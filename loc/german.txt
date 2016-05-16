@@ -1,0 +1,31 @@
+{
+  "BotWeapons_menu_name" : "Bot Waffen",
+  "BotWeapons_menu_desc" : "Stelle die Waffen für die Team KI ein",
+  "toggle_adjust_damage_title" : "Team KI Schaden anpassen"
+  "toggle_adjust_damage_desc" : "Macht den Schaden der Team KI konsistent und skaliert ihn mit dem Schwierigkeitsgrad"
+  "toggle_override_name" : "Waffen Override"
+  "toggle_override_desc" : "Ersetze individuelle Waffeneinstellungen der Team KI"
+  "menu_override_name" : "Override"
+  "item_random" : "Zufall"
+  "item_beretta92" : "Bernetti 9",
+  "item_c45" : "Chimano 88",
+  "item_raging_bull" : "Bronco .44",
+  "item_m4" : "CAR-4",
+  "item_ak47" : "AK",
+  "item_r870" : "Reinfeld 880",
+  "item_mossberg" : "Mosconi 12G",
+  "item_mp5" : "Compact-5",
+  "item_mp5_tactical" : "Compact-5 Tactical",
+  "item_mp9" : "CMP",
+  "item_mac11" : "Mark 10",
+  "item_saiga" : "IZHMA 12G",
+  "item_m249" : "KSP",
+  "item_benelli" : "M1014",
+  "item_g36" : "JP36",
+  "item_ump" : "UMP",
+  "item_scar_murky" : "Eagle Heavy",
+  "item_asval" : "Valkyria",
+  "item_sr2" : "Heather",
+  "item_akmsu" : "Krinkov",
+  "item_rpk" : "RPK"
+}

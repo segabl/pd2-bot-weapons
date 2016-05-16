@@ -1,0 +1,19 @@
+{
+  "name" : "Bot Weapons",
+  "description" : "Set the weapons for the team AI",
+  "author" : "topfpflanzen-wuerger",
+  "updates" : [
+    {
+      "revision" : 1.9,
+      "identifier" : "bot_weapons"
+    }
+  ]
+  "hooks" : [
+    { "hook_id" : "lib/managers/menumanager", "script_path" : "menu.lua"},
+    { "hook_id" : "lib/tweak_data/weapontweakdata", "script_path" : "weapontweakdata.lua"},
+    { "hook_id" : "lib/tweak_data/charactertweakdata", "script_path" : "charactertweakdata.lua"}
+  ]
+  "persist_scripts" : [
+    { "global" : "botweapons", "script_path" : "weapons.lua" }
+  ]
+}

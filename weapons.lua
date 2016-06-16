@@ -1,4 +1,4 @@
-if BotWeapons ~= nil then
+if BotWeapons ~= nil and Utils:IsInGameState() then
   if botweapons == false and BotWeapons._data["toggle_adjust_damage"] then
 
     local mult_dif = {
@@ -62,6 +62,12 @@ if BotWeapons ~= nil then
       w = BotWeapons._data["override"]
     end
     w = (w > #BotWeapons.weapon_unit_names) and math.random(#BotWeapons.weapon_unit_names) or w
+    
+    -- if we are in multiplayer, give bots a random weapon instead of the IZHMA 12G
+    while not Global.game_settings.single_player and BotWeapons.weapon_unit_names[w] == Idstring("units/payday2/weapons/wpn_npc_saiga/wpn_npc_saiga") do
+      log("[BotWeapons] Removing IZHMA 12G from bot in multiplayer!")
+      w = math.random(#BotWeapons.weapon_unit_names)
+    end
     
     tweak_data.character[c].weapon = deep_clone(tweak_data.character.presets.weapon.gang_member)
     tweak_data.character[c].weapon.weapons_of_choice = {primary = BotWeapons.weapon_unit_names[w], secondary = BotWeapons.weapon_unit_names[w]}

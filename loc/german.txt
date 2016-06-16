@@ -1,12 +1,12 @@
 {
   "BotWeapons_menu_name" : "Bot Waffen",
   "BotWeapons_menu_desc" : "Stelle die Waffen für die Team KI ein",
-  "toggle_adjust_damage_title" : "Team KI Schaden anpassen"
-  "toggle_adjust_damage_desc" : "Macht den Schaden der Team KI konsistent und skaliert ihn mit dem Schwierigkeitsgrad"
-  "toggle_override_name" : "Waffen Override"
-  "toggle_override_desc" : "Ersetze individuelle Waffeneinstellungen der Team KI"
-  "menu_override_name" : "Override"
-  "item_random" : "Zufall"
+  "toggle_adjust_damage_name" : "Team KI Schaden anpassen",
+  "toggle_adjust_damage_desc" : "Macht den Schaden der Team KI konsistent und skaliert ihn mit dem Schwierigkeitsgrad",
+  "toggle_override_name" : "Waffen Override",
+  "toggle_override_desc" : "Ersetze individuelle Waffeneinstellungen der Team KI",
+  "menu_override_name" : "Override",
+  "item_random" : "Zufall",
   "item_beretta92" : "Bernetti 9",
   "item_c45" : "Chimano 88",
   "item_raging_bull" : "Bronco .44",

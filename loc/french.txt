@@ -1,9 +1,9 @@
 {
   "BotWeapons_menu_name" : "Armes de Bot",
   "BotWeapons_menu_desc" : "Choisir les armes des bots",
-  "toggle_adjust_damage_title" : "Ajuster les dégâts des bots"
-  "toggle_adjust_damage_desc" : "Ajuster les dégâts des armes des bots et change en raport avec la difficulté"
-  "item_random" : "Au hasard"
+  "toggle_adjust_damage_name" : "Ajuster les dégâts des bots",
+  "toggle_adjust_damage_desc" : "Ajuster les dégâts des armes des bots et change en raport avec la difficulté",
+  "item_random" : "Au hasard",
   "item_beretta92" : "Bernetti 9",
   "item_c45" : "Chimano 88",
   "item_raging_bull" : "Bronco .44",

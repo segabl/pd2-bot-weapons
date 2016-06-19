@@ -59,6 +59,8 @@ if _G.BotWeapons == nil then
       file:write(json.encode(self._data))
       file:close()
     end
+    -- cause reload of tweak_data on changed settings
+    botweapons = false
   end
 
   function BotWeapons:Load()

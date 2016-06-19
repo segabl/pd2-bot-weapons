@@ -1,5 +1,6 @@
-if BotWeapons ~= nil and Utils:IsInGameState() then
-  if botweapons == false and BotWeapons._data["toggle_adjust_damage"] then
+if botweapons == false and BotWeapons ~= nil and Utils:IsInGameState() then
+
+  if BotWeapons._data["toggle_adjust_damage"] then
 
     local mult_dif = {
       normal = 0.4,

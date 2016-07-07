@@ -38,6 +38,8 @@ function CharacterTweakData:_presets(tweak_data)
   presets.weapon.gang_member.m249.FALLOFF[2].recoil = {1, 2}
   presets.weapon.gang_member.m249.FALLOFF[3].recoil = {2, 3}
   -- shotguns
+  presets.weapon.gang_member.r870.FALLOFF[2].r = 2000
+  presets.weapon.gang_member.r870.FALLOFF[3].r = 10000
   presets.weapon.gang_member.mossberg = deep_clone(presets.weapon.gang_member.r870)
   -- auto shotguns
   presets.weapon.gang_member.benelli = deep_clone(presets.weapon.gang_member.r870)

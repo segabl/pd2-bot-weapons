@@ -26,6 +26,8 @@ if _G.BotWeapons == nil then
     "item_sr2",
     "item_akmsu",
     "item_rpk",
+    -- new weapons
+    -- random
     "item_random"
   }
 
@@ -51,6 +53,7 @@ if _G.BotWeapons == nil then
     Idstring("units/pd2_dlc_mad/weapons/wpn_npc_sr2/wpn_npc_sr2"),
     Idstring("units/pd2_dlc_mad/weapons/wpn_npc_akmsu/wpn_npc_akmsu"),
     Idstring("units/pd2_dlc_mad/weapons/wpn_npc_rpk/wpn_npc_rpk")
+    -- new weapons
   }
 
   function BotWeapons:Save()

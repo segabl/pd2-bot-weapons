@@ -17,6 +17,7 @@ function CharacterTweakData:_presets(tweak_data)
 
     if v.ak47 ~= nil then
       v.m249 = deep_clone(v.ak47)
+      v.ksg = deep_clone(v.ak47);
     end
   end
   
@@ -62,4 +63,11 @@ function CharacterTweakData:_init_mobster_boss(presets)
   _init_mobster_bossORIG(self, presets)
   -- transfer ak47 weapon settings to new m249 preset
   self.mobster_boss.weapon.m249 = deep_clone(self.mobster_boss.weapon.ak47)
+end
+
+local _init_biker_bossORIG = CharacterTweakData._init_biker_boss
+function CharacterTweakData:_init_biker_boss(presets)
+  _init_biker_bossORIG(self, presets)
+  -- transfer ak47 weapon settings to new m249 preset
+  self.biker_boss.weapon.m249 = deep_clone(self.biker_boss.weapon.ak47)
 end

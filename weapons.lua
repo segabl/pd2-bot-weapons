@@ -65,7 +65,7 @@ if botweapons == false and BotWeapons ~= nil and Utils:IsInGameState() then
     w = (w > #BotWeapons.weapon_unit_names) and math.random(#BotWeapons.weapon_unit_names) or w
     
     -- if we are in multiplayer, give bots a random weapon instead of the IZHMA 12G
-    while not Global.game_settings.single_player and BotWeapons.weapon_unit_names[w] == Idstring("units/payday2/weapons/wpn_npc_saiga/wpn_npc_saiga") do
+    while not Global.game_settings.single_player and (w == 12 or w > 21) do
       log("[BotWeapons] Removing IZHMA 12G from bot in multiplayer!")
       w = math.random(#BotWeapons.weapon_unit_names)
     end

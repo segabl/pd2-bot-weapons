@@ -16,7 +16,6 @@ if _G.BotWeapons == nil then
     "item_mp5_tactical",
     "item_mp9",
     "item_mac11",
-    "item_saiga",
     "item_m249",
     "item_benelli",
     "item_g36",
@@ -26,7 +25,17 @@ if _G.BotWeapons == nil then
     "item_sr2",
     "item_akmsu",
     "item_rpk",
-    -- new weapons
+    -- weapons disabled in mp from here on
+    "item_saiga",
+    -- own weapons from here on
+    "item_famas",
+    "item_m14",
+    "item_p90",
+    "item_judge",
+    "item_boot",
+    "item_x_c45",
+    "item_x_mp5",
+    "item_x_akmsu",
     -- random
     "item_random"
   }
@@ -43,7 +52,6 @@ if _G.BotWeapons == nil then
     Idstring("units/payday2/weapons/wpn_npc_mp5_tactical/wpn_npc_mp5_tactical"),
     Idstring("units/payday2/weapons/wpn_npc_smg_mp9/wpn_npc_smg_mp9"),
     Idstring("units/payday2/weapons/wpn_npc_mac11/wpn_npc_mac11"),
-    Idstring("units/payday2/weapons/wpn_npc_saiga/wpn_npc_saiga"),
     Idstring("units/payday2/weapons/wpn_npc_lmg_m249/wpn_npc_lmg_m249"),
     Idstring("units/payday2/weapons/wpn_npc_benelli/wpn_npc_benelli"),
     Idstring("units/payday2/weapons/wpn_npc_g36/wpn_npc_g36"),
@@ -52,10 +60,22 @@ if _G.BotWeapons == nil then
     Idstring("units/pd2_dlc_mad/weapons/wpn_npc_asval/wpn_npc_asval"),
     Idstring("units/pd2_dlc_mad/weapons/wpn_npc_sr2/wpn_npc_sr2"),
     Idstring("units/pd2_dlc_mad/weapons/wpn_npc_akmsu/wpn_npc_akmsu"),
-    Idstring("units/pd2_dlc_mad/weapons/wpn_npc_rpk/wpn_npc_rpk")
-    -- new weapons
+    Idstring("units/pd2_dlc_mad/weapons/wpn_npc_rpk/wpn_npc_rpk"),
+    -- weapons disabled in mp from here on
+    Idstring("units/payday2/weapons/wpn_npc_saiga/wpn_npc_saiga"),
+    -- own weapons from here on
+    Idstring("units/payday2/weapons/wpn_npc_famas/wpn_npc_famas"),
+    Idstring("units/payday2/weapons/wpn_npc_m14/wpn_npc_m14"),
+    Idstring("units/payday2/weapons/wpn_npc_p90/wpn_npc_p90"),
+    Idstring("units/payday2/weapons/wpn_npc_judge/wpn_npc_judge"),
+    Idstring("units/payday2/weapons/wpn_npc_boot/wpn_npc_boot"),
+    Idstring("units/payday2/weapons/wpn_npc_x_c45/wpn_npc_x_c45"),
+    Idstring("units/payday2/weapons/wpn_npc_x_mp5/wpn_npc_x_mp5"),
+    Idstring("units/payday2/weapons/wpn_npc_x_akmsu/wpn_npc_x_akmsu")
   }
-
+  
+  BotWeapons.mp_disabled_index = 20
+  
   function BotWeapons:Save()
     local file = io.open(self._data_path, "w+")
     if file then
@@ -96,7 +116,7 @@ if _G.BotWeapons == nil then
 
   -- Populate it with items and callbacks
   Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotWeapons", function(menu_manager, nodes)
-
+  
     MenuCallbackHandler.BotWeapons_select = function(self, item)
       BotWeapons._data[item:name()] = item:value()
       BotWeapons:Save()

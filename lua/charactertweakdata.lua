@@ -4,31 +4,30 @@ function CharacterTweakData:_presets(tweak_data)
   log("[BotWeapons] Setting up additional npc weapon presets")
   local presets = _presetsORIG(self, tweak_data)
   
-  -- loop through all weapon presets and create new presets from old ones
+  -- loop through all weapon presets and create new presets from old ones for all the weapons
+  -- that are used by AI other than team AI
+
   for k, v in pairs(presets.weapon) do
     if v.m4 ~= nil then
       v.g36 = deep_clone(v.m4)
       v.scar = deep_clone(v.m4)
-    end
-    
-    if v.r870 ~= nil then
-      v.benelli = deep_clone(v.r870)
+      v.m14 = deep_clone(v.m4)
     end
 
     if v.ak47 ~= nil then
       v.m249 = deep_clone(v.ak47)
-      v.ksg = deep_clone(v.ak47);
     end
   end
   
   -- gang_member presets
   -- pistols
-  presets.weapon.gang_member.raging_bull = deep_clone(presets.weapon.gang_member.beretta92)
+  presets.weapon.gang_member.raging_bull = deep_clone(presets.weapon.gang_member.c45)
   presets.weapon.gang_member.raging_bull.RELOAD_SPEED = 0.7
+  -- smgs
+  presets.weapon.gang_member.mp5 = deep_clone(presets.weapon.gang_member.m4)
   -- rifles
-  presets.weapon.gang_member.ak47 = deep_clone(presets.weapon.gang_member.m4)
-  presets.weapon.gang_member.g36 = deep_clone(presets.weapon.gang_member.m4)
-  presets.weapon.gang_member.scar = deep_clone(presets.weapon.gang_member.m4)
+  presets.weapon.gang_member.m14.autofire_rounds = { 1, 1 }
+  presets.weapon.gang_member.m14.RELOAD_SPEED = 0.4
   -- lmg
   presets.weapon.gang_member.m249.autofire_rounds = { 20, 40 }
   presets.weapon.gang_member.m249.RELOAD_SPEED = 0.25
@@ -41,12 +40,26 @@ function CharacterTweakData:_presets(tweak_data)
   -- shotguns
   presets.weapon.gang_member.r870.FALLOFF[2].r = 2000
   presets.weapon.gang_member.r870.FALLOFF[3].r = 10000
+  
   presets.weapon.gang_member.mossberg = deep_clone(presets.weapon.gang_member.r870)
+  
+  presets.weapon.gang_member.judge = deep_clone(presets.weapon.gang_member.r870)
   -- auto shotguns
-  presets.weapon.gang_member.benelli = deep_clone(presets.weapon.gang_member.r870)
-  presets.weapon.gang_member.benelli.autofire_rounds = { 3, 7 }
-  presets.weapon.gang_member.saiga = deep_clone(presets.weapon.gang_member.benelli)
-  presets.weapon.gang_member.saiga.RELOAD_SPEED = 0.4
+  presets.weapon.gang_member.saiga = deep_clone(presets.weapon.gang_member.r870)
+  presets.weapon.gang_member.saiga.RELOAD_SPEED = 0.5
+  presets.weapon.gang_member.saiga.autofire_rounds = { 3, 7 }
+  -- akimbo
+  presets.weapon.gang_member.akimbo_pistol = deep_clone(presets.weapon.gang_member.c45)
+  presets.weapon.gang_member.akimbo_pistol.RELOAD_SPEED = 0.5
+  
+  presets.weapon.gang_member.akimbo_auto = deep_clone(presets.weapon.gang_member.m4)
+  presets.weapon.gang_member.akimbo_auto.RELOAD_SPEED = 0.4
+  presets.weapon.gang_member.akimbo_auto.FALLOFF[1].acc = {0.3, 0.7}
+  presets.weapon.gang_member.akimbo_auto.FALLOFF[2].acc = {0.1, 0.2}
+  presets.weapon.gang_member.akimbo_auto.FALLOFF[3].acc = {0, 0.1}
+  presets.weapon.gang_member.akimbo_auto.FALLOFF[1].recoil = {0, 1}
+  presets.weapon.gang_member.akimbo_auto.FALLOFF[2].recoil = {1, 2}
+  presets.weapon.gang_member.akimbo_auto.FALLOFF[3].recoil = {2, 3}
   
   return presets
 end

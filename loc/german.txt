@@ -27,5 +27,13 @@
   "item_asval" : "Valkyria",
   "item_sr2" : "Heather",
   "item_akmsu" : "Krinkov",
-  "item_rpk" : "RPK"
+  "item_rpk" : "RPK",
+  "item_famas" : "Clarion",
+  "item_m14" : "M308",
+  "item_p90" : "Kobus 90",
+  "item_judge" : "Judge",
+  "item_boot" : "Breaker 12G",
+  "item_x_c45" : "Akimbo Chimano 88",
+  "item_x_mp5" : "Akimbo Compact-5",
+  "item_x_akmsu" : "Akimbo Krinkov"
 }

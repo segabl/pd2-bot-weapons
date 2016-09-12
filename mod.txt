@@ -4,15 +4,8 @@
   "author" : "topfpflanzen-wuerger",
   "updates" : [
     {
-      "revision" : 2.5,
+      "revision" : 2.6,
       "identifier" : "bot_weapons"
-    },
-    {
-      "revision" : "revision.txt",
-      "identifier" : "bot_weapons_models",
-      "install_dir" : "assets/mod_overrides/",
-      "install_folder" : "Bot Weapons",
-      "display_name" : "Bot Weapons (Models)"
     }
   ]
   "libraries" : [

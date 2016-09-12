@@ -4,6 +4,9 @@ if _G.BotWeapons == nil then
   BotWeapons._data_path = SavePath .. "bot_weapons_data.txt"
   BotWeapons._data = {}
 
+  -- load custom models
+  ModCore:init(ModPath .. "config.xml", true, true)
+  
   BotWeapons.weapon_ids = {
     "item_beretta92",
     "item_c45",
@@ -93,33 +96,6 @@ if _G.BotWeapons == nil then
       file:close()
     end
   end
-  
-  function BotWeapons:check_mod_overrides()
-    local path = BotWeapons._path .. "../../assets/mod_overrides/Bot Weapons"
-    
-    if not io.file_is_readable(path .. "/revision.txt") then
-      log("[BotWeapons] Attempting to make directory in mod_overrides...")
-      if os.execute("mkdir \"" .. path .. "\"") == 0 then
-        local file = io.open(path .. "/revision.txt", "w")
-        file:write("0")
-        file:close()
-        log("[BotWeapons] Created a revision.txt for Bot Weapons data")
-      end
-    end
-    
-    local file = io.open(path .. "/revision.txt", "r")
-    local rev = file:read("*all")
-    file:close()
-    
-    local installed = rev ~= "0"
-    
-    -- Remove options for new weapons until mod_overrides is installed
-    if not installed then
-      for i = 1, 8, 1 do
-        table.remove(BotWeapons.weapon_ids, #BotWeapons.weapon_ids - 1)
-      end
-    end
-  end
 
   Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInit_BotWeapons", function(loc)
     -- fallback to english
@@ -143,8 +119,6 @@ if _G.BotWeapons == nil then
 
   -- Populate it with items and callbacks
   Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotWeapons", function(menu_manager, nodes)
-  
-    BotWeapons:check_mod_overrides()
   
     MenuCallbackHandler.BotWeapons_select = function(self, item)
       BotWeapons._data[item:name()] = item:value()

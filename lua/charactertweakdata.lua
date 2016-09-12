@@ -6,7 +6,6 @@ function CharacterTweakData:_presets(tweak_data)
   
   -- loop through all weapon presets and create new presets from old ones for all the weapons
   -- that are used by AI other than team AI
-
   for k, v in pairs(presets.weapon) do
     if v.m4 ~= nil then
       v.g36 = deep_clone(v.m4)
@@ -53,7 +52,7 @@ function CharacterTweakData:_presets(tweak_data)
   presets.weapon.gang_member.akimbo_pistol.RELOAD_SPEED = 0.5
   
   presets.weapon.gang_member.akimbo_auto = deep_clone(presets.weapon.gang_member.m4)
-  presets.weapon.gang_member.akimbo_auto.RELOAD_SPEED = 0.4
+  presets.weapon.gang_member.akimbo_auto.RELOAD_SPEED = 0.3
   presets.weapon.gang_member.akimbo_auto.FALLOFF[1].acc = {0.3, 0.7}
   presets.weapon.gang_member.akimbo_auto.FALLOFF[2].acc = {0.1, 0.2}
   presets.weapon.gang_member.akimbo_auto.FALLOFF[3].acc = {0, 0.1}

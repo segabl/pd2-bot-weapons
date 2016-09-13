@@ -76,13 +76,12 @@ if botweapons == false and BotWeapons ~= nil and Utils:IsInGameState() then
 
   end
 
-  for i = 1, CriminalsManager.get_num_characters() do
-    local c = CriminalsManager.character_names()[i]
+  for i, c in ipairs(CriminalsManager.character_names()) do
     local w = BotWeapons._data[c] or 4
-    if (BotWeapons._data["toggle_override"]) then
-      w = BotWeapons._data["override"]
+    if (BotWeapons._data["toggle_override_weapons"]) then
+      w = BotWeapons._data["override_weapons"]
     end
-    w = (w > #BotWeapons.weapon_unit_names) and math.random(#BotWeapons.weapon_unit_names) or w
+    w = (w > #BotWeapons.weapons) and math.random(#BotWeapons.weapons) or w
     
     -- if we are in multiplayer, remove weapons that would crash clients
     while not Global.game_settings.single_player and w > BotWeapons.mp_disabled_index do
@@ -91,7 +90,7 @@ if botweapons == false and BotWeapons ~= nil and Utils:IsInGameState() then
     end
     
     tweak_data.character[c].weapon = deep_clone(tweak_data.character.presets.weapon.gang_member)
-    tweak_data.character[c].weapon.weapons_of_choice = {primary = BotWeapons.weapon_unit_names[w], secondary = BotWeapons.weapon_unit_names[w]}
+    tweak_data.character[c].weapon.weapons_of_choice = {primary = BotWeapons.weapons[w], secondary = BotWeapons.weapons[w]}
   end
   
   botweapons = true

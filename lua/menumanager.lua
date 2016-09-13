@@ -1,215 +1,187 @@
-if _G.BotWeapons == nil then
-  _G.BotWeapons = {}
-  BotWeapons._path = ModPath
-  BotWeapons._data_path = SavePath .. "bot_weapons_data.txt"
-  BotWeapons._data = {}
+dofile(ModPath .. "lua/botweapons.lua")
 
-  -- load custom models
-  if ModCore then
-    ModCore:init(ModPath .. "config.xml", true, true)
-  end
-  
-  BotWeapons.weapon_ids = {
-    "item_beretta92",
-    "item_c45",
-    "item_raging_bull",
-    "item_m4",
-    "item_ak47",
-    "item_r870",
-    "item_mossberg",
-    "item_mp5",
-    "item_mp5_tactical",
-    "item_mp9",
-    "item_mac11",
-    "item_m249",
-    "item_benelli",
-    "item_g36",
-    "item_ump",
-    "item_scar_murky",
-    "item_asval",
-    "item_sr2",
-    "item_akmsu",
-    "item_rpk",
-    -- weapons disabled in mp from here on
-    "item_saiga",
-    -- own weapons from here on
-    "item_famas",
-    "item_m14",
-    "item_p90",
-    "item_judge",
-    "item_boot",
-    "item_x_c45",
-    "item_x_mp5",
-    "item_x_akmsu",
-    -- random
-    "item_random"
-  }
-
-  BotWeapons.weapon_unit_names = {
-    Idstring("units/payday2/weapons/wpn_npc_beretta92/wpn_npc_beretta92"),
-    Idstring("units/payday2/weapons/wpn_npc_c45/wpn_npc_c45"),
-    Idstring("units/payday2/weapons/wpn_npc_raging_bull/wpn_npc_raging_bull"),
-    Idstring("units/payday2/weapons/wpn_npc_m4/wpn_npc_m4"),
-    Idstring("units/payday2/weapons/wpn_npc_ak47/wpn_npc_ak47"),
-    Idstring("units/payday2/weapons/wpn_npc_r870/wpn_npc_r870"),
-    Idstring("units/payday2/weapons/wpn_npc_sawnoff_shotgun/wpn_npc_sawnoff_shotgun"),
-    Idstring("units/payday2/weapons/wpn_npc_mp5/wpn_npc_mp5"),
-    Idstring("units/payday2/weapons/wpn_npc_mp5_tactical/wpn_npc_mp5_tactical"),
-    Idstring("units/payday2/weapons/wpn_npc_smg_mp9/wpn_npc_smg_mp9"),
-    Idstring("units/payday2/weapons/wpn_npc_mac11/wpn_npc_mac11"),
-    Idstring("units/payday2/weapons/wpn_npc_lmg_m249/wpn_npc_lmg_m249"),
-    Idstring("units/payday2/weapons/wpn_npc_benelli/wpn_npc_benelli"),
-    Idstring("units/payday2/weapons/wpn_npc_g36/wpn_npc_g36"),
-    Idstring("units/payday2/weapons/wpn_npc_ump/wpn_npc_ump"),
-    Idstring("units/payday2/weapons/wpn_npc_scar_murkywater/wpn_npc_scar_murkywater"),
-    Idstring("units/pd2_dlc_mad/weapons/wpn_npc_asval/wpn_npc_asval"),
-    Idstring("units/pd2_dlc_mad/weapons/wpn_npc_sr2/wpn_npc_sr2"),
-    Idstring("units/pd2_dlc_mad/weapons/wpn_npc_akmsu/wpn_npc_akmsu"),
-    Idstring("units/pd2_dlc_mad/weapons/wpn_npc_rpk/wpn_npc_rpk"),
-    -- weapons disabled in mp from here on
-    Idstring("units/payday2/weapons/wpn_npc_saiga/wpn_npc_saiga"),
-    -- own weapons from here on
-    Idstring("units/payday2/weapons/wpn_npc_famas/wpn_npc_famas"),
-    Idstring("units/payday2/weapons/wpn_npc_m14/wpn_npc_m14"),
-    Idstring("units/payday2/weapons/wpn_npc_p90/wpn_npc_p90"),
-    Idstring("units/payday2/weapons/wpn_npc_judge/wpn_npc_judge"),
-    Idstring("units/payday2/weapons/wpn_npc_boot/wpn_npc_boot"),
-    Idstring("units/payday2/weapons/wpn_npc_x_c45/wpn_npc_x_c45"),
-    Idstring("units/payday2/weapons/wpn_npc_x_mp5/wpn_npc_x_mp5"),
-    Idstring("units/payday2/weapons/wpn_npc_x_akmsu/wpn_npc_x_akmsu")
-  }
-  
-  BotWeapons.pistols = { 1, 2, 3 }
-  BotWeapons.rifles = { 4, 5, 14, 16, 17, 22, 23 }
-  BotWeapons.smgs = { 8, 9, 10, 11, 15, 18, 19, 24 }
-  BotWeapons.shotguns = { 6, 7, 13, 21, 25, 26 }
-  BotWeapons.lmgs = { 12, 20 }
-  BotWeapons.akimbos = { 27, 28, 29 }
-  
-  BotWeapons.mp_disabled_index = 20
-  
-  function BotWeapons:Save()
-    local file = io.open(self._data_path, "w+")
-    if file then
-      file:write(json.encode(self._data))
-      file:close()
-    end
-    -- cause reload of tweak_data on changed settings
-    botweapons = false
-  end
-
-  function BotWeapons:Load()
-    local file = io.open(self._data_path, "r")
-    if file then
-      self._data = json.decode(file:read("*all"))
-      file:close()
+Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInit_BotWeapons", function(loc)
+  -- fallback to english
+  loc:load_localization_file(BotWeapons._path .. "loc/english.txt")
+  for _, filename in pairs(file.GetFiles(BotWeapons._path .. "loc/")) do
+    local str = filename:match('^(.*).txt$')
+    if str and Idstring(str) and Idstring(str):key() == SystemInfo:language():key() then
+      loc:load_localization_file(BotWeapons._path .. "loc/" .. filename)
+      break
     end
   end
+end)
 
-  Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInit_BotWeapons", function(loc)
-    -- fallback to english
-    loc:load_localization_file(BotWeapons._path .. "loc/english.txt")
-    for _, filename in pairs(file.GetFiles(BotWeapons._path .. "loc/")) do
-      local str = filename:match('^(.*).txt$')
-      if str and Idstring(str) and Idstring(str):key() == SystemInfo:language():key() then
-        loc:load_localization_file(BotWeapons._path .. "loc/" .. filename)
-        break
-      end
-    end
-  end)
+-- Menu setup
+local menu_id_weapons = "BotWeapons_menu_weapons"
+local menu_id_equipment = "BotWeapons_menu_equipment"
+local menu_id_armor = "BotWeapons_menu_armor"
 
-  -- Menu setup
-  local menu_id = "BotWeapons_menu"
+-- Register our new menu
+Hooks:Add("MenuManagerSetupCustomMenus", "MenuManagerSetupCustomMenus_BotWeapons", function(menu_manager, nodes)
+  MenuHelper:NewMenu(menu_id_armor)
+  MenuHelper:NewMenu(menu_id_equipment)
+  MenuHelper:NewMenu(menu_id_weapons)
+end)
 
-  -- Register our new menu
-  Hooks:Add("MenuManagerSetupCustomMenus", "MenuManagerSetupCustomMenus_BotWeapons", function(menu_manager, nodes)
-    MenuHelper:NewMenu(menu_id)
-  end)
+-- Populate it with items and callbacks
+Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotWeapons", function(menu_manager, nodes)
 
-  -- Populate it with items and callbacks
-  Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotWeapons", function(menu_manager, nodes)
+  MenuCallbackHandler.BotWeapons_select = function(self, item)
+    BotWeapons._data[item:name()] = item:value()
+    BotWeapons:Save()
+  end
   
-    MenuCallbackHandler.BotWeapons_select = function(self, item)
-      BotWeapons._data[item:name()] = item:value()
-      BotWeapons:Save()
-    end
-    
-    MenuCallbackHandler.BotWeapons_toggle = function(self, item)
-      BotWeapons._data[item:name()] = (item:value() == "on");
-      BotWeapons:Save()
-    end
+  MenuCallbackHandler.BotWeapons_toggle = function(self, item)
+    BotWeapons._data[item:name()] = (item:value() == "on");
+    BotWeapons:Save()
+  end
 
-    -- Load settings
-    BotWeapons:Load()
+  -- ARMOR MENU
+  MenuHelper:AddToggle({
+    id = "toggle_override_armor",
+    title = "toggle_override_armor_name",
+    desc = "toggle_override_armor_desc",
+    callback = "BotWeapons_toggle",
+    value = BotWeapons._data["toggle_override_armor"] or false,
+    menu_id = menu_id_armor,
+    priority = 98
+ })
+  
+  MenuHelper:AddMultipleChoice({
+    id = "override_armor",
+    title = "menu_override_name",
+    callback = "BotWeapons_select",
+    items = BotWeapons.armor_ids;
+    menu_id = menu_id_armor,
+    value = BotWeapons._data["override_armor"] or (#BotWeapons.armor_ids),
+    priority = 97
+ })
+  
+  MenuHelper:AddDivider({
+    id = "divider2",
+    size = 32,
+    menu_id = menu_id_armor,
+    priority = 96,
+ })
 
-    -- Toggle damage
-    MenuHelper:AddToggle({
-      id = "toggle_adjust_damage",
-      title = "toggle_adjust_damage_name",
-      desc = "toggle_adjust_damage_desc",
-      callback = "BotWeapons_toggle",
-      value = BotWeapons._data["toggle_adjust_damage"],
-      menu_id = menu_id,
-      priority = 100
-   })
-    
-    -- divider
-    MenuHelper:AddDivider({
-      id = "divider1",
-      size = 32,
-      menu_id = menu_id,
-      priority = 99,
-   })
-    
-    --override
-    MenuHelper:AddToggle({
-      id = "toggle_override",
-      title = "toggle_override_name",
-      desc = "toggle_override_desc",
-      callback = "BotWeapons_toggle",
-      value = BotWeapons._data["toggle_override"] or false,
-      menu_id = menu_id,
-      priority = 98
-   })
-    
+  for i, c in ipairs(CriminalsManager.character_names()) do
     MenuHelper:AddMultipleChoice({
-      id = "override",
-      title = "menu_override_name",
+      id = c .. "_armor",
+      title = "menu_" .. c,
+      callback = "BotWeapons_select",
+      items = BotWeapons.armor_ids;
+      menu_id = menu_id_armor,
+      value = BotWeapons._data[c .. "_armor"] or 1,
+      priority = 96 - i
+   })
+  end
+  
+  -- EQUIPMENT MENU
+  MenuHelper:AddToggle({
+    id = "toggle_override_equipment",
+    title = "toggle_override_equipment_name",
+    desc = "toggle_override_equipment_desc",
+    callback = "BotWeapons_toggle",
+    value = BotWeapons._data["toggle_override_equipment"] or false,
+    menu_id = menu_id_equipment,
+    priority = 98
+ })
+  
+  MenuHelper:AddMultipleChoice({
+    id = "override_equipment",
+    title = "menu_override_name",
+    callback = "BotWeapons_select",
+    items = BotWeapons.equipment_ids;
+    menu_id = menu_id_equipment,
+    value = BotWeapons._data["override_equipment"] or (#BotWeapons.equipment_ids),
+    priority = 97
+ })
+  
+  MenuHelper:AddDivider({
+    id = "divider2",
+    size = 32,
+    menu_id = menu_id_equipment,
+    priority = 96,
+ })
+
+  for i, c in ipairs(CriminalsManager.character_names()) do
+    MenuHelper:AddMultipleChoice({
+      id = c .. "_equipment",
+      title = "menu_" .. c,
+      callback = "BotWeapons_select",
+      items = BotWeapons.equipment_ids;
+      menu_id = menu_id_equipment,
+      value = BotWeapons._data[c .. "_equipment"] or 1,
+      priority = 96 - i
+   })
+  end
+  
+  -- WEAPONS MENU
+  MenuHelper:AddToggle({
+    id = "toggle_adjust_damage",
+    title = "toggle_adjust_damage_name",
+    desc = "toggle_adjust_damage_desc",
+    callback = "BotWeapons_toggle",
+    value = BotWeapons._data["toggle_adjust_damage"],
+    menu_id = menu_id_weapons,
+    priority = 100
+ })
+
+  MenuHelper:AddDivider({
+    id = "divider1",
+    size = 32,
+    menu_id = menu_id_weapons,
+    priority = 99,
+ })
+
+  MenuHelper:AddToggle({
+    id = "toggle_override_weapons",
+    title = "toggle_override_weapons_name",
+    desc = "toggle_override_weapons_desc",
+    callback = "BotWeapons_toggle",
+    value = BotWeapons._data["toggle_override_weapons"] or false,
+    menu_id = menu_id_weapons,
+    priority = 98
+ })
+  
+  MenuHelper:AddMultipleChoice({
+    id = "override_weapons",
+    title = "menu_override_name",
+    callback = "BotWeapons_select",
+    items = BotWeapons.weapon_ids;
+    menu_id = menu_id_weapons,
+    value = BotWeapons._data["override_weapons"] or (#BotWeapons.weapon_ids),
+    priority = 97
+ })
+  
+  MenuHelper:AddDivider({
+    id = "divider2",
+    size = 32,
+    menu_id = menu_id_weapons,
+    priority = 96,
+ })
+
+  for i, c in ipairs(CriminalsManager.character_names()) do
+    MenuHelper:AddMultipleChoice({
+      id = c .. "_weapon",
+      title = "menu_" .. c,
       callback = "BotWeapons_select",
       items = BotWeapons.weapon_ids;
-      menu_id = menu_id,
-      value = BotWeapons._data["override"] or (#BotWeapons.weapon_ids - 1),
-      priority = 97
+      menu_id = menu_id_weapons,
+      value = BotWeapons._data[c .. "_weapon"] or 4,
+      priority = 96 - i
    })
-    
-    -- divider
-    MenuHelper:AddDivider({
-      id = "divider2",
-      size = 32,
-      menu_id = menu_id,
-      priority = 96,
-   })
-    
-    -- Add every available character to the menus using the game's own menu names
-    for i = 1, CriminalsManager.get_num_characters() do
-      local character = CriminalsManager.character_names()[i]
+  end
+  
+end)
 
-      MenuHelper:AddMultipleChoice({
-        id = character,
-        title = "menu_" .. character,
-        callback = "BotWeapons_select",
-        items = BotWeapons.weapon_ids;
-        menu_id = menu_id,
-        value = BotWeapons._data[character] or 4,
-        priority = 96 - i
-     })
-    end
-    
-  end)
-
-  -- Build the menu and add it to the Mod Options menu
-  Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenus_BotWeapons", function(menu_manager, nodes)
-    nodes[menu_id] = MenuHelper:BuildMenu(menu_id)
-    MenuHelper:AddMenuItem(MenuHelper:GetMenu("lua_mod_options_menu"), menu_id, "BotWeapons_menu_name", "BotWeapons_menu_desc")
-  end)
-end
+-- Build the menus and add it to the Mod Options menu
+Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenus_BotWeapons", function(menu_manager, nodes)
+  nodes[menu_id_armor] = MenuHelper:BuildMenu(menu_id_armor)
+  nodes[menu_id_equipment] = MenuHelper:BuildMenu(menu_id_equipment)
+  nodes[menu_id_weapons] = MenuHelper:BuildMenu(menu_id_weapons)
+  MenuHelper:AddMenuItem(MenuHelper:GetMenu("lua_mod_options_menu"), menu_id_armor, "BotWeapons_menu_armor_name", "BotWeapons_menu_armor_desc")
+  MenuHelper:AddMenuItem(MenuHelper:GetMenu("lua_mod_options_menu"), menu_id_equipment, "BotWeapons_menu_equipment_name", "BotWeapons_menu_equipment_desc", menu_id_armor)
+  MenuHelper:AddMenuItem(MenuHelper:GetMenu("lua_mod_options_menu"), menu_id_weapons, "BotWeapons_menu_weapons_name", "BotWeapons_menu_weapons_desc", menu_id_deployables)
+end)

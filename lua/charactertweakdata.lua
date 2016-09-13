@@ -1,5 +1,4 @@
 local _presetsORIG = CharacterTweakData._presets
-
 function CharacterTweakData:_presets(tweak_data)
   log("[BotWeapons] Setting up additional npc weapon presets")
   local presets = _presetsORIG(self, tweak_data)
@@ -20,12 +19,15 @@ function CharacterTweakData:_presets(tweak_data)
   
   -- gang_member presets
   -- pistols
+  presets.weapon.gang_member.c45 = deep_clone(presets.weapon.gang_member.beretta92)
+  
   presets.weapon.gang_member.raging_bull = deep_clone(presets.weapon.gang_member.c45)
   presets.weapon.gang_member.raging_bull.RELOAD_SPEED = 0.7
   -- smgs
   presets.weapon.gang_member.mp5 = deep_clone(presets.weapon.gang_member.m4)
   -- rifles
   presets.weapon.gang_member.ak47 = deep_clone(presets.weapon.gang_member.m4)
+  
   presets.weapon.gang_member.m14.autofire_rounds = { 1, 1 }
   presets.weapon.gang_member.m14.RELOAD_SPEED = 0.4
   -- lmg

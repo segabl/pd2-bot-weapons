@@ -1,6 +1,6 @@
 {
-  "name" : "Bot Weapons",
-  "description" : "Set the weapons for the team AI",
+  "name" : "Bot Weapons and Equipment",
+  "description" : "Set the weapons, armor and deployables for the team AI",
   "author" : "topfpflanzen-wuerger",
   "updates" : [
     {

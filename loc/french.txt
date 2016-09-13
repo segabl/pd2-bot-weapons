@@ -1,6 +1,6 @@
 {
-  "BotWeapons_menu_name" : "Armes de Bot",
-  "BotWeapons_menu_desc" : "Choisir les armes des bots",
+  "BotWeapons_menu_weapons_name" : "Armes de Bot",
+  "BotWeapons_menu_weapons_desc" : "Choisir les armes des bots",
   "toggle_adjust_damage_name" : "Ajuster les dégâts des bots",
   "toggle_adjust_damage_desc" : "Ajuster les dégâts des armes des bots et change en raport avec la difficulté",
   "item_random" : "Au hasard",

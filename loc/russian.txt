@@ -1,10 +1,10 @@
 {
-  "BotWeapons_menu_name" : "Оружие ботов",
-  "BotWeapons_menu_desc" : "Выберите, какое оружие будут использовать ваши ИИ-напарники",
+  "BotWeapons_menu_weapons_name" : "Оружие ботов",
+  "BotWeapons_menu_weapons_desc" : "Выберите, какое оружие будут использовать ваши ИИ-напарники",
   "toggle_adjust_damage_name" : "Подобрать урон оружия ИИ-напарников"
   "toggle_adjust_damage_desc" : "Подбирает правильный урон оружия ИИ-напарников, сопоставимый со сложностью игры"
-  "toggle_override_name" : "Изменить оружие"
-  "toggle_override_desc" : "Изменить индивидуальные настройки оружия ИИ-напарников"
+  "toggle_override_weapons_name" : "Изменить оружие"
+  "toggle_override_weapons_desc" : "Изменить индивидуальные настройки оружия ИИ-напарников"
   "menu_override_name" : "Изменить"
   "item_random" : "Случайно"
   "item_beretta92" : "Bernetti 9",

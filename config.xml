@@ -56,17 +56,6 @@
       <texture path="units/payday2/weapons/wpn_npc_boot/boot_df" />
       <texture path="units/payday2/weapons/wpn_npc_boot/boot_nm" />
       
-      <!--M134-->  
-      <object path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134" />
-      <cooked_physics path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134" />
-      <material_config path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134" />
-      <material_config path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134_contour" />
-      <model path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134" />
-      <sequence_manager path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134" load="true" />
-      <unit path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134" load="true" />
-      <texture path="units/payday2/weapons/wpn_npc_m134/m134_df" />
-      <texture path="units/payday2/weapons/wpn_npc_m134/m134_nm" />
-      
       <!--Akimbo C45-->
       <unit path="units/payday2/weapons/wpn_npc_x_c45/wpn_npc_x_c45" load="true" />
       

@@ -25,6 +25,7 @@ function CharacterTweakData:_presets(tweak_data)
   -- smgs
   presets.weapon.gang_member.mp5 = deep_clone(presets.weapon.gang_member.m4)
   -- rifles
+  presets.weapon.gang_member.ak47 = deep_clone(presets.weapon.gang_member.m4)
   presets.weapon.gang_member.m14.autofire_rounds = { 1, 1 }
   presets.weapon.gang_member.m14.RELOAD_SPEED = 0.4
   -- lmg

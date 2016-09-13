@@ -5,7 +5,9 @@ if _G.BotWeapons == nil then
   BotWeapons._data = {}
 
   -- load custom models
-  ModCore:init(ModPath .. "config.xml", true, true)
+  if ModCore then
+    ModCore:init(ModPath .. "config.xml", true, true)
+  end
   
   BotWeapons.weapon_ids = {
     "item_beretta92",
@@ -76,6 +78,13 @@ if _G.BotWeapons == nil then
     Idstring("units/payday2/weapons/wpn_npc_x_mp5/wpn_npc_x_mp5"),
     Idstring("units/payday2/weapons/wpn_npc_x_akmsu/wpn_npc_x_akmsu")
   }
+  
+  BotWeapons.pistols = { 1, 2, 3 }
+  BotWeapons.rifles = { 4, 5, 14, 16, 17, 22, 23 }
+  BotWeapons.smgs = { 8, 9, 10, 11, 15, 18, 19, 24 }
+  BotWeapons.shotguns = { 6, 7, 13, 21, 25, 26 }
+  BotWeapons.lmgs = { 12, 20 }
+  BotWeapons.akimbos = { 27, 28, 29 }
   
   BotWeapons.mp_disabled_index = 20
   

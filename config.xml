@@ -1,79 +1,79 @@
 <mod name="Bot Weapons" global_key="bot_weapons">
     <!--directory points to the directory containing the classes relative to this mods folder-->
     <AddFiles directory="assets">
-      <!--NPC Famas-->  
-      <object path="units/payday2/weapons/wpn_npc_famas/wpn_npc_famas" force="false"/>
-      <cooked_physics path="units/payday2/weapons/wpn_npc_famas/wpn_npc_famas" force="false"/>
-      <material_config path="units/payday2/weapons/wpn_npc_famas/wpn_npc_famas" force="false"/>
-      <material_config path="units/payday2/weapons/wpn_npc_famas/wpn_npc_famas_contour" force="false"/>
-      <model path="units/payday2/weapons/wpn_npc_famas/wpn_npc_famas" force="false"/>
-      <sequence_manager path="units/payday2/weapons/wpn_npc_famas/wpn_npc_famas" force="false"/ load="true">
-      <unit path="units/payday2/weapons/wpn_npc_famas/wpn_npc_famas" force="false" load="true"/>
-      <texture path="units/payday2/weapons/wpn_npc_famas/famas_df" force="false"/>
-      <texture path="units/payday2/weapons/wpn_npc_famas/famas_nm" force="false"/>
+      <!--Famas-->  
+      <object path="units/payday2/weapons/wpn_npc_famas/wpn_npc_famas" />
+      <cooked_physics path="units/payday2/weapons/wpn_npc_famas/wpn_npc_famas" />
+      <material_config path="units/payday2/weapons/wpn_npc_famas/wpn_npc_famas" />
+      <material_config path="units/payday2/weapons/wpn_npc_famas/wpn_npc_famas_contour" />
+      <model path="units/payday2/weapons/wpn_npc_famas/wpn_npc_famas" />
+      <sequence_manager path="units/payday2/weapons/wpn_npc_famas/wpn_npc_famas" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_famas/wpn_npc_famas" load="true" />
+      <texture path="units/payday2/weapons/wpn_npc_famas/famas_df" />
+      <texture path="units/payday2/weapons/wpn_npc_famas/famas_nm" />
       
-      <!--NPC M14-->  
-      <object path="units/payday2/weapons/wpn_npc_m14/wpn_npc_m14" force="false"/>
-      <cooked_physics path="units/payday2/weapons/wpn_npc_m14/wpn_npc_m14" force="false"/>
-      <material_config path="units/payday2/weapons/wpn_npc_m14/wpn_npc_m14" force="false"/>
-      <material_config path="units/payday2/weapons/wpn_npc_m14/wpn_npc_m14_contour" force="false"/>
-      <model path="units/payday2/weapons/wpn_npc_m14/wpn_npc_m14" force="false"/>
-      <sequence_manager path="units/payday2/weapons/wpn_npc_m14/wpn_npc_m14" force="false"/ load="true">
-      <unit path="units/payday2/weapons/wpn_npc_m14/wpn_npc_m14" force="false" load="true"/>
-      <texture path="units/payday2/weapons/wpn_npc_m14/m14_df" force="false"/>
-      <texture path="units/payday2/weapons/wpn_npc_m14/m14_nm" force="false"/>
+      <!--M14-->  
+      <object path="units/payday2/weapons/wpn_npc_m14/wpn_npc_m14" />
+      <cooked_physics path="units/payday2/weapons/wpn_npc_m14/wpn_npc_m14" />
+      <material_config path="units/payday2/weapons/wpn_npc_m14/wpn_npc_m14" />
+      <material_config path="units/payday2/weapons/wpn_npc_m14/wpn_npc_m14_contour" />
+      <model path="units/payday2/weapons/wpn_npc_m14/wpn_npc_m14" />
+      <sequence_manager path="units/payday2/weapons/wpn_npc_m14/wpn_npc_m14" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_m14/wpn_npc_m14" load="true" />
+      <texture path="units/payday2/weapons/wpn_npc_m14/m14_df" />
+      <texture path="units/payday2/weapons/wpn_npc_m14/m14_nm" />
       
-      <!--NPC P90-->  
-      <object path="units/payday2/weapons/wpn_npc_p90/wpn_npc_p90" force="false"/>
-      <cooked_physics path="units/payday2/weapons/wpn_npc_p90/wpn_npc_p90" force="false"/>
-      <material_config path="units/payday2/weapons/wpn_npc_p90/wpn_npc_p90" force="false"/>
-      <material_config path="units/payday2/weapons/wpn_npc_p90/wpn_npc_p90_contour" force="false"/>
-      <model path="units/payday2/weapons/wpn_npc_p90/wpn_npc_p90" force="false"/>
-      <sequence_manager path="units/payday2/weapons/wpn_npc_p90/wpn_npc_p90" force="false"/ load="true">
-      <unit path="units/payday2/weapons/wpn_npc_p90/wpn_npc_p90" force="false" load="true"/>
-      <texture path="units/payday2/weapons/wpn_npc_p90/p90_df" force="false"/>
-      <texture path="units/payday2/weapons/wpn_npc_p90/p90_nm" force="false"/>
+      <!--P90-->  
+      <object path="units/payday2/weapons/wpn_npc_p90/wpn_npc_p90" />
+      <cooked_physics path="units/payday2/weapons/wpn_npc_p90/wpn_npc_p90" />
+      <material_config path="units/payday2/weapons/wpn_npc_p90/wpn_npc_p90" />
+      <material_config path="units/payday2/weapons/wpn_npc_p90/wpn_npc_p90_contour" />
+      <model path="units/payday2/weapons/wpn_npc_p90/wpn_npc_p90" />
+      <sequence_manager path="units/payday2/weapons/wpn_npc_p90/wpn_npc_p90" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_p90/wpn_npc_p90" load="true" />
+      <texture path="units/payday2/weapons/wpn_npc_p90/p90_df" />
+      <texture path="units/payday2/weapons/wpn_npc_p90/p90_nm" />
       
-      <!--NPC Judge-->  
-      <object path="units/payday2/weapons/wpn_npc_judge/wpn_npc_judge" force="false"/>
-      <cooked_physics path="units/payday2/weapons/wpn_npc_judge/wpn_npc_judge" force="false"/>
-      <material_config path="units/payday2/weapons/wpn_npc_judge/wpn_npc_judge" force="false"/>
-      <material_config path="units/payday2/weapons/wpn_npc_judge/wpn_npc_judge_contour" force="false"/>
-      <model path="units/payday2/weapons/wpn_npc_judge/wpn_npc_judge" force="false"/>
-      <sequence_manager path="units/payday2/weapons/wpn_npc_judge/wpn_npc_judge" force="false"/ load="true">
-      <unit path="units/payday2/weapons/wpn_npc_judge/wpn_npc_judge" force="false" load="true"/>
-      <texture path="units/payday2/weapons/wpn_npc_judge/judge_df" force="false"/>
-      <texture path="units/payday2/weapons/wpn_npc_judge/judge_nm" force="false"/>
+      <!--Judge-->  
+      <object path="units/payday2/weapons/wpn_npc_judge/wpn_npc_judge" />
+      <cooked_physics path="units/payday2/weapons/wpn_npc_judge/wpn_npc_judge" />
+      <material_config path="units/payday2/weapons/wpn_npc_judge/wpn_npc_judge" />
+      <material_config path="units/payday2/weapons/wpn_npc_judge/wpn_npc_judge_contour" />
+      <model path="units/payday2/weapons/wpn_npc_judge/wpn_npc_judge" />
+      <sequence_manager path="units/payday2/weapons/wpn_npc_judge/wpn_npc_judge" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_judge/wpn_npc_judge" load="true" />
+      <texture path="units/payday2/weapons/wpn_npc_judge/judge_df" />
+      <texture path="units/payday2/weapons/wpn_npc_judge/judge_nm" />
       
-      <!--NPC Boot-->  
-      <object path="units/payday2/weapons/wpn_npc_boot/wpn_npc_boot" force="false"/>
-      <cooked_physics path="units/payday2/weapons/wpn_npc_boot/wpn_npc_boot" force="false"/>
-      <material_config path="units/payday2/weapons/wpn_npc_boot/wpn_npc_boot" force="false"/>
-      <material_config path="units/payday2/weapons/wpn_npc_boot/wpn_npc_boot_contour" force="false"/>
-      <model path="units/payday2/weapons/wpn_npc_boot/wpn_npc_boot" force="false"/>
-      <sequence_manager path="units/payday2/weapons/wpn_npc_boot/wpn_npc_boot" force="false"/ load="true">
-      <unit path="units/payday2/weapons/wpn_npc_boot/wpn_npc_boot" force="false" load="true"/>
-      <texture path="units/payday2/weapons/wpn_npc_boot/boot_df" force="false"/>
-      <texture path="units/payday2/weapons/wpn_npc_boot/boot_nm" force="false"/>
+      <!--Boot-->  
+      <object path="units/payday2/weapons/wpn_npc_boot/wpn_npc_boot" />
+      <cooked_physics path="units/payday2/weapons/wpn_npc_boot/wpn_npc_boot" />
+      <material_config path="units/payday2/weapons/wpn_npc_boot/wpn_npc_boot" />
+      <material_config path="units/payday2/weapons/wpn_npc_boot/wpn_npc_boot_contour" />
+      <model path="units/payday2/weapons/wpn_npc_boot/wpn_npc_boot" />
+      <sequence_manager path="units/payday2/weapons/wpn_npc_boot/wpn_npc_boot" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_boot/wpn_npc_boot" load="true" />
+      <texture path="units/payday2/weapons/wpn_npc_boot/boot_df" />
+      <texture path="units/payday2/weapons/wpn_npc_boot/boot_nm" />
       
-      <!--NPC M134-->  
-      <object path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134" force="false"/>
-      <cooked_physics path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134" force="false"/>
-      <material_config path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134" force="false"/>
-      <material_config path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134_contour" force="false"/>
-      <model path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134" force="false"/>
-      <sequence_manager path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134" force="false"/ load="true">
-      <unit path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134" force="false" load="true"/>
-      <texture path="units/payday2/weapons/wpn_npc_m134/m134_df" force="false"/>
-      <texture path="units/payday2/weapons/wpn_npc_m134/m134_nm" force="false"/>
+      <!--M134-->  
+      <object path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134" />
+      <cooked_physics path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134" />
+      <material_config path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134" />
+      <material_config path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134_contour" />
+      <model path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134" />
+      <sequence_manager path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_m134/wpn_npc_m134" load="true" />
+      <texture path="units/payday2/weapons/wpn_npc_m134/m134_df" />
+      <texture path="units/payday2/weapons/wpn_npc_m134/m134_nm" />
       
-      <!--NPC Akimbo C45-->
-      <unit path="units/payday2/weapons/wpn_npc_x_c45/wpn_npc_x_c45" force="false" load="true"/>
+      <!--Akimbo C45-->
+      <unit path="units/payday2/weapons/wpn_npc_x_c45/wpn_npc_x_c45" load="true" />
       
-      <!--NPC Akimbo MP5-->
-      <unit path="units/payday2/weapons/wpn_npc_x_mp5/wpn_npc_x_mp5" force="false" load="true"/>
+      <!--Akimbo MP5-->
+      <unit path="units/payday2/weapons/wpn_npc_x_mp5/wpn_npc_x_mp5" load="true" />
       
-      <!--NPC Akimbo Akmsu-->
-      <unit path="units/payday2/weapons/wpn_npc_x_akmsu/wpn_npc_x_akmsu" force="false" load="true"/>
+      <!--Akimbo Akmsu-->
+      <unit path="units/payday2/weapons/wpn_npc_x_akmsu/wpn_npc_x_akmsu" load="true" />
     </AddFiles>
 </mod>

@@ -77,7 +77,7 @@ if botweapons == false and BotWeapons ~= nil and Utils:IsInGameState() then
   end
 
   for i, c in ipairs(CriminalsManager.character_names()) do
-    local w = BotWeapons._data[c] or 4
+    local w = BotWeapons._data[c .. "_weapon"] or 4
     if (BotWeapons._data["toggle_override_weapons"]) then
       w = BotWeapons._data["override_weapons"]
     end

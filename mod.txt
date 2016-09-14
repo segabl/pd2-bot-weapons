@@ -2,9 +2,10 @@
   "name" : "Bot Weapons and Equipment",
   "description" : "Set the weapons, armor and deployables for the team AI",
   "author" : "topfpflanzen-wuerger",
+  "priority" : 0,
   "updates" : [
     {
-      "revision" : 2.7,
+      "revision" : 2.8,
       "identifier" : "bot_weapons"
     }
   ]
@@ -16,11 +17,11 @@
     }
   ]
   "hooks" : [
-    { "hook_id" : "lib/managers/menumanager", "script_path" : "lua/menumanager.lua"},
-    { "hook_id" : "lib/tweak_data/weapontweakdata", "script_path" : "lua/weapontweakdata.lua"},
-    { "hook_id" : "lib/tweak_data/charactertweakdata", "script_path" : "lua/charactertweakdata.lua"},
-    { "hook_id" : "lib/units/player_team/teamaiinventory", "script_path" : "lua/teamaiinventory.lua"},
-    { "hook_id" : "lib/units/player_team/teamaimovement", "script_path" : "lua/teamaimovement.lua"}
+    { "hook_id" : "lib/managers/menumanager", "script_path" : "lua/menumanager.lua" },
+    { "hook_id" : "lib/tweak_data/weapontweakdata", "script_path" : "lua/weapontweakdata.lua" },
+    { "hook_id" : "lib/tweak_data/charactertweakdata", "script_path" : "lua/charactertweakdata.lua" },
+    { "hook_id" : "lib/units/player_team/teamaiinventory", "script_path" : "lua/teamaiinventory.lua" },
+    { "hook_id" : "lib/units/player_team/teamaimovement", "script_path" : "lua/teamaimovement.lua" }
   ]
   "persist_scripts" : [
     { "global" : "botweapons", "script_path" : "lua/weapons.lua" }

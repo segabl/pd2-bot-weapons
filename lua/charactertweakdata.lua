@@ -9,7 +9,6 @@ function CharacterTweakData:_presets(tweak_data)
     if v.m4 ~= nil then
       v.g36 = deep_clone(v.m4)
       v.scar = deep_clone(v.m4)
-      v.m14 = deep_clone(v.m4)
     end
 
     if v.ak47 ~= nil then
@@ -21,18 +20,22 @@ function CharacterTweakData:_presets(tweak_data)
   -- pistols
   presets.weapon.gang_member.c45 = deep_clone(presets.weapon.gang_member.beretta92)
   
-  presets.weapon.gang_member.raging_bull = deep_clone(presets.weapon.gang_member.c45)
+  presets.weapon.gang_member.raging_bull = deep_clone(presets.weapon.gang_member.beretta92)
   presets.weapon.gang_member.raging_bull.RELOAD_SPEED = 0.7
   -- smgs
   presets.weapon.gang_member.mp5 = deep_clone(presets.weapon.gang_member.m4)
   -- rifles
   presets.weapon.gang_member.ak47 = deep_clone(presets.weapon.gang_member.m4)
-  
-  presets.weapon.gang_member.m14.autofire_rounds = { 1, 1 }
-  presets.weapon.gang_member.m14.RELOAD_SPEED = 0.4
+  presets.weapon.gang_member.m14 = deep_clone(presets.weapon.gang_member.beretta92)
+  presets.weapon.gang_member.m14.autofire_rounds = { 2, 4 }
+  presets.weapon.gang_member.m14.RELOAD_SPEED = 0.6
+  presets.weapon.gang_member.m14.FALLOFF[1].mode = { 1, 0.8, 0.6, 0.4 }
+  presets.weapon.gang_member.m14.FALLOFF[2].mode = { 1, 0.4, 0.3, 0.1 }
+  presets.weapon.gang_member.m14.FALLOFF[3].mode = { 1, 0.2, 0, 0 }
   -- lmg
   presets.weapon.gang_member.m249.autofire_rounds = { 20, 40 }
-  presets.weapon.gang_member.m249.RELOAD_SPEED = 0.25
+  presets.weapon.gang_member.m249.RELOAD_SPEED = 0.4
+  presets.weapon.gang_member.m249.spread = 50
   presets.weapon.gang_member.m249.FALLOFF[1].acc = {0.3, 0.7}
   presets.weapon.gang_member.m249.FALLOFF[2].acc = {0.1, 0.2}
   presets.weapon.gang_member.m249.FALLOFF[3].acc = {0, 0.1}
@@ -56,6 +59,7 @@ function CharacterTweakData:_presets(tweak_data)
   
   presets.weapon.gang_member.akimbo_auto = deep_clone(presets.weapon.gang_member.m4)
   presets.weapon.gang_member.akimbo_auto.RELOAD_SPEED = 0.3
+  presets.weapon.gang_member.akimbo_auto.spread = 50
   presets.weapon.gang_member.akimbo_auto.FALLOFF[1].acc = {0.3, 0.7}
   presets.weapon.gang_member.akimbo_auto.FALLOFF[2].acc = {0.1, 0.2}
   presets.weapon.gang_member.akimbo_auto.FALLOFF[3].acc = {0, 0.1}

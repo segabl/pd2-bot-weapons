@@ -28,9 +28,9 @@ function WeaponTweakData:_init_data_m14_npc()
   self.m14_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556"
   self.m14_npc.CLIP_AMMO_MAX = 10
   self.m14_npc.NR_CLIPS_MAX = 8
-  self.m14_npc.auto.fire_rate = 0.5
+  self.m14_npc.auto.fire_rate = 0.3
   self.m14_npc.hold = "rifle"
-  self.m14_npc.alert_size = 8000
+  self.m14_npc.alert_size = 5000
   self.m14_npc.suppression = 2
   self.m14_npc.usage = "m14"
 end
@@ -83,4 +83,30 @@ end
 function WeaponTweakData:_init_data_x_akmsu_npc()
   self.x_akmsu_npc = deep_clone(self.x_mp5_npc)
   self.x_akmsu_npc.sounds.prefix = "akmsu_x_npc"
+end
+
+function WeaponTweakData:_init_data_ksg_npc()
+  self.ksg_npc = deep_clone(self.r870_npc)
+  self.ksg_npc.sounds.prefix = "keltec_npc"
+  self.ksg_npc.has_suppressor = "suppressed_a"
+end
+
+function WeaponTweakData:_init_data_l85a2_npc()
+  self.l85a2_npc = deep_clone(self.m4_npc)
+  self.l85a2_npc.sounds.prefix = "l85_npc"
+end
+
+function WeaponTweakData:_init_data_sterling_npc()
+  self.sterling_npc = deep_clone(self.mp5_npc)
+  self.sterling_npc.sounds.prefix = "sterling_npc"
+  self.sterling_npc.CLIP_AMMO_MAX = 40
+  self.sterling_npc.auto.fire_rate = 0.4
+  self.sterling_npc.hold = "pistol"
+end
+
+function WeaponTweakData:_init_data_s552_npc()
+  self.s552_npc = deep_clone(self.m4_npc)
+  self.s552_npc.sounds.prefix = "sig552_npc"
+  self.s552_secondary_npc = deep_clone(self.s552_npc)
+  self.s552_secondary_npc.use_data.selection_index = 1
 end

@@ -1,4 +1,4 @@
-<mod name="Bot Weapons" global_key="bot_weapons">
+<mod name="BotWeapons" global_key="bot_weapons">
     <!--directory points to the directory containing the classes relative to this mods folder-->
     <AddFiles directory="assets">
       <!--Famas-->  
@@ -64,5 +64,48 @@
       
       <!--Akimbo Akmsu-->
       <unit path="units/payday2/weapons/wpn_npc_x_akmsu/wpn_npc_x_akmsu" load="true" />
+      
+      <!--KSG-->  
+      <object path="units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg" />
+      <cooked_physics path="units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg" />
+      <material_config path="units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg" />
+      <material_config path="units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg_contour" />
+      <model path="units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg" />
+      <sequence_manager path="units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg" load="true" />
+      <texture path="units/payday2/weapons/wpn_npc_ksg/ksg_df" />
+      <texture path="units/payday2/weapons/wpn_npc_ksg/ksg_nm" />
+      
+      <!--L85A2-->  
+      <object path="units/payday2/weapons/wpn_npc_l85a2/wpn_npc_l85a2" />
+      <cooked_physics path="units/payday2/weapons/wpn_npc_l85a2/wpn_npc_l85a2" />
+      <material_config path="units/payday2/weapons/wpn_npc_l85a2/wpn_npc_l85a2" />
+      <material_config path="units/payday2/weapons/wpn_npc_l85a2/wpn_npc_l85a2_contour" />
+      <model path="units/payday2/weapons/wpn_npc_l85a2/wpn_npc_l85a2" />
+      <sequence_manager path="units/payday2/weapons/wpn_npc_l85a2/wpn_npc_l85a2" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_l85a2/wpn_npc_l85a2" load="true" />
+      <texture path="units/payday2/weapons/wpn_npc_l85a2/l85a2_df" />
+      <texture path="units/payday2/weapons/wpn_npc_l85a2/l85a2_nm" />
+      
+      <!--Sterling-->  
+      <object path="units/payday2/weapons/wpn_npc_sterling/wpn_npc_sterling" />
+      <cooked_physics path="units/payday2/weapons/wpn_npc_sterling/wpn_npc_sterling" />
+      <material_config path="units/payday2/weapons/wpn_npc_sterling/wpn_npc_sterling" />
+      <material_config path="units/payday2/weapons/wpn_npc_sterling/wpn_npc_sterling_contour" />
+      <model path="units/payday2/weapons/wpn_npc_sterling/wpn_npc_sterling" />
+      <sequence_manager path="units/payday2/weapons/wpn_npc_sterling/wpn_npc_sterling" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_sterling/wpn_npc_sterling" load="true" />
+      <texture path="units/payday2/weapons/wpn_npc_sterling/sterling_df" />
+      <texture path="units/payday2/weapons/wpn_npc_sterling/sterling_nm" />
+      
+      <!--S552-->  
+      <object path="units/payday2/weapons/wpn_npc_s552/wpn_npc_s552" force="true" />
+      <material_config path="units/payday2/weapons/wpn_npc_s552/wpn_npc_s552" force="true" />
+      <material_config path="units/payday2/weapons/wpn_npc_s552/wpn_npc_s552_contour" force="true" />
+      <model path="units/payday2/weapons/wpn_npc_s552/wpn_npc_s552" force="true" />
+      <unit path="units/payday2/weapons/wpn_npc_s552/wpn_npc_s552" load="true" force="true" />
+      <texture path="units/payday2/weapons/wpn_npc_s552/s552_df" />
+      <texture path="units/payday2/weapons/wpn_npc_s552/s552_nm" />
+      
     </AddFiles>
 </mod>

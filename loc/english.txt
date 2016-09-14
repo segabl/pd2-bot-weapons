@@ -44,5 +44,9 @@
   "item_boot" : "Breaker 12G",
   "item_x_c45" : "Akimbo Chimano 88",
   "item_x_mp5" : "Akimbo Compact-5",
-  "item_x_akmsu" : "Akimbo Krinkov"
+  "item_x_akmsu" : "Akimbo Krinkov",
+  "item_ksg" : "Raven",
+  "item_l85a2" : "Queen's Wrath",
+  "item_sterling" : "Patchett L2A1",
+  "item_s552" : "Commando 553"
 }

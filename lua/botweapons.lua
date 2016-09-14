@@ -100,6 +100,10 @@ if _G.BotWeapons == nil then
     "item_x_c45",
     "item_x_mp5",
     "item_x_akmsu",
+    "item_ksg",
+    "item_l85a2",
+    "item_sterling",
+    "item_s552",
     -- random
     "item_random"
   }
@@ -135,13 +139,17 @@ if _G.BotWeapons == nil then
     Idstring("units/payday2/weapons/wpn_npc_boot/wpn_npc_boot"),
     Idstring("units/payday2/weapons/wpn_npc_x_c45/wpn_npc_x_c45"),
     Idstring("units/payday2/weapons/wpn_npc_x_mp5/wpn_npc_x_mp5"),
-    Idstring("units/payday2/weapons/wpn_npc_x_akmsu/wpn_npc_x_akmsu")
+    Idstring("units/payday2/weapons/wpn_npc_x_akmsu/wpn_npc_x_akmsu"),
+    Idstring("units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg"),
+    Idstring("units/payday2/weapons/wpn_npc_l85a2/wpn_npc_l85a2"),
+    Idstring("units/payday2/weapons/wpn_npc_sterling/wpn_npc_sterling"),
+    Idstring("units/payday2/weapons/wpn_npc_s552/wpn_npc_s552")
   }
   
   BotWeapons.pistols = { 1, 2, 3 }
-  BotWeapons.rifles = { 4, 5, 14, 16, 17, 22, 23 }
-  BotWeapons.smgs = { 8, 9, 10, 11, 15, 18, 19, 24 }
-  BotWeapons.shotguns = { 6, 7, 13, 21, 25, 26 }
+  BotWeapons.rifles = { 4, 5, 14, 16, 17, 22, 23, 31, 33 }
+  BotWeapons.smgs = { 8, 9, 10, 11, 15, 18, 19, 24, 32 }
+  BotWeapons.shotguns = { 6, 7, 13, 21, 25, 26, 30 }
   BotWeapons.lmgs = { 12, 20 }
   BotWeapons.akimbos = { 27, 28, 29 }
   
@@ -153,8 +161,6 @@ if _G.BotWeapons == nil then
       file:write(json.encode(self._data))
       file:close()
     end
-    -- cause reload of tweak_data on changed settings
-    botweapons = false
   end
 
   function BotWeapons:Load()

@@ -66,9 +66,9 @@ if botweapons == false and BotWeapons ~= nil and Utils:IsInGameState() then
     tweak_data.character.presets.weapon.gang_member.judge.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 1.8
     tweak_data.character.presets.weapon.gang_member.judge.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 0.9
     
-    tweak_data.character.presets.weapon.gang_member.akimbo_pistol.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
-    tweak_data.character.presets.weapon.gang_member.akimbo_pistol.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
-    tweak_data.character.presets.weapon.gang_member.akimbo_pistol.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
+    tweak_data.character.presets.weapon.gang_member.akimbo_pistol.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 5
+    tweak_data.character.presets.weapon.gang_member.akimbo_pistol.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 5
+    tweak_data.character.presets.weapon.gang_member.akimbo_pistol.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 5
     
     tweak_data.character.presets.weapon.gang_member.akimbo_auto.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
     tweak_data.character.presets.weapon.gang_member.akimbo_auto.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4

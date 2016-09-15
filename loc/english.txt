@@ -50,5 +50,6 @@
   "item_sterling" : "Patchett L2A1",
   "item_s552" : "Commando 553",
   "item_deagle" : "Deagle",
-  "item_x_sr2" : "Akimbo Heather"
+  "item_x_sr2" : "Akimbo Heather",
+  "item_hk21" : "Brenner-21"
 }

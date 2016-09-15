@@ -32,7 +32,7 @@ function TeamAIMovement:check_visual_equipment()
   end
   -- set equipment models
   local equipment = BotWeapons._data[name .. "_equipment"] or 1
-  if equipment > 7 or BotWeapons._data["toggle_override_equipment"] then
+  if equipment > 8 or BotWeapons._data["toggle_override_equipment"] then
     equipment = math.random(#BotWeapons.equipment)
   end
   for k, v in pairs(BotWeapons.equipment[equipment]) do

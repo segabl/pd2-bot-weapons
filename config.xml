@@ -121,5 +121,16 @@
       <!--Akimbo SR2-->
       <unit path="units/payday2/weapons/wpn_npc_x_sr2/wpn_npc_x_sr2" load="true" />
       
+      <!--HK21-->  
+      <object path="units/payday2/weapons/wpn_npc_hk21/wpn_npc_hk21" />
+      <cooked_physics path="units/payday2/weapons/wpn_npc_hk21/wpn_npc_hk21" />
+      <material_config path="units/payday2/weapons/wpn_npc_hk21/wpn_npc_hk21" />
+      <material_config path="units/payday2/weapons/wpn_npc_hk21/wpn_npc_hk21_contour" />
+      <model path="units/payday2/weapons/wpn_npc_hk21/wpn_npc_hk21" />
+      <sequence_manager path="units/payday2/weapons/wpn_npc_hk21/wpn_npc_hk21" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_hk21/wpn_npc_hk21" load="true" />
+      <texture path="units/payday2/weapons/wpn_npc_hk21/hk21_df" />
+      <texture path="units/payday2/weapons/wpn_npc_hk21/hk21_nm" />
+      
     </AddFiles>
 </mod>

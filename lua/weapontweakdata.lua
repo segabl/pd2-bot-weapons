@@ -129,3 +129,19 @@ function WeaponTweakData:_init_data_deagle_npc()
   self.deagle_primary_npc = deep_clone(self.deagle_npc)
   self.deagle_primary_npc.use_data.selection_index = 2
 end
+
+function WeaponTweakData:_init_data_hk21_npc()
+  self.hk21_npc.sounds.prefix = "hk23e_npc"
+  self.hk21_npc.use_data.selection_index = 2
+  self.hk21_npc.DAMAGE = 2
+  self.hk21_npc.muzzleflash = "effects/payday2/particles/weapons/big_762_auto"
+  self.hk21_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556_lmg"
+  self.hk21_npc.CLIP_AMMO_MAX = 200
+  self.hk21_npc.NR_CLIPS_MAX = 5
+  self.hk21_npc.auto.fire_rate = 0.15
+  self.hk21_npc.hold = "rifle"
+  self.hk21_npc.alert_size = 5000
+  self.hk21_npc.suppression = 1
+  self.hk21_secondary_npc = deep_clone(self.hk21_npc)
+  self.hk21_secondary_npc.use_data.selection_index = 1
+end

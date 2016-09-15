@@ -105,6 +105,7 @@ if _G.BotWeapons == nil then
     "item_sterling",
     "item_s552",
     "item_deagle",
+    "item_x_sr2",
     -- random
     "item_random"
   }
@@ -145,7 +146,8 @@ if _G.BotWeapons == nil then
     Idstring("units/payday2/weapons/wpn_npc_l85a2/wpn_npc_l85a2"),
     Idstring("units/payday2/weapons/wpn_npc_sterling/wpn_npc_sterling"),
     Idstring("units/payday2/weapons/wpn_npc_s552/wpn_npc_s552"),
-    Idstring("units/payday2/weapons/wpn_npc_deagle/wpn_npc_deagle")
+    Idstring("units/payday2/weapons/wpn_npc_deagle/wpn_npc_deagle"),
+    Idstring("units/payday2/weapons/wpn_npc_x_sr2/wpn_npc_x_sr2")
   }
   
   BotWeapons.pistols = { 1, 2, 3, 34 }
@@ -153,7 +155,7 @@ if _G.BotWeapons == nil then
   BotWeapons.smgs = { 8, 9, 10, 11, 15, 18, 19, 24, 32 }
   BotWeapons.shotguns = { 6, 7, 13, 21, 25, 26, 30 }
   BotWeapons.lmgs = { 12, 20 }
-  BotWeapons.akimbos = { 27, 28, 29 }
+  BotWeapons.akimbos = { 27, 28, 29, 35 }
   
   BotWeapons.mp_disabled_index = 20
   

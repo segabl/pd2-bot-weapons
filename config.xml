@@ -118,5 +118,8 @@
       <texture path="units/payday2/weapons/wpn_npc_deagle/deagle_df" />
       <texture path="units/payday2/weapons/wpn_npc_deagle/deagle_nm" />
       
+      <!--Akimbo SR2-->
+      <unit path="units/payday2/weapons/wpn_npc_x_sr2/wpn_npc_x_sr2" load="true" />
+      
     </AddFiles>
 </mod>

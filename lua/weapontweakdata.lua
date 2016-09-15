@@ -15,7 +15,7 @@ function WeaponTweakData:_init_data_boot_npc()
 end
 
 function WeaponTweakData:_init_data_famas_npc()
-  self.famas_npc = deep_clone(self.ak47_npc)
+  self.famas_npc = deep_clone(self.m4_npc)
   self.famas_npc.sounds.prefix = "famas_npc"
   self.famas_npc.auto.fire_rate = 0.15
 end
@@ -33,6 +33,13 @@ function WeaponTweakData:_init_data_m14_npc()
   self.m14_npc.alert_size = 5000
   self.m14_npc.suppression = 2
   self.m14_npc.usage = "m14"
+end
+
+function WeaponTweakData:_init_data_p90_npc()
+  self.p90_npc = deep_clone(self.mp5_npc)
+  self.p90_npc.sounds.prefix = "p90_npc"
+  self.p90_npc.auto.fire_rate = 0.11
+  self.p90_npc.hold = "pistol"
 end
 
 function WeaponTweakData:_init_data_judge_npc()
@@ -64,24 +71,29 @@ function WeaponTweakData:_init_data_x_c45_npc()
   self.x_c45_npc.suppression = 1
 end
 
+function WeaponTweakData:_init_data_x_sr2_npc()
+  self.x_sr2_npc.sounds.prefix = "sr2_x_npc"
+  self.x_sr2_npc.use_data.selection_index = 2
+  self.x_sr2_npc.DAMAGE = 1
+  self.x_sr2_npc.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+  self.x_sr2_npc.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+  self.x_sr2_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+  self.x_sr2_npc.CLIP_AMMO_MAX = 60
+  self.x_sr2_npc.NR_CLIPS_MAX = 5
+  self.x_sr2_npc.auto.fire_rate = 0.12
+  self.x_sr2_npc.hold = "akimbo_pistol"
+  self.x_sr2_npc.alert_size = 1800
+  self.x_sr2_npc.suppression = 2
+  self.x_sr2_npc.usage = "akimbo_auto"
+end
+
 function WeaponTweakData:_init_data_x_mp5_npc()
+  self.x_mp5_npc = deep_clone(self.x_sr2_npc)
   self.x_mp5_npc.sounds.prefix = "mp5_x_npc"
-  self.x_mp5_npc.use_data.selection_index = 2
-  self.x_mp5_npc.DAMAGE = 1
-  self.x_mp5_npc.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
-  self.x_mp5_npc.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
-  self.x_mp5_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
-  self.x_mp5_npc.CLIP_AMMO_MAX = 60
-  self.x_mp5_npc.NR_CLIPS_MAX = 5
-  self.x_mp5_npc.auto = { fire_rate = 0.12 }
-  self.x_mp5_npc.hold = "akimbo_pistol"
-  self.x_mp5_npc.alert_size = 1800
-  self.x_mp5_npc.suppression = 2
-  self.x_mp5_npc.usage = "akimbo_auto"
 end
 
 function WeaponTweakData:_init_data_x_akmsu_npc()
-  self.x_akmsu_npc = deep_clone(self.x_mp5_npc)
+  self.x_akmsu_npc = deep_clone(self.x_sr2_npc)
   self.x_akmsu_npc.sounds.prefix = "akmsu_x_npc"
 end
 

@@ -59,7 +59,7 @@ function CharacterTweakData:_presets(tweak_data)
   
   presets.weapon.gang_member.akimbo_auto = deep_clone(presets.weapon.gang_member.m4)
   presets.weapon.gang_member.akimbo_auto.RELOAD_SPEED = 0.3
-  presets.weapon.gang_member.akimbo_auto.spread = 50
+  presets.weapon.gang_member.akimbo_auto.spread = 40
   presets.weapon.gang_member.akimbo_auto.FALLOFF[1].acc = {0.3, 0.7}
   presets.weapon.gang_member.akimbo_auto.FALLOFF[2].acc = {0.1, 0.2}
   presets.weapon.gang_member.akimbo_auto.FALLOFF[3].acc = {0, 0.1}

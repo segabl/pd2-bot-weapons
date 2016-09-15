@@ -2,77 +2,69 @@ if botweapons == false and BotWeapons ~= nil and Utils:IsInGameState() then
 
   if BotWeapons._data["toggle_adjust_damage"] then
 
-    local mult_dif = {
-      normal = 0.4,
-      hard = 0.6,
-      overkill = 0.8,
-      overkill_145 = 1,
-      overkill_290 = 1
-    }
+    tweak_data.character.presets.weapon.gang_member.c45.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 5
+    tweak_data.character.presets.weapon.gang_member.c45.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 5
+    tweak_data.character.presets.weapon.gang_member.c45.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 5
     
-    tweak_data.character.presets.weapon.gang_member.c45.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 5
-    tweak_data.character.presets.weapon.gang_member.c45.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 5
-    tweak_data.character.presets.weapon.gang_member.c45.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 5
+    tweak_data.character.presets.weapon.gang_member.beretta92.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 5
+    tweak_data.character.presets.weapon.gang_member.beretta92.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 5
+    tweak_data.character.presets.weapon.gang_member.beretta92.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 5
     
-    tweak_data.character.presets.weapon.gang_member.beretta92.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 5
-    tweak_data.character.presets.weapon.gang_member.beretta92.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 5
-    tweak_data.character.presets.weapon.gang_member.beretta92.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 5
+    tweak_data.character.presets.weapon.gang_member.raging_bull.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 4
+    tweak_data.character.presets.weapon.gang_member.raging_bull.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 4
+    tweak_data.character.presets.weapon.gang_member.raging_bull.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 4
     
-    tweak_data.character.presets.weapon.gang_member.raging_bull.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
-    tweak_data.character.presets.weapon.gang_member.raging_bull.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
-    tweak_data.character.presets.weapon.gang_member.raging_bull.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
+    tweak_data.character.presets.weapon.gang_member.m4.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 4
+    tweak_data.character.presets.weapon.gang_member.m4.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 4
+    tweak_data.character.presets.weapon.gang_member.m4.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 4
     
-    tweak_data.character.presets.weapon.gang_member.m4.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
-    tweak_data.character.presets.weapon.gang_member.m4.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
-    tweak_data.character.presets.weapon.gang_member.m4.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
+    tweak_data.character.presets.weapon.gang_member.mp5.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 4
+    tweak_data.character.presets.weapon.gang_member.mp5.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 4
+    tweak_data.character.presets.weapon.gang_member.mp5.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 4
     
-    tweak_data.character.presets.weapon.gang_member.mp5.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
-    tweak_data.character.presets.weapon.gang_member.mp5.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
-    tweak_data.character.presets.weapon.gang_member.mp5.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
+    tweak_data.character.presets.weapon.gang_member.ak47.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 1.35
+    tweak_data.character.presets.weapon.gang_member.ak47.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 1.35
+    tweak_data.character.presets.weapon.gang_member.ak47.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 1.35
     
-    tweak_data.character.presets.weapon.gang_member.ak47.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 1.35
-    tweak_data.character.presets.weapon.gang_member.ak47.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 1.35
-    tweak_data.character.presets.weapon.gang_member.ak47.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 1.35
+    tweak_data.character.presets.weapon.gang_member.g36.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 1.35
+    tweak_data.character.presets.weapon.gang_member.g36.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 1.35
+    tweak_data.character.presets.weapon.gang_member.g36.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 1.35
     
-    tweak_data.character.presets.weapon.gang_member.g36.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 1.35
-    tweak_data.character.presets.weapon.gang_member.g36.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 1.35
-    tweak_data.character.presets.weapon.gang_member.g36.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 1.35
+    tweak_data.character.presets.weapon.gang_member.scar.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 2
+    tweak_data.character.presets.weapon.gang_member.scar.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 2
+    tweak_data.character.presets.weapon.gang_member.scar.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 2
     
-    tweak_data.character.presets.weapon.gang_member.scar.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 2
-    tweak_data.character.presets.weapon.gang_member.scar.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 2
-    tweak_data.character.presets.weapon.gang_member.scar.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 2
+    tweak_data.character.presets.weapon.gang_member.m14.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 4
+    tweak_data.character.presets.weapon.gang_member.m14.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 4
+    tweak_data.character.presets.weapon.gang_member.m14.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 4
     
-    tweak_data.character.presets.weapon.gang_member.m14.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
-    tweak_data.character.presets.weapon.gang_member.m14.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
-    tweak_data.character.presets.weapon.gang_member.m14.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
+    tweak_data.character.presets.weapon.gang_member.m249.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 2
+    tweak_data.character.presets.weapon.gang_member.m249.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 2
+    tweak_data.character.presets.weapon.gang_member.m249.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 2
     
-    tweak_data.character.presets.weapon.gang_member.m249.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 2
-    tweak_data.character.presets.weapon.gang_member.m249.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 2
-    tweak_data.character.presets.weapon.gang_member.m249.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 2
+    tweak_data.character.presets.weapon.gang_member.r870.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 2
+    tweak_data.character.presets.weapon.gang_member.r870.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 1.5
+    tweak_data.character.presets.weapon.gang_member.r870.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 0.7
     
-    tweak_data.character.presets.weapon.gang_member.r870.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 2
-    tweak_data.character.presets.weapon.gang_member.r870.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 1.5
-    tweak_data.character.presets.weapon.gang_member.r870.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 0.7
+    tweak_data.character.presets.weapon.gang_member.mossberg.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 3.2
+    tweak_data.character.presets.weapon.gang_member.mossberg.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 2
+    tweak_data.character.presets.weapon.gang_member.mossberg.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 1
     
-    tweak_data.character.presets.weapon.gang_member.mossberg.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 3.2
-    tweak_data.character.presets.weapon.gang_member.mossberg.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 2
-    tweak_data.character.presets.weapon.gang_member.mossberg.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 1
+    tweak_data.character.presets.weapon.gang_member.saiga.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 1.5
+    tweak_data.character.presets.weapon.gang_member.saiga.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 1
+    tweak_data.character.presets.weapon.gang_member.saiga.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 0.5
     
-    tweak_data.character.presets.weapon.gang_member.saiga.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 1.5
-    tweak_data.character.presets.weapon.gang_member.saiga.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 1
-    tweak_data.character.presets.weapon.gang_member.saiga.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 0.5
+    tweak_data.character.presets.weapon.gang_member.judge.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 3.5
+    tweak_data.character.presets.weapon.gang_member.judge.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 1.8
+    tweak_data.character.presets.weapon.gang_member.judge.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 0.9
     
-    tweak_data.character.presets.weapon.gang_member.judge.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 3.5
-    tweak_data.character.presets.weapon.gang_member.judge.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 1.8
-    tweak_data.character.presets.weapon.gang_member.judge.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 0.9
+    tweak_data.character.presets.weapon.gang_member.akimbo_pistol.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 5
+    tweak_data.character.presets.weapon.gang_member.akimbo_pistol.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 5
+    tweak_data.character.presets.weapon.gang_member.akimbo_pistol.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 5
     
-    tweak_data.character.presets.weapon.gang_member.akimbo_pistol.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 5
-    tweak_data.character.presets.weapon.gang_member.akimbo_pistol.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 5
-    tweak_data.character.presets.weapon.gang_member.akimbo_pistol.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 5
-    
-    tweak_data.character.presets.weapon.gang_member.akimbo_auto.FALLOFF[1].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
-    tweak_data.character.presets.weapon.gang_member.akimbo_auto.FALLOFF[2].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
-    tweak_data.character.presets.weapon.gang_member.akimbo_auto.FALLOFF[3].dmg_mul = mult_dif[Global.game_settings.difficulty] * 4
+    tweak_data.character.presets.weapon.gang_member.akimbo_auto.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 4
+    tweak_data.character.presets.weapon.gang_member.akimbo_auto.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 4
+    tweak_data.character.presets.weapon.gang_member.akimbo_auto.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 4
 
   end
 

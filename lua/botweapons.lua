@@ -161,6 +161,15 @@ if _G.BotWeapons == nil then
   
   BotWeapons.mp_disabled_index = 20
   
+  -- difficulty multiplier
+  BotWeapons.multiplier = {
+    normal = 0.4,
+    hard = 0.6,
+    overkill = 0.8,
+    overkill_145 = 1,
+    overkill_290 = 1
+  }
+  
   function BotWeapons:Save()
     local file = io.open(self._data_path, "w+")
     if file then
@@ -176,7 +185,7 @@ if _G.BotWeapons == nil then
       file:close()
     end
   end
+  
+  -- Load settings
+  BotWeapons:Load()
 end
-
--- Load settings
-BotWeapons:Load()

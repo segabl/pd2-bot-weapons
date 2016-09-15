@@ -107,5 +107,16 @@
       <texture path="units/payday2/weapons/wpn_npc_s552/s552_df" />
       <texture path="units/payday2/weapons/wpn_npc_s552/s552_nm" />
       
+      <!--Deagle-->  
+      <object path="units/payday2/weapons/wpn_npc_deagle/wpn_npc_deagle" />
+      <cooked_physics path="units/payday2/weapons/wpn_npc_deagle/wpn_npc_deagle" />
+      <material_config path="units/payday2/weapons/wpn_npc_deagle/wpn_npc_deagle" />
+      <material_config path="units/payday2/weapons/wpn_npc_deagle/wpn_npc_deagle_contour" />
+      <model path="units/payday2/weapons/wpn_npc_deagle/wpn_npc_deagle" />
+      <sequence_manager path="units/payday2/weapons/wpn_npc_deagle/wpn_npc_deagle" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_deagle/wpn_npc_deagle" load="true" />
+      <texture path="units/payday2/weapons/wpn_npc_deagle/deagle_df" />
+      <texture path="units/payday2/weapons/wpn_npc_deagle/deagle_nm" />
+      
     </AddFiles>
 </mod>

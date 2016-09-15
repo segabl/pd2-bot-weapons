@@ -110,3 +110,10 @@ function WeaponTweakData:_init_data_s552_npc()
   self.s552_secondary_npc = deep_clone(self.s552_npc)
   self.s552_secondary_npc.use_data.selection_index = 1
 end
+
+function WeaponTweakData:_init_data_deagle_npc()
+  self.deagle_npc = deep_clone(self.raging_bull_npc)
+  self.deagle_npc.sounds.prefix = "deagle_npc"
+  self.deagle_primary_npc = deep_clone(self.deagle_npc)
+  self.deagle_primary_npc.use_data.selection_index = 2
+end

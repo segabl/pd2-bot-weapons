@@ -104,6 +104,7 @@ if _G.BotWeapons == nil then
     "item_l85a2",
     "item_sterling",
     "item_s552",
+    "item_deagle",
     -- random
     "item_random"
   }
@@ -143,10 +144,11 @@ if _G.BotWeapons == nil then
     Idstring("units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg"),
     Idstring("units/payday2/weapons/wpn_npc_l85a2/wpn_npc_l85a2"),
     Idstring("units/payday2/weapons/wpn_npc_sterling/wpn_npc_sterling"),
-    Idstring("units/payday2/weapons/wpn_npc_s552/wpn_npc_s552")
+    Idstring("units/payday2/weapons/wpn_npc_s552/wpn_npc_s552"),
+    Idstring("units/payday2/weapons/wpn_npc_deagle/wpn_npc_deagle")
   }
   
-  BotWeapons.pistols = { 1, 2, 3 }
+  BotWeapons.pistols = { 1, 2, 3, 34 }
   BotWeapons.rifles = { 4, 5, 14, 16, 17, 22, 23, 31, 33 }
   BotWeapons.smgs = { 8, 9, 10, 11, 15, 18, 19, 24, 32 }
   BotWeapons.shotguns = { 6, 7, 13, 21, 25, 26, 30 }

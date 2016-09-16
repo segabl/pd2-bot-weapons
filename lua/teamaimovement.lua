@@ -1,5 +1,3 @@
-dofile(ModPath .. "lua/botweapons.lua")
-
 function TeamAIMovement:play_redirect(redirect_name, at_time)
   -- Fix buggy auto animations when shooting with guns that use pistol animations
   local new_redirect = redirect_name

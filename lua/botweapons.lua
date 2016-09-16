@@ -107,6 +107,7 @@ if _G.BotWeapons == nil then
     "item_deagle",
     "item_x_sr2",
     "item_hk21",
+    "item_tecci",
     -- random
     "item_random"
   }
@@ -149,11 +150,13 @@ if _G.BotWeapons == nil then
     Idstring("units/payday2/weapons/wpn_npc_s552/wpn_npc_s552"),
     Idstring("units/payday2/weapons/wpn_npc_deagle/wpn_npc_deagle"),
     Idstring("units/payday2/weapons/wpn_npc_x_sr2/wpn_npc_x_sr2"),
-    Idstring("units/payday2/weapons/wpn_npc_hk21/wpn_npc_hk21")
+    Idstring("units/payday2/weapons/wpn_npc_hk21/wpn_npc_hk21"),
+    Idstring("units/payday2/weapons/wpn_npc_tecci/wpn_npc_tecci")
   }
   
+  -- maybe do something with this in the future :P
   BotWeapons.pistols = { 1, 2, 3, 34 }
-  BotWeapons.rifles = { 4, 5, 14, 16, 17, 22, 23, 31, 33 }
+  BotWeapons.rifles = { 4, 5, 14, 16, 17, 22, 23, 31, 33, 37 }
   BotWeapons.smgs = { 8, 9, 10, 11, 15, 18, 19, 24, 32 }
   BotWeapons.shotguns = { 6, 7, 13, 21, 25, 26, 30 }
   BotWeapons.lmgs = { 12, 20, 36 }

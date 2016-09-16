@@ -142,6 +142,15 @@ function WeaponTweakData:_init_data_hk21_npc()
   self.hk21_npc.hold = "rifle"
   self.hk21_npc.alert_size = 5000
   self.hk21_npc.suppression = 1
+  self.hk21_npc.usage = "m249"
   self.hk21_secondary_npc = deep_clone(self.hk21_npc)
   self.hk21_secondary_npc.use_data.selection_index = 1
+end
+
+function WeaponTweakData:_init_data_tecci_npc()
+  self.tecci_npc = deep_clone(self.m249_npc)
+  self.tecci_npc.sounds.prefix = "tecci_npc"
+  self.tecci_npc.muzzleflash = "effects/payday2/particles/weapons/556_auto"
+  self.tecci_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556"
+  self.tecci_npc.auto.fire_rate = 0.15
 end

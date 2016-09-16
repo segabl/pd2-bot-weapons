@@ -18,6 +18,7 @@ function CharacterTweakData:_presets(tweak_data)
   
   -- gang_member presets
   -- pistols
+  presets.weapon.gang_member.beretta92.spread = 10
   presets.weapon.gang_member.c45 = deep_clone(presets.weapon.gang_member.beretta92)
   
   presets.weapon.gang_member.raging_bull = deep_clone(presets.weapon.gang_member.beretta92)
@@ -54,7 +55,7 @@ function CharacterTweakData:_presets(tweak_data)
   presets.weapon.gang_member.saiga.RELOAD_SPEED = 0.5
   presets.weapon.gang_member.saiga.autofire_rounds = { 3, 7 }
   -- akimbo
-  presets.weapon.gang_member.akimbo_pistol = deep_clone(presets.weapon.gang_member.c45)
+  presets.weapon.gang_member.akimbo_pistol = deep_clone(presets.weapon.gang_member.beretta92)
   presets.weapon.gang_member.akimbo_pistol.RELOAD_SPEED = 0.5
   
   presets.weapon.gang_member.akimbo_auto = deep_clone(presets.weapon.gang_member.m4)

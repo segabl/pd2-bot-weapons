@@ -1,14 +1,14 @@
 if botweapons == false and BotWeapons ~= nil and Utils:IsInGameState() then
 
   if BotWeapons._data["toggle_adjust_damage"] then
-
-    tweak_data.character.presets.weapon.gang_member.c45.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 5
-    tweak_data.character.presets.weapon.gang_member.c45.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 5
-    tweak_data.character.presets.weapon.gang_member.c45.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 5
     
     tweak_data.character.presets.weapon.gang_member.beretta92.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 5
     tweak_data.character.presets.weapon.gang_member.beretta92.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 5
     tweak_data.character.presets.weapon.gang_member.beretta92.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 5
+    
+    tweak_data.character.presets.weapon.gang_member.c45.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 6
+    tweak_data.character.presets.weapon.gang_member.c45.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 6
+    tweak_data.character.presets.weapon.gang_member.c45.FALLOFF[3].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 6
     
     tweak_data.character.presets.weapon.gang_member.raging_bull.FALLOFF[1].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 4
     tweak_data.character.presets.weapon.gang_member.raging_bull.FALLOFF[2].dmg_mul = BotWeapons.multiplier[Global.game_settings.difficulty] * 4

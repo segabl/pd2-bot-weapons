@@ -17,7 +17,7 @@
   "item_none" : "None",
   "item_random" : "Random",
   "item_beretta92" : "Bernetti 9",
-  "item_c45" : "Chimano 88",
+  "item_c45" : "Chimano",
   "item_raging_bull" : "Bronco .44",
   "item_m4" : "CAR-4",
   "item_ak47" : "AK",

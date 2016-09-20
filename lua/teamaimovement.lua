@@ -8,9 +8,7 @@ function TeamAIMovement:play_redirect(redirect_name, at_time)
       new_redirect = "recoil_single"
     end
   end
-
-  local result = self._unit:play_redirect(Idstring(new_redirect), at_time)
-  return result ~= Idstring("") and result
+  return TeamAIMovement.super.play_redirect(self, new_redirect, at_time)
 end
 
 function TeamAIMovement:check_visual_equipment()

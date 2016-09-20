@@ -1,4 +1,4 @@
-if botweapons == false and BotWeapons ~= nil and Utils:IsInGameState() then
+if botweapons == false and BotWeapons ~= nil and Utils:IsInGameState() and not Network:is_client() then
 
   if BotWeapons._data["toggle_adjust_damage"] then
     

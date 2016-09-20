@@ -1,7 +1,7 @@
-local _presetsORIG = CharacterTweakData._presets
+local _presets_original = CharacterTweakData._presets
 function CharacterTweakData:_presets(tweak_data)
   log("[BotWeapons] Setting up additional npc weapon presets")
-  local presets = _presetsORIG(self, tweak_data)
+  local presets = _presets_original(self, tweak_data)
   
   -- loop through all weapon presets and create new presets from old ones for all the weapons
   -- that are used by AI other than team AI
@@ -73,23 +73,23 @@ function CharacterTweakData:_presets(tweak_data)
   return presets
 end
 
-local _init_tankORIG = CharacterTweakData._init_tank
+local _init_tank_original = CharacterTweakData._init_tank
 function CharacterTweakData:_init_tank(presets)
-  _init_tankORIG(self, presets)
+  _init_tank_original(self, presets)
   -- transfer ak47 weapon settings to new m249 preset
   self.tank.weapon.m249 = deep_clone(self.tank.weapon.ak47)
 end
 
-local _init_mobster_bossORIG = CharacterTweakData._init_mobster_boss
+local _init_mobster_boss_original = CharacterTweakData._init_mobster_boss
 function CharacterTweakData:_init_mobster_boss(presets)
-  _init_mobster_bossORIG(self, presets)
+  _init_mobster_boss_original(self, presets)
   -- transfer ak47 weapon settings to new m249 preset
   self.mobster_boss.weapon.m249 = deep_clone(self.mobster_boss.weapon.ak47)
 end
 
-local _init_biker_bossORIG = CharacterTweakData._init_biker_boss
+local _init_biker_boss_original = CharacterTweakData._init_biker_boss
 function CharacterTweakData:_init_biker_boss(presets)
-  _init_biker_bossORIG(self, presets)
+  _init_biker_boss_original(self, presets)
   -- transfer ak47 weapon settings to new m249 preset
   self.biker_boss.weapon.m249 = deep_clone(self.biker_boss.weapon.ak47)
 end

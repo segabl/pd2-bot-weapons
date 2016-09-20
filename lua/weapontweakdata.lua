@@ -1,8 +1,16 @@
-local _create_table_structureORIG = WeaponTweakData._create_table_structure
-
+local _create_table_structure_original = WeaponTweakData._create_table_structure
 function WeaponTweakData:_create_table_structure()
   log("[BotWeapons] Setting up additional npc weapon usages")
-  _create_table_structureORIG(self)
+  _create_table_structure_original(self)
+  
+  -- copy animations from usage
+  for _, v in pairs(self) do
+    if type(v) == "table" then
+      if v.usage then
+        v.anim = v.usage
+      end
+    end
+  end
   
   self.g36_npc.usage = "g36"
   self.m249_npc.usage = "m249"
@@ -64,7 +72,7 @@ function WeaponTweakData:_init_data_x_c45_npc()
   self.x_c45_npc.DAMAGE = 1
   self.x_c45_npc.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
   self.x_c45_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
-  self.x_c45_npc.CLIP_AMMO_MAX = 26
+  self.x_c45_npc.CLIP_AMMO_MAX = 30
   self.x_c45_npc.NR_CLIPS_MAX = 5
   self.x_c45_npc.hold = "akimbo_pistol"
   self.x_c45_npc.alert_size = 2500

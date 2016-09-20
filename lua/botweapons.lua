@@ -188,7 +188,7 @@ if _G.BotWeapons == nil then
       file:close()
     end
   end
-  
+   
   -- Load settings
   BotWeapons:Load()
 end

@@ -30,11 +30,15 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
   MenuCallbackHandler.BotWeapons_select = function(self, item)
     BotWeapons._data[item:name()] = item:value()
     BotWeapons:Save()
+    -- cause reload
+    botweapons = false
   end
   
   MenuCallbackHandler.BotWeapons_toggle = function(self, item)
     BotWeapons._data[item:name()] = (item:value() == "on");
     BotWeapons:Save()
+    -- cause reload
+    botweapons = false
   end
 
   -- ARMOR MENU

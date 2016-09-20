@@ -143,5 +143,16 @@
       <texture path="units/payday2/weapons/wpn_npc_tecci/tecci_df" />
       <texture path="units/payday2/weapons/wpn_npc_tecci/tecci_nm" />
       
+      <!--G18c-->  
+      <object path="units/payday2/weapons/wpn_npc_g18c/wpn_npc_g18c" />
+      <cooked_physics path="units/payday2/weapons/wpn_npc_g18c/wpn_npc_g18c" />
+      <material_config path="units/payday2/weapons/wpn_npc_g18c/wpn_npc_g18c" />
+      <material_config path="units/payday2/weapons/wpn_npc_g18c/wpn_npc_g18c_contour" />
+      <model path="units/payday2/weapons/wpn_npc_g18c/wpn_npc_g18c" />
+      <sequence_manager path="units/payday2/weapons/wpn_npc_g18c/wpn_npc_g18c" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_g18c/wpn_npc_g18c" load="true" />
+      <texture path="units/payday2/weapons/wpn_npc_g18c/g18c_df" />
+      <texture path="units/payday2/weapons/wpn_npc_g18c/g18c_nm" />
+      
     </AddFiles>
 </mod>

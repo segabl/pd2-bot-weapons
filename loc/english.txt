@@ -52,5 +52,6 @@
   "item_deagle" : "Deagle",
   "item_x_sr2" : "Akimbo Heather",
   "item_hk21" : "Brenner-21",
-  "item_tecci" : "Bootleg"
+  "item_tecci" : "Bootleg",
+  "item_g18c" : "STRYK 18c"
 }

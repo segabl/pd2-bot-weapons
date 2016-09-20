@@ -162,3 +162,13 @@ function WeaponTweakData:_init_data_tecci_npc()
   self.tecci_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556"
   self.tecci_npc.auto.fire_rate = 0.15
 end
+
+function WeaponTweakData:_init_data_glock_18_npc()
+  self.glock_18_npc = deep_clone(self.mp5_npc)
+  self.glock_18_npc.sounds.prefix = "g18c_npc"
+  self.glock_18_npc.use_data.selection_index = 1
+  self.glock_18_npc.hold = "pistol"
+  self.glock_18_npc.anim = "c45"
+  self.glock_18c_primary_npc = deep_clone(self.glock_18_npc)
+  self.glock_18c_primary_npc.use_data.selection_index = 2
+end

@@ -9,6 +9,8 @@ if _G.BotWeapons == nil then
     ModCore:init(BotWeapons._path .. "config.xml", true, true)
   end
   
+  BotWeapons.custom_weapons_enabled = false
+  
   BotWeapons.armor_ids = {
     "bm_armor_level_1",
     "bm_armor_level_2",
@@ -168,10 +170,10 @@ if _G.BotWeapons == nil then
   
   -- difficulty multiplier
   BotWeapons.multiplier = {
-    normal = 0.4,
+    normal = 0.5,
     hard = 0.6,
-    overkill = 0.8,
-    overkill_145 = 1,
+    overkill = 0.7,
+    overkill_145 = 0.8,
     overkill_290 = 1
   }
   
@@ -190,7 +192,62 @@ if _G.BotWeapons == nil then
       file:close()
     end
   end
-   
+  
+  function BotWeapons:set_damage_multiplicator(weapon, mul, falloff)
+    if not BotWeapons._data.toggle_adjust_damage or not Global.game_settings then
+      return
+    end
+    for i, v in ipairs(weapon.FALLOFF) do
+      local f = (#weapon.FALLOFF + 1 - i) / #weapon.FALLOFF
+      v.dmg_mul = self.multiplier[Global.game_settings.difficulty] * mul * (falloff and f or 1)
+    end
+  end
+  
+  function BotWeapons:set_equipment(unit, armor, equipment)
+    if not unit then
+      return
+    end
+    -- armor
+    for k, v in pairs(self.armor[armor or 0]) do
+      local mesh_name = Idstring(k)
+      local mesh_obj = unit:get_object(mesh_name)
+      if mesh_obj then
+        mesh_obj:set_visibility(v)
+      end
+    end
+    -- equipment
+    for k, v in pairs(self.equipment[equipment or 0]) do
+      local mesh_name = Idstring(k)
+      local mesh_obj = unit:get_object(mesh_name)
+      if mesh_obj then
+        mesh_obj:set_visibility(v)
+      end
+    end
+  end
+  
+  function BotWeapons:custom_weapons_allowed()
+    if Global.game_settings.single_player then
+      self.custom_weapons_enabled = true
+      return self.custom_weapons_enabled
+    end
+    if not Global.game_settings.team_ai then
+      self.custom_weapons_enabled = true
+      return self.custom_weapons_enabled
+    end
+    if Global.game_settings.permission ~= "private" then
+      self.custom_weapons_enabled = false
+      return self.custom_weapons_enabled
+    end
+    for _, peer in pairs(LuaNetworking:GetPeers()) do
+      if not peer.has_bot_weapons then
+        self.custom_weapons_enabled = false
+        return self.custom_weapons_enabled
+      end
+    end
+    self.custom_weapons_enabled = false --true
+    return self.custom_weapons_enabled
+  end
+  
   -- Load settings
   BotWeapons:Load()
 end

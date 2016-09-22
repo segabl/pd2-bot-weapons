@@ -25,5 +25,4 @@
     { "hook_id" : "lib/units/player_team/teamaimovement", "script_path" : "lua/teamaimovement.lua" },
     { "hook_id" : "lib/units/enemies/cop/copmovement", "script_path" : "lua/copmovement.lua" }
   ]
-
 }

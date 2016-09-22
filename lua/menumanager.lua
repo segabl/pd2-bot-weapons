@@ -190,28 +190,12 @@ Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenus_BotWeapons
   MenuHelper:AddMenuItem(MenuHelper:GetMenu("lua_mod_options_menu"), menu_id_weapons, "BotWeapons_menu_weapons_name", "BotWeapons_menu_weapons_desc", menu_id_deployables)
 end)
 
-Hooks:Add("MenuCallbackHandlerPreChoseLobbyPermission", "MenuCallbackHandlerPreChoseLobbyPermissionBotWeapons", function(callback_handler, item)
+-- Lock lobby if custom weapons are enabled
+local choice_lobby_permission_original = MenuCallbackHandler.choice_lobby_permission
+function MenuCallbackHandler:choice_lobby_permission(item)
   if item:value() ~= "private" and BotWeapons.custom_weapons_enabled then
     item:set_value("private")
+    return
   end
-end)
-
-Hooks:Add("BaseNetworkSessionOnLoadComplete", "BaseNetworkSessionOnLoadCompleteBotWeapons", function()
-  if Network:is_client() then
-    log("[BotWeapons] Sending Bot Weapons info to host")
-    LuaNetworking:SendToPeer(1, "bot_weapons_active", "")
-  end
-end)
-
-Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function(sender, id, data)
-  if id == "bot_weapons_active" then
-    local peer = LuaNetworking:GetPeers()[sender]
-    if peer then
-      log("[BotWeapons] Received info from " .. peer:name())
-      peer.has_bot_weapons = true
-    end
-  elseif id == "bot_weapons_equipment" and managers.criminals then
-    local d = json.decode(data)
-    BotWeapons:set_equipment(managers.criminals:character_unit_by_name(d.name), d.armor, d.equipment)
-  end
-end)
+  choice_lobby_permission_original(self, item)
+end

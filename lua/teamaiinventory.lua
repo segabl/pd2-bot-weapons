@@ -1,4 +1,3 @@
--- Enable akimbo for team AI
 function TeamAIInventory:add_unit_by_name(new_unit_name, equip)
   local new_unit = World:spawn_unit(new_unit_name, Vector3(), Rotation())
   local setup_data = {}
@@ -13,6 +12,7 @@ function TeamAIInventory:add_unit_by_name(new_unit_name, equip)
   setup_data.alert_AI = true
   setup_data.alert_filter = self._unit:brain():SO_access()
   new_unit:base():setup(setup_data)
+  -- Enable akimbo for team AI
   if new_unit:base().AKIMBO then
     new_unit:base():create_second_gun(new_unit_name)
   end

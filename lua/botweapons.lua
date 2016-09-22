@@ -166,6 +166,7 @@ if _G.BotWeapons == nil then
   BotWeapons.lmgs = { 12, 20, 36 }
   BotWeapons.akimbos = { 27, 28, 29, 35 }
   
+  -- index of the last weapon that is allowed in mp
   BotWeapons.mp_disabled_index = 20
   
   -- difficulty multiplier
@@ -223,6 +224,10 @@ if _G.BotWeapons == nil then
         mesh_obj:set_visibility(v)
       end
     end
+    -- sync settings with clients
+    if not Global.game_settings.single_player and LuaNetworking:IsHost() then
+      LuaNetworking:SendToPeers("bot_weapons_equipment", json.encode({name = managers.criminals:character_name_by_unit(unit), armor = armor, equipment = equipment}))
+    end
   end
   
   function BotWeapons:custom_weapons_allowed()
@@ -244,9 +249,29 @@ if _G.BotWeapons == nil then
         return self.custom_weapons_enabled
       end
     end
-    self.custom_weapons_enabled = false --true
+    self.custom_weapons_enabled = false -- should be "true" once syncing of custom weapons is possible
     return self.custom_weapons_enabled
   end
+  
+  Hooks:Add("BaseNetworkSessionOnLoadComplete", "BaseNetworkSessionOnLoadCompleteBotWeapons", function()
+    if LuaNetworking:IsClient() then
+      log("[BotWeapons] Sending Bot Weapons info to host")
+      LuaNetworking:SendToPeer(1, "bot_weapons_active", "")
+    end
+  end)
+
+  Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function(sender, id, data)
+    if id == "bot_weapons_active" then
+      local peer = LuaNetworking:GetPeers()[sender]
+      if peer then
+        log("[BotWeapons] Received info from " .. peer:name())
+        peer.has_bot_weapons = true
+      end
+    elseif id == "bot_weapons_equipment" and managers.criminals then
+      local d = json.decode(data)
+      BotWeapons:set_equipment(managers.criminals:character_unit_by_name(d.name), d.armor, d.equipment)
+    end
+  end)
   
   -- Load settings
   BotWeapons:Load()

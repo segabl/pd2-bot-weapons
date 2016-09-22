@@ -1,7 +1,7 @@
-local clbk_inventory_original = CopMovement.clbk_inventory
+CloneClass(CopMovement)
+
 function CopMovement:clbk_inventory(...)
-  clbk_inventory_original(self, ...)
-  
+  self.orig.clbk_inventory(self, ...)
   -- get reload animation from new anim field instead of usage
   local weapon = self._ext_inventory:equipped_unit()
   if weapon then

@@ -27,7 +27,4 @@ function TeamAIMovement:check_visual_equipment()
     equipment = math.random(#BotWeapons.equipment)
   end
   BotWeapons:set_equipment(self._unit, armor, equipment)
-  if not Global.game_settings.single_player and LuaNetworking:IsHost() then
-    LuaNetworking:SendToPeers("bot_weapons_equipment", json.encode({name = name, armor = armor, equipment = equipment}))
-  end
 end

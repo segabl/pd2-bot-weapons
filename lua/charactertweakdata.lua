@@ -1,12 +1,13 @@
 dofile(ModPath .. "lua/botweapons.lua")
 
-local _presets_original = CharacterTweakData._presets
-function CharacterTweakData:_presets(tweak_data)
+CloneClass(CharacterTweakData)
+
+function CharacterTweakData:_presets(...)
   log("[BotWeapons] Setting up additional npc weapon presets")
-  local presets = _presets_original(self, tweak_data)
+  local presets = self.orig._presets(self, ...)
   
   -- loop through all weapon presets and create new presets from old ones for all the weapons
-  -- that are used by AI other than team AI
+  -- that are used by cops and not only team AI so to not mess with any presets
   for k, v in pairs(presets.weapon) do
     if v.m4 ~= nil then
       v.g36 = deep_clone(v.m4)
@@ -93,23 +94,20 @@ function CharacterTweakData:_presets(tweak_data)
   return presets
 end
 
-local _init_tank_original = CharacterTweakData._init_tank
-function CharacterTweakData:_init_tank(presets)
-  _init_tank_original(self, presets)
+function CharacterTweakData:_init_tank(...)
+  self.orig._init_tank(self, ...)
   -- transfer ak47 weapon settings to new m249 preset
   self.tank.weapon.m249 = deep_clone(self.tank.weapon.ak47)
 end
 
-local _init_mobster_boss_original = CharacterTweakData._init_mobster_boss
-function CharacterTweakData:_init_mobster_boss(presets)
-  _init_mobster_boss_original(self, presets)
+function CharacterTweakData:_init_mobster_boss(...)
+  self.orig._init_mobster_boss(self, ...)
   -- transfer ak47 weapon settings to new m249 preset
   self.mobster_boss.weapon.m249 = deep_clone(self.mobster_boss.weapon.ak47)
 end
 
-local _init_biker_boss_original = CharacterTweakData._init_biker_boss
-function CharacterTweakData:_init_biker_boss(presets)
-  _init_biker_boss_original(self, presets)
+function CharacterTweakData:_init_biker_boss(...)
+  self.orig._init_biker_boss(self, ...)
   -- transfer ak47 weapon settings to new m249 preset
   self.biker_boss.weapon.m249 = deep_clone(self.biker_boss.weapon.ak47)
 end

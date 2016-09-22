@@ -1,7 +1,8 @@
-local _create_table_structure_original = WeaponTweakData._create_table_structure
-function WeaponTweakData:_create_table_structure()
+CloneClass(WeaponTweakData)
+
+function WeaponTweakData:_create_table_structure(...)
   log("[BotWeapons] Setting up additional npc weapon usages")
-  _create_table_structure_original(self)
+  self.orig._create_table_structure(self, ...)
   
   -- copy animations from usage
   for _, v in pairs(self) do

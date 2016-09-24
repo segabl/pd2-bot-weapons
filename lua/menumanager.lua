@@ -187,7 +187,7 @@ Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenus_BotWeapons
   nodes[menu_id_weapons] = MenuHelper:BuildMenu(menu_id_weapons)
   MenuHelper:AddMenuItem(MenuHelper:GetMenu("lua_mod_options_menu"), menu_id_armor, "BotWeapons_menu_armor_name", "BotWeapons_menu_armor_desc")
   MenuHelper:AddMenuItem(MenuHelper:GetMenu("lua_mod_options_menu"), menu_id_equipment, "BotWeapons_menu_equipment_name", "BotWeapons_menu_equipment_desc", menu_id_armor)
-  MenuHelper:AddMenuItem(MenuHelper:GetMenu("lua_mod_options_menu"), menu_id_weapons, "BotWeapons_menu_weapons_name", "BotWeapons_menu_weapons_desc", menu_id_deployables)
+  MenuHelper:AddMenuItem(MenuHelper:GetMenu("lua_mod_options_menu"), menu_id_weapons, "BotWeapons_menu_weapons_name", "BotWeapons_menu_weapons_desc", menu_id_equipment)
 end)
 
 -- Lock lobby if custom weapons are enabled

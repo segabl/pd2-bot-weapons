@@ -23,19 +23,12 @@ if _G.BotWeapons == nil then
   }
   
   BotWeapons.armor = {
-    -- suit
     { g_vest_body = false, g_vest_leg_arm = false, g_vest_neck = false, g_vest_shoulder = false, g_vest_small = false, g_vest_thies = false },
-    -- light
     { g_vest_body = false, g_vest_leg_arm = false, g_vest_neck = false, g_vest_shoulder = false, g_vest_small = true, g_vest_thies = false },
-    -- normal
     { g_vest_body = true, g_vest_leg_arm = false, g_vest_neck = false, g_vest_shoulder = false, g_vest_small = false, g_vest_thies = false },
-    -- heavy
     { g_vest_body = true, g_vest_leg_arm = false, g_vest_neck = true, g_vest_shoulder = false, g_vest_small = false, g_vest_thies = false },
-    -- flak
     { g_vest_body = true, g_vest_leg_arm = false, g_vest_neck = true, g_vest_shoulder = true, g_vest_small = false, g_vest_thies = false },
-    -- combined
     { g_vest_body = true, g_vest_leg_arm = false, g_vest_neck = true, g_vest_shoulder = true, g_vest_small = false, g_vest_thies = true },
-    -- ictv
     { g_vest_body = true, g_vest_leg_arm = true, g_vest_neck = true, g_vest_shoulder = true, g_vest_small = false, g_vest_thies = true }
   }
   
@@ -52,21 +45,13 @@ if _G.BotWeapons == nil then
   }
   
   BotWeapons.equipment = {
-    -- none
     { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = false },
-    -- ammo
     { g_ammobag = true, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = false },
-    -- armor
     { g_ammobag = false, g_armorbag = true, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = false },
-    -- bodybags
     { g_ammobag = false, g_armorbag = false, g_bodybagsbag = true, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = false },
-    -- doctor
     { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = true, g_sentrybag = false, g_toolbag = false },
-    -- ecm
     { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = true },
-    -- firstaid
     { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = true, g_medicbag = false, g_sentrybag = false, g_toolbag = false },
-    -- sentry
     { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = true, g_toolbag = false }
   }
   
@@ -111,6 +96,7 @@ if _G.BotWeapons == nil then
     "item_hk21",
     "item_tecci",
     "item_g18c",
+    "item_spas12",
     -- random
     "item_random"
   }
@@ -155,14 +141,15 @@ if _G.BotWeapons == nil then
     Idstring("units/payday2/weapons/wpn_npc_x_sr2/wpn_npc_x_sr2"),
     Idstring("units/payday2/weapons/wpn_npc_hk21/wpn_npc_hk21"),
     Idstring("units/payday2/weapons/wpn_npc_tecci/wpn_npc_tecci"),
-    Idstring("units/payday2/weapons/wpn_npc_g18c/wpn_npc_g18c")
+    Idstring("units/payday2/weapons/wpn_npc_g18c/wpn_npc_g18c"),
+    Idstring("units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12")
   }
   
   -- maybe do something with this in the future :P
   BotWeapons.pistols = { 1, 2, 3, 34, 38 }
   BotWeapons.rifles = { 4, 5, 14, 16, 17, 22, 23, 31, 33, 37 }
   BotWeapons.smgs = { 8, 9, 10, 11, 15, 18, 19, 24, 32 }
-  BotWeapons.shotguns = { 6, 7, 13, 21, 25, 26, 30 }
+  BotWeapons.shotguns = { 6, 7, 13, 21, 25, 26, 30, 39 }
   BotWeapons.lmgs = { 12, 20, 36 }
   BotWeapons.akimbos = { 27, 28, 29, 35 }
   
@@ -171,7 +158,7 @@ if _G.BotWeapons == nil then
   
   -- difficulty multiplier
   BotWeapons.multiplier = {
-    normal = 0.5,
+    normal = 0.4,
     hard = 0.6,
     overkill = 0.7,
     overkill_145 = 0.8,
@@ -226,7 +213,9 @@ if _G.BotWeapons == nil then
     end
     -- sync settings with clients
     if not Global.game_settings.single_player and LuaNetworking:IsHost() then
-      LuaNetworking:SendToPeers("bot_weapons_equipment", json.encode({name = managers.criminals:character_name_by_unit(unit), armor = armor, equipment = equipment}))
+      local name = managers.criminals:character_name_by_unit(unit)
+      log("[BotWeapons] Sending equipment info for " .. name)
+      LuaNetworking:SendToPeers("bot_weapons_equipment", json.encode({name = name, armor = armor, equipment = equipment}))
     end
   end
   
@@ -255,7 +244,7 @@ if _G.BotWeapons == nil then
   
   Hooks:Add("BaseNetworkSessionOnLoadComplete", "BaseNetworkSessionOnLoadCompleteBotWeapons", function()
     if LuaNetworking:IsClient() then
-      log("[BotWeapons] Sending Bot Weapons info to host")
+      log("[BotWeapons] Sending usage info to host")
       LuaNetworking:SendToPeer(1, "bot_weapons_active", "")
     end
   end)
@@ -264,11 +253,12 @@ if _G.BotWeapons == nil then
     if id == "bot_weapons_active" then
       local peer = LuaNetworking:GetPeers()[sender]
       if peer then
-        log("[BotWeapons] Received info from " .. peer:name())
+        log("[BotWeapons] Received usage info from " .. peer:name())
         peer.has_bot_weapons = true
       end
     elseif id == "bot_weapons_equipment" and managers.criminals then
       local d = json.decode(data)
+      log("[BotWeapons] Received equipment info for " .. d.name)
       BotWeapons:set_equipment(managers.criminals:character_unit_by_name(d.name), d.armor, d.equipment)
     end
   end)

@@ -173,3 +173,8 @@ function WeaponTweakData:_init_data_glock_18_npc()
   self.glock_18c_primary_npc = deep_clone(self.glock_18_npc)
   self.glock_18c_primary_npc.use_data.selection_index = 2
 end
+
+function WeaponTweakData:_init_data_spas12_npc()
+  self.spas12_npc = deep_clone(self.r870_npc)
+  self.spas12_npc.sounds.prefix = "spas_npc"
+end

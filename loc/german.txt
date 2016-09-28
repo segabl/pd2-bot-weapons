@@ -1,4 +1,6 @@
 {
+  "BotWeapons_menu_main_name" : "Bot Waffen und Ausrüstung",
+  "BotWeapons_menu_main_desc" : "Stelle die Panzerung, Ausrüstung und Waffen für die Team KI ein",
   "BotWeapons_menu_armor_name" : "Bot Panzerung",
   "BotWeapons_menu_armor_desc" : "Stelle die Panzerung für die Team KI ein",
   "BotWeapons_menu_equipment_name" : "Bot Ausrüstung",

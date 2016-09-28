@@ -158,10 +158,10 @@ if _G.BotWeapons == nil then
   
   -- difficulty multiplier
   BotWeapons.multiplier = {
-    normal = 0.4,
-    hard = 0.6,
-    overkill = 0.7,
-    overkill_145 = 0.8,
+    normal = 0.3,
+    hard = 0.4,
+    overkill = 0.6,
+    overkill_145 = 0.75,
     overkill_290 = 1
   }
   
@@ -251,7 +251,7 @@ if _G.BotWeapons == nil then
 
   Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function(sender, id, data)
     if id == "bot_weapons_active" then
-      local peer = LuaNetworking:GetPeers()[sender]
+      local peer = LuaNetworking:GetPeers() and LuaNetworking:GetPeers()[sender]
       if peer then
         log("[BotWeapons] Received usage info from " .. peer:name())
         peer.has_bot_weapons = true

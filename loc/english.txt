@@ -1,4 +1,6 @@
 {
+  "BotWeapons_menu_main_name" : "Bot Weapons and Equipment",
+  "BotWeapons_menu_main_desc" : "Set armor, equipment and weapons for the team AI",
   "BotWeapons_menu_armor_name" : "Bot armor",
   "BotWeapons_menu_armor_desc" : "Set the armor for the team AI",
   "BotWeapons_menu_equipment_name" : "Bot equipment",

@@ -22,16 +22,6 @@ if _G.BotWeapons == nil then
     "item_random"
   }
   
-  BotWeapons.armor = {
-    { g_vest_body = false, g_vest_leg_arm = false, g_vest_neck = false, g_vest_shoulder = false, g_vest_small = false, g_vest_thies = false },
-    { g_vest_body = false, g_vest_leg_arm = false, g_vest_neck = false, g_vest_shoulder = false, g_vest_small = true, g_vest_thies = false },
-    { g_vest_body = true, g_vest_leg_arm = false, g_vest_neck = false, g_vest_shoulder = false, g_vest_small = false, g_vest_thies = false },
-    { g_vest_body = true, g_vest_leg_arm = false, g_vest_neck = true, g_vest_shoulder = false, g_vest_small = false, g_vest_thies = false },
-    { g_vest_body = true, g_vest_leg_arm = false, g_vest_neck = true, g_vest_shoulder = true, g_vest_small = false, g_vest_thies = false },
-    { g_vest_body = true, g_vest_leg_arm = false, g_vest_neck = true, g_vest_shoulder = true, g_vest_small = false, g_vest_thies = true },
-    { g_vest_body = true, g_vest_leg_arm = true, g_vest_neck = true, g_vest_shoulder = true, g_vest_small = false, g_vest_thies = true }
-  }
-  
   BotWeapons.equipment_ids = {
     "item_none",
     "bm_equipment_ammo_bag",
@@ -191,19 +181,22 @@ if _G.BotWeapons == nil then
     end
   end
   
-  function BotWeapons:set_equipment(unit, armor, equipment)
+  function BotWeapons:set_armor(unit, armor)
     if not unit then
       return
     end
-    -- armor
-    for k, v in pairs(self.armor[armor or 0]) do
-      local mesh_name = Idstring(k)
-      local mesh_obj = unit:get_object(mesh_name)
-      if mesh_obj then
-        mesh_obj:set_visibility(v)
-      end
+    local armor_sequence = "var_model_0" .. armor
+    unit:damage():run_sequence_simple(armor_sequence)
+    -- sync settings with clients
+    if not Global.game_settings.single_player and LuaNetworking:IsHost() then
+      managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, armor_sequence)
     end
-    -- equipment
+  end
+  
+  function BotWeapons:set_equipment(unit, equipment)
+    if not unit then
+      return
+    end
     for k, v in pairs(self.equipment[equipment or 0]) do
       local mesh_name = Idstring(k)
       local mesh_obj = unit:get_object(mesh_name)
@@ -215,7 +208,7 @@ if _G.BotWeapons == nil then
     if not Global.game_settings.single_player and LuaNetworking:IsHost() then
       local name = managers.criminals:character_name_by_unit(unit)
       log("[BotWeapons] Sending equipment info for " .. name)
-      LuaNetworking:SendToPeers("bot_weapons_equipment", json.encode({name = name, armor = armor, equipment = equipment}))
+      LuaNetworking:SendToPeers("bot_weapons_equipment", json.encode({n = name, e = equipment}))
     end
   end
   
@@ -258,8 +251,8 @@ if _G.BotWeapons == nil then
       end
     elseif id == "bot_weapons_equipment" and managers.criminals then
       local d = json.decode(data)
-      log("[BotWeapons] Received equipment info for " .. d.name)
-      BotWeapons:set_equipment(managers.criminals:character_unit_by_name(d.name), d.armor, d.equipment)
+      log("[BotWeapons] Received equipment info for " .. d.n)
+      BotWeapons:set_equipment(managers.criminals:character_unit_by_name(d.n), d.e)
     end
   end)
   

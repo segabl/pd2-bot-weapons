@@ -5,7 +5,7 @@
   "priority" : 0,
   "updates" : [
     {
-      "revision" : 3.2,
+      "revision" : 3.3,
       "identifier" : "bot_weapons"
     }
   ]
@@ -23,6 +23,7 @@
     { "hook_id" : "lib/units/player_team/teamaibase", "script_path" : "lua/teamaibase.lua" },
     { "hook_id" : "lib/units/player_team/teamaiinventory", "script_path" : "lua/teamaiinventory.lua" },
     { "hook_id" : "lib/units/player_team/teamaimovement", "script_path" : "lua/teamaimovement.lua" },
-    { "hook_id" : "lib/units/enemies/cop/copmovement", "script_path" : "lua/copmovement.lua" }
+    { "hook_id" : "lib/units/enemies/cop/copmovement", "script_path" : "lua/copmovement.lua" },
+    { "hook_id" : "lib/network/base/networkpeer", "script_path" : "lua/networkpeer.lua" }
   ]
 }

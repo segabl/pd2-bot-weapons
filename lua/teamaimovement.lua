@@ -21,11 +21,12 @@ function TeamAIMovement:check_visual_equipment()
   if armor > #BotWeapons.armor_ids - 1 then
     armor = math.random(#BotWeapons.armor_ids - 1)
   end
-  BotWeapons:set_armor(self._unit, armor)
   -- choose equipment models
   local equipment = BotWeapons._data.toggle_override_equipment and BotWeapons._data.override_equipment or BotWeapons._data[name .. "_equipment"] or 1
   if equipment > #BotWeapons.equipment_ids - 1 then
     equipment = math.random(#BotWeapons.equipment_ids - 1)
   end
-  BotWeapons:set_equipment(self._unit, equipment)
+  BotWeapons:set_equipment(self._unit, armor, equipment)
+  self._bot_weapons_armor = armor
+  self._bot_weapons_equipment = equipment
 end

@@ -180,23 +180,14 @@ if _G.BotWeapons == nil then
       v.dmg_mul = self.multiplier[Global.game_settings.difficulty] * mul * (falloff and f or 1)
     end
   end
-  
-  function BotWeapons:set_armor(unit, armor)
+   
+  function BotWeapons:set_equipment(unit, armor, equipment)
     if not unit then
       return
     end
-    local armor_sequence = "var_model_0" .. armor
-    unit:damage():run_sequence_simple(armor_sequence)
-    -- sync settings with clients
-    if not Global.game_settings.single_player and LuaNetworking:IsHost() then
-      managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, armor_sequence)
-    end
-  end
-  
-  function BotWeapons:set_equipment(unit, equipment)
-    if not unit then
-      return
-    end
+    -- armor
+    unit:damage():run_sequence_simple("var_model_0" .. armor)
+    -- equipment
     for k, v in pairs(self.equipment[equipment or 0]) do
       local mesh_name = Idstring(k)
       local mesh_obj = unit:get_object(mesh_name)
@@ -204,11 +195,20 @@ if _G.BotWeapons == nil then
         mesh_obj:set_visibility(v)
       end
     end
-    -- sync settings with clients
+    self:sync_equipment(unit, armor, equipment)
+  end
+  
+  function BotWeapons:sync_equipment(unit, armor, equipment)
+    if not unit then
+      return
+    end
     if not Global.game_settings.single_player and LuaNetworking:IsHost() then
+      -- armor
+      managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, "var_model_0" .. armor)
+      -- equipment
       local name = managers.criminals:character_name_by_unit(unit)
       log("[BotWeapons] Sending equipment info for " .. name)
-      LuaNetworking:SendToPeers("bot_weapons_equipment", json.encode({n = name, e = equipment}))
+      LuaNetworking:SendToPeers("bot_weapons_equipment", name .. "/" .. equipment)
     end
   end
   
@@ -250,12 +250,13 @@ if _G.BotWeapons == nil then
         peer.has_bot_weapons = true
       end
     elseif id == "bot_weapons_equipment" and managers.criminals then
-      local d = json.decode(data)
-      log("[BotWeapons] Received equipment info for " .. d.n)
-      BotWeapons:set_equipment(managers.criminals:character_unit_by_name(d.n), d.e)
+      local name = data:sub(1, data:find("/") - 1)
+      local equipment = tonumber(data:sub(data:find("/") + 1))
+      log("[BotWeapons] Received equipment info for " .. name)
+      BotWeapons:set_equipment(managers.criminals:character_unit_by_name(name), equipment)
     end
   end)
-  
+
   -- Load settings
   BotWeapons:Load()
 end

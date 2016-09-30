@@ -18,6 +18,20 @@ function WeaponTweakData:_create_table_structure(...)
   self.scar_npc.usage = "scar"
 end
 
+function WeaponTweakData:_init_data_mossberg_npc()
+  self.mossberg_npc.sounds.prefix = "huntsman_npc"
+  self.mossberg_npc.use_data.selection_index = 2
+  self.mossberg_npc.DAMAGE = 6
+  self.mossberg_npc.muzzleflash = "effects/payday2/particles/weapons/762_auto"
+  self.mossberg_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug_semi"
+  self.mossberg_npc.CLIP_AMMO_MAX = 2
+  self.mossberg_npc.NR_CLIPS_MAX = 6
+  self.mossberg_npc.hold = "rifle"
+  self.mossberg_npc.alert_size = 3000
+  self.mossberg_npc.suppression = 2
+  self.mossberg_npc.is_shotgun = true
+end
+
 function WeaponTweakData:_init_data_boot_npc()
   self.boot_npc = deep_clone(self.r870_npc)
   self.boot_npc.sounds.prefix = "boot_npc"

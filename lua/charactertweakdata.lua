@@ -9,12 +9,12 @@ function CharacterTweakData:_presets(...)
   -- loop through all weapon presets and create new presets from old ones for all the weapons
   -- that are used by cops and not only team AI so to not mess with any presets
   for k, v in pairs(presets.weapon) do
-    if v.m4 ~= nil then
+    if v.m4 then
       v.g36 = deep_clone(v.m4)
       v.scar = deep_clone(v.m4)
     end
 
-    if v.ak47 ~= nil then
+    if v.ak47 then
       v.m249 = deep_clone(v.ak47)
     end
   end

@@ -182,13 +182,13 @@ if _G.BotWeapons == nil then
   end
    
   function BotWeapons:set_equipment(unit, armor, equipment)
-    if not unit then
+    if not unit or not alive(unit) then
       return
     end
     -- armor
     unit:damage():run_sequence_simple("var_model_0" .. armor)
     -- equipment
-    for k, v in pairs(self.equipment[equipment or 0]) do
+    for k, v in pairs(self.equipment[equipment]) do
       local mesh_name = Idstring(k)
       local mesh_obj = unit:get_object(mesh_name)
       if mesh_obj then
@@ -199,7 +199,7 @@ if _G.BotWeapons == nil then
   end
   
   function BotWeapons:sync_equipment(unit, armor, equipment)
-    if not unit then
+    if not unit or not alive(unit) then
       return
     end
     if not Global.game_settings.single_player and LuaNetworking:IsHost() then

@@ -165,5 +165,16 @@
       <texture path="units/payday2/weapons/wpn_npc_spas12/spas12_df" />
       <texture path="units/payday2/weapons/wpn_npc_spas12/spas12_nm" />
       
+      <!--M1928-->  
+      <object path="units/payday2/weapons/wpn_npc_m1928/wpn_npc_m1928" />
+      <cooked_physics path="units/payday2/weapons/wpn_npc_m1928/wpn_npc_m1928" />
+      <material_config path="units/payday2/weapons/wpn_npc_m1928/wpn_npc_m1928" />
+      <material_config path="units/payday2/weapons/wpn_npc_m1928/wpn_npc_m1928_contour" />
+      <model path="units/payday2/weapons/wpn_npc_m1928/wpn_npc_m1928" />
+      <sequence_manager path="units/payday2/weapons/wpn_npc_m1928/wpn_npc_m1928" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_m1928/wpn_npc_m1928" load="true" />
+      <texture path="units/payday2/weapons/wpn_npc_m1928/m1928_df" />
+      <texture path="units/payday2/weapons/wpn_npc_m1928/m1928_nm" />
+      
     </AddFiles>
 </mod>

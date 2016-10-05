@@ -197,7 +197,7 @@ end)
 -- Lock lobby if custom weapons are enabled
 local choice_lobby_permission_original = MenuCallbackHandler.choice_lobby_permission
 function MenuCallbackHandler:choice_lobby_permission(item)
-  if item:value() ~= "private" and BotWeapons.custom_weapons_enabled then
+  if item:value() ~= "private" and BotWeapons:custom_weapons_allowed() then
     item:set_value("private")
     return
   end

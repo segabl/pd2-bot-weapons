@@ -18,6 +18,11 @@ function WeaponTweakData:_create_table_structure(...)
   self.scar_npc.usage = "scar"
 end
 
+function WeaponTweakData:_init_data_r870_npc()
+  self.orig._init_data_r870_npc(self)
+  self.benelli_npc.sounds.prefix = "benelli_m4_npc"
+end
+
 function WeaponTweakData:_init_data_mossberg_npc()
   self.mossberg_npc.sounds.prefix = "huntsman_npc"
   self.mossberg_npc.use_data.selection_index = 2
@@ -30,6 +35,17 @@ function WeaponTweakData:_init_data_mossberg_npc()
   self.mossberg_npc.alert_size = 3000
   self.mossberg_npc.suppression = 2
   self.mossberg_npc.is_shotgun = true
+end
+
+function WeaponTweakData:_init_data_mp5_npc()
+  self.orig._init_data_mp5_npc(self)
+  self.akmsu_smg_npc.sounds.prefix = "akmsu_npc"
+  self.asval_smg_npc.sounds.prefix = "val_npc"
+end
+
+function WeaponTweakData:_init_data_mac11_npc()
+  self.orig._init_data_mac11_npc(self)
+  self.mac11_npc.sounds.prefix = "mac10_npc"
 end
 
 function WeaponTweakData:_init_data_boot_npc()
@@ -135,7 +151,7 @@ function WeaponTweakData:_init_data_sterling_npc()
   self.sterling_npc = deep_clone(self.mp5_npc)
   self.sterling_npc.sounds.prefix = "sterling_npc"
   self.sterling_npc.CLIP_AMMO_MAX = 40
-  self.sterling_npc.auto.fire_rate = 0.4
+  self.sterling_npc.auto.fire_rate = 0.3
   self.sterling_npc.hold = "pistol"
 end
 
@@ -179,10 +195,8 @@ function WeaponTweakData:_init_data_tecci_npc()
 end
 
 function WeaponTweakData:_init_data_glock_18_npc()
-  self.glock_18_npc = deep_clone(self.mp5_npc)
+  self.glock_18_npc = deep_clone(self.mac11_npc)
   self.glock_18_npc.sounds.prefix = "g18c_npc"
-  self.glock_18_npc.use_data.selection_index = 1
-  self.glock_18_npc.hold = "pistol"
   self.glock_18_npc.anim = "c45"
   self.glock_18c_primary_npc = deep_clone(self.glock_18_npc)
   self.glock_18c_primary_npc.use_data.selection_index = 2
@@ -191,4 +205,11 @@ end
 function WeaponTweakData:_init_data_spas12_npc()
   self.spas12_npc = deep_clone(self.r870_npc)
   self.spas12_npc.sounds.prefix = "spas_npc"
+end
+
+function WeaponTweakData:_init_data_m1928_npc()
+  self.m1928_npc = deep_clone(self.mp5_npc)
+  self.m1928_npc.sounds.prefix = "m1928_npc"
+  self.m1928_npc.CLIP_AMMO_MAX = 40
+  self.m1928_npc.auto.fire_rate = 0.2
 end

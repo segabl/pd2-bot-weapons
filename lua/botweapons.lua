@@ -9,8 +9,6 @@ if _G.BotWeapons == nil then
     ModCore:init(BotWeapons._path .. "config.xml", true, true)
   end
   
-  BotWeapons.custom_weapons_enabled = false
-  
   BotWeapons.armor_ids = {
     "bm_armor_level_1",
     "bm_armor_level_2",
@@ -87,6 +85,7 @@ if _G.BotWeapons == nil then
     "item_tecci",
     "item_g18c",
     "item_spas12",
+    "item_m1928",
     -- random
     "item_random"
   }
@@ -132,13 +131,14 @@ if _G.BotWeapons == nil then
     Idstring("units/payday2/weapons/wpn_npc_hk21/wpn_npc_hk21"),
     Idstring("units/payday2/weapons/wpn_npc_tecci/wpn_npc_tecci"),
     Idstring("units/payday2/weapons/wpn_npc_g18c/wpn_npc_g18c"),
-    Idstring("units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12")
+    Idstring("units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12"),
+    Idstring("units/payday2/weapons/wpn_npc_m1928/wpn_npc_m1928")
   }
   
   -- maybe do something with this in the future :P
   BotWeapons.pistols = { 1, 2, 3, 34, 38 }
   BotWeapons.rifles = { 4, 5, 14, 16, 17, 22, 23, 31, 33, 37 }
-  BotWeapons.smgs = { 8, 9, 10, 11, 15, 18, 19, 24, 32 }
+  BotWeapons.smgs = { 8, 9, 10, 11, 15, 18, 19, 24, 32, 40 }
   BotWeapons.shotguns = { 6, 7, 13, 21, 25, 26, 30, 39 }
   BotWeapons.lmgs = { 12, 20, 36 }
   BotWeapons.akimbos = { 27, 28, 29, 35 }
@@ -214,25 +214,20 @@ if _G.BotWeapons == nil then
   
   function BotWeapons:custom_weapons_allowed()
     if Global.game_settings.single_player then
-      self.custom_weapons_enabled = true
-      return self.custom_weapons_enabled
+      return true
     end
     if not Global.game_settings.team_ai then
-      self.custom_weapons_enabled = true
-      return self.custom_weapons_enabled
+      return true
     end
     if Global.game_settings.permission ~= "private" then
-      self.custom_weapons_enabled = false
-      return self.custom_weapons_enabled
+      return false
     end
     for _, peer in pairs(LuaNetworking:GetPeers()) do
       if not peer.has_bot_weapons then
-        self.custom_weapons_enabled = false
-        return self.custom_weapons_enabled
+        return false
       end
     end
-    self.custom_weapons_enabled = false -- should be "true" once syncing of custom weapons is possible
-    return self.custom_weapons_enabled
+    return false -- should be "true" once syncing of custom weapons is possible
   end
   
   Hooks:Add("BaseNetworkSessionOnLoadComplete", "BaseNetworkSessionOnLoadCompleteBotWeapons", function()

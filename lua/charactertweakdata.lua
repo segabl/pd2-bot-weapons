@@ -32,6 +32,7 @@ function CharacterTweakData:_presets(...)
   presets.weapon.gang_member.raging_bull.spread = 20
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.raging_bull, 4, false)
   -- rifles
+  presets.weapon.gang_member.m4.spread = 20
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.m4, 4, false)
   
   presets.weapon.gang_member.ak47 = deep_clone(presets.weapon.gang_member.m4)
@@ -47,11 +48,12 @@ function CharacterTweakData:_presets(...)
   presets.weapon.gang_member.m14.FALLOFF[2].mode = { 1, 0.4, 0.3, 0.1 }
   presets.weapon.gang_member.m14.FALLOFF[3].mode = { 1, 0.2, 0, 0 }
   -- smgs
+  presets.weapon.gang_member.mp5.spread = 30
   presets.weapon.gang_member.mp5 = deep_clone(presets.weapon.gang_member.m4)
   -- lmg
   presets.weapon.gang_member.m249.autofire_rounds = { 20, 40 }
   presets.weapon.gang_member.m249.RELOAD_SPEED = 0.4
-  presets.weapon.gang_member.m249.spread = 50
+  presets.weapon.gang_member.m249.spread = 60
   presets.weapon.gang_member.m249.FALLOFF[1].acc = {0.3, 0.7}
   presets.weapon.gang_member.m249.FALLOFF[2].acc = {0.1, 0.2}
   presets.weapon.gang_member.m249.FALLOFF[3].acc = {0, 0.1}
@@ -83,7 +85,7 @@ function CharacterTweakData:_presets(...)
   
   presets.weapon.gang_member.akimbo_auto = deep_clone(presets.weapon.gang_member.m4)
   presets.weapon.gang_member.akimbo_auto.RELOAD_SPEED = 0.3
-  presets.weapon.gang_member.akimbo_auto.spread = 40
+  presets.weapon.gang_member.akimbo_auto.spread = 50
   presets.weapon.gang_member.akimbo_auto.FALLOFF[1].acc = {0.3, 0.7}
   presets.weapon.gang_member.akimbo_auto.FALLOFF[2].acc = {0.1, 0.2}
   presets.weapon.gang_member.akimbo_auto.FALLOFF[3].acc = {0, 0.1}

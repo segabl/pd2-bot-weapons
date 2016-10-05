@@ -2,10 +2,10 @@
   "name" : "Bot Weapons and Equipment",
   "description" : "Set the weapons, armor and deployables for the team AI",
   "author" : "topfpflanzen-wuerger",
-  "priority" : 0,
+  "priority" : 100,
   "updates" : [
     {
-      "revision" : 3.4,
+      "revision" : 3.5,
       "identifier" : "bot_weapons"
     }
   ]

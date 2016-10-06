@@ -172,7 +172,7 @@ if _G.BotWeapons == nil then
   end
   
   function BotWeapons:set_damage_multiplicator(weapon, mul, falloff)
-    if not BotWeapons._data.toggle_adjust_damage or not Global.game_settings then
+    if not BotWeapons._data.toggle_adjust_damage or not Global.game_settings or not self.multiplier[Global.game_settings.difficulty] then
       return
     end
     for i, v in ipairs(weapon.FALLOFF) do

@@ -91,60 +91,60 @@ if _G.BotWeapons == nil then
   }
 
   BotWeapons.weapons = {
-    Idstring("units/payday2/weapons/wpn_npc_beretta92/wpn_npc_beretta92"),
-    Idstring("units/payday2/weapons/wpn_npc_c45/wpn_npc_c45"),
-    Idstring("units/payday2/weapons/wpn_npc_raging_bull/wpn_npc_raging_bull"),
-    Idstring("units/payday2/weapons/wpn_npc_m4/wpn_npc_m4"),
-    Idstring("units/payday2/weapons/wpn_npc_ak47/wpn_npc_ak47"),
-    Idstring("units/payday2/weapons/wpn_npc_r870/wpn_npc_r870"),
-    Idstring("units/payday2/weapons/wpn_npc_sawnoff_shotgun/wpn_npc_sawnoff_shotgun"),
-    Idstring("units/payday2/weapons/wpn_npc_mp5/wpn_npc_mp5"),
-    Idstring("units/payday2/weapons/wpn_npc_mp5_tactical/wpn_npc_mp5_tactical"),
-    Idstring("units/payday2/weapons/wpn_npc_smg_mp9/wpn_npc_smg_mp9"),
-    Idstring("units/payday2/weapons/wpn_npc_mac11/wpn_npc_mac11"),
-    Idstring("units/payday2/weapons/wpn_npc_lmg_m249/wpn_npc_lmg_m249"),
-    Idstring("units/payday2/weapons/wpn_npc_benelli/wpn_npc_benelli"),
-    Idstring("units/payday2/weapons/wpn_npc_g36/wpn_npc_g36"),
-    Idstring("units/payday2/weapons/wpn_npc_ump/wpn_npc_ump"),
-    Idstring("units/payday2/weapons/wpn_npc_scar_murkywater/wpn_npc_scar_murkywater"),
-    Idstring("units/pd2_dlc_mad/weapons/wpn_npc_asval/wpn_npc_asval"),
-    Idstring("units/pd2_dlc_mad/weapons/wpn_npc_sr2/wpn_npc_sr2"),
-    Idstring("units/pd2_dlc_mad/weapons/wpn_npc_akmsu/wpn_npc_akmsu"),
-    Idstring("units/pd2_dlc_mad/weapons/wpn_npc_rpk/wpn_npc_rpk"),
+    { unit = Idstring("units/payday2/weapons/wpn_npc_beretta92/wpn_npc_beretta92"), type = "pistol" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_c45/wpn_npc_c45"), type = "pistol" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_raging_bull/wpn_npc_raging_bull"), type = "pistol" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_m4/wpn_npc_m4"), type = "rifle" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_ak47/wpn_npc_ak47"), type = "rifle" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_r870/wpn_npc_r870"), type = "shotgun" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_sawnoff_shotgun/wpn_npc_sawnoff_shotgun"), type = "shotgun" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_mp5/wpn_npc_mp5"), type = "smg" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_mp5_tactical/wpn_npc_mp5_tactical"), type = "smg" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_smg_mp9/wpn_npc_smg_mp9"), type = "smg" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_mac11/wpn_npc_mac11"), type = "smg" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_lmg_m249/wpn_npc_lmg_m249"), type = "lmg" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_benelli/wpn_npc_benelli"), type = "shotgun" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_g36/wpn_npc_g36"), type = "rifle" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_ump/wpn_npc_ump"), type = "smg" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_scar_murkywater/wpn_npc_scar_murkywater"), type = "rifle" },
+    { unit = Idstring("units/pd2_dlc_mad/weapons/wpn_npc_asval/wpn_npc_asval"), type = "rifle" },
+    { unit = Idstring("units/pd2_dlc_mad/weapons/wpn_npc_sr2/wpn_npc_sr2"), type = "smg" },
+    { unit = Idstring("units/pd2_dlc_mad/weapons/wpn_npc_akmsu/wpn_npc_akmsu"), type = "smg" },
+    { unit = Idstring("units/pd2_dlc_mad/weapons/wpn_npc_rpk/wpn_npc_rpk"), type = "lmg" },
     -- weapons disabled in mp from here on
-    Idstring("units/payday2/weapons/wpn_npc_saiga/wpn_npc_saiga"),
+    { unit = Idstring("units/payday2/weapons/wpn_npc_saiga/wpn_npc_saiga"), type = "shotgun" },
     -- own weapons from here on
-    Idstring("units/payday2/weapons/wpn_npc_famas/wpn_npc_famas"),
-    Idstring("units/payday2/weapons/wpn_npc_m14/wpn_npc_m14"),
-    Idstring("units/payday2/weapons/wpn_npc_p90/wpn_npc_p90"),
-    Idstring("units/payday2/weapons/wpn_npc_judge/wpn_npc_judge"),
-    Idstring("units/payday2/weapons/wpn_npc_boot/wpn_npc_boot"),
-    Idstring("units/payday2/weapons/wpn_npc_x_c45/wpn_npc_x_c45"),
-    Idstring("units/payday2/weapons/wpn_npc_x_mp5/wpn_npc_x_mp5"),
-    Idstring("units/payday2/weapons/wpn_npc_x_akmsu/wpn_npc_x_akmsu"),
-    Idstring("units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg"),
-    Idstring("units/payday2/weapons/wpn_npc_l85a2/wpn_npc_l85a2"),
-    Idstring("units/payday2/weapons/wpn_npc_sterling/wpn_npc_sterling"),
-    Idstring("units/payday2/weapons/wpn_npc_s552/wpn_npc_s552"),
-    Idstring("units/payday2/weapons/wpn_npc_deagle/wpn_npc_deagle"),
-    Idstring("units/payday2/weapons/wpn_npc_x_sr2/wpn_npc_x_sr2"),
-    Idstring("units/payday2/weapons/wpn_npc_hk21/wpn_npc_hk21"),
-    Idstring("units/payday2/weapons/wpn_npc_tecci/wpn_npc_tecci"),
-    Idstring("units/payday2/weapons/wpn_npc_g18c/wpn_npc_g18c"),
-    Idstring("units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12"),
-    Idstring("units/payday2/weapons/wpn_npc_m1928/wpn_npc_m1928")
+    { unit = Idstring("units/payday2/weapons/wpn_npc_famas/wpn_npc_famas"), type = "rifle" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_m14/wpn_npc_m14"), type = "rifle" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_p90/wpn_npc_p90"), type = "smg" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_judge/wpn_npc_judge"), type = "shotgun" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_boot/wpn_npc_boot"), type = "shotgun" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_x_c45/wpn_npc_x_c45"), type = "pistol" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_x_mp5/wpn_npc_x_mp5"), type = "smg" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_x_akmsu/wpn_npc_x_akmsu"), type = "smg" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg"), type = "shotgun" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_l85a2/wpn_npc_l85a2"), type = "rifle" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_sterling/wpn_npc_sterling"), type = "smg" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_s552/wpn_npc_s552"), type = "rifle" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_deagle/wpn_npc_deagle"), type = "pistol" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_x_sr2/wpn_npc_x_sr2"), type = "smg" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_hk21/wpn_npc_hk21"), type = "lmg" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_tecci/wpn_npc_tecci"), type = "rifle" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_g18c/wpn_npc_g18c"), type = "pistol" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12"), type = "shotgun" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_m1928/wpn_npc_m1928"), type = "smg" }
   }
-  
-  -- maybe do something with this in the future :P
-  BotWeapons.pistols = { 1, 2, 3, 34, 38 }
-  BotWeapons.rifles = { 4, 5, 14, 16, 17, 22, 23, 31, 33, 37 }
-  BotWeapons.smgs = { 8, 9, 10, 11, 15, 18, 19, 24, 32, 40 }
-  BotWeapons.shotguns = { 6, 7, 13, 21, 25, 26, 30, 39 }
-  BotWeapons.lmgs = { 12, 20, 36 }
-  BotWeapons.akimbos = { 27, 28, 29, 35 }
   
   -- index of the last weapon that is allowed in mp
   BotWeapons.mp_disabled_index = 20
+  
+  -- vanilla replacements
+  BotWeapons.replacements = {}
+  for i = 1, BotWeapons.mp_disabled_index, 1 do
+    local weapon = BotWeapons.weapons[i]
+    BotWeapons.replacements[weapon.type] = BotWeapons.replacements[weapon.type] or {}
+    table.insert(BotWeapons.replacements[weapon.type], i)
+  end
   
   -- difficulty multiplier
   BotWeapons.multiplier = {
@@ -152,7 +152,9 @@ if _G.BotWeapons == nil then
     hard = 0.4,
     overkill = 0.6,
     overkill_145 = 0.75,
-    overkill_290 = 1
+    easy_wish = 0.9,
+    overkill_290 = 1,
+    sm_wish = 1.25
   }
   
   function BotWeapons:Save()

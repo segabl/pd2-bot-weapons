@@ -86,6 +86,7 @@ if _G.BotWeapons == nil then
     "item_g18c",
     "item_spas12",
     "item_m1928",
+    "item_vhs",
     -- random
     "item_random"
   }
@@ -132,7 +133,8 @@ if _G.BotWeapons == nil then
     { unit = Idstring("units/payday2/weapons/wpn_npc_tecci/wpn_npc_tecci"), type = "rifle" },
     { unit = Idstring("units/payday2/weapons/wpn_npc_g18c/wpn_npc_g18c"), type = "pistol" },
     { unit = Idstring("units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12"), type = "shotgun" },
-    { unit = Idstring("units/payday2/weapons/wpn_npc_m1928/wpn_npc_m1928"), type = "smg" }
+    { unit = Idstring("units/payday2/weapons/wpn_npc_m1928/wpn_npc_m1928"), type = "smg" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_vhs/wpn_npc_vhs"), type = "rifle" }
   }
   
   -- index of the last weapon that is allowed in mp
@@ -191,8 +193,7 @@ if _G.BotWeapons == nil then
     unit:damage():run_sequence_simple("var_model_0" .. armor)
     -- equipment
     for k, v in pairs(self.equipment[equipment]) do
-      local mesh_name = Idstring(k)
-      local mesh_obj = unit:get_object(mesh_name)
+      local mesh_obj = unit:get_object(Idstring(k))
       if mesh_obj then
         mesh_obj:set_visibility(v)
       end
@@ -225,7 +226,7 @@ if _G.BotWeapons == nil then
       return false
     end
     for _, peer in pairs(LuaNetworking:GetPeers()) do
-      if not peer.has_bot_weapons then
+      if not peer._has_bot_weapons then
         return false
       end
     end
@@ -241,10 +242,10 @@ if _G.BotWeapons == nil then
 
   Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function(sender, id, data)
     if id == "bot_weapons_active" then
-      local peer = LuaNetworking:GetPeers() and LuaNetworking:GetPeers()[sender]
+      local peer = LuaNetworking:GetPeers()[sender]
       if peer then
         log("[BotWeapons] Received usage info from " .. peer:name())
-        peer.has_bot_weapons = true
+        peer._has_bot_weapons = true
       end
     elseif id == "bot_weapons_equipment" and managers.criminals then
       local name = data:sub(1, data:find("/") - 1)

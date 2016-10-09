@@ -1,7 +1,7 @@
 <mod name="BotWeapons" global_key="bot_weapons">
     <!--directory points to the directory containing the classes relative to this mods folder-->
     <AddFiles directory="assets">
-      <!--Famas-->  
+      <!--Clarion-->  
       <object path="units/payday2/weapons/wpn_npc_famas/wpn_npc_famas" />
       <cooked_physics path="units/payday2/weapons/wpn_npc_famas/wpn_npc_famas" />
       <material_config path="units/payday2/weapons/wpn_npc_famas/wpn_npc_famas" />
@@ -12,7 +12,7 @@
       <texture path="units/payday2/weapons/wpn_npc_famas/famas_df" />
       <texture path="units/payday2/weapons/wpn_npc_famas/famas_nm" />
       
-      <!--M14-->  
+      <!--M308-->  
       <object path="units/payday2/weapons/wpn_npc_m14/wpn_npc_m14" />
       <cooked_physics path="units/payday2/weapons/wpn_npc_m14/wpn_npc_m14" />
       <material_config path="units/payday2/weapons/wpn_npc_m14/wpn_npc_m14" />
@@ -23,7 +23,7 @@
       <texture path="units/payday2/weapons/wpn_npc_m14/m14_df" />
       <texture path="units/payday2/weapons/wpn_npc_m14/m14_nm" />
       
-      <!--P90-->  
+      <!--Kobus 90-->  
       <object path="units/payday2/weapons/wpn_npc_p90/wpn_npc_p90" />
       <cooked_physics path="units/payday2/weapons/wpn_npc_p90/wpn_npc_p90" />
       <material_config path="units/payday2/weapons/wpn_npc_p90/wpn_npc_p90" />
@@ -45,7 +45,7 @@
       <texture path="units/payday2/weapons/wpn_npc_judge/judge_df" />
       <texture path="units/payday2/weapons/wpn_npc_judge/judge_nm" />
       
-      <!--Boot-->  
+      <!--Breaker 12G-->  
       <object path="units/payday2/weapons/wpn_npc_boot/wpn_npc_boot" />
       <cooked_physics path="units/payday2/weapons/wpn_npc_boot/wpn_npc_boot" />
       <material_config path="units/payday2/weapons/wpn_npc_boot/wpn_npc_boot" />
@@ -56,16 +56,16 @@
       <texture path="units/payday2/weapons/wpn_npc_boot/boot_df" />
       <texture path="units/payday2/weapons/wpn_npc_boot/boot_nm" />
       
-      <!--Akimbo C45-->
+      <!--Akimbo Chimano-->
       <unit path="units/payday2/weapons/wpn_npc_x_c45/wpn_npc_x_c45" load="true" />
       
-      <!--Akimbo MP5-->
+      <!--Akimbo Compact-5-->
       <unit path="units/payday2/weapons/wpn_npc_x_mp5/wpn_npc_x_mp5" load="true" />
       
-      <!--Akimbo Akmsu-->
+      <!--Akimbo Krinkov-->
       <unit path="units/payday2/weapons/wpn_npc_x_akmsu/wpn_npc_x_akmsu" load="true" />
       
-      <!--KSG-->  
+      <!--Raven-->  
       <object path="units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg" />
       <cooked_physics path="units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg" />
       <material_config path="units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg" />
@@ -76,7 +76,7 @@
       <texture path="units/payday2/weapons/wpn_npc_ksg/ksg_df" />
       <texture path="units/payday2/weapons/wpn_npc_ksg/ksg_nm" />
       
-      <!--L85A2-->  
+      <!--Queen's Wrath-->  
       <object path="units/payday2/weapons/wpn_npc_l85a2/wpn_npc_l85a2" />
       <cooked_physics path="units/payday2/weapons/wpn_npc_l85a2/wpn_npc_l85a2" />
       <material_config path="units/payday2/weapons/wpn_npc_l85a2/wpn_npc_l85a2" />
@@ -87,7 +87,7 @@
       <texture path="units/payday2/weapons/wpn_npc_l85a2/l85a2_df" />
       <texture path="units/payday2/weapons/wpn_npc_l85a2/l85a2_nm" />
       
-      <!--Sterling-->  
+      <!--Patchett L2A1-->  
       <object path="units/payday2/weapons/wpn_npc_sterling/wpn_npc_sterling" />
       <cooked_physics path="units/payday2/weapons/wpn_npc_sterling/wpn_npc_sterling" />
       <material_config path="units/payday2/weapons/wpn_npc_sterling/wpn_npc_sterling" />
@@ -98,7 +98,7 @@
       <texture path="units/payday2/weapons/wpn_npc_sterling/sterling_df" />
       <texture path="units/payday2/weapons/wpn_npc_sterling/sterling_nm" />
       
-      <!--S552-->  
+      <!--Commando 553-->  
       <object path="units/payday2/weapons/wpn_npc_s552/wpn_npc_s552" force="true" />
       <material_config path="units/payday2/weapons/wpn_npc_s552/wpn_npc_s552" force="true" />
       <material_config path="units/payday2/weapons/wpn_npc_s552/wpn_npc_s552_contour" force="true" />
@@ -118,10 +118,10 @@
       <texture path="units/payday2/weapons/wpn_npc_deagle/deagle_df" />
       <texture path="units/payday2/weapons/wpn_npc_deagle/deagle_nm" />
       
-      <!--Akimbo SR2-->
+      <!--Akimbo Heather-->
       <unit path="units/payday2/weapons/wpn_npc_x_sr2/wpn_npc_x_sr2" load="true" />
       
-      <!--HK21-->  
+      <!--Brenner-21-->  
       <object path="units/payday2/weapons/wpn_npc_hk21/wpn_npc_hk21" />
       <cooked_physics path="units/payday2/weapons/wpn_npc_hk21/wpn_npc_hk21" />
       <material_config path="units/payday2/weapons/wpn_npc_hk21/wpn_npc_hk21" />
@@ -132,7 +132,7 @@
       <texture path="units/payday2/weapons/wpn_npc_hk21/hk21_df" />
       <texture path="units/payday2/weapons/wpn_npc_hk21/hk21_nm" />
       
-      <!--Tecci-->  
+      <!--Bootleg-->  
       <object path="units/payday2/weapons/wpn_npc_tecci/wpn_npc_tecci" />
       <cooked_physics path="units/payday2/weapons/wpn_npc_tecci/wpn_npc_tecci" />
       <material_config path="units/payday2/weapons/wpn_npc_tecci/wpn_npc_tecci" />
@@ -143,7 +143,7 @@
       <texture path="units/payday2/weapons/wpn_npc_tecci/tecci_df" />
       <texture path="units/payday2/weapons/wpn_npc_tecci/tecci_nm" />
       
-      <!--G18c-->  
+      <!--Stryk 18c-->  
       <object path="units/payday2/weapons/wpn_npc_g18c/wpn_npc_g18c" />
       <cooked_physics path="units/payday2/weapons/wpn_npc_g18c/wpn_npc_g18c" />
       <material_config path="units/payday2/weapons/wpn_npc_g18c/wpn_npc_g18c" />
@@ -154,7 +154,7 @@
       <texture path="units/payday2/weapons/wpn_npc_g18c/g18c_df" />
       <texture path="units/payday2/weapons/wpn_npc_g18c/g18c_nm" />
       
-      <!--SPAS12-->  
+      <!--Predator 12G-->  
       <object path="units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12" />
       <cooked_physics path="units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12" />
       <material_config path="units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12" />
@@ -165,7 +165,7 @@
       <texture path="units/payday2/weapons/wpn_npc_spas12/spas12_df" />
       <texture path="units/payday2/weapons/wpn_npc_spas12/spas12_nm" />
       
-      <!--M1928-->  
+      <!--Chicago Typewriter-->  
       <object path="units/payday2/weapons/wpn_npc_m1928/wpn_npc_m1928" />
       <cooked_physics path="units/payday2/weapons/wpn_npc_m1928/wpn_npc_m1928" />
       <material_config path="units/payday2/weapons/wpn_npc_m1928/wpn_npc_m1928" />
@@ -175,6 +175,17 @@
       <unit path="units/payday2/weapons/wpn_npc_m1928/wpn_npc_m1928" load="true" />
       <texture path="units/payday2/weapons/wpn_npc_m1928/m1928_df" />
       <texture path="units/payday2/weapons/wpn_npc_m1928/m1928_nm" />
+      
+      <!--Lion's Roar-->  
+      <object path="units/payday2/weapons/wpn_npc_vhs/wpn_npc_vhs" />
+      <cooked_physics path="units/payday2/weapons/wpn_npc_vhs/wpn_npc_vhs" />
+      <material_config path="units/payday2/weapons/wpn_npc_vhs/wpn_npc_vhs" />
+      <material_config path="units/payday2/weapons/wpn_npc_vhs/wpn_npc_vhs_contour" />
+      <model path="units/payday2/weapons/wpn_npc_vhs/wpn_npc_vhs" />
+      <sequence_manager path="units/payday2/weapons/wpn_npc_vhs/wpn_npc_vhs" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_vhs/wpn_npc_vhs" load="true" />
+      <texture path="units/payday2/weapons/wpn_npc_vhs/vhs_df" />
+      <texture path="units/payday2/weapons/wpn_npc_vhs/vhs_nm" />
       
     </AddFiles>
 </mod>

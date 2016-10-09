@@ -213,3 +213,10 @@ function WeaponTweakData:_init_data_m1928_npc()
   self.m1928_npc.CLIP_AMMO_MAX = 40
   self.m1928_npc.auto.fire_rate = 0.2
 end
+
+function WeaponTweakData:_init_data_vhs_npc()
+  self.vhs_npc = deep_clone(self.m4_npc)
+  self.vhs_npc.sounds.prefix = "vhs_npc"
+  self.vhs_npc.auto.fire_rate = 0.1
+  self.vhs_npc.has_suppressor = "suppressed_a"
+end

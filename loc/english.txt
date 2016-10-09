@@ -57,5 +57,6 @@
   "item_tecci" : "Bootleg",
   "item_g18c" : "STRYK 18c",
   "item_spas12" : "Predator 12G",
-  "item_m1928" : "Chicago Typewriter"
+  "item_m1928" : "Chicago Typewriter",
+  "item_vhs" : "Lion's Roar"
 }

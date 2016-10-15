@@ -150,13 +150,13 @@ if _G.BotWeapons == nil then
   
   -- difficulty multiplier
   BotWeapons.multiplier = {
-    normal = 0.3,
-    hard = 0.4,
-    overkill = 0.6,
-    overkill_145 = 0.75,
-    easy_wish = 0.9,
-    overkill_290 = 1,
-    sm_wish = 1.25
+    normal = 0.5,
+    hard = 0.75,
+    overkill = 0.875,
+    overkill_145 = 1,
+    easy_wish = 1.125,
+    overkill_290 = 1.25,
+    sm_wish = 1.5
   }
   
   function BotWeapons:Save()
@@ -202,7 +202,7 @@ if _G.BotWeapons == nil then
   end
   
   function BotWeapons:sync_equipment(unit, armor, equipment)
-    if not unit or not alive(unit) then
+    if not unit or not alive(unit) or not armor or not equipment then
       return
     end
     if not Global.game_settings.single_player and LuaNetworking:IsHost() then

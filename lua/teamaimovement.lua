@@ -25,7 +25,9 @@ function TeamAIMovement:check_visual_equipment()
   if equipment > #BotWeapons.equipment_ids - 1 then
     equipment = math.random(#BotWeapons.equipment_ids - 1)
   end
-  BotWeapons:set_equipment(self._unit, armor, equipment)
   self._bot_weapons_armor = armor
   self._bot_weapons_equipment = equipment
+  BotWeapons:set_armor(self._unit, armor)
+  BotWeapons:set_equipment(self._unit, equipment)
+  BotWeapons:sync_armor_and_equipment(self._unit, armor, equipment)
 end

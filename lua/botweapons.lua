@@ -184,24 +184,27 @@ if _G.BotWeapons == nil then
       v.dmg_mul = self.multiplier[Global.game_settings.difficulty] * mul * (falloff and f or 1)
     end
   end
-   
-  function BotWeapons:set_equipment(unit, armor, equipment)
-    if not unit or not alive(unit) then
+  
+  function BotWeapons:set_armor(unit, armor)
+    if not unit or not alive(unit) or not armor then
       return
     end
-    -- armor
     unit:damage():run_sequence_simple("var_model_0" .. armor)
-    -- equipment
+  end
+  
+  function BotWeapons:set_equipment(unit, equipment)
+    if not unit or not alive(unit) or not equipment then
+      return
+    end
     for k, v in pairs(self.equipment[equipment]) do
       local mesh_obj = unit:get_object(Idstring(k))
       if mesh_obj then
         mesh_obj:set_visibility(v)
       end
     end
-    self:sync_equipment(unit, armor, equipment)
   end
   
-  function BotWeapons:sync_equipment(unit, armor, equipment)
+  function BotWeapons:sync_armor_and_equipment(unit, armor, equipment)
     if not unit or not alive(unit) or not armor or not equipment then
       return
     end

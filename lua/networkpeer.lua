@@ -4,7 +4,6 @@ function NetworkPeer:spawn_unit(spawn_point_id, is_drop_in, spawn_as)
   self.orig.spawn_unit(self, spawn_point_id, is_drop_in, spawn_as)
   -- handle sync with dropped in peers
   if LuaNetworking:IsHost() and is_drop_in and managers.criminals:nr_AI_criminals() > 0 then
-    log("[BotWeapons] " .. self:name() .. " dropped in with AI present, requires sync")
     for _, character in pairs(managers.criminals:characters()) do
       if character.taken and alive(character.unit) and character.data.ai then
         local movement = character.unit:movement()

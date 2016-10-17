@@ -1,11 +1,11 @@
 dofile(ModPath .. "lua/botweapons.lua")
 
 function TeamAIMovement:play_redirect(redirect_name, at_time)
-  -- Fix buggy autofire animations when shooting with guns that use pistol animations
+  -- Fix buggy autofire animations when shooting with akimbo guns
   local weapon = self._unit:inventory():equipped_unit()
   if weapon and redirect_name == "recoil_auto" then
     tweak = weapon:base():weapon_tweak_data()
-    if tweak.hold == "pistol" or tweak.hold == "akimbo_pistol" then
+    if tweak.hold == "akimbo_pistol" then
       redirect_name = "recoil_single"
     end
   end

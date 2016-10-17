@@ -102,6 +102,7 @@ function WeaponTweakData:_init_data_x_c45_npc()
   self.x_c45_npc.use_data.selection_index = 1
   self.x_c45_npc.DAMAGE = 1
   self.x_c45_npc.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+  self.x_c45_npc.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
   self.x_c45_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
   self.x_c45_npc.CLIP_AMMO_MAX = 30
   self.x_c45_npc.NR_CLIPS_MAX = 5
@@ -219,4 +220,11 @@ function WeaponTweakData:_init_data_vhs_npc()
   self.vhs_npc.sounds.prefix = "vhs_npc"
   self.vhs_npc.auto.fire_rate = 0.1
   self.vhs_npc.has_suppressor = "suppressed_a"
+end
+
+function WeaponTweakData:_init_data_x_b92fs_npc()
+  self.x_b92fs_npc = deep_clone(self.x_c45_npc)
+  self.x_b92fs_npc.sounds.prefix = "beretta_npc"
+  self.x_b92fs_npc.alert_size = 300
+  self.x_b92fs_npc.suppression = 0.3
 end

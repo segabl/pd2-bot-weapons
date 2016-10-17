@@ -187,5 +187,8 @@
       <texture path="units/payday2/weapons/wpn_npc_vhs/vhs_df" />
       <texture path="units/payday2/weapons/wpn_npc_vhs/vhs_nm" />
       
+      <!--Akimbo Bernetti-->
+      <unit path="units/payday2/weapons/wpn_npc_x_beretta92/wpn_npc_x_beretta92" load="true" />
+      
     </AddFiles>
 </mod>

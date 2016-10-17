@@ -87,6 +87,7 @@ if _G.BotWeapons == nil then
     "item_spas12",
     "item_m1928",
     "item_vhs",
+    "item_x_beretta92",
     -- random
     "item_random"
   }
@@ -134,7 +135,8 @@ if _G.BotWeapons == nil then
     { unit = Idstring("units/payday2/weapons/wpn_npc_g18c/wpn_npc_g18c"), type = "pistol" },
     { unit = Idstring("units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12"), type = "shotgun" },
     { unit = Idstring("units/payday2/weapons/wpn_npc_m1928/wpn_npc_m1928"), type = "smg" },
-    { unit = Idstring("units/payday2/weapons/wpn_npc_vhs/wpn_npc_vhs"), type = "rifle" }
+    { unit = Idstring("units/payday2/weapons/wpn_npc_vhs/wpn_npc_vhs"), type = "rifle" },
+    { unit = Idstring("units/payday2/weapons/wpn_npc_x_beretta92/wpn_npc_x_beretta92"), type = "pistol" }
   }
   
   -- index of the last weapon that is allowed in mp
@@ -213,7 +215,6 @@ if _G.BotWeapons == nil then
       managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, "var_model_0" .. armor)
       -- equipment
       local name = managers.criminals:character_name_by_unit(unit)
-      log("[BotWeapons] Sending equipment info for " .. name)
       LuaNetworking:SendToPeers("bot_weapons_equipment", name .. "/" .. equipment)
     end
   end
@@ -247,13 +248,11 @@ if _G.BotWeapons == nil then
     if id == "bot_weapons_active" then
       local peer = LuaNetworking:GetPeers()[sender]
       if peer then
-        log("[BotWeapons] Received usage info from " .. peer:name())
         peer._has_bot_weapons = true
       end
     elseif id == "bot_weapons_equipment" and managers.criminals then
       local name = data:sub(1, data:find("/") - 1)
       local equipment = tonumber(data:sub(data:find("/") + 1))
-      log("[BotWeapons] Received equipment info for " .. name)
       BotWeapons:set_equipment(managers.criminals:character_unit_by_name(name), equipment)
     end
   end)

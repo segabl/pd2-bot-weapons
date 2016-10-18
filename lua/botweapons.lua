@@ -251,9 +251,11 @@ if _G.BotWeapons == nil then
         peer._has_bot_weapons = true
       end
     elseif id == "bot_weapons_equipment" and managers.criminals then
-      local name = data:sub(1, data:find("/") - 1)
-      local equipment = tonumber(data:sub(data:find("/") + 1))
-      BotWeapons:set_equipment(managers.criminals:character_unit_by_name(name), equipment)
+      if data:find("/") ~= nil then
+        local name = data:sub(1, data:find("/") - 1)
+        local equipment = tonumber(data:sub(data:find("/") + 1))
+        BotWeapons:set_equipment(managers.criminals:character_unit_by_name(name), equipment)
+      end
     end
   end)
 

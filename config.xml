@@ -57,7 +57,7 @@
       <texture path="units/payday2/weapons/wpn_npc_boot/boot_nm" />
       
       <!--Akimbo Chimano-->
-      <unit path="units/payday2/weapons/wpn_npc_c45/wpn_npc_x_c45" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_c45/wpn_npc_x_c45" load="true" force="true" />
       
       <!--Akimbo Compact-5-->
       <unit path="units/payday2/weapons/wpn_npc_mp5/wpn_npc_x_mp5" load="true" />

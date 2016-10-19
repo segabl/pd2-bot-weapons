@@ -24,17 +24,9 @@ function WeaponTweakData:_init_data_r870_npc()
 end
 
 function WeaponTweakData:_init_data_mossberg_npc()
+  self.orig._init_data_mossberg_npc(self)
   self.mossberg_npc.sounds.prefix = "huntsman_npc"
-  self.mossberg_npc.use_data.selection_index = 2
-  self.mossberg_npc.DAMAGE = 6
-  self.mossberg_npc.muzzleflash = "effects/payday2/particles/weapons/762_auto"
-  self.mossberg_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug_semi"
   self.mossberg_npc.CLIP_AMMO_MAX = 2
-  self.mossberg_npc.NR_CLIPS_MAX = 6
-  self.mossberg_npc.hold = "rifle"
-  self.mossberg_npc.alert_size = 3000
-  self.mossberg_npc.suppression = 2
-  self.mossberg_npc.is_shotgun = true
 end
 
 function WeaponTweakData:_init_data_mp5_npc()
@@ -60,17 +52,9 @@ function WeaponTweakData:_init_data_famas_npc()
 end
 
 function WeaponTweakData:_init_data_m14_npc()
-  self.m14_npc.sounds.prefix = "m14_npc"
-  self.m14_npc.use_data.selection_index = 2
-  self.m14_npc.DAMAGE = 4
-  self.m14_npc.muzzleflash = "effects/payday2/particles/weapons/762_auto"
-  self.m14_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556"
+  self.orig._init_data_m14_npc(self)
   self.m14_npc.CLIP_AMMO_MAX = 10
-  self.m14_npc.NR_CLIPS_MAX = 8
-  self.m14_npc.auto.fire_rate = 0.3
-  self.m14_npc.hold = "rifle"
-  self.m14_npc.alert_size = 5000
-  self.m14_npc.suppression = 2
+  self.m14_npc.auto.fire_rate = 0.25
   self.m14_npc.usage = "m14"
 end
 
@@ -82,48 +66,23 @@ function WeaponTweakData:_init_data_p90_npc()
 end
 
 function WeaponTweakData:_init_data_judge_npc()
-  self.judge_npc.sounds.prefix = "judge_npc"
-  self.judge_npc.use_data.selection_index = 1
-  self.judge_npc.DAMAGE = 4
-  self.judge_npc.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+  self.orig._init_data_judge_npc(self)
   self.judge_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug_semi"
-  self.judge_npc.CLIP_AMMO_MAX = 6
-  self.judge_npc.NR_CLIPS_MAX = 8
-  self.judge_npc.hold = "pistol"
-  self.judge_npc.alert_size = 5000
-  self.judge_npc.suppression = 1.8
   self.judge_npc.is_shotgun = true
   self.judge_npc.auto = nil
   self.judge_npc.usage = "judge"
 end
 
 function WeaponTweakData:_init_data_x_c45_npc()
-  self.x_c45_npc.sounds.prefix = "c45_npc"
-  self.x_c45_npc.use_data.selection_index = 1
-  self.x_c45_npc.DAMAGE = 1
-  self.x_c45_npc.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
-  self.x_c45_npc.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
-  self.x_c45_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+  self.orig._init_data_x_c45_npc(self)
   self.x_c45_npc.CLIP_AMMO_MAX = 30
-  self.x_c45_npc.NR_CLIPS_MAX = 5
-  self.x_c45_npc.hold = "akimbo_pistol"
-  self.x_c45_npc.alert_size = 2500
-  self.x_c45_npc.suppression = 1
 end
 
 function WeaponTweakData:_init_data_x_sr2_npc()
-  self.x_sr2_npc.sounds.prefix = "sr2_x_npc"
-  self.x_sr2_npc.use_data.selection_index = 2
+  self.orig._init_data_x_sr2_npc(self)
   self.x_sr2_npc.DAMAGE = 1
-  self.x_sr2_npc.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
-  self.x_sr2_npc.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
-  self.x_sr2_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
   self.x_sr2_npc.CLIP_AMMO_MAX = 60
-  self.x_sr2_npc.NR_CLIPS_MAX = 5
   self.x_sr2_npc.auto.fire_rate = 0.12
-  self.x_sr2_npc.hold = "akimbo_pistol"
-  self.x_sr2_npc.alert_size = 1800
-  self.x_sr2_npc.suppression = 2
   self.x_sr2_npc.usage = "akimbo_auto"
 end
 
@@ -171,28 +130,23 @@ function WeaponTweakData:_init_data_deagle_npc()
 end
 
 function WeaponTweakData:_init_data_hk21_npc()
-  self.hk21_npc.sounds.prefix = "hk23e_npc"
-  self.hk21_npc.use_data.selection_index = 2
-  self.hk21_npc.DAMAGE = 2
-  self.hk21_npc.muzzleflash = "effects/payday2/particles/weapons/big_762_auto"
-  self.hk21_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556_lmg"
+  self.orig._init_data_hk21_npc(self)
   self.hk21_npc.CLIP_AMMO_MAX = 200
-  self.hk21_npc.NR_CLIPS_MAX = 5
-  self.hk21_npc.auto.fire_rate = 0.15
-  self.hk21_npc.hold = "rifle"
-  self.hk21_npc.alert_size = 5000
-  self.hk21_npc.suppression = 1
   self.hk21_npc.usage = "m249"
   self.hk21_secondary_npc = deep_clone(self.hk21_npc)
   self.hk21_secondary_npc.use_data.selection_index = 1
 end
 
+function WeaponTweakData:_init_data_m249_npc()
+  self.orig._init_data_m249_npc(self)
+  self.rpk_lmg_npc.sounds.prefix = "rpk_npc"
+end
+
 function WeaponTweakData:_init_data_tecci_npc()
-  self.tecci_npc = deep_clone(self.m249_npc)
+  self.tecci_npc = deep_clone(self.hk21_npc)
   self.tecci_npc.sounds.prefix = "tecci_npc"
   self.tecci_npc.muzzleflash = "effects/payday2/particles/weapons/556_auto"
   self.tecci_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556"
-  self.tecci_npc.auto.fire_rate = 0.15
 end
 
 function WeaponTweakData:_init_data_glock_18_npc()

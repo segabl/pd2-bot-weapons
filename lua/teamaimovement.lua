@@ -16,18 +16,24 @@ function TeamAIMovement:check_visual_equipment()
   -- set armor & deployables for team ai
   local name = managers.criminals:character_name_by_unit(self._unit)
   -- choose armor models
-  local armor = BotWeapons._data.toggle_override_armor and BotWeapons._data.override_armor or BotWeapons._data[name .. "_armor"] or 1
-  if armor > #BotWeapons.armor_ids - 1 then
-    armor = math.random(#BotWeapons.armor_ids - 1)
+  local armor_index = BotWeapons._data[name .. "_armor"] or 1
+  if BotWeapons._data.toggle_override_armor then
+    armor_index = BotWeapons._data.override_armor or #BotWeapons.armor
+  end
+  if armor_index > #BotWeapons.armor - 1 then
+    armor_index = math.random(#BotWeapons.armor - 1)
   end
   -- choose equipment models
-  local equipment = BotWeapons._data.toggle_override_equipment and BotWeapons._data.override_equipment or BotWeapons._data[name .. "_equipment"] or 1
-  if equipment > #BotWeapons.equipment_ids - 1 then
-    equipment = math.random(#BotWeapons.equipment_ids - 1)
+  local equipment_index = BotWeapons._data[name .. "_equipment"] or 1
+  if BotWeapons._data.toggle_override_equipment then
+    equipment_index = BotWeapons._data.override_equipment or #BotWeapons.equipment
   end
-  self._bot_weapons_armor = armor
-  self._bot_weapons_equipment = equipment
-  BotWeapons:set_armor(self._unit, armor)
-  BotWeapons:set_equipment(self._unit, equipment)
-  BotWeapons:sync_armor_and_equipment(self._unit, armor, equipment)
+  if equipment_index > #BotWeapons.equipment - 1 then
+    equipment_index = math.random(#BotWeapons.equipment - 1)
+  end
+  self._armor_index = armor_index
+  self._equipment_index = equipment_index
+  BotWeapons:set_armor(self._unit, armor_index)
+  BotWeapons:set_equipment(self._unit, equipment_index)
+  BotWeapons:sync_armor_and_equipment(self._unit, armor_index, equipment_index)
 end

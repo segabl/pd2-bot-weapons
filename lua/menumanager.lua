@@ -52,35 +52,35 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     value = BotWeapons._data["toggle_override_armor"] or false,
     menu_id = menu_id_armor,
     priority = 98
- })
+  })
   
   MenuHelper:AddMultipleChoice({
     id = "override_armor",
     title = "menu_override_name",
     callback = "BotWeapons_select",
-    items = BotWeapons.armor_ids;
+    items = BeardLib.Utils:GetSubValues(BotWeapons.armor, "name"),
     menu_id = menu_id_armor,
-    value = BotWeapons._data["override_armor"] or (#BotWeapons.armor_ids),
+    value = BotWeapons._data["override_armor"] or #BotWeapons.armor,
     priority = 97
- })
+  })
   
   MenuHelper:AddDivider({
     id = "divider2",
     size = 32,
     menu_id = menu_id_armor,
     priority = 96,
- })
+  })
 
   for i, c in ipairs(CriminalsManager.character_names()) do
     MenuHelper:AddMultipleChoice({
       id = c .. "_armor",
       title = "menu_" .. c,
       callback = "BotWeapons_select",
-      items = BotWeapons.armor_ids;
+      items = BeardLib.Utils:GetSubValues(BotWeapons.armor, "name"),
       menu_id = menu_id_armor,
       value = BotWeapons._data[c .. "_armor"] or 1,
       priority = 96 - i
-   })
+    })
   end
   
   -- EQUIPMENT MENU
@@ -92,35 +92,35 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     value = BotWeapons._data["toggle_override_equipment"] or false,
     menu_id = menu_id_equipment,
     priority = 98
- })
+  })
   
   MenuHelper:AddMultipleChoice({
     id = "override_equipment",
     title = "menu_override_name",
     callback = "BotWeapons_select",
-    items = BotWeapons.equipment_ids;
+    items = BeardLib.Utils:GetSubValues(BotWeapons.equipment, "name"),
     menu_id = menu_id_equipment,
-    value = BotWeapons._data["override_equipment"] or (#BotWeapons.equipment_ids),
+    value = BotWeapons._data["override_equipment"] or #BotWeapons.equipment,
     priority = 97
- })
+  })
   
   MenuHelper:AddDivider({
     id = "divider2",
     size = 32,
     menu_id = menu_id_equipment,
     priority = 96,
- })
+  })
 
   for i, c in ipairs(CriminalsManager.character_names()) do
     MenuHelper:AddMultipleChoice({
       id = c .. "_equipment",
       title = "menu_" .. c,
       callback = "BotWeapons_select",
-      items = BotWeapons.equipment_ids;
+      items = BeardLib.Utils:GetSubValues(BotWeapons.equipment, "name"),
       menu_id = menu_id_equipment,
       value = BotWeapons._data[c .. "_equipment"] or 1,
       priority = 96 - i
-   })
+    })
   end
   
   -- WEAPONS MENU
@@ -132,14 +132,14 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     value = BotWeapons._data["toggle_adjust_damage"],
     menu_id = menu_id_weapons,
     priority = 100
- })
+  })
 
   MenuHelper:AddDivider({
     id = "divider1",
     size = 32,
     menu_id = menu_id_weapons,
     priority = 99,
- })
+  })
 
   MenuHelper:AddToggle({
     id = "toggle_override_weapons",
@@ -149,35 +149,35 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     value = BotWeapons._data["toggle_override_weapons"] or false,
     menu_id = menu_id_weapons,
     priority = 98
- })
+  })
   
   MenuHelper:AddMultipleChoice({
     id = "override_weapons",
     title = "menu_override_name",
     callback = "BotWeapons_select",
-    items = BotWeapons.weapon_ids;
+    items = BeardLib.Utils:GetSubValues(BotWeapons.weapons, "name"),
     menu_id = menu_id_weapons,
-    value = BotWeapons._data["override_weapons"] or (#BotWeapons.weapon_ids),
+    value = BotWeapons._data["override_weapons"] or #BotWeapons.weapons,
     priority = 97
- })
+  })
   
   MenuHelper:AddDivider({
     id = "divider2",
     size = 32,
     menu_id = menu_id_weapons,
     priority = 96,
- })
+  })
 
   for i, c in ipairs(CriminalsManager.character_names()) do
     MenuHelper:AddMultipleChoice({
       id = c .. "_weapon",
       title = "menu_" .. c,
       callback = "BotWeapons_select",
-      items = BotWeapons.weapon_ids;
+      items = BeardLib.Utils:GetSubValues(BotWeapons.weapons, "name"),
       menu_id = menu_id_weapons,
       value = BotWeapons._data[c .. "_weapon"] or 4,
       priority = 96 - i
-   })
+    })
   end
   
 end)

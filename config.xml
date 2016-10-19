@@ -57,13 +57,13 @@
       <texture path="units/payday2/weapons/wpn_npc_boot/boot_nm" />
       
       <!--Akimbo Chimano-->
-      <unit path="units/payday2/weapons/wpn_npc_x_c45/wpn_npc_x_c45" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_c45/wpn_npc_x_c45" load="true" />
       
       <!--Akimbo Compact-5-->
-      <unit path="units/payday2/weapons/wpn_npc_x_mp5/wpn_npc_x_mp5" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_mp5/wpn_npc_x_mp5" load="true" />
       
       <!--Akimbo Krinkov-->
-      <unit path="units/payday2/weapons/wpn_npc_x_akmsu/wpn_npc_x_akmsu" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_akmsu/wpn_npc_x_akmsu" load="true" />
       
       <!--Raven-->  
       <object path="units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg" />
@@ -119,7 +119,7 @@
       <texture path="units/payday2/weapons/wpn_npc_deagle/deagle_nm" />
       
       <!--Akimbo Heather-->
-      <unit path="units/payday2/weapons/wpn_npc_x_sr2/wpn_npc_x_sr2" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_sr2/wpn_npc_x_sr2" load="true" />
       
       <!--Brenner-21-->  
       <object path="units/payday2/weapons/wpn_npc_hk21/wpn_npc_hk21" />
@@ -188,7 +188,7 @@
       <texture path="units/payday2/weapons/wpn_npc_vhs/vhs_nm" />
       
       <!--Akimbo Bernetti-->
-      <unit path="units/payday2/weapons/wpn_npc_x_beretta92/wpn_npc_x_beretta92" load="true" />
+      <unit path="units/payday2/weapons/wpn_npc_beretta92/wpn_npc_x_beretta92" load="true" />
       
     </AddFiles>
 </mod>

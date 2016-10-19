@@ -1,9 +1,0 @@
-<materials version="3" group="wpn_npc_g18c">
-    <material name="mtr_pistol" version="2" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:RL_3RD_WEAPONS">
-        <bump_normal_texture file="units/payday2/weapons/wpn_npc_g18c/pistol_nm"/>
-        <diffuse_texture file="units/payday2/weapons/wpn_npc_g18c/g18c_df"/>
-    </material>
-    <material name="mtr_pistol_lod" version="2" render_template="generic:DIFFUSE_TEXTURE:RL_3RD_WEAPONS">
-        <diffuse_texture file="units/payday2/weapons/wpn_npc_g18c/g18c_df"/>
-    </material>
-</materials>

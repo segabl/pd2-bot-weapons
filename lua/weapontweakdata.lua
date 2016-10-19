@@ -73,9 +73,10 @@ function WeaponTweakData:_init_data_judge_npc()
   self.judge_npc.usage = "judge"
 end
 
-function WeaponTweakData:_init_data_x_c45_npc()
-  self.orig._init_data_x_c45_npc(self)
-  self.x_c45_npc.CLIP_AMMO_MAX = 30
+function WeaponTweakData:_init_data_x_g17_npc()
+  self.orig._init_data_x_g17_npc(self)
+  self.x_g17_npc.CLIP_AMMO_MAX = 30
+  self.x_g17_npc.auto = nil
 end
 
 function WeaponTweakData:_init_data_x_sr2_npc()
@@ -177,8 +178,7 @@ function WeaponTweakData:_init_data_vhs_npc()
 end
 
 function WeaponTweakData:_init_data_x_b92fs_npc()
-  self.x_b92fs_npc = deep_clone(self.x_c45_npc)
-  self.x_b92fs_npc.sounds.prefix = "beretta_npc"
-  self.x_b92fs_npc.alert_size = 300
-  self.x_b92fs_npc.suppression = 0.3
+  self.orig._init_data_x_b92fs_npc(self)
+  self.x_b92fs_npc.CLIP_AMMO_MAX = 30
+  self.x_b92fs_npc.auto = nil
 end

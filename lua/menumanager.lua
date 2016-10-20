@@ -58,9 +58,9 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     id = "override_armor",
     title = "menu_override_name",
     callback = "BotWeapons_select",
-    items = BeardLib.Utils:GetSubValues(BotWeapons.armor, "name"),
+    items = BotWeapons:get_menu_list(BotWeapons.armor),
     menu_id = menu_id_armor,
-    value = BotWeapons._data["override_armor"] or #BotWeapons.armor,
+    value = BotWeapons._data["override_armor"] or #BotWeapons.armor + 1,
     priority = 97
   })
   
@@ -76,7 +76,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
       id = c .. "_armor",
       title = "menu_" .. c,
       callback = "BotWeapons_select",
-      items = BeardLib.Utils:GetSubValues(BotWeapons.armor, "name"),
+      items = BotWeapons:get_menu_list(BotWeapons.armor),
       menu_id = menu_id_armor,
       value = BotWeapons._data[c .. "_armor"] or 1,
       priority = 96 - i
@@ -98,9 +98,9 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     id = "override_equipment",
     title = "menu_override_name",
     callback = "BotWeapons_select",
-    items = BeardLib.Utils:GetSubValues(BotWeapons.equipment, "name"),
+    items = BotWeapons:get_menu_list(BotWeapons.equipment),
     menu_id = menu_id_equipment,
-    value = BotWeapons._data["override_equipment"] or #BotWeapons.equipment,
+    value = BotWeapons._data["override_equipment"] or #BotWeapons.equipment + 1,
     priority = 97
   })
   
@@ -116,7 +116,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
       id = c .. "_equipment",
       title = "menu_" .. c,
       callback = "BotWeapons_select",
-      items = BeardLib.Utils:GetSubValues(BotWeapons.equipment, "name"),
+      items = BotWeapons:get_menu_list(BotWeapons.equipment),
       menu_id = menu_id_equipment,
       value = BotWeapons._data[c .. "_equipment"] or 1,
       priority = 96 - i
@@ -155,9 +155,9 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     id = "override_weapons",
     title = "menu_override_name",
     callback = "BotWeapons_select",
-    items = BeardLib.Utils:GetSubValues(BotWeapons.weapons, "name"),
+    items = BotWeapons:get_menu_list(BotWeapons.weapons),
     menu_id = menu_id_weapons,
-    value = BotWeapons._data["override_weapons"] or #BotWeapons.weapons,
+    value = BotWeapons._data["override_weapons"] or #BotWeapons.weapons + 1,
     priority = 97
   })
   
@@ -173,9 +173,9 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
       id = c .. "_weapon",
       title = "menu_" .. c,
       callback = "BotWeapons_select",
-      items = BeardLib.Utils:GetSubValues(BotWeapons.weapons, "name"),
+      items = BotWeapons:get_menu_list(BotWeapons.weapons),
       menu_id = menu_id_weapons,
-      value = BotWeapons._data[c .. "_weapon"] or 4,
+      value = BotWeapons._data[c .. "_weapon"] or 1,
       priority = 96 - i
     })
   end
@@ -193,3 +193,13 @@ Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenus_BotWeapons
   MenuHelper:AddMenuItem(nodes[menu_id_main], menu_id_equipment, "BotWeapons_menu_equipment_name", "BotWeapons_menu_equipment_desc", menu_id_armor)
   MenuHelper:AddMenuItem(nodes[menu_id_main], menu_id_weapons, "BotWeapons_menu_weapons_name", "BotWeapons_menu_weapons_desc", menu_id_equipment)
 end)
+
+-- Lock lobby if custom weapons are enabled
+local choice_lobby_permission_original = MenuCallbackHandler.choice_lobby_permission
+function MenuCallbackHandler:choice_lobby_permission(item)
+  if item:value() ~= "private" and BotWeapons:custom_weapons_allowed() then
+    item:set_value("private")
+    return
+  end
+  choice_lobby_permission_original(self, item)
+end

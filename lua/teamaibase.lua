@@ -1,7 +1,7 @@
 dofile(ModPath .. "lua/botweapons.lua")
 
-function TeamAIBase:default_weapon_name(slot)
-  -- override default weapons
+function TeamAIBase:default_weapon_name(...)
+  -- override default weapons else
   if self._previous_weapon_choice then
     return self._previous_weapon_choice
   end
@@ -9,9 +9,9 @@ function TeamAIBase:default_weapon_name(slot)
   if BotWeapons._data.toggle_override_weapons then
     weapon_index = BotWeapons._data.override_weapons or #BotWeapons.weapons
   end
-  if weapon_index > #BotWeapons.weapons - 1 then
-    weapon_index = math.random(#BotWeapons.weapons - 1)
+  if weapon_index > #BotWeapons.weapons then
+    weapon_index = math.random(#BotWeapons.weapons)
   end
-  self._previous_weapon_choice = BotWeapons.weapons[weapon_index].unit
+  self._previous_weapon_choice = BotWeapons.weapons[weapon_index]
   return self._previous_weapon_choice
 end

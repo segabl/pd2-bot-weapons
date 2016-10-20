@@ -1,10 +1,9 @@
 dofile(ModPath .. "lua/botweapons.lua")
 
-CloneClass(CharacterTweakData)
-
+local _presets_original = CharacterTweakData._presets
 function CharacterTweakData:_presets(...)
-  log("[BotWeapons] Setting up additional npc weapon presets")
-  local presets = self.orig._presets(self, ...)
+  log("[BotWeapons] Setting up weapon presets")
+  local presets = _presets_original(self, ...)
   
   -- loop through all weapon presets and create new presets from old ones for all the weapons
   -- that are used by cops and not only team AI so to not mess with any presets
@@ -22,7 +21,7 @@ function CharacterTweakData:_presets(...)
   -- gang_member presets
   -- pistols
   presets.weapon.gang_member.beretta92.spread = 15
-  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.beretta92, 5, false)
+  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.beretta92, 6, false)
   
   presets.weapon.gang_member.c45 = deep_clone(presets.weapon.gang_member.beretta92)
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.c45, 6, false)
@@ -48,18 +47,16 @@ function CharacterTweakData:_presets(...)
   presets.weapon.gang_member.m14.FALLOFF[2].mode = { 1, 0.4, 0.3, 0.1 }
   presets.weapon.gang_member.m14.FALLOFF[3].mode = { 1, 0.2, 0, 0 }
   -- smgs
-  presets.weapon.gang_member.mp5.spread = 30
   presets.weapon.gang_member.mp5 = deep_clone(presets.weapon.gang_member.m4)
+  presets.weapon.gang_member.mp5.spread = 30
+  
+  presets.weapon.gang_member.p90 = deep_clone(presets.weapon.gang_member.m4)
+  presets.weapon.gang_member.p90.RELOAD_SPEED = 0.5
+  presets.weapon.gang_member.p90.spread = 40
   -- lmg
   presets.weapon.gang_member.m249.autofire_rounds = { 20, 40 }
   presets.weapon.gang_member.m249.RELOAD_SPEED = 0.4
-  presets.weapon.gang_member.m249.spread = 60
-  presets.weapon.gang_member.m249.FALLOFF[1].acc = {0.3, 0.7}
-  presets.weapon.gang_member.m249.FALLOFF[2].acc = {0.1, 0.2}
-  presets.weapon.gang_member.m249.FALLOFF[3].acc = {0, 0.1}
-  presets.weapon.gang_member.m249.FALLOFF[1].recoil = {0, 1}
-  presets.weapon.gang_member.m249.FALLOFF[2].recoil = {1, 2}
-  presets.weapon.gang_member.m249.FALLOFF[3].recoil = {2, 3}
+  presets.weapon.gang_member.m249.spread = 80
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.m249, 2, false)
   -- shotguns
   presets.weapon.gang_member.r870.FALLOFF[1].r = 600
@@ -71,8 +68,7 @@ function CharacterTweakData:_presets(...)
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.mossberg, 3, true)
   
   presets.weapon.gang_member.judge = deep_clone(presets.weapon.gang_member.r870)
-  presets.weapon.gang_member.judge.RELOAD_SPEED = 0.5
-  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.judge, 3.5, true)
+  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.judge, 4, true)
   -- auto shotguns
   presets.weapon.gang_member.saiga = deep_clone(presets.weapon.gang_member.r870)
   presets.weapon.gang_member.saiga.RELOAD_SPEED = 0.5
@@ -80,37 +76,33 @@ function CharacterTweakData:_presets(...)
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.saiga, 1.5, true)
   -- akimbo
   presets.weapon.gang_member.akimbo_pistol = deep_clone(presets.weapon.gang_member.m4)
-  presets.weapon.gang_member.akimbo_pistol.autofire_rounds = { 2, 4 }
   presets.weapon.gang_member.akimbo_pistol.RELOAD_SPEED = 0.5
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.akimbo_pistol, 5, false)
   
   presets.weapon.gang_member.akimbo_auto = deep_clone(presets.weapon.gang_member.m4)
   presets.weapon.gang_member.akimbo_auto.RELOAD_SPEED = 0.3
-  presets.weapon.gang_member.akimbo_auto.spread = 50
-  presets.weapon.gang_member.akimbo_auto.FALLOFF[1].acc = {0.3, 0.7}
-  presets.weapon.gang_member.akimbo_auto.FALLOFF[2].acc = {0.1, 0.2}
-  presets.weapon.gang_member.akimbo_auto.FALLOFF[3].acc = {0, 0.1}
-  presets.weapon.gang_member.akimbo_auto.FALLOFF[1].recoil = {0, 1}
-  presets.weapon.gang_member.akimbo_auto.FALLOFF[2].recoil = {1, 2}
-  presets.weapon.gang_member.akimbo_auto.FALLOFF[3].recoil = {2, 3}
+  presets.weapon.gang_member.akimbo_auto.spread = 60
 
   return presets
 end
 
+local _init_tank_original = CharacterTweakData._init_tank
 function CharacterTweakData:_init_tank(...)
-  self.orig._init_tank(self, ...)
+  _init_tank_original(self, ...)
   -- transfer ak47 weapon settings to new m249 preset
   self.tank.weapon.m249 = deep_clone(self.tank.weapon.ak47)
 end
 
+local _init_mobster_boss_original = CharacterTweakData._init_mobster_boss
 function CharacterTweakData:_init_mobster_boss(...)
-  self.orig._init_mobster_boss(self, ...)
+  _init_mobster_boss_original(self, ...)
   -- transfer ak47 weapon settings to new m249 preset
   self.mobster_boss.weapon.m249 = deep_clone(self.mobster_boss.weapon.ak47)
 end
 
+local _init_biker_boss_original = CharacterTweakData._init_biker_boss
 function CharacterTweakData:_init_biker_boss(...)
-  self.orig._init_biker_boss(self, ...)
+  _init_biker_boss_original(self, ...)
   -- transfer ak47 weapon settings to new m249 preset
   self.biker_boss.weapon.m249 = deep_clone(self.biker_boss.weapon.ak47)
 end

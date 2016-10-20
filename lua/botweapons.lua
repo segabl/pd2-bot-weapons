@@ -4,87 +4,6 @@ if _G.BotWeapons == nil then
   BotWeapons._data_path = SavePath .. "bot_weapons_data.txt"
   BotWeapons._data = {}
   
-  BotWeapons.armor = {
-    { name = "bm_armor_level_1" },
-    { name = "bm_armor_level_2" },
-    { name = "bm_armor_level_3" },
-    { name = "bm_armor_level_4" },
-    { name = "bm_armor_level_5" },
-    { name = "bm_armor_level_6" },
-    { name = "bm_armor_level_7" },
-    { name = "item_random" }
-  }
-  
-  BotWeapons.equipment = {
-    { name = "item_none", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = false }},
-    { name = "bm_equipment_ammo_bag", parts = { g_ammobag = true, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = false }},
-    { name = "bm_equipment_armor_kit", parts = { g_ammobag = false, g_armorbag = true, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = false }},
-    { name = "bm_equipment_bodybags_bag", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = true, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = false }},
-    { name = "bm_equipment_doctor_bag", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = true, g_sentrybag = false, g_toolbag = false }},
-    { name = "bm_equipment_ecm_jammer", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = true }},
-    { name = "bm_equipment_first_aid_kit", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = true, g_medicbag = false, g_sentrybag = false, g_toolbag = false }},
-    { name = "bm_equipment_sentry_gun", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = true, g_toolbag = false }},
-    { name = "item_random" }
-  }
-  
-  BotWeapons.weapons = {
-    { name = "item_beretta92", unit = "wpn_fps_pis_b92fs_npc", type = "pistol" },
-    { name = "item_c45", unit = "wpn_fps_pis_g17_npc", type = "pistol" },
-    { name = "item_raging_bull", unit = "wpn_fps_pis_rage_npc", type = "pistol" },
-    { name = "item_m4", unit = "wpn_fps_ass_m4_npc", type = "rifle" },
-    { name = "item_ak47", unit = "wpn_fps_ass_74_npc", type = "rifle" },
-    { name = "item_r870", unit = "wpn_fps_shot_r870_npc", type = "shotgun" },
-    { name = "item_mossberg", unit = "wpn_fps_shot_huntsman_npc", type = "shotgun" },
-    { name = "item_mp5", unit = "wpn_fps_smg_mp5_npc", type = "smg" },
-    { name = "item_mp5_tactical", unit = "wpn_fps_smg_mp5_npc", type = "smg" },
-    { name = "item_mp9", unit = "wpn_fps_smg_mp9_npc", type = "smg" },
-    { name = "item_mac11", unit = "wpn_fps_smg_mac10_npc", type = "smg" },
-    { name = "item_m249", unit = "wpn_fps_lmg_m249_npc", type = "lmg" },
-    { name = "item_benelli", unit = "wpn_fps_sho_ben_npc", type = "shotgun" },
-    { name = "item_g36", unit = "wpn_fps_ass_g36_npc", type = "rifle" },
-    { name = "item_ump", unit = "wpn_fps_ass_g36_npc", type = "smg" },
-    { name = "item_scar_murky", unit = "wpn_fps_ass_scar_npc", type = "rifle" },
-    { name = "item_asval", unit = "wpn_fps_ass_asval_npc", type = "rifle" },
-    { name = "item_sr2", unit = "wpn_fps_smg_sr2_npc", type = "smg" },
-    { name = "item_akmsu", unit = "wpn_fps_smg_akmsu_npc", type = "smg" },
-    { name = "item_rpk", unit = "wpn_fps_lmg_rpk_npc", type = "lmg" },
-    { name = "item_saiga", unit = "wpn_fps_shot_saiga_npc", type = "shotgun" },
-    { name = "item_famas", unit = "wpn_fps_ass_famas_npc", type = "rifle" },
-    { name = "item_m14", unit = "wpn_fps_ass_m14_npc", type = "rifle" },
-    { name = "item_p90", unit = "wpn_fps_smg_p90_npc", type = "smg" },
-    { name = "item_judge", unit = "wpn_fps_pis_judge_npc", type = "shotgun" },
-    { name = "item_boot", unit = "wpn_fps_sho_boot_npc", type = "shotgun" },
-    { name = "item_x_c45", unit = "wpn_fps_pis_x_g17_npc", type = "pistol" },
-    { name = "item_x_mp5", unit = "wpn_fps_smg_x_mp5_npc", type = "smg" },
-    { name = "item_x_akmsu", unit = "wpn_fps_smg_x_akmsu_npc", type = "smg" },
-    { name = "item_ksg", unit = "wpn_fps_sho_ksg_npc", type = "shotgun" },
-    { name = "item_l85a2", unit = "wpn_fps_ass_l85a2_npc", type = "rifle" },
-    { name = "item_sterling", unit = "wpn_fps_smg_sterling_npc", type = "smg" },
-    { name = "item_s552", unit = "wpn_fps_ass_s552_npc", type = "rifle" },
-    { name = "item_deagle", unit = "wpn_fps_pis_deagle_npc", type = "pistol" },
-    { name = "item_x_sr2", unit = "wpn_fps_smg_x_sr2_npc", type = "smg" },
-    { name = "item_hk21", unit = "wpn_fps_lmg_hk21_npc", type = "lmg" },
-    { name = "item_tecci", unit = "wpn_fps_ass_tecci_npc", type = "rifle" },
-    { name = "item_g18c", unit = "wpn_fps_pis_g18c_npc", type = "pistol" },
-    { name = "item_spas12", unit = "wpn_fps_sho_spas12_npc", type = "shotgun" },
-    { name = "item_m1928", unit = "wpn_fps_smg_thompson_npc", type = "smg" },
-    { name = "item_vhs", unit = "wpn_fps_ass_vhs_npc", type = "rifle" },
-    { name = "item_x_beretta92", unit = "wpn_fps_x_b92fs_npc", type = "pistol" },
-    -- random
-    { name = "item_random" }
-  }
-  
-  -- difficulty multiplier
-  BotWeapons.multiplier = {
-    normal = 0.5,
-    hard = 0.75,
-    overkill = 0.875,
-    overkill_145 = 1,
-    easy_wish = 1.125,
-    overkill_290 = 1.25,
-    sm_wish = 1.5
-  }
-  
   function BotWeapons:Save()
     local file = io.open(self._data_path, "w+")
     if file then
@@ -98,6 +17,74 @@ if _G.BotWeapons == nil then
     if file then
       self._data = json.decode(file:read("*all"))
       file:close()
+    end
+  end
+  
+  function BotWeapons:init()
+    self:Load()
+  
+    self.armor = {
+      { menu_name = "bm_armor_level_1" },
+      { menu_name = "bm_armor_level_2" },
+      { menu_name = "bm_armor_level_3" },
+      { menu_name = "bm_armor_level_4" },
+      { menu_name = "bm_armor_level_5" },
+      { menu_name = "bm_armor_level_6" },
+      { menu_name = "bm_armor_level_7" }
+    }
+  
+    self.equipment = {
+      { menu_name = "item_none", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = false }},
+      { menu_name = "bm_equipment_ammo_bag", parts = { g_ammobag = true, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = false }},
+      { menu_name = "bm_equipment_armor_kit", parts = { g_ammobag = false, g_armorbag = true, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = false }},
+      { menu_name = "bm_equipment_bodybags_bag", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = true, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = false }},
+      { menu_name = "bm_equipment_doctor_bag", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = true, g_sentrybag = false, g_toolbag = false }},
+      { menu_name = "bm_equipment_ecm_jammer", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = true }},
+      { menu_name = "bm_equipment_first_aid_kit", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = true, g_medicbag = false, g_sentrybag = false, g_toolbag = false }},
+      { menu_name = "bm_equipment_sentry_gun", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = true, g_toolbag = false }}
+    }
+  
+    -- difficulty multiplier
+    self.multiplier = {
+      normal = 0.5,
+      hard = 0.75,
+      overkill = 0.875,
+      overkill_145 = 1,
+      easy_wish = 1.125,
+      overkill_290 = 1.25,
+      sm_wish = 1.5
+    }
+  
+    -- load weapon definitions
+    local file = io.open(BotWeapons._path .. "weapons.json", "r")
+    if file then
+      self.weapons = json.decode(file:read("*all"))
+      file:close()
+    end
+    self.weapons = self.weapons or {}
+  end
+  
+  function BotWeapons:get_menu_list(tbl)
+    local menu_list = {}
+    for _, v in ipairs(tbl) do
+      table.insert(menu_list, v.menu_name)
+    end
+    table.insert(menu_list, "item_random")
+    return menu_list
+  end
+  
+  function BotWeapons:load_weapon_units()
+    if managers.dyn_resource and tweak_data.weapon and tweak_data.weapon.factory then
+      log("[BotWeapons] Loading weapon units")
+      for _, weapon in ipairs(self.weapons) do
+        local unit_name = Idstring(tweak_data.weapon.factory[weapon.factory_name].unit)
+        if not managers.dyn_resource:is_resource_ready(Idstring("unit"), unit_name, managers.dyn_resource.DYN_RESOURCES_PACKAGE) then
+          --log("[BotWeapons] Loading unit " .. weapon.factory_name)
+          managers.dyn_resource:load(Idstring("unit"), unit_name, managers.dyn_resource.DYN_RESOURCES_PACKAGE)
+        end
+      end
+    else
+      log("[BotWeapons] Not ready to load units")
     end
   end
   
@@ -143,6 +130,24 @@ if _G.BotWeapons == nil then
     end
   end
   
+  function BotWeapons:custom_weapons_allowed()
+    if Global.game_settings.single_player then
+      return true
+    end
+    if not Global.game_settings.team_ai then
+      return true
+    end
+    if Global.game_settings.permission ~= "private" then
+      return false
+    end
+    for _, peer in pairs(LuaNetworking:GetPeers()) do
+      if not peer._has_bot_weapons then
+        return false
+      end
+    end
+    return true
+  end
+  
   Hooks:Add("BaseNetworkSessionOnLoadComplete", "BaseNetworkSessionOnLoadCompleteBotWeapons", function()
     if LuaNetworking:IsClient() then
       log("[BotWeapons] Sending usage info to host")
@@ -166,5 +171,5 @@ if _G.BotWeapons == nil then
   end)
 
   -- Load settings
-  BotWeapons:Load()
+  BotWeapons:init()
 end

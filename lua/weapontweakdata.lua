@@ -29,10 +29,9 @@ function WeaponTweakData:_init_data_mossberg_npc()
   self.mossberg_npc.CLIP_AMMO_MAX = 2
 end
 
-function WeaponTweakData:_init_data_mp5_npc()
-  self.orig._init_data_mp5_npc(self)
-  self.akmsu_smg_npc.sounds.prefix = "akmsu_npc"
-  self.asval_smg_npc.sounds.prefix = "val_npc"
+function WeaponTweakData:_init_data_ben_npc()
+  self.ben_npc = deep_clone(self.r870_npc)
+  self.ben_npc.sounds.prefix = "benelli_m4_npc"
 end
 
 function WeaponTweakData:_init_data_mac11_npc()
@@ -100,7 +99,6 @@ end
 function WeaponTweakData:_init_data_ksg_npc()
   self.ksg_npc = deep_clone(self.r870_npc)
   self.ksg_npc.sounds.prefix = "keltec_npc"
-  self.ksg_npc.has_suppressor = "suppressed_a"
 end
 
 function WeaponTweakData:_init_data_l85a2_npc()

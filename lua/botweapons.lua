@@ -48,9 +48,7 @@ if _G.BotWeapons == nil then
     { name = "item_sr2", unit = "wpn_fps_smg_sr2_npc", type = "smg" },
     { name = "item_akmsu", unit = "wpn_fps_smg_akmsu_npc", type = "smg" },
     { name = "item_rpk", unit = "wpn_fps_lmg_rpk_npc", type = "lmg" },
-    -- weapons disabled in mp from here on
     { name = "item_saiga", unit = "wpn_fps_shot_saiga_npc", type = "shotgun" },
-    -- own weapons from here on
     { name = "item_famas", unit = "wpn_fps_ass_famas_npc", type = "rifle" },
     { name = "item_m14", unit = "wpn_fps_ass_m14_npc", type = "rifle" },
     { name = "item_p90", unit = "wpn_fps_smg_p90_npc", type = "smg" },
@@ -75,17 +73,6 @@ if _G.BotWeapons == nil then
     -- random
     { name = "item_random" }
   }
-  
-  -- index of the last weapon that is allowed in mp
-  BotWeapons.mp_disabled_index = 20
-  
-  -- vanilla replacements
-  BotWeapons.replacements = {}
-  for i = 1, BotWeapons.mp_disabled_index, 1 do
-    local weapon = BotWeapons.weapons[i]
-    BotWeapons.replacements[weapon.type] = BotWeapons.replacements[weapon.type] or {}
-    table.insert(BotWeapons.replacements[weapon.type], i)
-  end
   
   -- difficulty multiplier
   BotWeapons.multiplier = {
@@ -154,24 +141,6 @@ if _G.BotWeapons == nil then
       local name = managers.criminals:character_name_by_unit(unit)
       LuaNetworking:SendToPeers("bot_weapons_equipment", name .. "/" .. equipment_index)
     end
-  end
-  
-  function BotWeapons:custom_weapons_allowed()
-    if Global.game_settings.single_player then
-      return true
-    end
-    if not Global.game_settings.team_ai then
-      return true
-    end
-    if Global.game_settings.permission ~= "private" then
-      return false
-    end
-    for _, peer in pairs(LuaNetworking:GetPeers()) do
-      if not peer._has_bot_weapons then
-        return false
-      end
-    end
-    return false -- should be "true" once syncing of custom weapons is possible
   end
   
   Hooks:Add("BaseNetworkSessionOnLoadComplete", "BaseNetworkSessionOnLoadCompleteBotWeapons", function()

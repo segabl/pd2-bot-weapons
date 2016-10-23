@@ -265,6 +265,25 @@
       "auto"
     ]
   },
+  {
+    "menu_name": "bm_w_fal",
+    "factory_name": "wpn_fps_ass_fal_npc",
+    "type": "rifle",
+    "tweak_data": "fal_npc",
+    "based_on": "m4_npc",
+    "fields_preserve": [
+      "sounds",
+      "auto"
+    ],
+    "blueprint": [
+      "wpn_fps_ass_fal_body_standard",
+      "wpn_fps_ass_fal_fg_standard",
+      "wpn_fps_ass_fal_g_standard",
+      "wpn_fps_ass_fal_m_standard",
+      "wpn_fps_ass_fal_s_standard",
+      "wpn_fps_upg_o_reflex"
+    ]
+  },
   
   
   {
@@ -386,6 +405,21 @@
       "wpn_fps_sho_s_spas12_folded"
     ]
   },
+  {
+    "menu_name": "bm_w_b682",
+    "factory_name": "wpn_fps_shot_b682_npc",
+    "type": "shotgun",
+    "tweak_data": "b682_npc",
+    "based_on": "huntsman_npc",
+    "fields_preserve": [
+      "sounds"
+    ],
+    "blueprint": [
+      "wpn_fps_shot_b682_body_standard",
+      "wpn_fps_shot_b682_b_long",
+      "wpn_fps_shot_b682_s_ammopouch"
+    ]
+  },
   
   
   {
@@ -500,7 +534,7 @@
     "fields_change": {
       "CLIP_AMMO_MAX": 50
       "usage": "p90"
-    }
+    },
     "blueprint": [
       "wpn_fps_smg_p90_body_p90",
       "wpn_fps_smg_p90_b_short",
@@ -517,17 +551,28 @@
     "based_on": "mp9_npc",
     "fields_preserve": [
       "sounds"
-    ]
+    ],
     "fields_change": {
       "auto": {
         "fire_rate": 0.2
       }
-    }
+    },
     "blueprint": [
       "wpn_fps_smg_sterling_b_standard",
       "wpn_fps_smg_sterling_body_standard",
       "wpn_fps_smg_sterling_m_long",
       "wpn_fps_smg_sterling_s_standard"
+    ]
+  },
+  {
+    "menu_name": "bm_w_baka",
+    "factory_name": "wpn_fps_smg_baka_npc",
+    "type": "smg",
+    "tweak_data": "baka_npc",
+    "based_on": "mp9_npc",
+    "fields_preserve": [
+      "sounds",
+      "auto"
     ]
   },
   

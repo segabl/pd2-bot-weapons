@@ -45,7 +45,7 @@ function TeamAIInventory:add_unit_by_name(weapon, equip)
       log("[BotWeapons] Could not find weapon " .. factory_name)
     end
   end
-  local type_replacement = online_replacements[weapon.type] and online_replacements[weapon.type][math.random(#online_replacements[weapon.type])] or "units/payday2/weapons/wpn_npc_m4/wpn_npc_m4"
-  local replacement = weapon.online_name or type_replacement
+  local type_replacement = online_replacements[weapon.type] and online_replacements[weapon.type][math.random(#online_replacements[weapon.type])]
+  local replacement = weapon.online_name or type_replacement or "units/payday2/weapons/wpn_npc_m4/wpn_npc_m4"
   add_unit_by_name_original(self, Idstring(replacement), equip)
 end

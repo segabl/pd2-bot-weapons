@@ -439,7 +439,7 @@
   {
     "menu_name": "bm_w_mp9",
     "factory_name": "wpn_fps_smg_mp9_npc",
-    "online_name": "units/payday2/weapons/wpn_npc_mp9/wpn_npc_mp9",
+    "online_name": "units/payday2/weapons/wpn_npc_smg_mp9/wpn_npc_smg_mp9",
     "type": "smg",
     "tweak_data": "mp9_npc"
   },

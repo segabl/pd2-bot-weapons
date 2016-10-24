@@ -13,12 +13,15 @@ function TeamAIMovement:play_redirect(redirect_name, at_time)
 end
 
 function TeamAIMovement:check_visual_equipment()
+  if not LuaNetworking:IsHost() then
+    return
+  end
   -- set armor & deployables for team ai
   local name = managers.criminals:character_name_by_unit(self._unit)
   -- choose armor models
   local armor_index = BotWeapons._data[name .. "_armor"] or 1
   if BotWeapons._data.toggle_override_armor then
-    armor_index = BotWeapons._data.override_armor or #BotWeapons.armor
+    armor_index = BotWeapons._data.override_armor or (#BotWeapons.armor + 1)
   end
   if armor_index > #BotWeapons.armor then
     armor_index = math.random(#BotWeapons.armor)
@@ -26,7 +29,7 @@ function TeamAIMovement:check_visual_equipment()
   -- choose equipment models
   local equipment_index = BotWeapons._data[name .. "_equipment"] or 1
   if BotWeapons._data.toggle_override_equipment then
-    equipment_index = BotWeapons._data.override_equipment or #BotWeapons.equipment
+    equipment_index = BotWeapons._data.override_equipment or (#BotWeapons.equipment + 1)
   end
   if equipment_index > #BotWeapons.equipment then
     equipment_index = math.random(#BotWeapons.equipment)

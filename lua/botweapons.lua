@@ -118,15 +118,15 @@ if _G.BotWeapons == nil then
   end
   
   function BotWeapons:sync_armor_and_equipment(unit, armor_index, equipment_index)
-    if not unit or not alive(unit) or not armor_index or not equipment_index then
+    if not unit or not alive(unit) then
       return
     end
     if not Global.game_settings.single_player and LuaNetworking:IsHost() then
       -- armor
-      managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, "var_model_0" .. armor_index)
+      managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, "var_model_0" .. (armor_index or 1))
       -- equipment
       local name = managers.criminals:character_name_by_unit(unit)
-      LuaNetworking:SendToPeers("bot_weapons_equipment", name .. "/" .. equipment_index)
+      DelayedCalls:Add("bot_weapons_sync_equipment_" .. name, 1, function () LuaNetworking:SendToPeers("bot_weapons_equipment", name .. "," .. (equipment_index or 1)) end)
     end
   end
   
@@ -135,7 +135,7 @@ if _G.BotWeapons == nil then
       return true
     end
     if not Global.game_settings.team_ai then
-      return true
+      return false
     end
     if Global.game_settings.permission ~= "private" then
       return false
@@ -150,21 +150,20 @@ if _G.BotWeapons == nil then
   
   Hooks:Add("BaseNetworkSessionOnLoadComplete", "BaseNetworkSessionOnLoadCompleteBotWeapons", function()
     if LuaNetworking:IsClient() then
-      log("[BotWeapons] Sending usage info to host")
       LuaNetworking:SendToPeer(1, "bot_weapons_active", "")
     end
   end)
 
   Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function(sender, id, data)
+    local peer = LuaNetworking:GetPeers()[sender]
     if id == "bot_weapons_active" then
-      local peer = LuaNetworking:GetPeers()[sender]
       if peer then
         peer._has_bot_weapons = true
       end
     elseif id == "bot_weapons_equipment" and managers.criminals then
-      if data:find("/") ~= nil then
-        local name = data:sub(1, data:find("/") - 1)
-        local equipment = tonumber(data:sub(data:find("/") + 1))
+      if data:find(",") ~= nil then
+        local name = data:sub(1, data:find(",") - 1)
+        local equipment = tonumber(data:sub(data:find(",") + 1))
         BotWeapons:set_equipment(managers.criminals:character_unit_by_name(name), equipment)
       end
     end

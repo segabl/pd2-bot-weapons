@@ -35,6 +35,10 @@ local online_replacements = {
 
 local add_unit_by_name_original = TeamAIInventory.add_unit_by_name
 function TeamAIInventory:add_unit_by_name(weapon, equip) 
+  if type(weapon) ~= "table" then
+    add_unit_by_name_original(self, weapon, equip)
+    return
+  end
   if BotWeapons:custom_weapons_allowed() then
     local factory_name = weapon.factory_name
     local factory_weapon = tweak_data.weapon.factory[factory_name]

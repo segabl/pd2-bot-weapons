@@ -183,9 +183,6 @@
     "tweak_data": "m14_npc",
     "fields_change": {
       "CLIP_AMMO_MAX": 10,
-      "auto": {
-        "fire_rate": 0.3
-      }
       "usage": "m14"
     },
     "blueprint": [

@@ -98,6 +98,17 @@ if _G.BotWeapons == nil then
     end
   end
   
+  function BotWeapons:set_accuracy_multiplicator(weapon, mul)
+    if not Global.game_settings then
+      return
+    end
+    for i, v in ipairs(weapon.FALLOFF) do
+      local f = (#weapon.FALLOFF + 1 - i) / #weapon.FALLOFF
+      v.acc[1] = v.acc[1] * mul
+      v.acc[2] = v.acc[2] * mul
+    end
+  end
+  
   function BotWeapons:set_armor(unit, armor_index)
     if not unit or not alive(unit) or not armor_index then
       return

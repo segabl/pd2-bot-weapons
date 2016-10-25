@@ -8,7 +8,7 @@
   "BotWeapons_menu_weapons_name" : "Bot weapons",
   "BotWeapons_menu_weapons_desc" : "Set the weapons for the team AI",
   "toggle_adjust_damage_name" : "Adjust team AI damage",
-  "toggle_adjust_damage_desc" : "Disables team AI's damage falloff and scales damage with difficulty",
+  "toggle_adjust_damage_desc" : "Disables team AIs damage falloff and scales damage with difficulty",
   "toggle_override_armor_name" : "Armor override",
   "toggle_override_armor_desc" : "Override individual armor settings of the team AI",
   "toggle_override_equipment_name" : "Equipment override",

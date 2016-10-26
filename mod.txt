@@ -5,7 +5,7 @@
   "priority" : 100,
   "updates" : [
     {
-      "revision" : 3.9,
+      "revision" : 4,
       "identifier" : "bot_weapons"
     }
   ],

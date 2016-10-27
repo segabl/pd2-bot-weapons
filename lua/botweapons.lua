@@ -102,11 +102,13 @@ if _G.BotWeapons == nil then
     if not Global.game_settings then
       return
     end
+    local old = weapon._old_acc_mul or 1
     for i, v in ipairs(weapon.FALLOFF) do
       local f = (#weapon.FALLOFF + 1 - i) / #weapon.FALLOFF
-      v.acc[1] = v.acc[1] * mul
-      v.acc[2] = v.acc[2] * mul
+      v.acc[1] = math.max(math.min((v.acc[1] / old) * mul, 1), 0)
+      v.acc[2] = math.max(math.min((v.acc[2] / old) * mul, 1), 0)
     end
+    weapon._old_acc_mul = mul
   end
   
   function BotWeapons:set_armor(unit, armor_index)

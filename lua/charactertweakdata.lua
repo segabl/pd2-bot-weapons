@@ -42,6 +42,8 @@ function CharacterTweakData:_presets(...)
   
   presets.weapon.gang_member.m14 = deep_clone(presets.weapon.gang_member.m4)
   presets.weapon.gang_member.m14.RELOAD_SPEED = 0.4
+  presets.weapon.gang_member.m14.FALLOFF[1].recoil = { 0.2, 0.4 }
+  presets.weapon.gang_member.m14.FALLOFF[2].recoil = { 0.5, 2 }
   -- smgs
   presets.weapon.gang_member.mp5 = deep_clone(presets.weapon.gang_member.m4)
   BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.mp5, 0.85)
@@ -65,10 +67,14 @@ function CharacterTweakData:_presets(...)
   
   presets.weapon.gang_member.mossberg = deep_clone(presets.weapon.gang_member.r870)
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.mossberg, 3, true)
+  presets.weapon.gang_member.mossberg.FALLOFF[1].recoil = { 0.25, 0.5 }
+  presets.weapon.gang_member.mossberg.FALLOFF[2].recoil = { 0.5, 2 }
   
   presets.weapon.gang_member.judge = deep_clone(presets.weapon.gang_member.r870)
   presets.weapon.gang_member.judge.RELOAD_SPEED = 0.5
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.judge, 4, true)
+  presets.weapon.gang_member.judge.FALLOFF[1].recoil = { 0.25, 1 }
+  presets.weapon.gang_member.judge.FALLOFF[2].recoil = { 1, 2 }
   -- auto shotguns
   presets.weapon.gang_member.saiga = deep_clone(presets.weapon.gang_member.r870)
   presets.weapon.gang_member.saiga.RELOAD_SPEED = 0.5
@@ -77,7 +83,9 @@ function CharacterTweakData:_presets(...)
   -- akimbo
   presets.weapon.gang_member.akimbo_pistol = deep_clone(presets.weapon.gang_member.m4)
   presets.weapon.gang_member.akimbo_pistol.RELOAD_SPEED = 0.5
-  BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.akimbo_pistol, 0.85)
+  BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.akimbo_pistol, 0.9)
+  presets.weapon.gang_member.akimbo_pistol.FALLOFF[1].recoil = { 0.1, 0.2 }
+  presets.weapon.gang_member.akimbo_pistol.FALLOFF[2].recoil = { 0.2, 0.75 }
   
   presets.weapon.gang_member.akimbo_auto = deep_clone(presets.weapon.gang_member.m4)
   presets.weapon.gang_member.akimbo_auto.RELOAD_SPEED = 0.3

@@ -191,9 +191,15 @@
     "factory_name": "wpn_fps_ass_m14_npc",
     "type": "rifle",
     "tweak_data": "m14_npc",
+    "based_on": "raging_bull_npc",
+    "fields_preserve": [
+      "sounds",
+      "hold",
+      "anim"
+    ],
     "fields_change": {
       "CLIP_AMMO_MAX": 10,
-      "usage": "m14"
+      "usage": "m14",
     },
     "blueprint": [
       "wpn_fps_ass_m14_b_standard",

@@ -29,7 +29,7 @@ function CharacterTweakData:_presets(...)
   presets.weapon.gang_member.raging_bull = deep_clone(presets.weapon.gang_member.beretta92)
   presets.weapon.gang_member.raging_bull.RELOAD_SPEED = 0.5
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.raging_bull, 4, false)
-  BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.beretta92, 1)
+  BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.raging_bull, 1)
   -- rifles
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.m4, 4, false)
   
@@ -40,7 +40,7 @@ function CharacterTweakData:_presets(...)
   
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.scar, 2, false)
   
-  presets.weapon.gang_member.m14 = deep_clone(presets.weapon.gang_member.raging_bull)
+  presets.weapon.gang_member.m14 = deep_clone(presets.weapon.gang_member.m4)
   presets.weapon.gang_member.m14.RELOAD_SPEED = 0.4
   -- smgs
   presets.weapon.gang_member.mp5 = deep_clone(presets.weapon.gang_member.m4)

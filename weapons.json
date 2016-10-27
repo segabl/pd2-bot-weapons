@@ -72,6 +72,16 @@
       "wpn_fps_pis_g18c_s_stock"
     ]
   },
+  {
+    "menu_name": "bm_w_ppk",
+    "factory_name": "wpn_fps_pis_ppk_npc",
+    "type": "pistol",
+    "tweak_data": "ppk_npc",
+    "based_on": "c45_npc",
+    "fields_preserve": [
+      "sounds"
+    ]
+  },
   
   
   {
@@ -271,17 +281,28 @@
     "fields_preserve": [
       "sounds",
       "auto"
-    ],
-    "blueprint": [
-      "wpn_fps_ass_fal_body_standard",
-      "wpn_fps_ass_fal_fg_standard",
-      "wpn_fps_ass_fal_g_standard",
-      "wpn_fps_ass_fal_m_standard",
-      "wpn_fps_ass_fal_s_standard",
-      "wpn_fps_upg_o_reflex"
     ]
   },
-  
+  {
+    "menu_name": "bm_w_aug",
+    "factory_name": "wpn_fps_ass_aug_npc",
+    "type": "rifle",
+    "tweak_data": "aug_npc",
+    "based_on": "m4_npc",
+    "fields_preserve": [
+      "sounds",
+      "auto"
+    ],
+    "blueprint": [
+      "wpn_fps_aug_body_f90",
+      "wpn_fps_aug_b_long",
+      "wpn_fps_upg_vg_ass_smg_verticalgrip",
+      "wpn_fps_aug_m_pmag",
+      "wpn_fps_aug_fg_a3",
+      "wpn_fps_upg_fl_ass_peq15",
+      "wpn_fps_upg_o_t1micro"
+    ]
+  },
   
   {
     "menu_name": "bm_w_r870",

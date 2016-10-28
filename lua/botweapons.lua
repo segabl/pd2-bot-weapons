@@ -1,11 +1,11 @@
 if _G.BotWeapons == nil then
   _G.BotWeapons = {}
   BotWeapons._path = ModPath
-  BotWeapons._data_path = SavePath .. "bot_weapons_data.txt"
+  BotWeapons._data_path = SavePath
   BotWeapons._data = {}
   
   function BotWeapons:Save()
-    local file = io.open(self._data_path, "w+")
+    local file = io.open(self._data_path .. "bot_weapons_data.txt", "w+")
     if file then
       file:write(json.encode(self._data))
       file:close()
@@ -13,7 +13,7 @@ if _G.BotWeapons == nil then
   end
 
   function BotWeapons:Load()
-    local file = io.open(self._data_path, "r")
+    local file = io.open(self._data_path .. "bot_weapons_data.txt", "r")
     if file then
       self._data = json.decode(file:read("*all"))
       file:close()
@@ -62,6 +62,23 @@ if _G.BotWeapons == nil then
       file:close()
     end
     self.weapons = self.weapons or {}
+    
+    -- load user overrides
+    local file = io.open(BotWeapons._data_path .. "bot_weapons_overrides.json", "r")
+    if file then
+      log("[BotWeapons] Found custom weapon override file, loading it")
+      local overrides = json.decode(file:read("*all"))
+      file:close()
+      if overrides then
+        for _, weapon in ipairs(self.weapons) do
+          if overrides[weapon.tweak_data] then
+            for k, v in pairs(overrides[weapon.tweak_data]) do
+              weapon[k] = v
+            end
+          end
+        end
+      end
+    end
   end
   
   function BotWeapons:get_menu_list(tbl)
@@ -109,6 +126,24 @@ if _G.BotWeapons == nil then
       v.acc[2] = math.max(math.min((v.acc[2] / old) * mul, 1), 0)
     end
     weapon._old_acc_mul = mul
+  end
+  
+  function BotWeapons:set_single_fire_mode(weapon, rec1, rec2, rec3)
+    if not Global.game_settings then
+      return
+    end
+    weapon.FALLOFF[1].recoil = rec1 or weapon.FALLOFF[1].recoil
+    weapon.FALLOFF[2].recoil = rec2 or weapon.FALLOFF[2].recoil
+    weapon.FALLOFF[3].recoil = rec3 or weapon.FALLOFF[3].recoil
+  end
+  
+  function BotWeapons:set_auto_fire_mode(weapon, mode1, mode2, mode3)
+    if not Global.game_settings then
+      return
+    end
+    weapon.FALLOFF[1].mode = mode1 or weapon.FALLOFF[1].mode
+    weapon.FALLOFF[2].mode = mode2 or weapon.FALLOFF[2].mode
+    weapon.FALLOFF[3].mode = mode3 or weapon.FALLOFF[3].mode
   end
   
   function BotWeapons:set_armor(unit, armor_index)

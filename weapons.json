@@ -198,6 +198,7 @@
       "anim"
     ],
     "fields_change": {
+      "DAMAGE": 3.5,
       "CLIP_AMMO_MAX": 10,
       "usage": "m14",
     },

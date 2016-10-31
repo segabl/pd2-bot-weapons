@@ -72,9 +72,8 @@ if _G.BotWeapons == nil then
       if overrides then
         for _, weapon in ipairs(self.weapons) do
           if overrides[weapon.tweak_data] then
-            for k, v in pairs(overrides[weapon.tweak_data]) do
-              weapon[k] = v
-            end
+            weapon.online_name = overrides[weapon.tweak_data].online_name or weapon.online_name
+            weapon.blueprint = overrides[weapon.tweak_data].blueprint or weapon.blueprint
           end
         end
       end

@@ -41,9 +41,9 @@ function CharacterTweakData:_presets(...)
   
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.scar, 2, false)
   
-  presets.weapon.gang_member.m14 = deep_clone(presets.weapon.gang_member.raging_bull)
+  presets.weapon.gang_member.m14 = deep_clone(presets.weapon.gang_member.m4)
   presets.weapon.gang_member.m14.RELOAD_SPEED = 0.4
-  BotWeapons:set_single_fire_mode(presets.weapon.gang_member.m14, { 0.2, 0.4 }, { 0.5, 2 })
+  BotWeapons:set_single_fire_mode(presets.weapon.gang_member.m14, { 0.2, 0.5 }, { 0.75, 2 }, { 2, 3 })
   -- smgs
   presets.weapon.gang_member.mp5 = deep_clone(presets.weapon.gang_member.m4)
   BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.mp5, 0.85)
@@ -67,10 +67,8 @@ function CharacterTweakData:_presets(...)
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.mossberg, 3, true)
   BotWeapons:set_single_fire_mode(presets.weapon.gang_member.mossberg, { 0.25, 0.5 }, { 0.5, 2 })
   
-  presets.weapon.gang_member.judge = deep_clone(presets.weapon.gang_member.r870)
-  presets.weapon.gang_member.judge.RELOAD_SPEED = 0.5
+  presets.weapon.gang_member.judge = deep_clone(presets.weapon.gang_member.raging_bull)
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.judge, 4, true)
-  BotWeapons:set_single_fire_mode(presets.weapon.gang_member.judge, { 0.25, 1 }, { 1, 2 })
   -- auto shotguns
   presets.weapon.gang_member.saiga = deep_clone(presets.weapon.gang_member.r870)
   presets.weapon.gang_member.saiga.RELOAD_SPEED = 0.5

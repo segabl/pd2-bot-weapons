@@ -82,10 +82,17 @@ if _G.BotWeapons == nil then
   
   function BotWeapons:get_menu_list(tbl)
     local menu_list = {}
+    local names = {}
+    local item_name
+    local localized_name
     for _, v in ipairs(tbl) do
-      table.insert(menu_list, v.menu_name)
+      item_name = v.menu_name:gsub("^bm_w", "item")
+      table.insert(menu_list, item_name)
+      localized_name = managers.localization:text(v.menu_name):upper()
+      names[item_name] = localized_name:gsub(" PISTOLS?$", ""):gsub(" REVOLVER$", ""):gsub(" RIFLE$", ""):gsub(" SHOTGUN$", ""):gsub(" GUNS?$", ""):gsub(" LIGHT MACHINE$", ""):gsub(" SUBMACHINE$", "")
     end
     table.insert(menu_list, "item_random")
+    managers.localization:add_localized_strings(names)
     return menu_list
   end
   

@@ -52,6 +52,7 @@ function CharacterTweakData:_presets(...)
   presets.weapon.gang_member.p90.RELOAD_SPEED = 0.5
   BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.p90, 0.7)
   -- lmgs
+  presets.weapon.gang_member.m249 = deep_clone(presets.weapon.gang_member.m4)
   presets.weapon.gang_member.m249.autofire_rounds = { 15, 40 }
   presets.weapon.gang_member.m249.RELOAD_SPEED = 0.4
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.m249, 2, false)

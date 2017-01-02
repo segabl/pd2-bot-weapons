@@ -134,9 +134,8 @@
       "wpn_fps_ass_g36_m_standard",
       "wpn_fps_ass_g36_b_long",
       "wpn_fps_ass_g36_fg_k",
-      "wpn_fps_upg_ass_ns_jprifles",
       "wpn_fps_upg_fl_ass_smg_sho_surefire",
-      "wpn_fps_upg_o_specter"
+      "wpn_fps_ass_g36_o_vintage"
     ]
   },
   {
@@ -452,14 +451,7 @@
     "factory_name": "wpn_fps_smg_mp5_npc",
     "online_name": "units/payday2/weapons/wpn_npc_mp5/wpn_npc_mp5",
     "type": "smg",
-    "tweak_data": "mp5_npc",
-    "blueprint": [
-      "wpn_fps_smg_mp5_body_mp5",
-      "wpn_fps_smg_mp5_fg_mp5a4",
-      "wpn_fps_smg_mp5_m_std",
-      "wpn_fps_smg_mp5_s_solid",
-      "wpn_fps_upg_o_cmore"
-    ]
+    "tweak_data": "mp5_npc"
   },
   {
     "menu_name": "bm_w_mp9",

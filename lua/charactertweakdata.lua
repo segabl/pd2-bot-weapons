@@ -31,26 +31,28 @@ function CharacterTweakData:_presets(...)
   presets.weapon.gang_member.raging_bull.RELOAD_SPEED = 0.5
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.raging_bull, 4, false)
   BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.raging_bull, 1)
+  BotWeapons:set_single_fire_mode(presets.weapon.gang_member.raging_bull, { 0.5, 1 }, { 0.75, 2 })
   -- rifles
-  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.m4, 4, false)
+  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.m4, 5, false)
   
   presets.weapon.gang_member.ak47 = deep_clone(presets.weapon.gang_member.m4)
-  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.ak47, 1.35, false)
+  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.ak47, 1.67, false)
   
-  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.g36, 1.35, false)
+  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.g36, 1.67, false)
   
-  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.scar, 2, false)
+  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.scar, 2.5, false)
   
   presets.weapon.gang_member.m14 = deep_clone(presets.weapon.gang_member.m4)
   presets.weapon.gang_member.m14.RELOAD_SPEED = 0.4
+  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.m14, 4, false)
   BotWeapons:set_single_fire_mode(presets.weapon.gang_member.m14, { 0.2, 0.5 }, { 0.75, 2 }, { 2, 3 })
   -- smgs
   presets.weapon.gang_member.mp5 = deep_clone(presets.weapon.gang_member.m4)
-  BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.mp5, 0.85)
+  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.mp5, 4, false)
   
   presets.weapon.gang_member.p90 = deep_clone(presets.weapon.gang_member.mp5)
   presets.weapon.gang_member.p90.RELOAD_SPEED = 0.5
-  BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.p90, 0.7)
+  BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.p90, 0.8)
   -- lmgs
   presets.weapon.gang_member.m249 = deep_clone(presets.weapon.gang_member.m4)
   presets.weapon.gang_member.m249.autofire_rounds = { 15, 40 }
@@ -84,6 +86,7 @@ function CharacterTweakData:_presets(...)
   
   presets.weapon.gang_member.akimbo_auto = deep_clone(presets.weapon.gang_member.m4)
   presets.weapon.gang_member.akimbo_auto.RELOAD_SPEED = 0.3
+  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.akimbo_auto, 4, false)
   BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.akimbo_auto, 0.6)
   
   return presets

@@ -17,7 +17,7 @@ function TeamAIMovement:check_visual_equipment()
     return
   end
   -- set armor & deployables for team ai
-  local name = managers.criminals:character_name_by_unit(self._unit)
+  local name = self._unit:base()._tweak_table
   -- choose armor models
   local armor_index = BotWeapons._data[name .. "_armor"] or 1
   if BotWeapons._data.toggle_override_armor then

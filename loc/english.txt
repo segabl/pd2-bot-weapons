@@ -5,6 +5,8 @@
   "BotWeapons_menu_armor_desc" : "Set the armor for the team AI",
   "BotWeapons_menu_equipment_name" : "Bot equipment",
   "BotWeapons_menu_equipment_desc" : "Set the equipment for the team AI",
+  "BotWeapons_menu_masks_name" : "Bot masks",
+  "BotWeapons_menu_masks_desc" : "Set the masks for the team AI",
   "BotWeapons_menu_weapons_name" : "Bot weapons",
   "BotWeapons_menu_weapons_desc" : "Set the weapons for the team AI",
   "toggle_adjust_damage_name" : "Adjust team AI damage",
@@ -13,9 +15,14 @@
   "toggle_override_armor_desc" : "Override individual armor settings of the team AI",
   "toggle_override_equipment_name" : "Equipment override",
   "toggle_override_equipment_desc" : "Override individual equipment settings of the team AI",
+  "slider_mask_customized_chance_name" : "Mask customization chance",
+  "slider_mask_customized_chance_desc" : "Chance that a bot will have a customized mask when using random option",
+  "toggle_override_masks_name" : "Mask override",
+  "toggle_override_masks_desc" : "Override individual mask settings of the team AI",
   "toggle_override_weapons_name" : "Weapon override",
   "toggle_override_weapons_desc" : "Override individual weapon settings of the team AI",
   "menu_override_name" : "Override",
   "item_none" : "None",
-  "item_random" : "Random"
+  "item_random" : "Random",
+  "item_same_as_me" : "Same as me"
 }

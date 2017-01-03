@@ -5,6 +5,8 @@
   "BotWeapons_menu_armor_desc" : "Stelle die Panzerung für die Team KI ein",
   "BotWeapons_menu_equipment_name" : "Bot Ausrüstung",
   "BotWeapons_menu_equipment_desc" : "Stelle die Ausrüstung für die Team KI ein",
+  "BotWeapons_menu_masks_name" : "Bot Masken",
+  "BotWeapons_menu_masks_desc" : "Stelle die Masken für die Team KI ein",
   "BotWeapons_menu_weapons_name" : "Bot Waffen",
   "BotWeapons_menu_weapons_desc" : "Stelle die Waffen für die Team KI ein",
   "toggle_adjust_damage_name" : "Team KI Schaden anpassen",
@@ -13,9 +15,14 @@
   "toggle_override_armor_desc" : "Ersetze individuelle Panzerung der Team KI",
   "toggle_override_equipment_name" : "Ausrüstung Override",
   "toggle_override_equipment_desc" : "Ersetze individuelle Ausrüstung der Team KI",
+  "slider_mask_customized_chance_name" : "Masken Individualisierungs-Wahrscheinlichkeit",
+  "slider_mask_customized_chance_desc" : "Wahrscheinlichkeit, dass ein Bot eine individualisierte Maske bei Auswahl der Zufall Option verwendet",
+  "toggle_override_masks_name" : "Masken Override",
+  "toggle_override_masks_desc" : "Ersetze individuelle Masken der Team KI",
   "toggle_override_weapons_name" : "Waffen Override",
   "toggle_override_weapons_desc" : "Ersetze individuelle Waffen der Team KI",
   "menu_override_name" : "Override",
   "item_none" : "Nichts",
-  "item_random" : "Zufall"
+  "item_random" : "Zufall",
+  "item_same_as_me" : "Gleiche wie ich"
 }

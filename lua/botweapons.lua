@@ -43,16 +43,21 @@ if _G.BotWeapons == nil then
       { menu_name = "bm_equipment_first_aid_kit", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = true, g_medicbag = false, g_sentrybag = false, g_toolbag = false }},
       { menu_name = "bm_equipment_sentry_gun", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = true, g_toolbag = false }}
     }
+    
+    self.masks = {
+      { menu_name = "bm_msk_character_locked" },
+      { menu_name = "item_same_as_me" }
+    }
   
     -- difficulty multiplier
     self.multiplier = {
-      normal = 0.5,
-      hard = 0.75,
-      overkill = 0.875,
-      overkill_145 = 1,
-      easy_wish = 1.125,
-      overkill_290 = 1.25,
-      sm_wish = 1.5
+      normal = 0.4,
+      hard = 0.55,
+      overkill = 0.7,
+      overkill_145 = 0.85,
+      easy_wish = 1,
+      overkill_290 = 1.3,
+      sm_wish = 1.6
     }
   
     -- load weapon definitions
@@ -171,16 +176,49 @@ if _G.BotWeapons == nil then
     end
   end
   
-  function BotWeapons:sync_armor_and_equipment(unit, armor_index, equipment_index)
+  function BotWeapons:set_mask(unit, mask_id, blueprint)
     if not unit or not alive(unit) then
+      return
+    end
+    if unit:inventory() then
+      unit:inventory():set_mask(mask_id, blueprint)
+    end
+  end
+  
+  function BotWeapons:sync_armor_and_equipment(unit, armor_index, equipment_index)
+    if not unit or not alive(unit) or not unit:base() or not unit:base()._tweak_table then
       return
     end
     if not Global.game_settings.single_player and LuaNetworking:IsHost() then
       -- armor
       managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, "var_model_0" .. (armor_index or 1))
       -- equipment
-      local name = managers.criminals:character_name_by_unit(unit)
-      DelayedCalls:Add("bot_weapons_sync_equipment_" .. name, 1, function () LuaNetworking:SendToPeers("bot_weapons_equipment", name .. "," .. (equipment_index or 1)) end)
+      local name = unit:base()._tweak_table
+      DelayedCalls:Add("bot_weapons_sync_equipment_" .. name, 1, function ()
+        LuaNetworking:SendToPeers("bot_weapons_equipment", name .. "," .. (equipment_index or 1))
+      end)
+    end
+  end
+  
+  function BotWeapons:build_mask_string(mask_id, blueprint)
+    local s = "" .. (mask_id or " ")
+    if not blueprint then
+      return s
+    end
+    s = s .. "," .. (blueprint.color.id or " ") .. "," .. (blueprint.pattern.id or " ") .. "," .. (blueprint.material.id or " ")
+    return s
+  end
+  
+  function BotWeapons:sync_mask(unit, mask_id, blueprint)
+    if not unit or not alive(unit) or not unit:base() or not unit:base()._tweak_table then
+      return
+    end
+    if not Global.game_settings.single_player and LuaNetworking:IsHost() then
+      -- mask
+      local name = unit:base()._tweak_table
+      DelayedCalls:Add("bot_weapons_sync_mask_" .. name, 1, function () 
+        LuaNetworking:SendToPeers("bot_weapons_mask", name .. "," .. self:build_mask_string(mask_id, blueprint))
+      end)
     end
   end
   
@@ -210,15 +248,30 @@ if _G.BotWeapons == nil then
 
   Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function(sender, id, data)
     local peer = LuaNetworking:GetPeers()[sender]
+    local params = string.split(data or "", ",", true)
     if id == "bot_weapons_active" then
       if peer then
         peer._has_bot_weapons = true
       end
     elseif id == "bot_weapons_equipment" and managers.criminals then
-      if data:find(",") ~= nil then
-        local name = data:sub(1, data:find(",") - 1)
-        local equipment = tonumber(data:sub(data:find(",") + 1))
+      if #params == 2 then
+        local name = params[1]
+        local equipment = tonumber(params[2])
         BotWeapons:set_equipment(managers.criminals:character_unit_by_name(name), equipment)
+      end
+    elseif id == "bot_weapons_mask" and managers.criminals then
+      if #params >= 2 then
+        local name = params[1]
+        local mask_id = params[2]
+        local blueprint
+        if #params == 5 then
+          blueprint = {
+            color = {id = params[3]},
+            pattern = {id = params[4]},
+            material = {id = params[5]}
+          }
+        end
+        BotWeapons:set_mask(managers.criminals:character_unit_by_name(name), mask_id, blueprint)
       end
     end
   end)

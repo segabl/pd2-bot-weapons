@@ -10,6 +10,10 @@ function NetworkPeer:spawn_unit(spawn_point_id, is_drop_in, spawn_as)
           self:send_queued_sync("sync_run_sequence_char", character.unit, "var_model_0" .. (movement._armor_index or 1))
           LuaNetworking:SendToPeer(self:id(), "bot_weapons_equipment", character.name .. "," .. (movement._equipment_index or 1))
         end
+        local inventory = character.unit:inventory()
+        if inventory then
+          LuaNetworking:SendToPeer(self:id(), "bot_weapons_mask", character.name .. "," .. BotWeapons:build_mask_string(inventory._mask_id, inventory._mask_blueprint))
+        end
       end
     end 
   end

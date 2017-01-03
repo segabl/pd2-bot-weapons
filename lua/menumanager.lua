@@ -15,6 +15,7 @@ end)
 -- Menu setup
 local menu_id_main = "BotWeapons_menu_main"
 local menu_id_weapons = "BotWeapons_menu_weapons"
+local menu_id_masks = "BotWeapons_menu_masks"
 local menu_id_equipment = "BotWeapons_menu_equipment"
 local menu_id_armor = "BotWeapons_menu_armor"
 
@@ -23,6 +24,7 @@ Hooks:Add("MenuManagerSetupCustomMenus", "MenuManagerSetupCustomMenus_BotWeapons
   MenuHelper:NewMenu(menu_id_main)
   MenuHelper:NewMenu(menu_id_armor)
   MenuHelper:NewMenu(menu_id_equipment)
+  MenuHelper:NewMenu(menu_id_masks)
   MenuHelper:NewMenu(menu_id_weapons)
 end)
 
@@ -66,7 +68,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
   
   MenuHelper:AddDivider({
     id = "divider2",
-    size = 32,
+    size = 24,
     menu_id = menu_id_armor,
     priority = 96,
   })
@@ -106,7 +108,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
   
   MenuHelper:AddDivider({
     id = "divider2",
-    size = 32,
+    size = 24,
     menu_id = menu_id_equipment,
     priority = 96,
   })
@@ -119,6 +121,66 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
       items = BotWeapons:get_menu_list(BotWeapons.equipment),
       menu_id = menu_id_equipment,
       value = BotWeapons._data[c .. "_equipment"] or 1,
+      priority = 96 - i
+    })
+  end
+  
+  -- MASKS MENU
+  MenuHelper:AddSlider({
+    id = "slider_mask_customized_chance",
+    title = "slider_mask_customized_chance_name",
+    desc = "slider_mask_customized_chance_desc",
+    callback = "BotWeapons_select",
+    value = BotWeapons._data["slider_mask_customized_chance"] or 0.5,
+    min = 0,
+    max = 1,
+    show_value = true,
+    menu_id = menu_id_masks,
+    priority = 100
+  })
+  
+  MenuHelper:AddDivider({
+    id = "divider1",
+    size = 24,
+    menu_id = menu_id_masks,
+    priority = 99,
+  })
+  
+  MenuHelper:AddToggle({
+    id = "toggle_override_masks",
+    title = "toggle_override_masks_name",
+    desc = "toggle_override_masks_desc",
+    callback = "BotWeapons_toggle",
+    value = BotWeapons._data["toggle_override_masks"] or false,
+    menu_id = menu_id_masks,
+    priority = 98
+  })
+  
+  MenuHelper:AddMultipleChoice({
+    id = "override_masks",
+    title = "menu_override_name",
+    callback = "BotWeapons_select",
+    items = BotWeapons:get_menu_list(BotWeapons.masks, true),
+    menu_id = menu_id_masks,
+    value = BotWeapons._data["override_masks"] or #BotWeapons.masks,
+    priority = 97
+  })
+  
+  MenuHelper:AddDivider({
+    id = "divider2",
+    size = 24,
+    menu_id = menu_id_masks,
+    priority = 96,
+  })
+
+  for i, c in ipairs(CriminalsManager.character_names()) do
+    MenuHelper:AddMultipleChoice({
+      id = c .. "_mask",
+      title = "menu_" .. c,
+      callback = "BotWeapons_select",
+      items = BotWeapons:get_menu_list(BotWeapons.masks, true),
+      menu_id = menu_id_masks,
+      value = BotWeapons._data[c .. "_mask"] or 1,
       priority = 96 - i
     })
   end
@@ -136,7 +198,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
 
   MenuHelper:AddDivider({
     id = "divider1",
-    size = 32,
+    size = 24,
     menu_id = menu_id_weapons,
     priority = 99,
   })
@@ -163,7 +225,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
   
   MenuHelper:AddDivider({
     id = "divider2",
-    size = 32,
+    size = 24,
     menu_id = menu_id_weapons,
     priority = 96,
   })
@@ -187,11 +249,13 @@ Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenus_BotWeapons
   nodes[menu_id_main] = MenuHelper:BuildMenu(menu_id_main)
   nodes[menu_id_armor] = MenuHelper:BuildMenu(menu_id_armor)
   nodes[menu_id_equipment] = MenuHelper:BuildMenu(menu_id_equipment)
+  nodes[menu_id_masks] = MenuHelper:BuildMenu(menu_id_masks)
   nodes[menu_id_weapons] = MenuHelper:BuildMenu(menu_id_weapons)
   MenuHelper:AddMenuItem(MenuHelper:GetMenu("lua_mod_options_menu"), menu_id_main, "BotWeapons_menu_main_name", "BotWeapons_menu_main_desc")
   MenuHelper:AddMenuItem(nodes[menu_id_main], menu_id_armor, "BotWeapons_menu_armor_name", "BotWeapons_menu_armor_desc")
   MenuHelper:AddMenuItem(nodes[menu_id_main], menu_id_equipment, "BotWeapons_menu_equipment_name", "BotWeapons_menu_equipment_desc", menu_id_armor)
-  MenuHelper:AddMenuItem(nodes[menu_id_main], menu_id_weapons, "BotWeapons_menu_weapons_name", "BotWeapons_menu_weapons_desc", menu_id_equipment)
+  MenuHelper:AddMenuItem(nodes[menu_id_main], menu_id_masks, "BotWeapons_menu_masks_name", "BotWeapons_menu_masks_desc", menu_id_equipment)
+  MenuHelper:AddMenuItem(nodes[menu_id_main], menu_id_weapons, "BotWeapons_menu_weapons_name", "BotWeapons_menu_weapons_desc", menu_id_masks)
 end)
 
 -- Lock lobby if custom weapons are enabled

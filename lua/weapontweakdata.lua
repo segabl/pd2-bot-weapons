@@ -15,6 +15,7 @@ function WeaponTweakData:init(...)
   self.m249_npc.usage = "m249"
   self.scar_npc.usage = "scar"
   self.g36_npc.usage = "g36"
+  self.m95_npc.usage = "sniper"
   -- setup weapons
   log("[BotWeapons] Setting up weapons")
   for _, weapon in ipairs(BotWeapons.weapons) do

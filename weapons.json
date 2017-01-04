@@ -309,6 +309,17 @@
       "wpn_fps_upg_o_t1micro"
     ]
   },
+  {
+    "menu_name": "bm_w_contraband",
+    "factory_name": "wpn_fps_ass_contraband_npc",
+    "type": "rifle",
+    "tweak_data": "contraband_npc",
+    "based_on": "scar_npc",
+    "fields_preserve": [
+      "sounds",
+      "auto"
+    ]
+  },
   
   {
     "menu_name": "bm_w_r870",
@@ -723,6 +734,66 @@
     "based_on": "x_mp5_npc",
     "fields_preserve": [
       "sounds"
+    ]
+  },
+  
+  
+  {
+    "menu_name": "bm_w_m95",
+    "factory_name": "wpn_fps_snp_m95_npc",
+    "type": "sniper",
+    "tweak_data": "m95_npc",
+    "based_on": "raging_bull_npc",
+    "fields_preserve": [
+      "sounds",
+      "hold",
+      "anim",
+      "muzzleflash",
+      "shell_ejection"
+    ],
+    "fields_change": {
+      "CLIP_AMMO_MAX": 5,
+      "DAMAGE": 40
+    },
+    "blueprint": [
+      "wpn_fps_snp_m95_barrel_standard",
+      "wpn_fps_snp_m95_bipod",
+      "wpn_fps_snp_m95_lower_reciever",
+      "wpn_fps_snp_m95_upper_reciever",
+      "wpn_fps_snp_m95_magazine",
+      "wpn_fps_upg_o_leupold",
+      "wpn_fps_upg_m4_g_standard_vanilla"
+    ]
+  },
+  {
+    "menu_name": "bm_w_model70",
+    "factory_name": "wpn_fps_snp_model70_npc",
+    "type": "sniper",
+    "tweak_data": "model70_npc",
+    "based_on": "m95_npc",
+    "fields_preserve": [
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
+    ]
+  },
+  {
+    "menu_name": "bm_w_desertfox",
+    "factory_name": "wpn_fps_snp_desertfox_npc",
+    "type": "sniper",
+    "tweak_data": "desertfox_npc",
+    "based_on": "m95_npc",
+    "fields_preserve": [
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
+    ],
+    "blueprint": [
+      "wpn_fps_snp_desertfox_b_silencer",
+      "wpn_fps_snp_desertfox_body",
+      "wpn_fps_snp_desertfox_dh_standard",
+      "wpn_fps_snp_desertfox_mag",
+      "wpn_fps_upg_o_shortdot"
     ]
   }
 ]

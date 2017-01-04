@@ -94,7 +94,7 @@ if _G.BotWeapons == nil then
       item_name = v.menu_name:gsub("^bm_w", "item")
       table.insert(menu_list, item_name)
       localized_name = managers.localization:text(v.menu_name):upper()
-      names[item_name] = localized_name:gsub(" PISTOLS?$", ""):gsub(" REVOLVER$", ""):gsub(" RIFLE$", ""):gsub(" SHOTGUN$", ""):gsub(" GUNS?$", ""):gsub(" LIGHT MACHINE$", ""):gsub(" SUBMACHINE$", "")
+      names[item_name] = localized_name:gsub(" PISTOLS?$", ""):gsub(" REVOLVER$", ""):gsub(" RIFLE$", ""):gsub(" SHOTGUN$", ""):gsub(" GUNS?$", ""):gsub(" LIGHT MACHINE$", ""):gsub(" SUBMACHINE$", ""):gsub(" ASSAULT$", ""):gsub(" SNIPER$", "")
     end
     table.insert(menu_list, "item_random")
     managers.localization:add_localized_strings(names)

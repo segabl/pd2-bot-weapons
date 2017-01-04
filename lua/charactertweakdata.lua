@@ -65,13 +65,14 @@ function CharacterTweakData:_presets(...)
   presets.weapon.gang_member.r870.FALLOFF[2].r = 2000
   presets.weapon.gang_member.r870.FALLOFF[3].r = 4000
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.r870, 2, true)
+  BotWeapons:set_single_fire_mode(presets.weapon.gang_member.r870, { 1, 2 })
   
   presets.weapon.gang_member.mossberg = deep_clone(presets.weapon.gang_member.r870)
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.mossberg, 3, true)
   BotWeapons:set_single_fire_mode(presets.weapon.gang_member.mossberg, { 0.25, 0.5 }, { 0.5, 2 })
   
   presets.weapon.gang_member.judge = deep_clone(presets.weapon.gang_member.raging_bull)
-  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.judge, 4, true)
+  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.judge, 3, true)
   -- auto shotguns
   presets.weapon.gang_member.saiga = deep_clone(presets.weapon.gang_member.r870)
   presets.weapon.gang_member.saiga.RELOAD_SPEED = 0.5
@@ -88,6 +89,12 @@ function CharacterTweakData:_presets(...)
   presets.weapon.gang_member.akimbo_auto.RELOAD_SPEED = 0.3
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.akimbo_auto, 4, false)
   BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.akimbo_auto, 0.6)
+  -- snipers
+  presets.weapon.gang_member.sniper = deep_clone(presets.weapon.gang_member.beretta92)
+  presets.weapon.gang_member.sniper.range = { close = 5000, optimal = 10000, far = 15000 }
+  presets.weapon.gang_member.sniper.RELOAD_SPEED = 0.3
+  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.sniper, 1, false)
+  BotWeapons:set_single_fire_mode(presets.weapon.gang_member.sniper, { 3, 4 }, { 3.5, 5 }, { 4, 6 })
   
   return presets
 end

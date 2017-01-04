@@ -90,7 +90,7 @@ function CharacterTweakData:_presets(...)
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.akimbo_auto, 4, false)
   BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.akimbo_auto, 0.6)
   -- snipers
-  presets.weapon.gang_member.sniper = deep_clone(presets.weapon.gang_member.beretta92)
+  presets.weapon.gang_member.sniper = deep_clone(presets.weapon.gang_member.raging_bull)
   presets.weapon.gang_member.sniper.range = { close = 5000, optimal = 10000, far = 15000 }
   presets.weapon.gang_member.sniper.RELOAD_SPEED = 0.3
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.sniper, 1, false)

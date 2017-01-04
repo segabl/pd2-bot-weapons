@@ -753,7 +753,7 @@
     ],
     "fields_change": {
       "CLIP_AMMO_MAX": 5,
-      "DAMAGE": 40
+      "DAMAGE": 30
     },
     "blueprint": [
       "wpn_fps_snp_m95_barrel_standard",

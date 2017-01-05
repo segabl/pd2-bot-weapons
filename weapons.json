@@ -343,10 +343,10 @@
     "online_name": "units/payday2/weapons/wpn_npc_sawnoff_shotgun/wpn_npc_sawnoff_shotgun",
     "type": "shotgun",
     "tweak_data": "huntsman_npc",
-    "fields_change": {
-      "DAMAGE": 6,
-      "usage": "mossberg"
-    },
+    "based_on": "mossberg_npc",
+    "fields_preserve": [
+      "sounds"
+    ]
   },
   {
     "menu_name": "bm_w_benelli",
@@ -354,7 +354,7 @@
     "online_name": "units/payday2/weapons/wpn_npc_benelli/wpn_npc_benelli",
     "type": "shotgun",
     "tweak_data": "ben_npc",
-    "based_on": "r870_npc",
+    "based_on": "benelli_npc",
     "fields_preserve": [
       "sounds"
     ]
@@ -753,7 +753,7 @@
     ],
     "fields_change": {
       "CLIP_AMMO_MAX": 5,
-      "DAMAGE": 30
+      "DAMAGE": 7
     },
     "blueprint": [
       "wpn_fps_snp_m95_barrel_standard",

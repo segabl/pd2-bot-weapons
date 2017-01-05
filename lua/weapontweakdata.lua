@@ -12,6 +12,7 @@ function WeaponTweakData:init(...)
     end
   end
   -- set new usage
+  self.benelli_npc.usage = "benelli"
   self.m249_npc.usage = "m249"
   self.scar_npc.usage = "scar"
   self.g36_npc.usage = "g36"
@@ -42,4 +43,53 @@ function WeaponTweakData:init(...)
       log("[BotWeapons] Could not find preset " .. weapon.tweak_data)
     end
   end
+end
+
+-- some fixes for default weapon presets used by LQ version of some guns
+local _init_data_beretta92_npc_original = WeaponTweakData._init_data_beretta92_npc
+function WeaponTweakData:_init_data_beretta92_npc()
+  _init_data_beretta92_npc_original(self)
+  self.beretta92_npc.has_suppressor = "suppressed_a"
+  self.beretta92_primary_npc.has_suppressor = "suppressed_a"
+end
+
+local _init_data_r870_npc_original = WeaponTweakData._init_data_r870_npc
+function WeaponTweakData:_init_data_r870_npc()
+  _init_data_r870_npc_original(self)
+  self.benelli_npc.sounds.prefix = "benelli_m4_npc"
+end
+
+local _init_data_mossberg_npc_original = WeaponTweakData._init_data_mossberg_npc
+function WeaponTweakData:_init_data_mossberg_npc()
+  _init_data_mossberg_npc_original(self)
+  self.mossberg_npc.sounds.prefix = "huntsman_npc"
+  self.mossberg_npc.CLIP_AMMO_MAX = 2
+end
+
+local _init_data_mp5_npc_original = WeaponTweakData._init_data_mp5_npc
+function WeaponTweakData:_init_data_mp5_npc()
+  _init_data_mp5_npc_original(self)
+  self.ump_npc.sounds.prefix = "schakal_npc"
+  self.akmsu_smg_npc.sounds.prefix  = "akmsu_npc"
+  self.akmsu_smg_npc.has_suppressor = "suppressed_a"
+  self.asval_smg_npc.sounds.prefix  = "val_npc"
+  self.asval_smg_npc.has_suppressor = "suppressed_a"
+end
+
+local _init_data_mac11_npc_original = WeaponTweakData._init_data_mac11_npc
+function WeaponTweakData:_init_data_mac11_npc()
+  _init_data_mac11_npc_original(self)
+  self.mac11_npc.sounds.prefix = "mac10_npc"
+end
+
+local _init_data_mp9_npc_original = WeaponTweakData._init_data_mp9_npc
+function WeaponTweakData:_init_data_mp9_npc()
+  _init_data_mp9_npc_original(self)
+  self.sr2_smg_npc.sounds.prefix = "sr2_npc"
+end
+
+local _init_data_m249_npc_original = WeaponTweakData._init_data_m249_npc
+function WeaponTweakData:_init_data_m249_npc()
+  _init_data_m249_npc_original(self)
+  self.rpk_lmg_npc.sounds.prefix = "rpk_npc"
 end

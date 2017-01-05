@@ -8,6 +8,10 @@ function CharacterTweakData:_presets(...)
   -- loop through all weapon presets and create new presets from old ones for all the weapons
   -- that are used by cops and not only team AI so to not mess with any existing presets
   for k, v in pairs(presets.weapon) do
+    if v.r870 then
+      v.benelli = deep_clone(v.r870)
+    end
+  
     if v.m4 then
       v.g36 = deep_clone(v.m4)
       v.scar = deep_clone(v.m4)
@@ -28,7 +32,7 @@ function CharacterTweakData:_presets(...)
   presets.weapon.gang_member.c45 = deep_clone(presets.weapon.gang_member.beretta92)
   
   presets.weapon.gang_member.raging_bull = deep_clone(presets.weapon.gang_member.beretta92)
-  presets.weapon.gang_member.raging_bull.RELOAD_SPEED = 0.5
+  presets.weapon.gang_member.raging_bull.RELOAD_SPEED = 0.3
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.raging_bull, 4, false)
   BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.raging_bull, 1)
   BotWeapons:set_single_fire_mode(presets.weapon.gang_member.raging_bull, { 0.5, 1 }, { 0.75, 2 })
@@ -56,7 +60,7 @@ function CharacterTweakData:_presets(...)
   -- lmgs
   presets.weapon.gang_member.m249 = deep_clone(presets.weapon.gang_member.m4)
   presets.weapon.gang_member.m249.autofire_rounds = { 15, 40 }
-  presets.weapon.gang_member.m249.RELOAD_SPEED = 0.4
+  presets.weapon.gang_member.m249.RELOAD_SPEED = 0.3
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.m249, 2, false)
   BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.m249, 0.4)
   BotWeapons:set_auto_fire_mode(presets.weapon.gang_member.m249, { 0, 0, 0, 1 }, { 0, 0, 0.5, 1 }, { 0, 0, 1, 0 })
@@ -67,14 +71,19 @@ function CharacterTweakData:_presets(...)
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.r870, 2, true)
   BotWeapons:set_single_fire_mode(presets.weapon.gang_member.r870, { 1, 2 })
   
+  presets.weapon.gang_member.benelli = deep_clone(presets.weapon.gang_member.r870)
+  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.benelli, 1.5, true)
+  BotWeapons:set_single_fire_mode(presets.weapon.gang_member.benelli, { 0.25, 0.25 }, { 0.25, 0.75 }, { 0.5, 1.5 })
+  
   presets.weapon.gang_member.mossberg = deep_clone(presets.weapon.gang_member.r870)
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.mossberg, 3, true)
   BotWeapons:set_single_fire_mode(presets.weapon.gang_member.mossberg, { 0.25, 0.5 }, { 0.5, 2 })
   
-  presets.weapon.gang_member.judge = deep_clone(presets.weapon.gang_member.raging_bull)
-  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.judge, 3, true)
+  presets.weapon.gang_member.judge = deep_clone(presets.weapon.gang_member.benelli)
+  presets.weapon.gang_member.judge.RELOAD_SPEED = 0.3
+  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.judge, 4, true)
   -- auto shotguns
-  presets.weapon.gang_member.saiga = deep_clone(presets.weapon.gang_member.r870)
+  presets.weapon.gang_member.saiga = deep_clone(presets.weapon.gang_member.benelli)
   presets.weapon.gang_member.saiga.RELOAD_SPEED = 0.5
   presets.weapon.gang_member.saiga.autofire_rounds = { 4, 7 }
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.saiga, 1.5, true)
@@ -93,8 +102,8 @@ function CharacterTweakData:_presets(...)
   presets.weapon.gang_member.sniper = deep_clone(presets.weapon.gang_member.raging_bull)
   presets.weapon.gang_member.sniper.range = { close = 5000, optimal = 10000, far = 15000 }
   presets.weapon.gang_member.sniper.RELOAD_SPEED = 0.3
-  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.sniper, 1, false)
-  BotWeapons:set_single_fire_mode(presets.weapon.gang_member.sniper, { 3, 4 }, { 3.5, 5 }, { 4, 6 })
+  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.sniper, 4.5, false)
+  BotWeapons:set_single_fire_mode(presets.weapon.gang_member.sniper, { 3, 4 }, { 4, 5 }, { 5, 6 })
   
   return presets
 end

@@ -55,12 +55,13 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     menu_id = menu_id_armor,
     priority = 98
   })
-  
+
+  local armor_list = BotWeapons:get_menu_list(BotWeapons.armor)
   MenuHelper:AddMultipleChoice({
     id = "override_armor",
     title = "menu_override_name",
     callback = "BotWeapons_select",
-    items = BotWeapons:get_menu_list(BotWeapons.armor),
+    items = armor_list,
     menu_id = menu_id_armor,
     value = BotWeapons._data["override_armor"] or #BotWeapons.armor + 1,
     priority = 97
@@ -78,7 +79,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
       id = c .. "_armor",
       title = "menu_" .. c,
       callback = "BotWeapons_select",
-      items = BotWeapons:get_menu_list(BotWeapons.armor),
+      items = armor_list,
       menu_id = menu_id_armor,
       value = BotWeapons._data[c .. "_armor"] or 1,
       priority = 96 - i
@@ -96,11 +97,12 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     priority = 98
   })
   
+  local equipment_list = BotWeapons:get_menu_list(BotWeapons.equipment)
   MenuHelper:AddMultipleChoice({
     id = "override_equipment",
     title = "menu_override_name",
     callback = "BotWeapons_select",
-    items = BotWeapons:get_menu_list(BotWeapons.equipment),
+    items = equipment_list,
     menu_id = menu_id_equipment,
     value = BotWeapons._data["override_equipment"] or #BotWeapons.equipment + 1,
     priority = 97
@@ -118,7 +120,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
       id = c .. "_equipment",
       title = "menu_" .. c,
       callback = "BotWeapons_select",
-      items = BotWeapons:get_menu_list(BotWeapons.equipment),
+      items = equipment_list,
       menu_id = menu_id_equipment,
       value = BotWeapons._data[c .. "_equipment"] or 1,
       priority = 96 - i
@@ -156,11 +158,12 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     priority = 98
   })
   
+  local mask_list = BotWeapons:get_menu_list(BotWeapons.masks)
   MenuHelper:AddMultipleChoice({
     id = "override_masks",
     title = "menu_override_name",
     callback = "BotWeapons_select",
-    items = BotWeapons:get_menu_list(BotWeapons.masks, true),
+    items = mask_list,
     menu_id = menu_id_masks,
     value = BotWeapons._data["override_masks"] or #BotWeapons.masks,
     priority = 97
@@ -178,7 +181,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
       id = c .. "_mask",
       title = "menu_" .. c,
       callback = "BotWeapons_select",
-      items = BotWeapons:get_menu_list(BotWeapons.masks, true),
+      items = mask_list,
       menu_id = menu_id_masks,
       value = BotWeapons._data[c .. "_mask"] or 1,
       priority = 96 - i
@@ -213,11 +216,12 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     priority = 98
   })
   
+  local weapon_list = BotWeapons:get_menu_list(BotWeapons.weapons)
   MenuHelper:AddMultipleChoice({
     id = "override_weapons",
     title = "menu_override_name",
     callback = "BotWeapons_select",
-    items = BotWeapons:get_menu_list(BotWeapons.weapons),
+    items = weapon_list,
     menu_id = menu_id_weapons,
     value = BotWeapons._data["override_weapons"] or #BotWeapons.weapons + 1,
     priority = 97
@@ -235,7 +239,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
       id = c .. "_weapon",
       title = "menu_" .. c,
       callback = "BotWeapons_select",
-      items = BotWeapons:get_menu_list(BotWeapons.weapons),
+      items = weapon_list,
       menu_id = menu_id_weapons,
       value = BotWeapons._data[c .. "_weapon"] or 1,
       priority = 96 - i

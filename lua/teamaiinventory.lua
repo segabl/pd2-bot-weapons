@@ -77,28 +77,24 @@ for k, _ in pairs(tweak_data.blackmarket.materials) do
 end
 
 function TeamAIInventory:set_mask(id, blueprint)
-  local vis = self._mask_visibility
-  self:set_mask_visibility(false)
-  self._mask_visibility = vis
-  -- set default mask first
-  self._mask_id = managers.criminals:character_data_by_unit(self._unit).mask_id
-  local mask_unit_name = managers.criminals:character_data_by_unit(self._unit).mask_obj
-  self._mask_unit_name = mask_unit_name[Global.level_data.level_id] or mask_unit_name.default or mask_unit_name
-  self._mask_blueprint = nil
-  -- then try to set mask given by params
   if id and tweak_data.blackmarket.masks[id] then
+    local vis = self._mask_visibility
+    self:set_mask_visibility(false)
+    self._mask_visibility = vis
     if tweak_data.blackmarket.masks[id].characters then
-      id = tweak_data.blackmarket.masks[id].characters[managers.criminals.convert_old_to_new_character_workname(self._unit:base()._tweak_table)]
+      id = tweak_data.blackmarket.masks[id].characters[managers.criminals.convert_old_to_new_character_workname(self._unit:base()._tweak_table)] or id
     end
     self._mask_id = id
     self._mask_unit_name = tweak_data.blackmarket.masks[id].unit
     self._mask_blueprint = blueprint
+    managers.dyn_resource:load(Idstring("unit"), Idstring(self._mask_unit_name), managers.dyn_resource.DYN_RESOURCES_PACKAGE, callback(self, self, "clbk_mask_unit_loaded"))
   end
-  managers.dyn_resource:load(Idstring("unit"), Idstring(self._mask_unit_name), managers.dyn_resource.DYN_RESOURCES_PACKAGE, callback(self, self, "clbk_mask_unit_loaded"))
 end
 
 function TeamAIInventory:preload_mask()
-  local id, blueprint
+  local id = managers.criminals:character_data_by_unit(self._unit).mask_id
+  local blueprint = nil
+  
   if LuaNetworking:IsHost() then
     local name = self._unit:base()._tweak_table
     
@@ -106,7 +102,7 @@ function TeamAIInventory:preload_mask()
     if BotWeapons._data.toggle_override_masks then
       index = BotWeapons._data.override_masks or (#BotWeapons.masks + 1)
     end
-    
+
     if index == 2 then
       local player_mask = managers.blackmarket:equipped_mask()
       if player_mask then

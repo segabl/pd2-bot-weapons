@@ -115,7 +115,7 @@ function TeamAIInventory:preload_mask()
       end
     elseif index > #BotWeapons.masks then
       id = TeamAIInventory.masks[math.random(#TeamAIInventory.masks)]
-      if math.random() < BotWeapons._data.slider_mask_customized_chance then
+      if math.random() < (BotWeapons._data.slider_mask_customized_chance or 0.5) then
         blueprint = {
           color = {id = TeamAIInventory.colors[math.random(#TeamAIInventory.colors)]},
           pattern = {id = TeamAIInventory.patterns[math.random(#TeamAIInventory.patterns)]},
@@ -130,23 +130,17 @@ end
 
 function TeamAIInventory:set_mask_visibility(state)
   self._mask_visibility = state
-  local character_name = CriminalsManager.convert_old_to_new_character_workname(self._unit:base()._tweak_table) 
-  if not character_name then
-    return
-  end
   if alive(self._mask_unit) and not state then
     for _, linked_unit in ipairs(self._mask_unit:children()) do
       linked_unit:unlink()
       World:delete_unit(linked_unit)
     end
     self._mask_unit:unlink()
-    local name = self._mask_unit:name()
     World:delete_unit(self._mask_unit)
-    local mask_off_sequence = (tweak_data.blackmarket.characters[character_name] or tweak_data.blackmarket.characters.locked[character_name]).mask_off_sequence
+    local mask_off_sequence = managers.blackmarket:character_mask_off_sequence_by_character_name(self._unit:base()._tweak_table)
     if mask_off_sequence then
       self._unit:damage():run_sequence_simple(mask_off_sequence)
     end
-    return
   end
   if not state then
     return
@@ -163,7 +157,7 @@ function TeamAIInventory:set_mask_visibility(state)
     self._mask_unit:link(self._mask_unit:orientation_object():name(), backside, backside:orientation_object():name())
   end
   if not self._mask_id or not tweak_data.blackmarket.masks[self._mask_id].skip_mask_on_sequence then
-    local mask_on_sequence = (tweak_data.blackmarket.characters[character_name] or tweak_data.blackmarket.characters.locked[character_name]).mask_on_sequence
+    local mask_on_sequence = managers.blackmarket:character_mask_on_sequence_by_character_name(self._unit:base()._tweak_table)
     if mask_on_sequence then
       self._unit:damage():run_sequence_simple(mask_on_sequence)
     end

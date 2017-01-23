@@ -133,7 +133,8 @@ function TeamAIInventory:set_mask_visibility(state)
     end
     self._mask_unit:unlink()
     World:delete_unit(self._mask_unit)
-    local mask_off_sequence = managers.blackmarket:character_mask_off_sequence_by_character_name(self._unit:base()._tweak_table)
+    local name = CriminalsManager.convert_old_to_new_character_workname(self._unit:base()._tweak_table)
+    local mask_off_sequence = tweak_data.blackmarket.characters[name] and tweak_data.blackmarket.characters[name].mask_off_sequence
     if mask_off_sequence then
       self._unit:damage():run_sequence_simple(mask_off_sequence)
     end

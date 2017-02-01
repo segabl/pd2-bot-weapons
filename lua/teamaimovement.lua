@@ -40,3 +40,16 @@ function TeamAIMovement:check_visual_equipment()
   BotWeapons:set_equipment(self._unit, equipment_index)
   BotWeapons:sync_armor_and_equipment(self._unit, armor_index, equipment_index)
 end
+
+-- link to HuskPlayerMovement for bag carrying
+function TeamAIMovement:set_visual_carry(...)
+  HuskPlayerMovement.set_visual_carry(self, ...)
+end
+
+function TeamAIMovement:_destroy_current_carry_unit(...)
+  HuskPlayerMovement._destroy_current_carry_unit(self, ...)
+end
+
+function TeamAIMovement:_create_carry_unit(...)
+  HuskPlayerMovement._create_carry_unit(self, ...)
+end

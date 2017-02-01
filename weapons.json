@@ -62,7 +62,7 @@
     "fields_change": {
       "usage": "mp5",
       "CLIP_AMMO_MAX": 32
-    }
+    },
     "blueprint": [
       "wpn_fps_pis_g18c_body_frame",
       "wpn_fps_pis_g18c_b_standard",
@@ -124,7 +124,7 @@
     ]
   },
   {
-    "menu_name": "bm_w_g36"
+    "menu_name": "bm_w_g36",
     "factory_name": "wpn_fps_ass_g36_npc",
     "online_name": "units/payday2/weapons/wpn_npc_g36/wpn_npc_g36",
     "type": "rifle",
@@ -139,7 +139,7 @@
     ]
   },
   {
-    "menu_name": "bm_w_scar"
+    "menu_name": "bm_w_scar",
     "factory_name": "wpn_fps_ass_scar_npc",
     "online_name": "units/payday2/weapons/wpn_npc_scar_murkywater/wpn_npc_scar_murkywater",
     "type": "rifle",
@@ -560,7 +560,7 @@
       "auto"
     ],
     "fields_change": {
-      "CLIP_AMMO_MAX": 50
+      "CLIP_AMMO_MAX": 50,
       "usage": "p90"
     },
     "blueprint": [
@@ -712,7 +712,7 @@
       "anim"
     ],
     "fields_change": {
-      "usage": "akimbo_auto"
+      "usage": "akimbo_auto",
       "CLIP_AMMO_MAX": 60
     }
   },

@@ -41,6 +41,25 @@ function TeamAIMovement:check_visual_equipment()
   BotWeapons:sync_armor_and_equipment(self._unit, armor_index, equipment_index)
 end
 
+local set_carrying_bag_original = TeamAIMovement.set_carrying_bag
+function TeamAIMovement:set_carrying_bag(unit, ...)
+  local enabled = BotWeapons._data.toggle_player_carry or BotWeapons._data.toggle_player_carry == nil
+  if unit and enabled then
+    local bag_object = unit:get_object(Idstring("g_bag")) or unit:get_object(Idstring("g_canvasbag")) or unit:get_object(Idstring("g_g")) or unit:get_object(Idstring("g_goat")) or unit:get_object(Idstring("g_bodybag"))
+    if bag_object then
+      bag_object:set_visibility(false)
+    end
+    self:set_visual_carry(unit:carry_data():carry_id())
+  elseif not unit and self._carry_unit then
+    local bag_object = self._carry_unit:get_object(Idstring("g_bag")) or self._carry_unit:get_object(Idstring("g_canvasbag")) or self._carry_unit:get_object(Idstring("g_g")) or self._carry_unit:get_object(Idstring("g_goat")) or self._carry_unit:get_object(Idstring("g_bodybag"))
+    if bag_object then
+      bag_object:set_visibility(true)
+    end
+    self:set_visual_carry(nil)
+  end
+  set_carrying_bag_original(self, unit, ...)
+end
+
 -- link to HuskPlayerMovement for bag carrying
 function TeamAIMovement:set_visual_carry(...)
   HuskPlayerMovement.set_visual_carry(self, ...)

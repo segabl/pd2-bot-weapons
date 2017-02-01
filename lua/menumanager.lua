@@ -34,15 +34,11 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
   MenuCallbackHandler.BotWeapons_select = function(self, item)
     BotWeapons._data[item:name()] = item:value()
     BotWeapons:Save()
-    -- cause reload
-    botweapons = false
   end
   
   MenuCallbackHandler.BotWeapons_toggle = function(self, item)
     BotWeapons._data[item:name()] = (item:value() == "on");
     BotWeapons:Save()
-    -- cause reload
-    botweapons = false
   end
 
   -- ARMOR MENU
@@ -87,6 +83,23 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
   end
   
   -- EQUIPMENT MENU
+  MenuHelper:AddToggle({
+    id = "toggle_player_carry",
+    title = "toggle_player_carry_name",
+    desc = "toggle_player_carry_desc",
+    callback = "BotWeapons_toggle",
+    value = BotWeapons._data["toggle_player_carry"] == nil and true or BotWeapons._data["toggle_player_carry"],
+    menu_id = menu_id_equipment,
+    priority = 100
+  })
+  
+  MenuHelper:AddDivider({
+    id = "divider1",
+    size = 24,
+    menu_id = menu_id_equipment,
+    priority = 99,
+  })
+  
   MenuHelper:AddToggle({
     id = "toggle_override_equipment",
     title = "toggle_override_equipment_name",

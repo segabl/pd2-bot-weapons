@@ -103,6 +103,7 @@ function CharacterTweakData:_presets(...)
   presets.weapon.gang_member.sniper.range = { close = 5000, optimal = 10000, far = 15000 }
   presets.weapon.gang_member.sniper.RELOAD_SPEED = 0.3
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.sniper, 4.5, false)
+  BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.sniper, 2)
   BotWeapons:set_single_fire_mode(presets.weapon.gang_member.sniper, { 3, 4 }, { 4, 5 }, { 5, 6 })
   
   return presets

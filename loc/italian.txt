@@ -13,6 +13,8 @@
   "toggle_adjust_damage_desc" : "Disabilita il falloff del danno della squadra IA e scala il danno con la difficoltà",
   "toggle_override_armor_name" : "Sostituzione Armatura",
   "toggle_override_armor_desc" : "Sostituisce le singole impostazioni dell'armatura della squadra IA",
+  "toggle_player_carry_name" : "Trasporta i borsoni come i giocatori",
+  "toggle_player_carry_desc" : "La Squadra IA trasporterà i borsoni allo stesso modo dei giocatori umani anziché averli fluttuanti dietro di loro",
   "toggle_override_equipment_name" : "Sostituzione Equipaggiamento",
   "toggle_override_equipment_desc" : "Sostituisce le singole impostazioni dell'equipaggiamento della squadra IA",
   "slider_mask_customized_chance_name" : "Probabilità maschera personalizzata",

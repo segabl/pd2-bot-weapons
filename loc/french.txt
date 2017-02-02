@@ -13,6 +13,8 @@
   "toggle_adjust_damage_desc" : "Désactiver les dégâts de chute des bots et les dégâts des échelles avec difficulté",
   "toggle_override_armor_name" : "Passer outre l'armure",
   "toggle_override_armor_desc" : "Passer outre les paramètres d'armure individuelles des bots",
+  "toggle_player_carry_name" : "Porter des sacs comme des joueurs",
+  "toggle_player_carry_desc" : "Les bots transporteront des sacs comme des joueurs humains au lieu d'avoir des sacs flottant au-dessus de leur dos",
   "toggle_override_equipment_name" : "Passer outre les équipements",
   "toggle_override_equipment_desc" : "Passer outre les paramètres des équipements individuelles des bots",
   "slider_mask_customized_chance_name" : "Possibilité de personnalisation du masque",

@@ -13,6 +13,8 @@
   "toggle_adjust_damage_desc" : "Disables team AIs damage falloff and scales damage with difficulty",
   "toggle_override_armor_name" : "Armor override",
   "toggle_override_armor_desc" : "Override individual armor settings of the team AI",
+  "toggle_player_carry_name" : "Carry bags like players",
+  "toggle_player_carry_desc" : "Team AI will carry bags like human players instead of having bags floating above their backs",
   "toggle_override_equipment_name" : "Equipment override",
   "toggle_override_equipment_desc" : "Override individual equipment settings of the team AI",
   "slider_mask_customized_chance_name" : "Mask customization chance",

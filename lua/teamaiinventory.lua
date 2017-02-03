@@ -43,7 +43,7 @@ function TeamAIInventory:add_unit_by_name(weapon, equip)
     local factory_name = weapon.factory_name
     local factory_weapon = tweak_data.weapon.factory[factory_name]
     if factory_weapon then
-      HuskPlayerInventory.add_unit_by_factory_blueprint(self, factory_name, equip, true, weapon.blueprint or factory_weapon.default_blueprint)
+      self:add_unit_by_factory_blueprint(factory_name, equip, true, weapon.blueprint or factory_weapon.default_blueprint)
       return
     else
       log("[BotWeapons] Could not find weapon " .. factory_name)
@@ -52,6 +52,31 @@ function TeamAIInventory:add_unit_by_name(weapon, equip)
   local type_replacement = online_replacements[weapon.type] and online_replacements[weapon.type][math.random(#online_replacements[weapon.type])]
   local replacement = weapon.online_name or type_replacement or "units/payday2/weapons/wpn_npc_m4/wpn_npc_m4"
   add_unit_by_name_original(self, Idstring(replacement), equip)
+end
+
+function TeamAIInventory:add_unit_by_factory_blueprint(factory_name, equip, instant, blueprint, cosmetics)
+  local factory_weapon = tweak_data.weapon.factory[factory_name]
+  local new_unit = World:spawn_unit(Idstring(factory_weapon.unit), Vector3(), Rotation())
+  new_unit:base():set_factory_data(factory_name)
+  new_unit:base():set_cosmetics_data(cosmetics)
+  new_unit:base():assemble_from_blueprint(factory_name, blueprint)
+  new_unit:base():check_npc()
+  local setup_data = {}
+  setup_data.user_unit = self._unit
+  setup_data.ignore_units = {
+    self._unit,
+    new_unit
+  }
+  setup_data.expend_ammo = false
+  setup_data.hit_slotmask = managers.slot:get_mask("bullet_impact_targets")
+  setup_data.user_sound_variant = tweak_data.character[self._unit:base()._tweak_table].weapon_voice
+  setup_data.alert_AI = true
+  setup_data.alert_filter = self._unit:brain():SO_access()
+  new_unit:base():setup(setup_data)
+  self:add_unit(new_unit, equip, instant)
+  if new_unit:base().AKIMBO then
+    new_unit:base():create_second_gun()
+  end
 end
 
 TeamAIInventory.masks = TeamAIInventory.masks or {}

@@ -346,6 +346,11 @@
     "based_on": "mossberg_npc",
     "fields_preserve": [
       "sounds"
+    ],
+    "blueprint": [
+      "wpn_fps_shot_huntsman_body_standard",
+      "wpn_fps_shot_huntsman_b_short",
+      "wpn_fps_shot_huntsman_s_short"
     ]
   },
   {
@@ -601,6 +606,25 @@
     "fields_preserve": [
       "sounds",
       "auto"
+    ]
+  },
+  {
+    "menu_name": "bm_w_cobray",
+    "factory_name": "wpn_fps_smg_cobray_npc",
+    "type": "smg",
+    "tweak_data": "cobray_npc",
+    "based_on": "mp9_npc",
+    "fields_preserve": [
+      "sounds",
+      "auto"
+    ],
+    "blueprint": [
+      "wpn_fps_smg_cobray_body_lower_jacket",
+      "wpn_fps_smg_cobray_body_upper_jacket",
+      "wpn_fps_smg_cobray_bolt",
+      "wpn_fps_smg_cobray_m_standard",
+      "wpn_fps_smg_cobray_s_standard",
+      "wpn_fps_smg_cobray_barrel"
     ]
   },
   

@@ -1,6 +1,6 @@
 {
   "name" : "Bot Weapons and Equipment",
-  "description" : "Set the weapons, armor and deployables for the team AI",
+  "description" : "Customize the visual appearance of the Team AI to make them more human-like",
   "author" : "topfpflanzen-wuerger",
   "priority" : 100,
   "updates" : [

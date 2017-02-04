@@ -23,6 +23,15 @@ if _G.BotWeapons == nil then
   function BotWeapons:init()
     self:Load()
   
+    self.version = "0.00"
+    local file = io.open(BotWeapons._path .. "mod.txt", "r")
+    if file then
+      local data = json.decode(file:read("*all"))
+      file:close()
+      self.version = string.format("%.2f", data and data.updates and data.updates[1] and data.updates[1].revision or 0)
+    end
+    log("[BotWeapons] Version " .. self.version)
+  
     self.armor = {
       { menu_name = "bm_armor_level_1" },
       { menu_name = "bm_armor_level_2" },
@@ -242,16 +251,20 @@ if _G.BotWeapons == nil then
   
   Hooks:Add("BaseNetworkSessionOnLoadComplete", "BaseNetworkSessionOnLoadCompleteBotWeapons", function()
     if LuaNetworking:IsClient() then
-      LuaNetworking:SendToPeer(1, "bot_weapons_active", "")
+      LuaNetworking:SendToPeer(1, "bot_weapons_active", version)
     end
   end)
 
   Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function(sender, id, data)
     local peer = LuaNetworking:GetPeers()[sender]
     local params = string.split(data or "", ",", true)
-    if id == "bot_weapons_active" then
-      if peer then
-        peer._has_bot_weapons = true
+    if id == "bot_weapons_active" and peer then
+      if #params == 1 then
+        if params[1] == BotWeapons.version then
+          peer._has_bot_weapons = true
+        else
+          log("[BotWeapons] Client version mismatch")
+        end
       end
     elseif id == "bot_weapons_equipment" and managers.criminals then
       if #params == 2 then

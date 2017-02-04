@@ -56,7 +56,11 @@ end
 
 function TeamAIInventory:add_unit_by_factory_blueprint(factory_name, equip, instant, blueprint, cosmetics)
   local factory_weapon = tweak_data.weapon.factory[factory_name]
-  local new_unit = World:spawn_unit(Idstring(factory_weapon.unit), Vector3(), Rotation())
+  local weapon_unit = Idstring(factory_weapon and factory_weapon.unit)
+  if not managers.dyn_resource:is_resource_ready(Idstring("unit"), weapon_unit, managers.dyn_resource.DYN_RESOURCES_PACKAGE) then
+    managers.dyn_resource:load(Idstring("unit"), weapon_unit, managers.dyn_resource.DYN_RESOURCES_PACKAGE)
+  end
+  local new_unit = World:spawn_unit(weapon_unit, Vector3(), Rotation())
   new_unit:base():set_factory_data(factory_name)
   new_unit:base():set_cosmetics_data(cosmetics)
   new_unit:base():assemble_from_blueprint(factory_name, blueprint)

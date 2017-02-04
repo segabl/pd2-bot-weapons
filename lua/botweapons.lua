@@ -110,21 +110,6 @@ if _G.BotWeapons == nil then
     return menu_list
   end
   
-  function BotWeapons:load_weapon_units()
-    if managers.dyn_resource and tweak_data.weapon and tweak_data.weapon.factory then
-      log("[BotWeapons] Loading weapon units")
-      for _, weapon in ipairs(self.weapons) do
-        local unit_name = Idstring(tweak_data.weapon.factory[weapon.factory_name].unit)
-        if not managers.dyn_resource:is_resource_ready(Idstring("unit"), unit_name, managers.dyn_resource.DYN_RESOURCES_PACKAGE) then
-          --log("[BotWeapons] Loading unit " .. weapon.factory_name)
-          managers.dyn_resource:load(Idstring("unit"), unit_name, managers.dyn_resource.DYN_RESOURCES_PACKAGE)
-        end
-      end
-    else
-      log("[BotWeapons] Not ready to load units")
-    end
-  end
-  
   function BotWeapons:set_damage_multiplicator(weapon, mul, falloff)
     if not BotWeapons._data.toggle_adjust_damage or not Global.game_settings or not self.multiplier[Global.game_settings.difficulty] then
       return

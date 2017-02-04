@@ -5,13 +5,12 @@
   "priority" : 100,
   "updates" : [
     {
-      "revision" : 5.3,
+      "revision" : 5.4,
       "identifier" : "bot_weapons"
     }
   ],
   "hooks" : [
     { "hook_id" : "lib/managers/menumanager", "script_path" : "lua/menumanager.lua" },
-    { "hook_id" : "lib/managers/dynamicresourcemanager", "script_path" : "lua/dynamicresourcemanager.lua" },
     { "hook_id" : "lib/tweak_data/weapontweakdata", "script_path" : "lua/weapontweakdata.lua" },
     { "hook_id" : "lib/tweak_data/charactertweakdata", "script_path" : "lua/charactertweakdata.lua" },
     { "hook_id" : "lib/units/player_team/teamaibase", "script_path" : "lua/teamaibase.lua" },

@@ -23,13 +23,13 @@ if _G.BotWeapons == nil then
   function BotWeapons:init()
     self:Load()
   
-    self.version = "0.00"
     local file = io.open(BotWeapons._path .. "mod.txt", "r")
     if file then
       local data = json.decode(file:read("*all"))
       file:close()
-      self.version = string.format("%.2f", data and data.updates and data.updates[1] and data.updates[1].revision or 0)
+      self.version = string.format("%.1f", data and data.updates and data.updates[1] and data.updates[1].revision or 0)
     end
+    self.version = self.version or "0.0"
     log("[BotWeapons] Version " .. self.version)
   
     self.armor = {

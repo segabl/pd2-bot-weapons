@@ -56,6 +56,9 @@ end
 
 function TeamAIInventory:add_unit_by_factory_blueprint(factory_name, equip, instant, blueprint, cosmetics)
   local factory_weapon = tweak_data.weapon.factory[factory_name]
+  if not factory_weapon and factory_weapon.unit then
+    return
+  end
   local weapon_unit = Idstring(factory_weapon and factory_weapon.unit)
   if not managers.dyn_resource:is_resource_ready(Idstring("unit"), weapon_unit, managers.dyn_resource.DYN_RESOURCES_PACKAGE) then
     managers.dyn_resource:load(Idstring("unit"), weapon_unit, managers.dyn_resource.DYN_RESOURCES_PACKAGE)
@@ -74,8 +77,11 @@ function TeamAIInventory:add_unit_by_factory_blueprint(factory_name, equip, inst
   setup_data.expend_ammo = false
   setup_data.hit_slotmask = managers.slot:get_mask("bullet_impact_targets")
   setup_data.user_sound_variant = tweak_data.character[self._unit:base()._tweak_table].weapon_voice
-  setup_data.alert_AI = true
-  setup_data.alert_filter = self._unit:brain():SO_access()
+  setup_data.alert_AI = false
+  if self._unit:brain().SO_access then
+    setup_data.alert_AI = true
+    setup_data.alert_filter = self._unit:brain():SO_access()
+  end
   new_unit:base():setup(setup_data)
   self:add_unit(new_unit, equip, instant)
   if new_unit:base().AKIMBO then

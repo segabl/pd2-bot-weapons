@@ -203,23 +203,6 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
   
   -- WEAPONS MENU
   MenuHelper:AddToggle({
-    id = "toggle_adjust_damage",
-    title = "toggle_adjust_damage_name",
-    desc = "toggle_adjust_damage_desc",
-    callback = "BotWeapons_toggle",
-    value = BotWeapons._data["toggle_adjust_damage"],
-    menu_id = menu_id_weapons,
-    priority = 100
-  })
-
-  MenuHelper:AddDivider({
-    id = "divider1",
-    size = 24,
-    menu_id = menu_id_weapons,
-    priority = 99,
-  })
-
-  MenuHelper:AddToggle({
     id = "toggle_override_weapons",
     title = "toggle_override_weapons_name",
     desc = "toggle_override_weapons_desc",

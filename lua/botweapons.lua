@@ -58,17 +58,6 @@ if _G.BotWeapons == nil then
       { menu_name = "item_same_as_me" }
     }
   
-    -- difficulty multiplier
-    self.multiplier = {
-      normal = 0.4,
-      hard = 0.55,
-      overkill = 0.7,
-      overkill_145 = 0.85,
-      easy_wish = 1,
-      overkill_290 = 1.3,
-      sm_wish = 1.6
-    }
-  
     -- load weapon definitions
     local file = io.open(BotWeapons._path .. "weapons.json", "r")
     if file then
@@ -110,13 +99,13 @@ if _G.BotWeapons == nil then
     return menu_list
   end
   
-  function BotWeapons:set_damage_multiplicator(weapon, mul, falloff)
-    if not BotWeapons._data.toggle_adjust_damage or not Global.game_settings or not self.multiplier[Global.game_settings.difficulty] then
+  function BotWeapons:set_damage_multiplicator(weapon, mul)
+    if not Global.game_settings then
       return
     end
+    local factor = weapon.FALLOFF[1].dmg_mul and (mul / weapon.FALLOFF[1].dmg_mul) or 0
     for i, v in ipairs(weapon.FALLOFF) do
-      local f = (#weapon.FALLOFF + 1 - i) / #weapon.FALLOFF
-      v.dmg_mul = self.multiplier[Global.game_settings.difficulty] * mul * (falloff and f or 1)
+      v.dmg_mul = v.dmg_mul * factor
     end
   end
   

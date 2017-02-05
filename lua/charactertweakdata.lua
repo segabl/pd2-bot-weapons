@@ -89,12 +89,12 @@ function CharacterTweakData:_presets(...)
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.saiga, 1.5, true)
   BotWeapons:set_auto_fire_mode(presets.weapon.gang_member.saiga, { 0, 0.33, 0.66, 1 }, { 0.33, 0.66, 1, 0 }, { 0.66, 1, 0, 0 })
   -- akimbo
-  presets.weapon.gang_member.akimbo_pistol = deep_clone(presets.weapon.gang_member.m4)
+  presets.weapon.gang_member.akimbo_pistol = deep_clone(presets.weapon.gang_member.mp5)
   presets.weapon.gang_member.akimbo_pistol.RELOAD_SPEED = 0.5
   BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.akimbo_pistol, 0.9)
-  BotWeapons:set_single_fire_mode(presets.weapon.gang_member.akimbo_pistol, { 0.1, 0.2 }, { 0.2, 0.75 }, { 1, 2 })
+  BotWeapons:set_single_fire_mode(presets.weapon.gang_member.akimbo_pistol, { 0.1, 0.2 }, { 0.2, 0.4 }, { 0.75, 1.25 })
   
-  presets.weapon.gang_member.akimbo_auto = deep_clone(presets.weapon.gang_member.m4)
+  presets.weapon.gang_member.akimbo_auto = deep_clone(presets.weapon.gang_member.mp5)
   presets.weapon.gang_member.akimbo_auto.RELOAD_SPEED = 0.3
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.akimbo_auto, 4, false)
   BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.akimbo_auto, 0.6)

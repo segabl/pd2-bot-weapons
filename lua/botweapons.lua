@@ -236,7 +236,7 @@ if _G.BotWeapons == nil then
   
   Hooks:Add("BaseNetworkSessionOnLoadComplete", "BaseNetworkSessionOnLoadCompleteBotWeapons", function()
     if LuaNetworking:IsClient() then
-      LuaNetworking:SendToPeer(1, "bot_weapons_active", version)
+      LuaNetworking:SendToPeer(1, "bot_weapons_active", BotWeapons.version)
     end
   end)
 

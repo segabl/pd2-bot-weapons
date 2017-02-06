@@ -37,18 +37,10 @@ local online_replacements = {
 local add_unit_by_name_original = TeamAIInventory.add_unit_by_name
 function TeamAIInventory:add_unit_by_name(weapon, equip) 
   if type(weapon) ~= "table" then
-    add_unit_by_name_original(self, weapon, equip)
-    return
+    return add_unit_by_name_original(self, weapon, equip)
   end
   if BotWeapons:custom_weapons_allowed() then
-    local factory_name = weapon.factory_name
-    local factory_weapon = tweak_data.weapon.factory[factory_name]
-    if factory_weapon then
-      self:add_unit_by_factory_blueprint(factory_name, equip, true, weapon.blueprint or factory_weapon.default_blueprint)
-      return
-    else
-      log("[BotWeapons] Could not find weapon " .. factory_name)
-    end
+    return self:add_unit_by_factory_blueprint(weapon.factory_name, equip, true, weapon.blueprint)
   end
   local type_replacement = online_replacements[weapon.type] and online_replacements[weapon.type][math.random(#online_replacements[weapon.type])]
   local replacement = weapon.online_name or type_replacement or "units/payday2/weapons/wpn_npc_m4/wpn_npc_m4"
@@ -57,17 +49,18 @@ end
 
 function TeamAIInventory:add_unit_by_factory_blueprint(factory_name, equip, instant, blueprint, cosmetics)
   local factory_weapon = tweak_data.weapon.factory[factory_name]
-  if not factory_weapon and factory_weapon.unit then
+  if not factory_weapon then
+    log("[BotWeapons] Could not find weapon " .. factory_name)
     return
   end
-  local weapon_unit = Idstring(factory_weapon and factory_weapon.unit)
+  local weapon_unit = Idstring(factory_weapon.unit)
   if not managers.dyn_resource:is_resource_ready(Idstring("unit"), weapon_unit, managers.dyn_resource.DYN_RESOURCES_PACKAGE) then
     managers.dyn_resource:load(Idstring("unit"), weapon_unit, managers.dyn_resource.DYN_RESOURCES_PACKAGE)
   end
   local new_unit = World:spawn_unit(weapon_unit, Vector3(), Rotation())
   new_unit:base():set_factory_data(factory_name)
   new_unit:base():set_cosmetics_data(cosmetics)
-  new_unit:base():assemble_from_blueprint(factory_name, blueprint)
+  new_unit:base():assemble_from_blueprint(factory_name, blueprint or factory_weapon.default_blueprint)
   new_unit:base():check_npc()
   local setup_data = {}
   setup_data.user_unit = self._unit

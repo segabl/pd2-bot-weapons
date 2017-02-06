@@ -129,3 +129,17 @@ function CharacterTweakData:_init_biker_boss(...)
   -- transfer ak47 weapon settings to new m249 preset
   self.biker_boss.weapon.m249 = deep_clone(self.biker_boss.weapon.ak47)
 end
+
+local _init_drug_lord_boss_original = CharacterTweakData._init_drug_lord_boss
+function CharacterTweakData:_init_drug_lord_boss(...)
+  _init_drug_lord_boss_original(self, ...)
+  -- transfer ak47 weapon settings to new m249 preset
+  self.biker_boss.weapon.scar = deep_clone(self.biker_boss.weapon.ak47)
+end
+
+local _init_drug_lord_boss_stealth_original = CharacterTweakData._init_drug_lord_boss_stealth
+function CharacterTweakData:_init_drug_lord_boss_stealth(...)
+  _init_drug_lord_boss_stealth_original(self, ...)
+  -- transfer ak47 weapon settings to new m249 preset
+  self.biker_boss.weapon.scar = deep_clone(self.biker_boss.weapon.ak47)
+end

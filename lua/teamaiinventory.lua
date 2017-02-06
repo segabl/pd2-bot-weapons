@@ -11,7 +11,8 @@ local online_replacements = {
     "units/payday2/weapons/wpn_npc_ak47/wpn_npc_ak47",
     "units/payday2/weapons/wpn_npc_g36/wpn_npc_g36",
     "units/payday2/weapons/wpn_npc_scar_murkywater/wpn_npc_scar_murkywater",
-    "units/pd2_dlc_mad/weapons/wpn_npc_asval/wpn_npc_asval"
+    "units/pd2_dlc_mad/weapons/wpn_npc_asval/wpn_npc_asval",
+    "units/pd2_dlc_chico/weapons/wpn_npc_sg417/wpn_npc_sg417"
   },
   smg = {
     "units/payday2/weapons/wpn_npc_mp5/wpn_npc_mp5",

@@ -57,6 +57,10 @@ function TeamAIMovement:set_carrying_bag(unit, ...)
     end
     self:set_visual_carry(nil)
   end
+  local name_label = managers.hud:_get_name_label(self._unit:unit_data().name_label_id)
+  if name_label then
+    name_label.panel:child("bag"):set_visible(enabled and unit)
+  end
   set_carrying_bag_original(self, unit, ...)
 end
 

@@ -90,19 +90,17 @@ function CharacterTweakData:_presets(...)
   BotWeapons:set_auto_fire_mode(presets.weapon.gang_member.saiga, { 0, 0.33, 0.66, 1 }, { 0.33, 0.66, 1, 0 }, { 0.66, 1, 0, 0 })
   -- akimbo
   presets.weapon.gang_member.akimbo_pistol = deep_clone(presets.weapon.gang_member.mp5)
-  presets.weapon.gang_member.akimbo_pistol.RELOAD_SPEED = 0.5
-  BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.akimbo_pistol, 0.9)
+  presets.weapon.gang_member.akimbo_pistol.RELOAD_SPEED = 0.8
   BotWeapons:set_single_fire_mode(presets.weapon.gang_member.akimbo_pistol, { 0.1, 0.2 }, { 0.2, 0.4 }, { 0.75, 1.25 })
   
   presets.weapon.gang_member.akimbo_auto = deep_clone(presets.weapon.gang_member.mp5)
-  presets.weapon.gang_member.akimbo_auto.RELOAD_SPEED = 0.3
-  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.akimbo_auto, 4)
-  BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.akimbo_auto, 0.6)
+  presets.weapon.gang_member.akimbo_auto.RELOAD_SPEED = 0.4
+  BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.akimbo_auto, 0.7)
   -- snipers
   presets.weapon.gang_member.sniper = deep_clone(presets.weapon.gang_member.raging_bull)
   presets.weapon.gang_member.sniper.range = { close = 5000, optimal = 10000, far = 15000 }
   presets.weapon.gang_member.sniper.RELOAD_SPEED = 0.3
-  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.sniper, 5)
+  BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.sniper, 6)
   BotWeapons:set_accuracy_multiplicator(presets.weapon.gang_member.sniper, 2)
   BotWeapons:set_single_fire_mode(presets.weapon.gang_member.sniper, { 3, 4 }, { 4, 5 }, { 5, 6 })
   

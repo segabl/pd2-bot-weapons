@@ -44,18 +44,10 @@ end
 local set_carrying_bag_original = TeamAIMovement.set_carrying_bag
 function TeamAIMovement:set_carrying_bag(unit, ...)
   local enabled = BotWeapons._data.toggle_player_carry or BotWeapons._data.toggle_player_carry == nil
-  if unit and enabled then
-    local bag_object = unit:get_object(Idstring("g_bag")) or unit:get_object(Idstring("g_canvasbag")) or unit:get_object(Idstring("g_g")) or unit:get_object(Idstring("g_goat")) or unit:get_object(Idstring("g_bodybag"))
-    if bag_object then
-      bag_object:set_visibility(false)
-    end
-    self:set_visual_carry(unit:carry_data():carry_id())
-  elseif not unit and self._carry_unit then
-    local bag_object = self._carry_unit:get_object(Idstring("g_bag")) or self._carry_unit:get_object(Idstring("g_canvasbag")) or self._carry_unit:get_object(Idstring("g_g")) or self._carry_unit:get_object(Idstring("g_goat")) or self._carry_unit:get_object(Idstring("g_bodybag"))
-    if bag_object then
-      bag_object:set_visibility(true)
-    end
-    self:set_visual_carry(nil)
+  self:set_visual_carry(enabled and unit and unit:carry_data():carry_id())
+  local bag_unit = unit or self._carry_unit
+  if bag_unit then
+    bag_unit:set_visible(not (enabled and unit))
   end
   local name_label = managers.hud:_get_name_label(self._unit:unit_data().name_label_id)
   if name_label then

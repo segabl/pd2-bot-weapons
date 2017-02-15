@@ -70,8 +70,8 @@ function TeamAIInventory:add_unit_by_factory_blueprint(factory_name, equip, inst
   }
   setup_data.expend_ammo = false
   setup_data.hit_slotmask = managers.slot:get_mask("bullet_impact_targets")
-  setup_data.user_sound_variant = tweak_data.character[self._unit:base()._tweak_table].weapon_voice
-  setup_data.alert_AI = false
+  setup_data.user_sound_variant = "1"
+  setup_data.alert_AI = true
   if self._unit:brain().SO_access then
     setup_data.alert_AI = true
     setup_data.alert_filter = self._unit:brain():SO_access()

@@ -109,10 +109,9 @@
     "online_name": "units/payday2/weapons/wpn_npc_ak47/wpn_npc_ak47",
     "type": "rifle",
     "tweak_data": "ak74_npc",
-    "based_on": "m4_npc",
+    "based_on": "ak47_npc",
     "fields_preserve": [
-      "sounds",
-      "auto"
+      "sounds"
     ],
     "blueprint": [
       "wpn_fps_ass_74_b_standard",
@@ -129,6 +128,9 @@
     "online_name": "units/payday2/weapons/wpn_npc_g36/wpn_npc_g36",
     "type": "rifle",
     "tweak_data": "g36_npc",
+    "fields_change": {
+      "usage": "g36"
+    },
     "blueprint": [
       "wpn_fps_ass_g36_s_kv",
       "wpn_fps_ass_g36_m_standard",
@@ -144,6 +146,9 @@
     "online_name": "units/payday2/weapons/wpn_npc_scar_murkywater/wpn_npc_scar_murkywater",
     "type": "rifle",
     "tweak_data": "scar_npc",
+    "fields_change": {
+      "usage": "scar"
+    },
     "blueprint": [
       "wpn_fps_ass_scar_m_standard",
       "wpn_fps_ass_scar_b_medium",
@@ -197,7 +202,6 @@
       "anim"
     ],
     "fields_change": {
-      "DAMAGE": 3.5,
       "CLIP_AMMO_MAX": 10,
       "usage": "m14",
     },
@@ -253,6 +257,9 @@
       "sounds",
       "auto"
     ],
+    "fields_change": {
+      "usage": "lmg"
+    },
     "blueprint": [
       "wpn_fps_ass_tecci_b_long",
       "wpn_fps_ass_tecci_dh_standard",
@@ -315,7 +322,7 @@
     "online_name": "units/pd2_dlc_chico/weapons/wpn_npc_sg417/wpn_npc_sg417"
     "type": "rifle",
     "tweak_data": "contraband_npc",
-    "based_on": "scar_npc",
+    "based_on": "m4_npc",
     "fields_preserve": [
       "sounds",
       "auto"
@@ -363,7 +370,10 @@
     "based_on": "benelli_npc",
     "fields_preserve": [
       "sounds"
-    ]
+    ],
+    "fields_change": {
+      "usage": "benelli"
+    }
   },
   {
     "menu_name": "bm_w_saiga",
@@ -392,6 +402,7 @@
     ],
     "fields_change": {
       "usage": "judge",
+      "DAMAGE": 5,
       "is_shotgun": true,
       "muzzleflash": "effects/payday2/particles/weapons/762_auto",
       "shell_ejection": "effects/payday2/particles/weapons/shells/shell_slug"
@@ -435,10 +446,13 @@
     "factory_name": "wpn_fps_sho_spas12_npc",
     "type": "shotgun",
     "tweak_data": "spas12_npc",
-    "based_on": "r870_npc",
+    "based_on": "benelli_npc",
     "fields_preserve": [
       "sounds"
     ],
+    "fields_change": {
+      "usage": "benelli"
+    },
     "blueprint": [
       "wpn_fps_sho_b_spas12_short",
       "wpn_fps_sho_body_spas12_standard",
@@ -451,7 +465,7 @@
     "factory_name": "wpn_fps_shot_b682_npc",
     "type": "shotgun",
     "tweak_data": "b682_npc",
-    "based_on": "huntsman_npc",
+    "based_on": "mossberg_npc",
     "fields_preserve": [
       "sounds"
     ],
@@ -577,6 +591,21 @@
     ]
   },
   {
+    "menu_name": "bm_w_m1928",
+    "factory_name": "wpn_fps_smg_thompson_npc",
+    "type": "smg",
+    "tweak_data": "m1928_npc",
+    "based_on": "mp5_npc",
+    "fields_preserve": [
+      "sounds",
+      "auto"
+    ],
+    "fields_change": {
+      "CLIP_AMMO_MAX": 50,
+      "usage": "p90"
+    }
+  },
+  {
     "menu_name": "bm_w_sterling",
     "factory_name": "wpn_fps_smg_sterling_npc",
     "type": "smg",
@@ -634,7 +663,10 @@
     "factory_name": "wpn_fps_lmg_m249_npc",
     "online_name": "units/payday2/weapons/wpn_npc_lmg_m249/wpn_npc_lmg_m249",
     "type": "lmg",
-    "tweak_data": "m249_npc"
+    "tweak_data": "m249_npc",
+    "fields_change": {
+      "usage": "lmg"
+    }
   },
   {
     "menu_name": "bm_w_rpk",
@@ -646,7 +678,10 @@
     "fields_preserve": [
       "sounds",
       "auto"
-    ]
+    ],
+    "fields_change": {
+      "usage": "lmg"
+    }
   },
   {
     "menu_name": "bm_w_hk21",
@@ -658,6 +693,9 @@
       "sounds",
       "auto"
     ],
+    "fields_change": {
+      "usage": "lmg"
+    },
     "blueprint": [
       "wpn_fps_lmg_hk21_b_short",
       "wpn_fps_lmg_hk21_body_lower",
@@ -770,14 +808,15 @@
     "based_on": "raging_bull_npc",
     "fields_preserve": [
       "sounds",
-      "hold",
-      "anim",
       "muzzleflash",
-      "shell_ejection"
+      "shell_ejection",
+      "hold",
+      "anim"
     ],
     "fields_change": {
+      "DAMAGE": 2,
       "CLIP_AMMO_MAX": 5,
-      "DAMAGE": 7
+      "usage": "sniper"
     },
     "blueprint": [
       "wpn_fps_snp_m95_barrel_standard",
@@ -799,7 +838,10 @@
       "sounds",
       "muzzleflash",
       "shell_ejection"
-    ]
+    ],
+    "fields_change": {
+      "usage": "sniper"
+    }
   },
   {
     "menu_name": "bm_w_desertfox",
@@ -812,6 +854,9 @@
       "muzzleflash",
       "shell_ejection"
     ],
+    "fields_change": {
+      "usage": "sniper"
+    },
     "blueprint": [
       "wpn_fps_snp_desertfox_b_silencer",
       "wpn_fps_snp_desertfox_body",

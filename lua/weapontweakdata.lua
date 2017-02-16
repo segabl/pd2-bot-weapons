@@ -11,12 +11,6 @@ function WeaponTweakData:init(...)
       end
     end
   end
-  -- set new usage
-  self.benelli_npc.usage = "benelli"
-  self.m249_npc.usage = "m249"
-  self.scar_npc.usage = "scar"
-  self.g36_npc.usage = "g36"
-  self.m95_npc.usage = "sniper"
   -- setup weapons
   log("[BotWeapons] Setting up weapons")
   for _, weapon in ipairs(BotWeapons.weapons) do
@@ -51,6 +45,12 @@ function WeaponTweakData:_init_data_beretta92_npc()
   _init_data_beretta92_npc_original(self)
   self.beretta92_npc.has_suppressor = "suppressed_a"
   self.beretta92_primary_npc.has_suppressor = "suppressed_a"
+end
+
+local _init_data_m4_npc_original = WeaponTweakData._init_data_m4_npc
+function WeaponTweakData:_init_data_m4_npc()
+  _init_data_m4_npc_original(self)
+  self.sg417_npc.sounds.prefix = "contraband_npc"
 end
 
 local _init_data_r870_npc_original = WeaponTweakData._init_data_r870_npc

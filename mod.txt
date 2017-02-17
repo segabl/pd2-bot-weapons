@@ -13,8 +13,6 @@
     { "hook_id" : "lib/managers/menumanager", "script_path" : "lua/menumanager.lua" },
     { "hook_id" : "lib/tweak_data/weapontweakdata", "script_path" : "lua/weapontweakdata.lua" },
     { "hook_id" : "lib/tweak_data/charactertweakdata", "script_path" : "lua/charactertweakdata.lua" },
-    { "hook_id" : "lib/units/player_team/teamaibase", "script_path" : "lua/teamaibase.lua" },
-    { "hook_id" : "lib/units/player_team/huskteamaibase", "script_path" : "lua/huskteamaibase.lua" },
     { "hook_id" : "lib/units/player_team/teamaiinventory", "script_path" : "lua/teamaiinventory.lua" },
     { "hook_id" : "lib/units/player_team/huskteamaiinventory", "script_path" : "lua/huskteamaiinventory.lua" },
     { "hook_id" : "lib/units/player_team/teamaimovement", "script_path" : "lua/teamaimovement.lua" },

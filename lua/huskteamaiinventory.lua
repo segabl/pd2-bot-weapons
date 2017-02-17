@@ -1,7 +1,3 @@
-function HuskTeamAIInventory:add_unit_by_factory_blueprint(...)
-  TeamAIInventory.add_unit_by_factory_blueprint(self, ...)
-end
-
 function HuskTeamAIInventory:set_mask(...)
   TeamAIInventory.set_mask(self, ...)
 end

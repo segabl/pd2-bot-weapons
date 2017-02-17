@@ -259,6 +259,7 @@ Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenus_BotWeapons
 end)
 
 -- Lock lobby if custom weapons are enabled
+--[[
 local choice_lobby_permission_original = MenuCallbackHandler.choice_lobby_permission
 function MenuCallbackHandler:choice_lobby_permission(item)
   if item:value() ~= "private" and BotWeapons:custom_weapons_allowed() and Utils:IsInHeist() then
@@ -267,3 +268,4 @@ function MenuCallbackHandler:choice_lobby_permission(item)
   end
   choice_lobby_permission_original(self, item)
 end
+]]

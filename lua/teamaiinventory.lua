@@ -1,86 +1,22 @@
 dofile(ModPath .. "lua/botweapons.lua")
 
-local online_replacements = {
-  pistol = {
-    "units/payday2/weapons/wpn_npc_beretta92/wpn_npc_beretta92",
-    "units/payday2/weapons/wpn_npc_c45/wpn_npc_c45",
-    "units/payday2/weapons/wpn_npc_raging_bull/wpn_npc_raging_bull"
-  },
-  rifle = {
-    "units/payday2/weapons/wpn_npc_m4/wpn_npc_m4",
-    "units/payday2/weapons/wpn_npc_ak47/wpn_npc_ak47",
-    "units/payday2/weapons/wpn_npc_g36/wpn_npc_g36",
-    "units/payday2/weapons/wpn_npc_scar_murkywater/wpn_npc_scar_murkywater",
-    "units/pd2_dlc_mad/weapons/wpn_npc_asval/wpn_npc_asval",
-    "units/pd2_dlc_chico/weapons/wpn_npc_sg417/wpn_npc_sg417"
-  },
-  smg = {
-    "units/payday2/weapons/wpn_npc_mp5/wpn_npc_mp5",
-    "units/payday2/weapons/wpn_npc_mp5_tactical/wpn_npc_mp5_tactical",
-    "units/payday2/weapons/wpn_npc_smg_mp9/wpn_npc_smg_mp9",
-    "units/payday2/weapons/wpn_npc_mac11/wpn_npc_mac11",
-    "units/payday2/weapons/wpn_npc_ump/wpn_npc_ump",
-    "units/pd2_dlc_mad/weapons/wpn_npc_akmsu/wpn_npc_akmsu",
-    "units/pd2_dlc_mad/weapons/wpn_npc_sr2/wpn_npc_sr2"
-  },
-  shotgun = {
-    "units/payday2/weapons/wpn_npc_r870/wpn_npc_r870",
-    "units/payday2/weapons/wpn_npc_sawnoff_shotgun/wpn_npc_sawnoff_shotgun",
-    "units/payday2/weapons/wpn_npc_benelli/wpn_npc_benelli"
-  },
-  lmg = {
-    "units/payday2/weapons/wpn_npc_lmg_m249/wpn_npc_lmg_m249",
-    "units/pd2_dlc_mad/weapons/wpn_npc_rpk/wpn_npc_rpk"
-  }
-}
-
-local add_unit_by_name_original = TeamAIInventory.add_unit_by_name
-function TeamAIInventory:add_unit_by_name(weapon, equip) 
-  if type(weapon) ~= "table" then
-    return add_unit_by_name_original(self, weapon, equip)
+function TeamAIInventory:remove_all_selections()
+  for i_sel, selection_data in pairs(self._available_selections) do
+    if selection_data.unit and selection_data.unit:base() then
+      selection_data.unit:base():remove_destroy_listener(self._listener_id)
+      selection_data.unit:base():set_slot(selection_data.unit, 0)
+    end
   end
-  if BotWeapons:custom_weapons_allowed() then
-    return self:add_unit_by_factory_blueprint(weapon.factory_name, equip, true, weapon.blueprint)
-  end
-  local type_replacement = online_replacements[weapon.type] and online_replacements[weapon.type][math.random(#online_replacements[weapon.type])]
-  local replacement = weapon.online_name or type_replacement or "units/payday2/weapons/wpn_npc_m4/wpn_npc_m4"
-  add_unit_by_name_original(self, Idstring(replacement), equip)
+  self._equipped_selection = nil
+  self._available_selections = {}
 end
 
-function TeamAIInventory:add_unit_by_factory_blueprint(factory_name, equip, instant, blueprint, cosmetics)
-  local factory_weapon = tweak_data.weapon.factory[factory_name]
-  if not factory_weapon then
-    log("[BotWeapons] Could not find weapon " .. factory_name)
-    return
-  end
-  local weapon_unit = Idstring(factory_weapon.unit)
-  if not managers.dyn_resource:is_resource_ready(Idstring("unit"), weapon_unit, managers.dyn_resource.DYN_RESOURCES_PACKAGE) then
-    managers.dyn_resource:load(Idstring("unit"), weapon_unit, managers.dyn_resource.DYN_RESOURCES_PACKAGE)
-  end
-  local new_unit = World:spawn_unit(weapon_unit, Vector3(), Rotation())
-  new_unit:base():set_factory_data(factory_name)
-  new_unit:base():set_cosmetics_data(cosmetics)
-  new_unit:base():assemble_from_blueprint(factory_name, blueprint or factory_weapon.default_blueprint)
-  new_unit:base():check_npc()
-  local setup_data = {}
-  setup_data.user_unit = self._unit
-  setup_data.ignore_units = {
-    self._unit,
-    new_unit
-  }
-  setup_data.expend_ammo = false
-  setup_data.hit_slotmask = managers.slot:get_mask("bullet_impact_targets")
-  setup_data.user_sound_variant = "1"
-  setup_data.alert_AI = true
-  if self._unit:brain().SO_access then
-    setup_data.alert_AI = true
-    setup_data.alert_filter = self._unit:brain():SO_access()
-  end
-  new_unit:base():setup(setup_data)
-  self:add_unit(new_unit, equip, instant)
-  if new_unit:base().AKIMBO then
-    new_unit:base():create_second_gun()
-  end
+function TeamAIInventory:add_unit_by_factory_name(...)
+  HuskPlayerInventory.add_unit_by_factory_name(self, ...)
+end
+
+function TeamAIInventory:add_unit_by_factory_blueprint(...)
+  HuskPlayerInventory.add_unit_by_factory_blueprint(self, ...)
 end
 
 TeamAIInventory.masks = TeamAIInventory.masks or {}

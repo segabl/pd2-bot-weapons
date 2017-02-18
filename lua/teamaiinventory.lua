@@ -11,6 +11,16 @@ function TeamAIInventory:remove_all_selections()
   self._available_selections = {}
 end
 
+function TeamAIInventory:save(data)
+  self.super.save(self, data)
+  if BotWeapons._replace_guns then
+    local replacement = BotWeapons:replacement_by_factory_id(self:equipped_unit():base()._factory_id)
+    local index = self._get_weapon_sync_index(replacement)
+    log("[BotWeapons] Replaced weapon for client (" .. data.equipped_weapon_index .. " -> " .. index .. ")")
+    data.equipped_weapon_index = index
+  end
+end
+
 function TeamAIInventory:add_unit_by_factory_name(...)
   HuskPlayerInventory.add_unit_by_factory_name(self, ...)
 end

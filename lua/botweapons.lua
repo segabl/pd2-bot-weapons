@@ -99,6 +99,15 @@ if _G.BotWeapons == nil then
     return menu_list
   end
   
+  function BotWeapons:copy_falloff(weapon, from)
+    if not Global.game_settings then
+      return
+    end
+    for i, v in ipairs(weapon.FALLOFF) do
+      v.dmg_mul = from.FALLOFF[i] and from.FALLOFF[i].dmg_mul or v.dmg_mul
+    end
+  end
+  
   function BotWeapons:set_damage_multiplicator(weapon, mul)
     if not Global.game_settings then
       return
@@ -122,22 +131,26 @@ if _G.BotWeapons == nil then
     weapon._old_acc_mul = mul
   end
   
-  function BotWeapons:set_single_fire_mode(weapon, rec1, rec2, rec3)
+  function BotWeapons:set_single_fire_mode(weapon, rec)
     if not Global.game_settings then
       return
     end
-    weapon.FALLOFF[1].recoil = rec1 or weapon.FALLOFF[1].recoil
-    weapon.FALLOFF[2].recoil = rec2 or weapon.FALLOFF[2].recoil
-    weapon.FALLOFF[3].recoil = rec3 or weapon.FALLOFF[3].recoil
+    for i, v in ipairs(rec) do
+      if weapon.FALLOFF[i] then
+        weapon.FALLOFF[i].recoil = v
+      end
+    end
   end
   
-  function BotWeapons:set_auto_fire_mode(weapon, mode1, mode2, mode3)
+  function BotWeapons:set_auto_fire_mode(weapon, mode)
     if not Global.game_settings then
       return
     end
-    weapon.FALLOFF[1].mode = mode1 or weapon.FALLOFF[1].mode
-    weapon.FALLOFF[2].mode = mode2 or weapon.FALLOFF[2].mode
-    weapon.FALLOFF[3].mode = mode3 or weapon.FALLOFF[3].mode
+    for i, v in ipairs(mode) do
+      if weapon.FALLOFF[i] then
+        weapon.FALLOFF[i].mode = v
+      end
+    end
   end
   
   function BotWeapons:set_armor(unit, armor_index)
@@ -205,22 +218,32 @@ if _G.BotWeapons == nil then
     end
   end
   
-  function BotWeapons:custom_weapons_allowed()
-    if Global.game_settings.single_player then
-      return true
+  function BotWeapons:replacement_by_factory_id(factory_id)
+    if not factory_id then
+      return Idstring("units/payday2/weapons/wpn_npc_m4/wpn_npc_m4")
     end
-    if not Global.game_settings.team_ai then
-      return false
-    end
-    if Global.game_settings.permission ~= "private" then
-      return false
-    end
-    for _, peer in pairs(LuaNetworking:GetPeers()) do
-      if not peer._has_bot_weapons then
-        return false
+    local type_replacements = {
+      pistol = "units/payday2/weapons/wpn_npc_c45/wpn_npc_c45",
+      rifle = "units/payday2/weapons/wpn_npc_m4/wpn_npc_m4",
+      shotgun = "units/payday2/weapons/wpn_npc_r870/wpn_npc_r870",
+      smg = "units/payday2/weapons/wpn_npc_mp5/wpn_npc_mp5",
+      lmg = "units/payday2/weapons/wpn_npc_lmg_m249/wpn_npc_lmg_m249",
+      akimbo_pistol = nil,
+      akimbo_smg = nil,
+      sniper = nil,
+    }
+    for _, weapon in ipairs(self.weapons) do
+      if weapon.factory_name == factory_id then
+        if  weapon.online_name then
+          return Idstring(weapon.online_name)
+        elseif type_replacements[weapon.type] then
+          return Idstring(type_replacements[weapon.type])
+        else
+          return Idstring(type_replacements.rifle)
+        end
       end
     end
-    return true
+    return Idstring("units/payday2/weapons/wpn_npc_m4/wpn_npc_m4")
   end
   
   Hooks:Add("BaseNetworkSessionOnLoadComplete", "BaseNetworkSessionOnLoadCompleteBotWeapons", function()

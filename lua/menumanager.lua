@@ -257,15 +257,3 @@ Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenus_BotWeapons
   MenuHelper:AddMenuItem(nodes[menu_id_main], menu_id_masks, "BotWeapons_menu_masks_name", "BotWeapons_menu_masks_desc", menu_id_equipment)
   MenuHelper:AddMenuItem(nodes[menu_id_main], menu_id_weapons, "BotWeapons_menu_weapons_name", "BotWeapons_menu_weapons_desc", menu_id_masks)
 end)
-
--- Lock lobby if custom weapons are enabled
---[[
-local choice_lobby_permission_original = MenuCallbackHandler.choice_lobby_permission
-function MenuCallbackHandler:choice_lobby_permission(item)
-  if item:value() ~= "private" and BotWeapons:custom_weapons_allowed() and Utils:IsInHeist() then
-    item:set_value("private")
-    return
-  end
-  choice_lobby_permission_original(self, item)
-end
-]]

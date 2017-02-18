@@ -1,3 +1,5 @@
+dofile(ModPath .. "lua/botweapons.lua")
+
 local spawn_unit_original = NetworkPeer.spawn_unit
 function NetworkPeer:spawn_unit(spawn_point_id, is_drop_in, spawn_as)
   spawn_unit_original(self, spawn_point_id, is_drop_in, spawn_as)

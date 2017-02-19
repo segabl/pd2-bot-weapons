@@ -380,6 +380,7 @@
   {
     "menu_name": "bm_w_saiga",
     "factory_name": "wpn_fps_shot_saiga_npc",
+    "online_name": "units/payday2/weapons/wpn_npc_ak47/wpn_npc_ak47"
     "type": "shotgun",
     "tweak_data": "saiga_npc",
     "blueprint": [

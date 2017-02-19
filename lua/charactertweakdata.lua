@@ -45,7 +45,7 @@ function CharacterTweakData:_presets(...)
   presets.weapon.gang_member.m14 = deep_clone(presets.weapon.gang_member.beretta92)
   presets.weapon.gang_member.m14.RELOAD_SPEED = 0.5
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.m14, m4_dmg_mul * 0.7)
-  BotWeapons:set_single_fire_mode(presets.weapon.gang_member.m14, { { 0.2, 0.5 }, { 0.75, 2 }, { 2, 3 } })
+  BotWeapons:set_single_fire_mode(presets.weapon.gang_member.m14, { { 0.2, 0.3 }, { 0.5, 1 }, { 1, 2 } })
   
   -- smgs
   presets.weapon.gang_member.mp5 = deep_clone(presets.weapon.gang_member.m4)
@@ -93,7 +93,7 @@ function CharacterTweakData:_presets(...)
   presets.weapon.gang_member.akimbo_pistol = deep_clone(presets.weapon.gang_member.beretta92)
   presets.weapon.gang_member.akimbo_pistol.RELOAD_SPEED = 0.7
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.akimbo_pistol, m4_dmg_mul)
-  BotWeapons:set_single_fire_mode(presets.weapon.gang_member.akimbo_pistol, { { 0.1, 0.2 }, { 0.2, 0.4 }, { 0.6, 1 } })
+  BotWeapons:set_single_fire_mode(presets.weapon.gang_member.akimbo_pistol, { { 0.1, 0.15 }, { 0.15, 0.3 }, { 0.3, 0.6 } })
   
   presets.weapon.gang_member.akimbo_auto = deep_clone(presets.weapon.gang_member.mp5)
   presets.weapon.gang_member.akimbo_auto.RELOAD_SPEED = 0.4

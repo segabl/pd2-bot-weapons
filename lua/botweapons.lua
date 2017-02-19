@@ -1,28 +1,11 @@
-if _G.BotWeapons == nil then
+if not _G.BotWeapons then
+
   _G.BotWeapons = {}
   BotWeapons._path = ModPath
   BotWeapons._data_path = SavePath
   BotWeapons._data = {}
-  
-  function BotWeapons:Save()
-    local file = io.open(self._data_path .. "bot_weapons_data.txt", "w+")
-    if file then
-      file:write(json.encode(self._data))
-      file:close()
-    end
-  end
 
-  function BotWeapons:Load()
-    local file = io.open(self._data_path .. "bot_weapons_data.txt", "r")
-    if file then
-      self._data = json.decode(file:read("*all"))
-      file:close()
-    end
-  end
-  
   function BotWeapons:init()
-    self:Load()
-  
     self._revision = 0
     local file = io.open(BotWeapons._path .. "mod.txt", "r")
     if file then
@@ -59,7 +42,7 @@ if _G.BotWeapons == nil then
     }
   
     -- load weapon definitions
-    local file = io.open(BotWeapons._path .. "weapons.json", "r")
+    file = io.open(BotWeapons._path .. "weapons.json", "r")
     if file then
       self.weapons = json.decode(file:read("*all"))
       file:close()
@@ -67,7 +50,7 @@ if _G.BotWeapons == nil then
     self.weapons = self.weapons or {}
     
     -- load user overrides
-    local file = io.open(BotWeapons._data_path .. "bot_weapons_overrides.json", "r")
+    file = io.open(BotWeapons._data_path .. "bot_weapons_overrides.json", "r")
     if file then
       log("[BotWeapons] Found custom weapon override file, loading it")
       local overrides = json.decode(file:read("*all"))
@@ -75,12 +58,14 @@ if _G.BotWeapons == nil then
       if overrides then
         for _, weapon in ipairs(self.weapons) do
           if overrides[weapon.tweak_data] then
-            weapon.online_name = overrides[weapon.tweak_data].online_name or weapon.online_name
             weapon.blueprint = overrides[weapon.tweak_data].blueprint or weapon.blueprint
           end
         end
       end
     end
+    
+    -- load settings
+    self:Load()
   end
   
   function BotWeapons:get_menu_list(tbl)
@@ -89,10 +74,13 @@ if _G.BotWeapons == nil then
     local item_name
     local localized_name
     for _, v in ipairs(tbl) do
-      item_name = v.menu_name:gsub("^bm_w", "item")
+      item_name = v.menu_name:gsub("^bm_w_", "item_")
+      localized_name = managers.localization:text(v.menu_name):upper()     
+      if v.menu_name:gmatch("^bm_w_.+") then
+        localized_name = localized_name:gsub(" PISTOLS?$", ""):gsub(" REVOLVER$", ""):gsub(" RIFLE$", ""):gsub(" SHOTGUN$", ""):gsub(" GUNS?$", ""):gsub(" LIGHT MACHINE$", ""):gsub(" SUBMACHINE$", ""):gsub(" ASSAULT$", ""):gsub(" SNIPER$", "")
+      end
       table.insert(menu_list, item_name)
-      localized_name = managers.localization:text(v.menu_name):upper()
-      names[item_name] = localized_name:gsub(" PISTOLS?$", ""):gsub(" REVOLVER$", ""):gsub(" RIFLE$", ""):gsub(" SHOTGUN$", ""):gsub(" GUNS?$", ""):gsub(" LIGHT MACHINE$", ""):gsub(" SUBMACHINE$", ""):gsub(" ASSAULT$", ""):gsub(" SNIPER$", "")
+      names[item_name] = localized_name
     end
     table.insert(menu_list, "item_random")
     managers.localization:add_localized_strings(names)
@@ -100,18 +88,16 @@ if _G.BotWeapons == nil then
   end
   
   function BotWeapons:copy_falloff(weapon, from)
-    if not Global.game_settings then
-      return
-    end
     for i, v in ipairs(weapon.FALLOFF) do
-      v.dmg_mul = from.FALLOFF[i] and from.FALLOFF[i].dmg_mul or v.dmg_mul
+      if from.FALLOFF[i] then
+        v.r = from.FALLOFF[i].r
+        v.dmg_mul = from.FALLOFF[i].dmg_mul
+        v.acc = deep_clone(from.FALLOFF[i].acc)
+      end
     end
   end
   
   function BotWeapons:set_damage_multiplicator(weapon, mul)
-    if not Global.game_settings then
-      return
-    end
     local factor = weapon.FALLOFF[1].dmg_mul and (mul / weapon.FALLOFF[1].dmg_mul) or 0
     for i, v in ipairs(weapon.FALLOFF) do
       v.dmg_mul = v.dmg_mul * factor
@@ -119,9 +105,6 @@ if _G.BotWeapons == nil then
   end
   
   function BotWeapons:set_accuracy_multiplicator(weapon, mul)
-    if not Global.game_settings then
-      return
-    end
     local old = weapon._old_acc_mul or 1
     for i, v in ipairs(weapon.FALLOFF) do
       local f = (#weapon.FALLOFF + 1 - i) / #weapon.FALLOFF
@@ -132,9 +115,6 @@ if _G.BotWeapons == nil then
   end
   
   function BotWeapons:set_single_fire_mode(weapon, rec)
-    if not Global.game_settings then
-      return
-    end
     for i, v in ipairs(rec) do
       if weapon.FALLOFF[i] then
         weapon.FALLOFF[i].recoil = v
@@ -143,9 +123,6 @@ if _G.BotWeapons == nil then
   end
   
   function BotWeapons:set_auto_fire_mode(weapon, mode)
-    if not Global.game_settings then
-      return
-    end
     for i, v in ipairs(mode) do
       if weapon.FALLOFF[i] then
         weapon.FALLOFF[i].mode = v
@@ -176,9 +153,7 @@ if _G.BotWeapons == nil then
     if not unit or not alive(unit) then
       return
     end
-    if unit:inventory() then
-      unit:inventory():set_mask(mask_id, blueprint)
-    end
+    unit:inventory():set_mask(mask_id, blueprint)
   end
   
   function BotWeapons:sync_armor_and_equipment(unit, armor_index, equipment_index)
@@ -218,37 +193,66 @@ if _G.BotWeapons == nil then
     end
   end
   
-  function BotWeapons:replacement_by_factory_id(factory_id)
-    if not factory_id then
-      return Idstring("units/payday2/weapons/wpn_npc_m4/wpn_npc_m4")
+  function BotWeapons:chk_create_sync_index()
+    if self._weapon_indices then
+      return
     end
-    local type_replacements = {
-      pistol = "units/payday2/weapons/wpn_npc_c45/wpn_npc_c45",
-      rifle = "units/payday2/weapons/wpn_npc_m4/wpn_npc_m4",
-      shotgun = "units/payday2/weapons/wpn_npc_r870/wpn_npc_r870",
-      smg = "units/payday2/weapons/wpn_npc_mp5/wpn_npc_mp5",
-      lmg = "units/payday2/weapons/wpn_npc_lmg_m249/wpn_npc_lmg_m249",
-      akimbo_pistol = nil,
-      akimbo_smg = nil,
-      sniper = nil,
-    }
-    for _, weapon in ipairs(self.weapons) do
-      if weapon.factory_name == factory_id then
-        if  weapon.online_name then
-          return Idstring(weapon.online_name)
-        elseif type_replacements[weapon.type] then
-          return Idstring(type_replacements[weapon.type])
-        else
-          return Idstring(type_replacements.rifle)
+    local weapon_list = {}
+    for id, data in pairs(tweak_data.weapon.factory) do
+      if id ~= "parts" and data.unit then
+        table.insert(weapon_list, id)
+      end
+    end
+    table.sort(weapon_list, function(a, b)
+      return a < b
+    end)
+    self._weapon_indices = {}
+    local start_index = #tweak_data.character.weap_unit_names
+    for i, factory_id in ipairs(weapon_list) do
+      self._weapon_indices[factory_id] = start_index + i
+    end
+  end
+    
+  function BotWeapons:sync_index_by_name(wanted_weap_name)
+    if type_name(wanted_weap_name) == "Idstring" then
+      for i, test_weap_name in ipairs(tweak_data.character.weap_unit_names) do
+        if test_weap_name == wanted_weap_name then
+          return i
         end
       end
     end
-    return Idstring("units/payday2/weapons/wpn_npc_m4/wpn_npc_m4")
+    self:chk_create_sync_index()
+    return self._weapon_indices[wanted_weap_name]
+  end
+    
+  function BotWeapons:replacement_by_index(index)
+    if index <= #tweak_data.character.weap_unit_names then
+      return index
+    end
+    local type_replacements = {
+      pistol = Idstring("units/payday2/weapons/wpn_npc_c45/wpn_npc_c45"),
+      rifle = Idstring("units/payday2/weapons/wpn_npc_m4/wpn_npc_m4"),
+      shotgun = Idstring("units/payday2/weapons/wpn_npc_r870/wpn_npc_r870"),
+      smg = Idstring("units/payday2/weapons/wpn_npc_mp5/wpn_npc_mp5"),
+      lmg = Idstring("units/payday2/weapons/wpn_npc_lmg_m249/wpn_npc_lmg_m249"),
+    }
+    for _, weapon in ipairs(self.weapons) do
+      if self:sync_index_by_name(weapon.factory_name) == index then
+        if weapon.online_name then
+          return self:sync_index_by_name(Idstring(weapon.online_name))
+        elseif type_replacements[weapon.type] then
+          return self:sync_index_by_name(type_replacements[weapon.type])
+        else
+          return self:sync_index_by_name(type_replacements.rifle)
+        end
+      end
+    end
+    return self:sync_index_by_name(type_replacements.rifle)
   end
   
   Hooks:Add("BaseNetworkSessionOnLoadComplete", "BaseNetworkSessionOnLoadCompleteBotWeapons", function()
     if LuaNetworking:IsClient() then
-      LuaNetworking:SendToPeer(1, "bot_weapons_active", BotWeapons.version)
+      LuaNetworking:SendToPeer(1, "bot_weapons_active", BotWeapons._revision)
     end
   end)
 
@@ -257,7 +261,7 @@ if _G.BotWeapons == nil then
     local params = string.split(data or "", ",", true)
     if id == "bot_weapons_active" and peer then
       if #params == 1 then
-        if params[1] == BotWeapons.version then
+        if tonumber(params[1]) == BotWeapons._revision then
           peer._has_bot_weapons = true
         else
           log("[BotWeapons] Client version mismatch")
@@ -286,6 +290,23 @@ if _G.BotWeapons == nil then
     end
   end)
 
-  -- Load settings
+  function BotWeapons:Save()
+    local file = io.open(self._data_path .. "bot_weapons_data.txt", "w+")
+    if file then
+      file:write(json.encode(self._data))
+      file:close()
+    end
+  end
+
+  function BotWeapons:Load()
+    local file = io.open(self._data_path .. "bot_weapons_data.txt", "r")
+    if file then
+      self._data = json.decode(file:read("*all"))
+      file:close()
+    end
+  end
+  
+  -- initialize
   BotWeapons:init()
+  
 end

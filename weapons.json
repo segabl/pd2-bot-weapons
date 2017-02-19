@@ -42,6 +42,7 @@
   {
     "menu_name": "bm_w_deagle",
     "factory_name": "wpn_fps_pis_deagle_npc",
+    "online_name": "units/payday2/weapons/wpn_npc_raging_bull/wpn_npc_raging_bull",
     "type": "pistol",
     "tweak_data": "deagle_npc",
     "based_on": "raging_bull_npc",
@@ -52,6 +53,7 @@
   {
     "menu_name": "bm_w_glock_18c",
     "factory_name": "wpn_fps_pis_g18c_npc",
+    "online_name": "units/payday2/weapons/wpn_npc_m4/wpn_npc_m4",
     "type": "pistol",
     "tweak_data": "glock_18_npc",
     "based_on": "c45_npc",
@@ -319,7 +321,7 @@
   {
     "menu_name": "bm_w_contraband",
     "factory_name": "wpn_fps_ass_contraband_npc",
-    "online_name": "units/pd2_dlc_chico/weapons/wpn_npc_sg417/wpn_npc_sg417"
+    "online_name": "units/pd2_dlc_chico/weapons/wpn_npc_sg417/wpn_npc_sg417",
     "type": "rifle",
     "tweak_data": "contraband_npc",
     "based_on": "m4_npc",

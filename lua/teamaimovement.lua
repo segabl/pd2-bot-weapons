@@ -12,10 +12,18 @@ function TeamAIMovement:_post_init()
       weapon_index = math.random(#BotWeapons.weapons)
     end
     local weapon = BotWeapons.weapons[weapon_index]
-    
-    self._ext_inventory:remove_all_selections()
     local factory_weapon = tweak_data.weapon.factory[weapon.factory_name]
+    if not factory_weapon or not factory_weapon.unit then
+      log("[BotWeapons] " .. weapon.factory_name .. " or its unit does not exist")
+      return _post_init_original(self)
+    end
     local blueprint_string = managers.weapon_factory:blueprint_to_string(weapon.factory_name, weapon.blueprint or factory_weapon.default_blueprint)
+    
+    if self._ext_inventory:is_selection_available(1) and self._ext_inventory:is_selection_available(2) then
+      self._ext_inventory:equip_selection(1, true)
+      self._ext_inventory:remove_selection(2, true)
+    end
+    
     self._ext_inventory:add_unit_by_factory_name(weapon.factory_name, true, true, blueprint_string, "")
     self._ext_inventory:equipped_unit():base()._alert_events = not self._ext_inventory:equipped_unit():base():got_silencer() and {} or nil
     
@@ -26,7 +34,8 @@ function TeamAIMovement:_post_init()
   return _post_init_original(self)
 end
 
-function TeamAIMovement:play_redirect(redirect_name, at_time)
+local play_redirect_original = TeamAIMovement.play_redirect
+function TeamAIMovement:play_redirect(redirect_name, ...)
   -- Fix buggy autofire animations when shooting with akimbo guns
   local weapon = self._unit:inventory():equipped_unit()
   if weapon and redirect_name == "recoil_auto" then
@@ -35,7 +44,7 @@ function TeamAIMovement:play_redirect(redirect_name, at_time)
       redirect_name = "recoil_single"
     end
   end
-  return TeamAIMovement.super.play_redirect(self, redirect_name, at_time)
+  return play_redirect_original(self, redirect_name, ...)
 end
 
 function TeamAIMovement:check_visual_equipment()

@@ -1,23 +1,12 @@
 dofile(ModPath .. "lua/botweapons.lua")
 
-function TeamAIInventory:remove_all_selections()
-  for i_sel, selection_data in pairs(self._available_selections) do
-    if selection_data.unit and selection_data.unit:base() then
-      selection_data.unit:base():remove_destroy_listener(self._listener_id)
-      selection_data.unit:base():set_slot(selection_data.unit, 0)
-    end
-  end
-  self._equipped_selection = nil
-  self._available_selections = {}
-end
-
+local save_original = TeamAIInventory.save
 function TeamAIInventory:save(data)
-  self.super.save(self, data)
+  save_original(self, data)
   if BotWeapons._replace_guns then
-    local replacement = BotWeapons:replacement_by_factory_id(self:equipped_unit():base()._factory_id)
-    local index = self._get_weapon_sync_index(replacement)
-    log("[BotWeapons] Replaced weapon for client (" .. data.equipped_weapon_index .. " -> " .. index .. ")")
-    data.equipped_weapon_index = index
+    local replacement = BotWeapons:replacement_by_index(data.equipped_weapon_index)
+    log("[BotWeapons] Replaced weapon (" .. self._unit:base()._tweak_table .. " " .. data.equipped_weapon_index .. "->" .. replacement .. ")")
+    data.equipped_weapon_index = replacement
   end
 end
 
@@ -26,6 +15,7 @@ function TeamAIInventory:add_unit_by_factory_name(...)
 end
 
 function TeamAIInventory:add_unit_by_factory_blueprint(...)
+  self._has_non_standard_gun = true
   HuskPlayerInventory.add_unit_by_factory_blueprint(self, ...)
 end
 

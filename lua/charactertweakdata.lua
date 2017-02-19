@@ -87,7 +87,7 @@ function CharacterTweakData:_presets(...)
   presets.weapon.gang_member.saiga.RELOAD_SPEED = 0.5
   presets.weapon.gang_member.saiga.autofire_rounds = { 4, 7 }
   BotWeapons:set_damage_multiplicator(presets.weapon.gang_member.saiga, m4_dmg_mul * 0.6)
-  BotWeapons:set_auto_fire_mode(presets.weapon.gang_member.saiga, { 0, 0.33, 0.66, 1 }, { 0.33, 0.66, 1, 0 }, { 0.66, 1, 0, 0 })
+  BotWeapons:set_auto_fire_mode(presets.weapon.gang_member.saiga, { { 0, 0.33, 0.66, 1 }, { 0.33, 0.66, 1, 0 }, { 0.66, 1, 0, 0 } })
   
   -- akimbo
   presets.weapon.gang_member.akimbo_pistol = deep_clone(presets.weapon.gang_member.beretta92)

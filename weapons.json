@@ -113,7 +113,8 @@
     "tweak_data": "ak74_npc",
     "based_on": "ak47_npc",
     "fields_preserve": [
-      "sounds"
+      "sounds",
+      "auto"
     ],
     "blueprint": [
       "wpn_fps_ass_74_b_standard",

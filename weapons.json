@@ -42,7 +42,6 @@
   {
     "menu_name": "bm_w_deagle",
     "factory_name": "wpn_fps_pis_deagle_npc",
-    "online_name": "units/payday2/weapons/wpn_npc_raging_bull/wpn_npc_raging_bull",
     "type": "pistol",
     "tweak_data": "deagle_npc",
     "based_on": "raging_bull_npc",
@@ -80,6 +79,16 @@
     "type": "pistol",
     "tweak_data": "ppk_npc",
     "based_on": "c45_npc",
+    "fields_preserve": [
+      "sounds"
+    ]
+  },
+  {
+    "menu_name": "bm_w_peacemaker",
+    "factory_name": "wpn_fps_pis_peacemaker_npc",
+    "type": "pistol",
+    "tweak_data": "peacemaker_npc",
+    "based_on": "raging_bull_npc",
     "fields_preserve": [
       "sounds"
     ]

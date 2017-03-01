@@ -19,10 +19,8 @@ function TeamAIMovement:_post_init()
     end
     local blueprint_string = managers.weapon_factory:blueprint_to_string(weapon.factory_name, weapon.blueprint or factory_weapon.default_blueprint)
     
-    if self._ext_inventory:is_selection_available(1) and self._ext_inventory:is_selection_available(2) then
-      self._ext_inventory:equip_selection(1, true)
-      self._ext_inventory:remove_selection(2, true)
-    end
+    self._ext_inventory:remove_selection(1, true)
+    self._ext_inventory:remove_selection(2, true)
     
     self._ext_inventory:add_unit_by_factory_name(weapon.factory_name, true, true, blueprint_string, "")
     self._ext_inventory:equipped_unit():base()._alert_events = not self._ext_inventory:equipped_unit():base():got_silencer() and {} or nil

@@ -19,9 +19,7 @@ function TeamAIMovement:_post_init()
     end
     local blueprint_string = managers.weapon_factory:blueprint_to_string(weapon.factory_name, weapon.blueprint or factory_weapon.default_blueprint)
     -- remove previously added selections
-    for i, _ in ipairs(self._ext_inventory:available_selections()) do
-      self._ext_inventory:remove_selection(i, true)
-    end
+    self._ext_inventory:remove_all_selections()
     self._ext_inventory:add_unit_by_factory_name(weapon.factory_name, true, true, blueprint_string, "")
     self._ext_inventory:equipped_unit():base()._alert_events = not self._ext_inventory:equipped_unit():base():got_silencer() and {} or nil
     if managers.groupai:state():whisper_mode() then

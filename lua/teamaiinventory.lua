@@ -10,6 +10,17 @@ function TeamAIInventory:save(data)
   end
 end
 
+function PlayerInventory:remove_all_selections()
+  for i_sel, selection_data in pairs(self._available_selections) do
+    if selection_data.unit and selection_data.unit:base() then
+      selection_data.unit:base():remove_destroy_listener(self._listener_id)
+      selection_data.unit:base():set_slot(selection_data.unit, 0)
+    end
+  end
+  self._equipped_selection = nil
+  self._available_selections = {}
+end
+
 function TeamAIInventory:add_unit_by_factory_name(...)
   self._has_non_standard_gun = true
   HuskPlayerInventory.add_unit_by_factory_name(self, ...)

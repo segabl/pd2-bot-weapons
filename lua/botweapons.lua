@@ -250,6 +250,31 @@ if not _G.BotWeapons then
     return self:sync_index_by_name(type_replacements.rifle)
   end
   
+  function BotWeapons:get_masks_data()
+    if not self._masks_data then
+      self._masks_data = {}
+      self._masks_data.masks = {}
+      for k, v in pairs(tweak_data.blackmarket.masks) do
+        if not v.inaccessible then
+          table.insert(self._masks_data.masks, k)
+        end
+      end
+      self._masks_data.colors = {}
+      for k, _ in pairs(tweak_data.blackmarket.colors) do
+        table.insert(self._masks_data.colors, k)
+      end
+      self._masks_data.patterns = {}
+      for k, _ in pairs(tweak_data.blackmarket.textures) do
+        table.insert(self._masks_data.patterns, k)
+      end
+      self._masks_data.materials = {}
+      for k, _ in pairs(tweak_data.blackmarket.materials) do
+        table.insert(self._masks_data.materials, k)
+      end
+    end
+    return self._masks_data
+  end
+  
   Hooks:Add("BaseNetworkSessionOnLoadComplete", "BaseNetworkSessionOnLoadCompleteBotWeapons", function()
     if LuaNetworking:IsClient() then
       LuaNetworking:SendToPeer(1, "bot_weapons_active", BotWeapons._revision)

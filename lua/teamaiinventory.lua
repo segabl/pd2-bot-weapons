@@ -36,7 +36,7 @@ function TeamAIInventory:set_mask(id, blueprint)
     id = tweak_data.blackmarket.masks[id].characters[managers.criminals.convert_old_to_new_character_workname(self._unit:base()._tweak_table)] or id
   end
   self._mask_id = id or managers.criminals:character_data_by_unit(self._unit).mask_id
-  self._mask_unit_name = tweak_data.blackmarket.masks[id].unit
+  self._mask_unit_name = tweak_data.blackmarket.masks[self._mask_id].unit
   self._mask_blueprint = blueprint
   local vis = self._mask_visibility
   self:set_mask_visibility(false)

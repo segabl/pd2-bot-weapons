@@ -55,13 +55,7 @@ function TeamAIInventory:preload_mask()
     if BotWeapons._data.toggle_override_masks then
       index = BotWeapons._data.override_masks or (#BotWeapons.masks + 1)
     end
-    if index == 2 then
-      local player_mask = managers.blackmarket:equipped_mask()
-      if player_mask then
-        id = player_mask.mask_id
-        blueprint = player_mask.blueprint
-      end
-    elseif index > #BotWeapons.masks then
+    if index > #BotWeapons.masks then
       id = masks_data.masks[math.random(#masks_data.masks)]
       if math.random() < (BotWeapons._data.slider_mask_customized_chance or 0.5) then
         blueprint = {
@@ -69,6 +63,18 @@ function TeamAIInventory:preload_mask()
           pattern = {id = masks_data.patterns[math.random(#masks_data.patterns)]},
           material = {id = masks_data.materials[math.random(#masks_data.materials)]}
         }
+      end
+    else
+      if BotWeapons.masks[index][name] or BotWeapons.masks[index].pool then
+        local selection = BotWeapons.masks[index][name] or BotWeapons.masks[index].pool[math.random(#BotWeapons.masks[index].pool)]
+        id = selection.id
+        blueprint = selection.blueprint
+      elseif BotWeapons.masks[index].menu_name == "item_same_as_me" then
+        local player_mask = managers.blackmarket:equipped_mask()
+        if player_mask then
+          id = player_mask.mask_id
+          blueprint = player_mask.blueprint
+        end
       end
     end
   end
@@ -101,6 +107,13 @@ function TeamAIInventory:set_mask_visibility(state)
   self._mask_unit = World:spawn_unit(Idstring(self._mask_unit_name), mask_align:position(), mask_align:rotation())
   self._mask_unit:base():apply_blueprint(self._mask_blueprint)
   self._unit:link(mask_align:name(), self._mask_unit, self._mask_unit:orientation_object():name())
+  local mask_data = {
+    mask_id = self._mask_id,
+    mask_unit = self._mask_unit,
+    mask_align = mask_align,
+    character_name = managers.criminals.convert_old_to_new_character_workname(self._unit:base()._tweak_table)
+  }
+  self:update_mask_offset(mask_data)
   if not self._mask_id or not tweak_data.blackmarket.masks[self._mask_id].type then
     local backside = World:spawn_unit(Idstring("units/payday2/masks/msk_backside/msk_backside"), mask_align:position(), mask_align:rotation())
     self._mask_unit:link(self._mask_unit:orientation_object():name(), backside, backside:orientation_object():name())

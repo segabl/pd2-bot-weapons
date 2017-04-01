@@ -823,13 +823,13 @@
       "sounds",
       "muzzleflash",
       "shell_ejection",
-      "hold",
-      "anim"
+      "hold"
     ],
     "fields_change": {
       "DAMAGE": 2,
       "CLIP_AMMO_MAX": 5,
-      "usage": "sniper"
+      "usage": "sniper",
+      "anim": "m4"
     },
     "blueprint": [
       "wpn_fps_snp_m95_barrel_standard",
@@ -851,10 +851,7 @@
       "sounds",
       "muzzleflash",
       "shell_ejection"
-    ],
-    "fields_change": {
-      "usage": "sniper"
-    }
+    ]
   },
   {
     "menu_name": "bm_w_desertfox",
@@ -867,9 +864,6 @@
       "muzzleflash",
       "shell_ejection"
     ],
-    "fields_change": {
-      "usage": "sniper"
-    },
     "blueprint": [
       "wpn_fps_snp_desertfox_b_silencer",
       "wpn_fps_snp_desertfox_body",

@@ -9,8 +9,6 @@
   "BotWeapons_menu_masks_desc" : "Définir les masques pour l'équipe des bots",
   "BotWeapons_menu_weapons_name" : "Armes des Bot",
   "BotWeapons_menu_weapons_desc" : "Choisir les armes des bots",
-  "toggle_adjust_damage_name" : "Ajuster les dégâts des bots",
-  "toggle_adjust_damage_desc" : "Désactiver les dégâts de chute des bots et les dégâts des échelles avec difficulté",
   "toggle_override_armor_name" : "Passer outre l'armure",
   "toggle_override_armor_desc" : "Passer outre les paramètres d'armure individuelles des bots",
   "toggle_player_carry_name" : "Porter des sacs comme des joueurs",

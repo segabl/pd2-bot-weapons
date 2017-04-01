@@ -1,0 +1,58 @@
+[
+  {
+    "menu_name": "bm_msk_character_locked"
+  },
+  {
+    "menu_name": "item_same_as_me"
+  },
+  {
+    "menu_name": "item_mega",
+    "russian": {
+      "id": "dallas_glow"
+    },
+    "german": {
+      "id": "wolf_glow"
+    },
+    "spanish": {
+      "id": "chains_glow"
+    },
+    "old_hoxton": {
+      "id": "hoxton_glow"
+    },
+    "female_1": {
+      "id": "pdc16_clover"
+    },
+    "sydney": {
+      "id": "swm_sydney"
+    }
+    "pool": [
+      { "id": "megacthulhu" },
+      { "id": "hunter" },
+      { "id": "cop_skull" },
+      { "id": "cop_plague_doctor" },
+      { "id": "cop_kawaii" },
+      { "id": "fab_mega_grin" },
+      { "id": "fab_mega_doctor" },
+      { "id": "fab_mega_alien" },
+      { "id": "fab_mega_gage_blade" },
+      { "id": "fab_mega_mark" }
+    ]
+  },
+  {
+    "menu_name": "item_shades",
+    "pool": [
+      { "id": "aviator" },
+      { "id": "stoneface" },
+      { "id": "wayfarer" }
+    ]
+  },
+  {
+    "menu_name": "item_beanies",
+    "pool": [
+      { "id": "bny_01" },
+      { "id": "bny_02" },
+      { "id": "bny_03" },
+      { "id": "bny_04" }
+    ]
+  }
+]

@@ -9,8 +9,6 @@
   "BotWeapons_menu_masks_desc" : "Set the masks for the team AI",
   "BotWeapons_menu_weapons_name" : "Bot weapons",
   "BotWeapons_menu_weapons_desc" : "Set the weapons for the team AI",
-  "toggle_adjust_damage_name" : "Adjust team AI damage",
-  "toggle_adjust_damage_desc" : "Disables team AIs damage falloff and scales damage with difficulty",
   "toggle_override_armor_name" : "Armor override",
   "toggle_override_armor_desc" : "Override individual armor settings of the team AI",
   "toggle_player_carry_name" : "Carry bags like players",
@@ -26,5 +24,8 @@
   "menu_override_name" : "Override",
   "item_none" : "None",
   "item_random" : "Random",
-  "item_same_as_me" : "Same as me"
+  "item_same_as_me" : "Same as me",
+  "item_mega" : "Mega Masks",
+  "item_shades" : "Shades",
+  "item_beanies" : "Beanies"
 }

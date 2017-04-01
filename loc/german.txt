@@ -9,8 +9,6 @@
   "BotWeapons_menu_masks_desc" : "Stelle die Masken für die Team KI ein",
   "BotWeapons_menu_weapons_name" : "Bot Waffen",
   "BotWeapons_menu_weapons_desc" : "Stelle die Waffen für die Team KI ein",
-  "toggle_adjust_damage_name" : "Team KI Schaden anpassen",
-  "toggle_adjust_damage_desc" : "Macht den Schaden der Team KI konsistent und skaliert ihn mit dem Schwierigkeitsgrad",
   "toggle_override_armor_name" : "Panzerung Override",
   "toggle_override_armor_desc" : "Ersetze individuelle Panzerung der Team KI",
   "toggle_player_carry_name" : "Trage Taschen wie Spieler",
@@ -26,5 +24,8 @@
   "menu_override_name" : "Override",
   "item_none" : "Nichts",
   "item_random" : "Zufall",
-  "item_same_as_me" : "Gleiche wie ich"
+  "item_same_as_me" : "Gleiche wie ich",
+  "item_mega" : "Mega Masken",
+  "item_shades" : "Sonnenbrillen",
+  "item_beanies" : "Hauben"
 }

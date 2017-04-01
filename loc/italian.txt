@@ -9,8 +9,6 @@
   "BotWeapons_menu_masks_desc" : "Imposta le maschere per la squadra IA",
   "BotWeapons_menu_weapons_name" : "Armi bot",
   "BotWeapons_menu_weapons_desc" : "Imposta le armi per la squadra IA",
-  "toggle_adjust_damage_name" : "Regola il danno della squadra IA",
-  "toggle_adjust_damage_desc" : "Disabilita il falloff del danno della squadra IA e scala il danno con la difficoltà",
   "toggle_override_armor_name" : "Sostituzione Armatura",
   "toggle_override_armor_desc" : "Sostituisce le singole impostazioni dell'armatura della squadra IA",
   "toggle_player_carry_name" : "Trasporta i borsoni come i giocatori",

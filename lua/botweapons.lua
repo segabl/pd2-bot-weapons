@@ -35,11 +35,6 @@ if not _G.BotWeapons then
       { menu_name = "bm_equipment_first_aid_kit", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = true, g_medicbag = false, g_sentrybag = false, g_toolbag = false }},
       { menu_name = "bm_equipment_sentry_gun", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = true, g_toolbag = false }}
     }
-    
-    self.masks = {
-      { menu_name = "bm_msk_character_locked" },
-      { menu_name = "item_same_as_me" }
-    }
   
     -- load weapon definitions
     file = io.open(BotWeapons._path .. "weapons.json", "r")
@@ -63,6 +58,14 @@ if not _G.BotWeapons then
         end
       end
     end
+    
+    -- load mask sets
+    file = io.open(BotWeapons._path .. "masks.json", "r")
+    if file then
+      self.masks = json.decode(file:read("*all"))
+      file:close()
+    end
+    self.masks = self.masks or {}
     
     -- load settings
     self:Load()

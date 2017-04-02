@@ -24,5 +24,8 @@
   "menu_override_name" : "Passer outre",
   "item_none" : "Aucun",
   "item_random" : "Au hasard",
-  "item_same_as_me" : "Le même que moi"
+  "item_same_as_me" : "Le même que moi",
+  "item_mega" : "Méga Masques",
+  "item_shades" : "Lunettes de soleil",
+  "item_beanies" : "Bonnets"
 }

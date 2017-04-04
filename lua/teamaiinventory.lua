@@ -36,13 +36,15 @@ function TeamAIInventory:set_mask(id, blueprint)
     id = tweak_data.blackmarket.masks[id].characters[managers.criminals.convert_old_to_new_character_workname(self._unit:base()._tweak_table)] or id
   end
   self._mask_id = id or managers.criminals:character_data_by_unit(self._unit).mask_id
-  self._mask_unit_name = tweak_data.blackmarket.masks[self._mask_id].unit
+  self._mask_unit_name = self._mask_id and tweak_data.blackmarket.masks[self._mask_id] and tweak_data.blackmarket.masks[self._mask_id].unit
   self._mask_blueprint = blueprint
   local vis = self._mask_visibility
   self:set_mask_visibility(false)
   self._mask_visibility = vis
   if self._mask_unit_name then
     managers.dyn_resource:load(Idstring("unit"), Idstring(self._mask_unit_name), managers.dyn_resource.DYN_RESOURCES_PACKAGE, callback(self, self, "clbk_mask_unit_loaded"))
+  else
+    log("[BotWeapons] Could not find mask unit name for " .. tostring(self._mask_id))
   end
 end
 

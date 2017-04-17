@@ -7,7 +7,9 @@
     "tweak_data": "g17_npc",
     "based_on": "c45_npc",
     "fields_preserve": [
-      "sounds"
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
     ],
     "blueprint": [
       "wpn_fps_pis_g17_body_standard",
@@ -46,7 +48,9 @@
     "tweak_data": "deagle_npc",
     "based_on": "raging_bull_npc",
     "fields_preserve": [
-      "sounds"
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
     ]
   },
   {
@@ -58,6 +62,8 @@
     "based_on": "c45_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ],
     "fields_change": {
@@ -80,7 +86,9 @@
     "tweak_data": "ppk_npc",
     "based_on": "c45_npc",
     "fields_preserve": [
-      "sounds"
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
     ]
   },
   {
@@ -90,7 +98,9 @@
     "tweak_data": "peacemaker_npc",
     "based_on": "raging_bull_npc",
     "fields_preserve": [
-      "sounds"
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
     ]
   },
   
@@ -123,6 +133,8 @@
     "based_on": "ak47_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ],
     "blueprint": [
@@ -182,6 +194,8 @@
     "based_on": "m4_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ]
   },
@@ -193,6 +207,8 @@
     "based_on": "m4_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ],
     "blueprint": [
@@ -210,6 +226,8 @@
     "based_on": "raging_bull_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "hold",
       "anim"
     ],
@@ -235,6 +253,8 @@
     "based_on": "m4_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ]
   },
@@ -246,6 +266,8 @@
     "based_on": "m4_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ],
     "blueprint": [
@@ -267,6 +289,8 @@
     "based_on": "m249_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ],
     "fields_change": {
@@ -294,6 +318,8 @@
     "based_on": "m4_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ]
   },
@@ -305,6 +331,8 @@
     "based_on": "m4_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ]
   },
@@ -316,6 +344,8 @@
     "based_on": "m4_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ],
     "blueprint": [
@@ -337,6 +367,8 @@
     "based_on": "m4_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ]
   },
@@ -365,7 +397,9 @@
     "tweak_data": "huntsman_npc",
     "based_on": "mossberg_npc",
     "fields_preserve": [
-      "sounds"
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
     ],
     "blueprint": [
       "wpn_fps_shot_huntsman_body_standard",
@@ -381,7 +415,9 @@
     "tweak_data": "ben_npc",
     "based_on": "benelli_npc",
     "fields_preserve": [
-      "sounds"
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
     ],
     "fields_change": {
       "usage": "benelli"
@@ -411,14 +447,14 @@
     "tweak_data": "judge_npc",
     "based_on": "raging_bull_npc",
     "fields_preserve": [
-      "sounds"
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
     ],
     "fields_change": {
       "usage": "judge",
       "DAMAGE": 5,
       "is_shotgun": true,
-      "muzzleflash": "effects/payday2/particles/weapons/762_auto",
-      "shell_ejection": "effects/payday2/particles/weapons/shells/shell_slug"
     },
     "blueprint": [
       "wpn_fps_pis_judge_body_standard",
@@ -434,7 +470,9 @@
     "tweak_data": "boot_npc",
     "based_on": "r870_npc",
     "fields_preserve": [
-      "sounds"
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
     ]
   },
   {
@@ -444,7 +482,9 @@
     "tweak_data": "ksg_npc",
     "based_on": "r870_npc",
     "fields_preserve": [
-      "sounds"
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
     ],
     "blueprint": [
       "wpn_fps_sho_ksg_b_standard",
@@ -461,7 +501,9 @@
     "tweak_data": "spas12_npc",
     "based_on": "benelli_npc",
     "fields_preserve": [
-      "sounds"
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
     ],
     "fields_change": {
       "usage": "benelli"
@@ -480,7 +522,9 @@
     "tweak_data": "b682_npc",
     "based_on": "mossberg_npc",
     "fields_preserve": [
-      "sounds"
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
     ],
     "blueprint": [
       "wpn_fps_shot_b682_body_standard",
@@ -513,6 +557,8 @@
     "based_on": "mp9_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ],
     "blueprint": [
@@ -530,6 +576,8 @@
     "based_on": "mp5_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ],
     "blueprint": [
@@ -554,6 +602,8 @@
     "based_on": "mp9_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ]
   },
@@ -566,6 +616,8 @@
     "based_on": "mp5_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ],
     "blueprint": [
@@ -589,6 +641,8 @@
     "based_on": "mp9_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ],
     "fields_change": {
@@ -611,6 +665,8 @@
     "based_on": "mp5_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ],
     "fields_change": {
@@ -625,7 +681,9 @@
     "tweak_data": "sterling_npc",
     "based_on": "mp9_npc",
     "fields_preserve": [
-      "sounds"
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
     ],
     "fields_change": {
       "auto": {
@@ -647,6 +705,8 @@
     "based_on": "mp9_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ]
   },
@@ -658,6 +718,8 @@
     "based_on": "mp9_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ],
     "blueprint": [
@@ -690,6 +752,8 @@
     "based_on": "m249_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ],
     "fields_change": {
@@ -704,6 +768,8 @@
     "based_on": "m249_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "auto"
     ],
     "fields_change": {
@@ -730,6 +796,8 @@
     "based_on": "g17_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "hold",
       "usage",
       "anim"
@@ -745,7 +813,9 @@
     "tweak_data": "x_b92fs_npc",
     "based_on": "x_g17_npc",
     "fields_preserve": [
-      "sounds"
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
     ],
     "blueprint": [
       "wpn_fps_pis_beretta_body_beretta",
@@ -763,7 +833,9 @@
     "tweak_data": "x_deagle_npc",
     "based_on": "x_g17_npc",
     "fields_preserve": [
-      "sounds"
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
     ],
     "blueprint": [
       "wpn_fps_pis_deagle_body_standard",
@@ -783,6 +855,8 @@
     "based_on": "mp5_npc",
     "fields_preserve": [
       "sounds",
+      "muzzleflash",
+      "shell_ejection",
       "hold",
       "anim"
     ],
@@ -798,7 +872,9 @@
     "tweak_data": "x_akmsu_npc",
     "based_on": "x_mp5_npc",
     "fields_preserve": [
-      "sounds"
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
     ]
   },
   {
@@ -808,7 +884,9 @@
     "tweak_data": "x_sr2_npc",
     "based_on": "x_mp5_npc",
     "fields_preserve": [
-      "sounds"
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
     ]
   },
   
@@ -828,7 +906,6 @@
     "fields_change": {
       "DAMAGE": 2,
       "CLIP_AMMO_MAX": 5,
-      "usage": "sniper",
       "anim": "m4"
     },
     "blueprint": [
@@ -870,6 +947,29 @@
       "wpn_fps_snp_desertfox_dh_standard",
       "wpn_fps_snp_desertfox_mag",
       "wpn_fps_upg_o_shortdot"
+    ]
+  },
+  {
+    "menu_name": "bm_w_siltstone",
+    "factory_name": "wpn_fps_snp_siltstone_npc",
+    "type": "sniper",
+    "tweak_data": "siltstone_npc",
+    "based_on": "m95_npc",
+    "fields_preserve": [
+      "sounds",
+      "muzzleflash",
+      "shell_ejection"
+    ],
+    "blueprint": [
+      "wpn_fps_snp_siltstone_b_standard",
+      "wpn_fps_snp_siltstone_body_receiver",
+      "wpn_fps_snp_siltstone_dh_standard",
+      "wpn_fps_snp_siltstone_ejector",
+      "wpn_fps_snp_siltstone_fg_wood",
+      "wpn_fps_snp_siltstone_m_standard",
+      "wpn_fps_snp_siltstone_s_wood",
+      "wpn_fps_upg_o_specter",
+      "wpn_fps_upg_fl_ass_laser"
     ]
   }
 ]

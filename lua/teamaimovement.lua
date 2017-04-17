@@ -84,6 +84,14 @@ function TeamAIMovement:check_visual_equipment()
   BotWeapons:set_armor(self._unit, armor_index)
   BotWeapons:set_equipment(self._unit, equipment_index)
   BotWeapons:sync_armor_and_equipment(self._unit, armor_index, equipment_index)
+  -- run heist specific sequences
+  local current_level = managers.job and managers.job:current_level_id()
+	if current_level then
+		local sequence = tweak_data.levels[current_level] and tweak_data.levels[current_level].player_sequence
+		if sequence then
+			self._unit:damage():run_sequence_simple(sequence)
+		end
+	end
 end
 
 local set_carrying_bag_original = TeamAIMovement.set_carrying_bag

@@ -90,33 +90,6 @@ if not _G.BotWeapons then
     return menu_list
   end
   
-  function BotWeapons:copy_falloff(weapon, from)
-    for i, v in ipairs(weapon.FALLOFF) do
-      if from.FALLOFF[i] then
-        v.r = from.FALLOFF[i].r
-        v.dmg_mul = from.FALLOFF[i].dmg_mul
-        v.acc = deep_clone(from.FALLOFF[i].acc)
-      end
-    end
-  end
-  
-  function BotWeapons:set_damage_multiplicator(weapon, mul)
-    local factor = weapon.FALLOFF[1].dmg_mul and (mul / weapon.FALLOFF[1].dmg_mul) or 0
-    for i, v in ipairs(weapon.FALLOFF) do
-      v.dmg_mul = v.dmg_mul * factor
-    end
-  end
-  
-  function BotWeapons:set_accuracy_multiplicator(weapon, mul)
-    local old = weapon._old_acc_mul or 1
-    for i, v in ipairs(weapon.FALLOFF) do
-      local f = (#weapon.FALLOFF + 1 - i) / #weapon.FALLOFF
-      v.acc[1] = math.max(math.min((v.acc[1] / old) * mul, 1), 0)
-      v.acc[2] = math.max(math.min((v.acc[2] / old) * mul, 1), 0)
-    end
-    weapon._old_acc_mul = mul
-  end
-  
   function BotWeapons:set_single_fire_mode(weapon, rec)
     for i, v in ipairs(rec) do
       if weapon.FALLOFF[i] then

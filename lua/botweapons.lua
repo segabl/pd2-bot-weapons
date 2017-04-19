@@ -90,19 +90,41 @@ if not _G.BotWeapons then
     return menu_list
   end
   
-  function BotWeapons:set_single_fire_mode(weapon, rec)
-    for i, v in ipairs(rec) do
-      if weapon.FALLOFF[i] then
-        weapon.FALLOFF[i].recoil = v
-      end
-    end
+  function BotWeapons:set_single_fire_mode(weapon, rec1, rec2)
+    weapon.FALLOFF[1].recoil = rec1 or weapon.FALLOFF[1].recoil
+    weapon.FALLOFF[#weapon.FALLOFF].recoil = rec2 or weapon.FALLOFF[#weapon.FALLOFF].recoil
   end
   
-  function BotWeapons:set_auto_fire_mode(weapon, mode)
-    for i, v in ipairs(mode) do
-      if weapon.FALLOFF[i] then
-        weapon.FALLOFF[i].mode = v
+  function BotWeapons:set_auto_fire_mode(weapon, mode1, mode2)
+    weapon.FALLOFF[1].mode = mode1 or weapon.FALLOFF[1].mode
+    weapon.FALLOFF[#weapon.FALLOFF].mode = mode2 or weapon.FALLOFF[#weapon.FALLOFF].mode
+  end
+  
+  function BotWeapons:create_interpolated_falloff_data(presets, steps)
+    log("[BotWeapons] Interpolating FALLOFF in " .. steps .. " steps for bot weapon presets")
+    for name, weapon in pairs(presets) do
+      local first = weapon.FALLOFF[1]
+      local last = weapon.FALLOFF[#weapon.FALLOFF]
+      local data = {
+        first,
+        last
+      }
+      local falloff, blend
+      for i = 2, steps - 1 do
+        falloff = deep_clone(last)
+        table.insert(data, 2, falloff)
+        blend = i / steps
+        falloff.r = math.lerp(last.r, first.r, blend)
+        falloff.acc = { 
+          math.lerp(last.acc[1], first.acc[1], blend),
+          math.lerp(last.acc[2], first.acc[2], blend)
+        }
+        falloff.recoil = {
+          math.lerp(last.recoil[1], first.recoil[1], blend),
+          math.lerp(last.recoil[2], first.recoil[2], blend)
+        }
       end
+      weapon.FALLOFF = data
     end
   end
   

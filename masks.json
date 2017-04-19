@@ -24,7 +24,10 @@
     },
     "sydney": {
       "id": "swm_sydney"
-    }
+    },
+    "wild": {
+      "id": "mrm"
+    },
     "pool": [
       { "id": "megacthulhu" },
       { "id": "hunter" },
@@ -35,7 +38,8 @@
       { "id": "fab_mega_doctor" },
       { "id": "fab_mega_alien" },
       { "id": "cop_mega_gage_blade" },
-      { "id": "fab_mega_mark" }
+      { "id": "fab_mega_mark" },
+      { "id": "mdm" }
     ]
   },
   {

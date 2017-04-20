@@ -4,7 +4,7 @@
   "author" : "topfpflanzen-wuerger",
   "updates" : [
     {
-      "revision" : 69,
+      "revision" : 70,
       "identifier" : "bot_weapons"
     }
   ],

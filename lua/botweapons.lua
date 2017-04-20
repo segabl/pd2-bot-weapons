@@ -103,28 +103,31 @@ if not _G.BotWeapons then
   function BotWeapons:create_interpolated_falloff_data(presets, steps)
     log("[BotWeapons] Interpolating FALLOFF in " .. steps .. " steps for bot weapon presets")
     for name, weapon in pairs(presets) do
-      local first = weapon.FALLOFF[1]
-      local last = weapon.FALLOFF[#weapon.FALLOFF]
-      local data = {
-        first,
-        last
-      }
-      local falloff, blend
-      for i = 2, steps - 1 do
-        falloff = deep_clone(last)
-        table.insert(data, 2, falloff)
-        blend = i / steps
-        falloff.r = math.lerp(last.r, first.r, blend)
-        falloff.acc = { 
-          math.lerp(last.acc[1], first.acc[1], blend),
-          math.lerp(last.acc[2], first.acc[2], blend)
+      if not weapon._interpolation_done then
+        local first = weapon.FALLOFF[1]
+        local last = weapon.FALLOFF[#weapon.FALLOFF]
+        local data = {
+          first,
+          last
         }
-        falloff.recoil = {
-          math.lerp(last.recoil[1], first.recoil[1], blend),
-          math.lerp(last.recoil[2], first.recoil[2], blend)
-        }
+        local falloff, blend
+        for i = 2, steps - 1 do
+          falloff = deep_clone(last)
+          table.insert(data, 2, falloff)
+          blend = i / steps
+          falloff.r = math.lerp(last.r, first.r, blend)
+          falloff.acc = { 
+            math.lerp(last.acc[1], first.acc[1], blend),
+            math.lerp(last.acc[2], first.acc[2], blend)
+          }
+          falloff.recoil = {
+            math.lerp(last.recoil[1], first.recoil[1], blend),
+            math.lerp(last.recoil[2], first.recoil[2], blend)
+          }
+        end
+        weapon.FALLOFF = data
+        weapon._interpolation_done = true
       end
-      weapon.FALLOFF = data
     end
   end
   

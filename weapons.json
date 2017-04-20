@@ -213,8 +213,7 @@
     "factory_name": "wpn_fps_ass_l85a2_npc",
     "type": "rifle",
     "tweak_data": {
-      "name": "l85a2_crew",
-      "DAMAGE": 1.25
+      "name": "l85a2_crew"
     }
   },
   {
@@ -241,10 +240,7 @@
     "type": "rifle",
     "tweak_data": {
       "name": "tecci_crew",
-      "usage": "lmg",
-      "auto": {
-        "fire_rate": 0.09
-      }
+      "usage": "lmg"
     }
     "blueprint": [
       "wpn_fps_ass_tecci_b_long",
@@ -450,8 +446,7 @@
     "online_name": "units/payday2/weapons/wpn_npc_mp5/wpn_npc_mp5",
     "type": "smg",
     "tweak_data": {
-      "name": "mp5_crew",
-      "DAMAGE": 1.2
+      "name": "mp5_crew"
     }
   },
   {
@@ -460,8 +455,7 @@
     "online_name": "units/payday2/weapons/wpn_npc_smg_mp9/wpn_npc_smg_mp9",
     "type": "smg",
     "tweak_data": {
-      "name": "mp9_crew",
-      "DAMAGE": 0.95
+      "name": "mp9_crew"
     }
   },
   {
@@ -470,8 +464,7 @@
     "online_name": "units/payday2/weapons/wpn_npc_mac11/wpn_npc_mac11",
     "type": "smg",
     "tweak_data": {
-      "name": "mac10_crew",
-      "DAMAGE": 0.8
+      "name": "mac10_crew"
     },
     "blueprint": [
       "wpn_fps_smg_mac10_body_mac10",
@@ -485,8 +478,7 @@
     "online_name": "units/payday2/weapons/wpn_npc_ump/wpn_npc_ump",
     "type": "smg",
     "tweak_data": {
-      "name": "schakal_crew",
-      "DAMAGE": 1.35
+      "name": "schakal_crew"
     },
     "blueprint": [
       "wpn_fps_smg_schakal_b_standard",
@@ -507,8 +499,7 @@
     "online_name": "units/pd2_dlc_mad/weapons/wpn_npc_sr2/wpn_npc_sr2",
     "type": "smg",
     "tweak_data": {
-      "name": "sr2_crew",
-      "DAMAGE": 1.2
+      "name": "sr2_crew"
     }
   },
   {
@@ -517,8 +508,7 @@
     "online_name": "units/pd2_dlc_mad/weapons/wpn_npc_akmsu/wpn_npc_akmsu",
     "type": "smg",
     "tweak_data": {
-      "name": "akmsu_crew",
-      "DAMAGE": 1
+      "name": "akmsu_crew"
     },
     "blueprint": [
       "wpn_fps_smg_akmsu_body_lowerreceiver",
@@ -538,8 +528,7 @@
     "factory_name": "wpn_fps_smg_p90_npc",
     "type": "smg",
     "tweak_data": {
-      "name": "p90_crew",
-      "usage": "p90"
+      "name": "p90_crew"
     },
     "blueprint": [
       "wpn_fps_smg_p90_body_p90",
@@ -554,9 +543,7 @@
     "factory_name": "wpn_fps_smg_thompson_npc",
     "type": "smg",
     "tweak_data": {
-      "name": "m1928_crew",
-      "usage": "p90",
-      "DAMAGE": 1.2
+      "name": "m1928_crew"
     }
   },
   {
@@ -564,8 +551,7 @@
     "factory_name": "wpn_fps_smg_sterling_npc",
     "type": "smg",
     "tweak_data": {
-      "name": "sterling_crew",
-      "DAMAGE": 1.65
+      "name": "sterling_crew"
     },
     "blueprint": [
       "wpn_fps_smg_sterling_b_standard",
@@ -579,8 +565,7 @@
     "factory_name": "wpn_fps_smg_baka_npc",
     "type": "smg",
     "tweak_data": {
-      "name": "baka_crew",
-      "DAMAGE": 0.75
+      "name": "baka_crew"
     }
   },
   {
@@ -588,8 +573,7 @@
     "factory_name": "wpn_fps_smg_cobray_npc",
     "type": "smg",
     "tweak_data": {
-      "name": "cobray_crew",
-      "DAMAGE": 0.75,
+      "name": "cobray_crew"
     },
     "blueprint": [
       "wpn_fps_smg_cobray_body_lower_jacket",
@@ -693,11 +677,7 @@
     "type": "akimbo_smg",
     "tweak_data": {
       "name": "x_mp5_crew",
-      "usage": "akimbo_auto",
-      "DAMAGE": 1.2,
-      "auto": {
-        "fire_rate": 0.08
-      }
+      "usage": "akimbo_auto"
     }
   },
   {
@@ -706,11 +686,7 @@
     "type": "akimbo_smg",
     "tweak_data": {
       "name": "x_akmsu_crew",
-      "usage": "akimbo_auto",
-      "DAMAGE": 1,
-      "auto": {
-        "fire_rate": 0.073
-      }
+      "usage": "akimbo_auto"
     }
   },
   {
@@ -719,11 +695,7 @@
     "type": "akimbo_smg",
     "tweak_data": {
       "name": "x_sr2_crew",
-      "usage": "akimbo_auto",
-      "DAMAGE": 1.2,
-      "auto": {
-        "fire_rate": 0.08
-      }
+      "usage": "akimbo_auto"
     }
   },
   

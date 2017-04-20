@@ -4,9 +4,8 @@ local _presets_original = CharacterTweakData._presets
 function CharacterTweakData:_presets(...)
   local presets = _presets_original(self, ...)
   -- gang_member presets
-  local m4_spread = presets.weapon.gang_member.m4.spread
   -- pistols
-  presets.weapon.gang_member.beretta92.spread = m4_spread * 0.5
+  presets.weapon.gang_member.beretta92.spread = presets.weapon.gang_member.m4.spread * 0.5
   BotWeapons:set_single_fire_mode(presets.weapon.gang_member.beretta92, {0.2, 0.3})
   
   presets.weapon.gang_member.c45 = presets.weapon.gang_member.beretta92
@@ -19,24 +18,15 @@ function CharacterTweakData:_presets(...)
   -- rifles  
   presets.weapon.gang_member.ak47 = presets.weapon.gang_member.m4
 
-  presets.weapon.gang_member.g36 = presets.weapon.gang_member.m4
-
-  presets.weapon.gang_member.scar = presets.weapon.gang_member.m4
-
   presets.weapon.gang_member.m14 = deep_clone(presets.weapon.gang_member.beretta92)
   BotWeapons:set_single_fire_mode(presets.weapon.gang_member.m14, {0.1, 0.25})
   
   -- smgs
   presets.weapon.gang_member.mp5 = presets.weapon.gang_member.m4
   
-  presets.weapon.gang_member.mac11 = presets.weapon.gang_member.mp4
-  
-  presets.weapon.gang_member.p90 = presets.weapon.gang_member.mp4
-  
   -- lmgs
   presets.weapon.gang_member.lmg = deep_clone(presets.weapon.gang_member.m4)
   presets.weapon.gang_member.lmg.autofire_rounds = { 15, 40 }
-  BotWeapons:set_auto_fire_mode(presets.weapon.gang_member.lmg, {0, 0, 0, 1})
   
   -- shotguns
   BotWeapons:set_single_fire_mode(presets.weapon.gang_member.r870, {0.5, 1})
@@ -49,8 +39,7 @@ function CharacterTweakData:_presets(...)
   
   -- auto shotguns
   presets.weapon.gang_member.saiga = deep_clone(presets.weapon.gang_member.benelli)
-  presets.weapon.gang_member.saiga.autofire_rounds = { 3, 6 }
-  BotWeapons:set_auto_fire_mode(presets.weapon.gang_member.saiga, {0, 0.33, 0.66, 1}, {0.33, 0.66, 1, 0})
+  presets.weapon.gang_member.saiga.autofire_rounds = { 1, 5 }
   
   -- akimbo
   presets.weapon.gang_member.akimbo_pistol = deep_clone(presets.weapon.gang_member.beretta92)
@@ -61,7 +50,7 @@ function CharacterTweakData:_presets(...)
   
   -- snipers
   presets.weapon.gang_member.rifle = deep_clone(presets.weapon.gang_member.raging_bull)
-  presets.weapon.gang_member.rifle.spread = m4_spread * 0.25
+  presets.weapon.gang_member.rifle.spread = presets.weapon.gang_member.m4.spread * 0.5
   BotWeapons:set_single_fire_mode(presets.weapon.gang_member.rifle, {1, 1})
   
   -- create better range interpolation

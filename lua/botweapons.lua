@@ -101,20 +101,17 @@ if not _G.BotWeapons then
   end
   
   function BotWeapons:create_interpolated_falloff_data(presets, steps)
-    log("[BotWeapons] Interpolating FALLOFF in " .. steps .. " steps for bot weapon presets")
-    for name, weapon in pairs(presets) do
+    log("[BotWeapons] Interpolating FALLOFF in " .. steps .. " steps for gang presets")
+    for _, weapon in pairs(presets) do
       if not weapon._interpolation_done then
         local first = weapon.FALLOFF[1]
         local last = weapon.FALLOFF[#weapon.FALLOFF]
-        local data = {
-          first,
-          last
-        }
+        local data = {}
         local falloff, blend
-        for i = 2, steps - 1 do
+        for i = 1, steps + 1 do
           falloff = deep_clone(last)
-          table.insert(data, 2, falloff)
-          blend = i / steps
+          table.insert(data, 1, falloff)
+          blend = (i - 1) / steps
           falloff.r = math.lerp(last.r, first.r, blend)
           falloff.acc = { 
             math.lerp(last.acc[1], first.acc[1], blend),
@@ -131,11 +128,26 @@ if not _G.BotWeapons then
     end
   end
   
+  function BotWeapons:get_level_sequence()
+    local current_level = managers.job and managers.job:current_level_id()
+    if current_level then
+      local sequence = tweak_data.levels[current_level] and tweak_data.levels[current_level].player_sequence
+      if sequence then
+        return sequence
+      end
+    end
+  end
+  
   function BotWeapons:set_armor(unit, armor_index)
     if not unit or not alive(unit) or not armor_index then
       return
     end
     unit:damage():run_sequence_simple("var_model_0" .. armor_index)
+    -- run heist specific sequence
+    local level_sequence = self:get_level_sequence()
+    if level_sequence then
+      unit:damage():run_sequence_simple(level_sequence)
+    end
   end
   
   function BotWeapons:set_equipment(unit, equipment_index)
@@ -164,6 +176,11 @@ if not _G.BotWeapons then
     if not Global.game_settings.single_player and LuaNetworking:IsHost() then
       -- armor
       managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, "var_model_0" .. (armor_index or 1))
+      -- run heist specific sequence
+      local level_sequence = self:get_level_sequence()
+      if level_sequence then
+        managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, level_sequence)
+      end
       -- equipment
       local name = unit:base()._tweak_table
       DelayedCalls:Add("bot_weapons_sync_equipment_" .. name, 1, function ()

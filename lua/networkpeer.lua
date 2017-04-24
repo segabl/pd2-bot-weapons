@@ -11,6 +11,11 @@ function NetworkPeer:spawn_unit(spawn_point_id, is_drop_in, spawn_as)
         local inventory = data.unit:inventory()
         local name = data.unit:base()._tweak_table
         self:send_queued_sync("sync_run_sequence_char", data.unit, "var_model_0" .. (movement._armor_index or 1))
+        -- run heist specific sequence
+        local level_sequence = BotWeapons:get_level_sequence()
+        if level_sequence then
+          self:send_queued_sync("sync_run_sequence_char", data.unit, level_sequence)
+        end
         LuaNetworking:SendToPeer(self:id(), "bot_weapons_equipment", name .. "," .. (movement._equipment_index or 1))
         LuaNetworking:SendToPeer(self:id(), "bot_weapons_mask", name .. "," .. BotWeapons:build_mask_string(inventory._mask_id, inventory._mask_blueprint))
       end

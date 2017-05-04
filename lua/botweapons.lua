@@ -80,7 +80,7 @@ if not _G.BotWeapons then
       item_name = v.menu_name:gsub("^bm_w_", "item_")
       localized_name = managers.localization:text(v.menu_name):upper()     
       if v.menu_name:gmatch("^bm_w_.+") then
-        localized_name = localized_name:gsub(" PISTOLS?$", ""):gsub(" REVOLVER$", ""):gsub(" RIFLE$", ""):gsub(" SHOTGUN$", ""):gsub(" GUNS?$", ""):gsub(" LIGHT MACHINE$", ""):gsub(" SUBMACHINE$", ""):gsub(" ASSAULT$", ""):gsub(" SNIPER$", "")
+        localized_name = localized_name:gsub(" PISTOLS?$", ""):gsub(" REVOLVERS?$", ""):gsub(" RIFLES?$", ""):gsub(" SHOTGUNS?$", ""):gsub(" GUNS?$", ""):gsub(" LIGHT MACHINE$", ""):gsub(" SUBMACHINE$", ""):gsub(" ASSAULT$", ""):gsub(" SNIPER$", "")
       end
       table.insert(menu_list, item_name)
       names[item_name] = localized_name

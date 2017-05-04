@@ -89,6 +89,27 @@
       "DAMAGE": 7.5
     }
   },
+  {
+    "menu_name": "bm_w_chinchilla",
+    "factory_name": "wpn_fps_pis_chinchilla_npc",
+    "type": "pistol",
+    "tweak_data": {
+      "name": "chinchilla_crew",
+      "usage": "raging_bull",
+      "DAMAGE": 7.5
+    },
+    "blueprint": [
+      "wpn_fps_pis_chinchilla_b_satan",
+      "wpn_fps_pis_chinchilla_body",
+      "wpn_fps_pis_chinchilla_cylinder",
+      "wpn_fps_pis_chinchilla_dh_hammer",
+      "wpn_fps_pis_chinchilla_ejector",
+      "wpn_fps_pis_chinchilla_ejectorpin",
+      "wpn_fps_pis_chinchilla_g_death",
+      "wpn_fps_pis_chinchilla_lock_arm",
+      "wpn_fps_pis_chinchilla_m_bullets"
+    ]
+  },
   
   
   {
@@ -668,6 +689,27 @@
       "wpn_fps_pis_deagle_g_ergo",
       "wpn_fps_pis_deagle_m_standard",
       "wpn_fps_upg_fl_pis_crimson"
+    ]
+  },
+  {
+    "menu_name": "bm_w_x_chinchilla",
+    "factory_name": "wpn_fps_pis_x_chinchilla_npc",
+    "type": "akimbo_pistol",
+    "tweak_data": {
+      "name": "x_chinchilla_crew",
+      "usage": "akimbo_deagle"
+      "DAMAGE": 4.5
+    },
+    "blueprint": [
+      "wpn_fps_pis_chinchilla_b_satan",
+      "wpn_fps_pis_chinchilla_body",
+      "wpn_fps_pis_chinchilla_cylinder",
+      "wpn_fps_pis_chinchilla_dh_hammer",
+      "wpn_fps_pis_chinchilla_ejector",
+      "wpn_fps_pis_chinchilla_ejectorpin",
+      "wpn_fps_pis_chinchilla_g_death",
+      "wpn_fps_pis_chinchilla_lock_arm",
+      "wpn_fps_pis_chinchilla_m_bullets"
     ]
   },
   

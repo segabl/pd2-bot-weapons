@@ -11,12 +11,12 @@ function CharacterTweakData:_presets(...)
   
   -- pistols
   gang_presets.beretta92.spread = gang_presets.m4.spread * 0.75
-  BotWeapons:set_single_fire_mode(gang_presets.beretta92, {0.2, 0.2}, {0.3, 0.4})
+  BotWeapons:set_single_fire_mode(gang_presets.beretta92, {0.2, 0.3})
   
   gang_presets.c45 = gang_presets.beretta92
 
   gang_presets.raging_bull = deep_clone(gang_presets.beretta92)
-  BotWeapons:set_single_fire_mode(gang_presets.raging_bull, {0.5, 0.5}, {0.75, 1})
+  BotWeapons:set_single_fire_mode(gang_presets.raging_bull, {0.5, 0.75})
   
   gang_presets.glock18 = gang_presets.m4
   
@@ -26,8 +26,8 @@ function CharacterTweakData:_presets(...)
   gang_presets.m14 = deep_clone(gang_presets.m4)
   gang_presets.m14.spread = gang_presets.m4.spread * 0.75
   gang_presets.m14.autofire_rounds = { 3, 4 }
-  BotWeapons:set_single_fire_mode(gang_presets.m14, {0.5, 0.5}, {0.75, 1})
-  BotWeapons:set_auto_fire_mode(gang_presets.m14, {1, 0, 0, 0.25}, {1, 0, 0, 0.25})
+  BotWeapons:set_single_fire_mode(gang_presets.m14, {0.5, 0.75})
+  BotWeapons:set_auto_fire_mode(gang_presets.m14, {1, 0, 0, 0.25})
   
   -- smgs
   gang_presets.mp5 = gang_presets.m4
@@ -38,11 +38,11 @@ function CharacterTweakData:_presets(...)
   gang_presets.lmg.FALLOFF[#gang_presets.lmg.FALLOFF].acc = { 0.5, 0.5 }
   
   -- shotguns
-  BotWeapons:set_single_fire_mode(gang_presets.r870, {0.75, 0.75}, {1.125, 1.5})
+  BotWeapons:set_single_fire_mode(gang_presets.r870, {0.75, 1.125})
   gang_presets.r870.spread = gang_presets.m4.spread * 0.75
 
   gang_presets.mossberg = deep_clone(gang_presets.r870)
-  BotWeapons:set_single_fire_mode(gang_presets.mossberg, {0.4, 0.4}, {0.6, 0.8})
+  BotWeapons:set_single_fire_mode(gang_presets.mossberg, {0.4, 0.6})
   
   -- auto shotguns
   gang_presets.saiga = deep_clone(gang_presets.mossberg)
@@ -50,10 +50,10 @@ function CharacterTweakData:_presets(...)
   
   -- akimbo
   gang_presets.akimbo_pistol = deep_clone(gang_presets.beretta92)
-  BotWeapons:set_single_fire_mode(gang_presets.akimbo_pistol, {0.1, 0.1}, {0.15, 0.2})
+  BotWeapons:set_single_fire_mode(gang_presets.akimbo_pistol, {0.1, 0.2})
   
   gang_presets.akimbo_deagle = deep_clone(gang_presets.beretta92)
-  BotWeapons:set_single_fire_mode(gang_presets.akimbo_deagle, {0.3, 0.3}, {0.45, 0.6})
+  BotWeapons:set_single_fire_mode(gang_presets.akimbo_deagle, {0.3, 0.5})
   
   gang_presets.akimbo_auto = deep_clone(gang_presets.m4)
   gang_presets.akimbo_auto.autofire_rounds = { 10, 25 }
@@ -61,7 +61,7 @@ function CharacterTweakData:_presets(...)
   
   -- snipers
   gang_presets.rifle = deep_clone(gang_presets.raging_bull)
-  BotWeapons:set_single_fire_mode(gang_presets.rifle, {1, 1}, {1.5, 2})
+  BotWeapons:set_single_fire_mode(gang_presets.rifle, {1, 1.5})
   
   -- create better range interpolation
   BotWeapons:create_interpolated_falloff_data(gang_presets, 10)

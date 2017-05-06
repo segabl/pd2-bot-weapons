@@ -90,14 +90,16 @@ if not _G.BotWeapons then
     return menu_list
   end
   
-  function BotWeapons:set_single_fire_mode(weapon, rec1, rec2)
-    weapon.FALLOFF[1].recoil = rec1 or weapon.FALLOFF[1].recoil
-    weapon.FALLOFF[#weapon.FALLOFF].recoil = rec2 or weapon.FALLOFF[#weapon.FALLOFF].recoil
+  function BotWeapons:set_single_fire_mode(weapon, rec)
+    for _, v in ipairs(weapon.FALLOFF) do
+      v.recoil = rec
+    end
   end
   
-  function BotWeapons:set_auto_fire_mode(weapon, mode1, mode2)
-    weapon.FALLOFF[1].mode = mode1 or weapon.FALLOFF[1].mode
-    weapon.FALLOFF[#weapon.FALLOFF].mode = mode2 or weapon.FALLOFF[#weapon.FALLOFF].mode
+  function BotWeapons:set_auto_fire_mode(weapon, mode)
+    for _, v in ipairs(weapon.FALLOFF) do
+      v.mode = mode
+    end
   end
   
   function BotWeapons:create_interpolated_falloff_data(presets, steps)

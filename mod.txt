@@ -1,7 +1,7 @@
 {
   "name" : "Bot Weapons and Equipment",
   "description" : "Customize the visual appearance of the Team AI to make them more human-like",
-  "author" : "topfpflanzen-wuerger",
+  "author" : "Nebby",
   "updates" : [
     {
       "revision" : 71,

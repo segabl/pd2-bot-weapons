@@ -52,8 +52,8 @@ if not _G.BotWeapons then
       file:close()
       if overrides then
         for _, weapon in ipairs(self.weapons) do
-          if overrides[weapon.tweak_data] then
-            weapon.blueprint = overrides[weapon.tweak_data].blueprint or weapon.blueprint
+          if weapon.tweak_data and weapon.tweak_data.name and overrides[weapon.tweak_data.name] then
+            weapon.blueprint = overrides[weapon.tweak_data.name].blueprint or weapon.blueprint
           end
         end
       end

@@ -119,7 +119,7 @@
     "type": "rifle",
     "tweak_data": {
       "name": "m4_crew"
-    }
+    },
     "blueprint": [
       "wpn_fps_upg_m4_g_standard_vanilla",
       "wpn_fps_m4_lower_reciever",
@@ -262,7 +262,7 @@
     "tweak_data": {
       "name": "tecci_crew",
       "usage": "lmg"
-    }
+    },
     "blueprint": [
       "wpn_fps_ass_tecci_b_long",
       "wpn_fps_ass_tecci_dh_standard",
@@ -348,7 +348,7 @@
       "name": "huntsman_crew",
       "usage": "mossberg",
       "DAMAGE": 10
-    }
+    },
     "blueprint": [
       "wpn_fps_shot_huntsman_body_standard",
       "wpn_fps_shot_huntsman_b_short",
@@ -369,7 +369,7 @@
   {
     "menu_name": "bm_w_saiga",
     "factory_name": "wpn_fps_shot_saiga_npc",
-    "online_name": "units/payday2/weapons/wpn_npc_ak47/wpn_npc_ak47"
+    "online_name": "units/payday2/weapons/wpn_npc_ak47/wpn_npc_ak47",
     "type": "shotgun",
     "tweak_data": {
       "name": "saiga_crew",
@@ -395,7 +395,7 @@
       "usage": "mossberg",
       "DAMAGE": 6,
       "is_shotgun": true
-    }
+    },
     "blueprint": [
       "wpn_fps_pis_judge_body_standard",
       "wpn_fps_pis_judge_b_standard",
@@ -436,7 +436,7 @@
       "name": "spas12_crew",
       "usage": "mossberg",
       "DAMAGE": 6
-    }
+    },
     "blueprint": [
       "wpn_fps_sho_b_spas12_short",
       "wpn_fps_sho_body_spas12_standard",
@@ -452,7 +452,7 @@
       "name": "b682_crew",
       "usage": "mossberg",
       "DAMAGE": 10
-    }
+    },
     "blueprint": [
       "wpn_fps_shot_b682_body_standard",
       "wpn_fps_shot_b682_b_long",
@@ -634,7 +634,7 @@
     "tweak_data": {
       "name": "hk21_crew",
       "usage": "lmg"
-    }
+    },
     "blueprint": [
       "wpn_fps_lmg_hk21_b_short",
       "wpn_fps_lmg_hk21_body_lower",
@@ -680,7 +680,7 @@
     "type": "akimbo_pistol",
     "tweak_data": {
       "name": "x_deagle_crew",
-      "usage": "akimbo_deagle"
+      "usage": "akimbo_deagle",
       "DAMAGE": 4.5
     },
     "blueprint": [
@@ -697,7 +697,7 @@
     "type": "akimbo_pistol",
     "tweak_data": {
       "name": "x_chinchilla_crew",
-      "usage": "akimbo_deagle"
+      "usage": "akimbo_deagle",
       "DAMAGE": 4.5
     },
     "blueprint": [

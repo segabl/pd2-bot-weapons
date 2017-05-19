@@ -228,13 +228,13 @@ if not _G.BotWeapons then
         else
           if self.masks[index][char_name] or self.masks[index].pool then
             local selection = self.masks[index][char_name] or self.masks[index].pool[math.random(#self.masks[index].pool)]
-            loadout.mask = selection.loadout.mask
-            loadout.mask_blueprint = selection.loadout.mask_blueprint
+            loadout.mask = selection.id
+            loadout.mask_blueprint = selection.blueprint
           elseif self.masks[index].menu_name == "item_same_as_me" then
             local player_mask = managers.blackmarket:equipped_mask()
             if player_mask then
-              loadout.mask = player_mask.mask_loadout.mask
-              loadout.mask_blueprint = player_mask.loadout.mask_blueprint
+              loadout.mask = player_mask.id
+              loadout.mask_blueprint = player_mask.blueprint
             end
           end
         end

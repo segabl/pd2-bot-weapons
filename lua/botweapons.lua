@@ -68,7 +68,7 @@ if not _G.BotWeapons then
     self.masks = self.masks or {}
     
     -- load settings
-    self:Load()
+    self:load()
   end
   
   function BotWeapons:get_menu_list(tbl)
@@ -150,6 +150,13 @@ if not _G.BotWeapons then
     if level_sequence then
       unit:damage():run_sequence_simple(level_sequence)
     end
+    if not Global.game_settings.single_player and LuaNetworking:IsHost() then
+      managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, "var_model_0" .. (armor_index or 1))
+      -- run heist specific sequence
+      if level_sequence then
+        managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, level_sequence)
+      end
+    end
   end
   
   function BotWeapons:set_equipment(unit, equipment_index)
@@ -162,114 +169,14 @@ if not _G.BotWeapons then
         mesh_obj:set_visibility(v)
       end
     end
-  end
-  
-  function BotWeapons:set_mask(unit, mask_id, blueprint)
-    if not unit or not alive(unit) then
-      return
-    end
-    unit:inventory():set_mask(mask_id, blueprint)
-  end
-  
-  function BotWeapons:sync_armor_and_equipment(unit, armor_index, equipment_index)
-    if not unit or not alive(unit) or not unit:base() or not unit:base()._tweak_table then
-      return
-    end
     if not Global.game_settings.single_player and LuaNetworking:IsHost() then
-      -- armor
-      managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, "var_model_0" .. (armor_index or 1))
-      -- run heist specific sequence
-      local level_sequence = self:get_level_sequence()
-      if level_sequence then
-        managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, level_sequence)
-      end
-      -- equipment
       local name = unit:base()._tweak_table
       DelayedCalls:Add("bot_weapons_sync_equipment_" .. name, 1, function ()
         LuaNetworking:SendToPeers("bot_weapons_equipment", name .. "," .. (equipment_index or 1))
       end)
     end
   end
-  
-  function BotWeapons:build_mask_string(mask_id, blueprint)
-    local s = "" .. (mask_id or " ")
-    if not blueprint then
-      return s
-    end
-    s = s .. "," .. (blueprint.color.id or " ") .. "," .. (blueprint.pattern.id or " ") .. "," .. (blueprint.material.id or " ")
-    return s
-  end
-  
-  function BotWeapons:sync_mask(unit, mask_id, blueprint)
-    if not unit or not alive(unit) or not unit:base() or not unit:base()._tweak_table then
-      return
-    end
-    if not Global.game_settings.single_player and LuaNetworking:IsHost() then
-      -- mask
-      local name = unit:base()._tweak_table
-      DelayedCalls:Add("bot_weapons_sync_mask_" .. name, 1, function () 
-        LuaNetworking:SendToPeers("bot_weapons_mask", name .. "," .. self:build_mask_string(mask_id, blueprint))
-      end)
-    end
-  end
-  
-  function BotWeapons:chk_create_sync_index()
-    if self._weapon_indices then
-      return
-    end
-    local weapon_list = {}
-    for id, data in pairs(tweak_data.weapon.factory) do
-      if id ~= "parts" and data.unit then
-        table.insert(weapon_list, id)
-      end
-    end
-    table.sort(weapon_list, function(a, b)
-      return a < b
-    end)
-    self._weapon_indices = {}
-    local start_index = #tweak_data.character.weap_unit_names
-    for i, factory_id in ipairs(weapon_list) do
-      self._weapon_indices[factory_id] = start_index + i
-    end
-  end
-    
-  function BotWeapons:sync_index_by_name(wanted_weap_name)
-    if type_name(wanted_weap_name) == "Idstring" then
-      for i, test_weap_name in ipairs(tweak_data.character.weap_unit_names) do
-        if test_weap_name == wanted_weap_name then
-          return i
-        end
-      end
-    end
-    self:chk_create_sync_index()
-    return self._weapon_indices[wanted_weap_name]
-  end
-    
-  function BotWeapons:replacement_by_index(index)
-    if index <= #tweak_data.character.weap_unit_names then
-      return index
-    end
-    local type_replacements = {
-      pistol = Idstring("units/payday2/weapons/wpn_npc_c45/wpn_npc_c45"),
-      rifle = Idstring("units/payday2/weapons/wpn_npc_m4/wpn_npc_m4"),
-      shotgun = Idstring("units/payday2/weapons/wpn_npc_r870/wpn_npc_r870"),
-      smg = Idstring("units/payday2/weapons/wpn_npc_mp5/wpn_npc_mp5"),
-      lmg = Idstring("units/payday2/weapons/wpn_npc_lmg_m249/wpn_npc_lmg_m249"),
-    }
-    for _, weapon in ipairs(self.weapons) do
-      if self:sync_index_by_name(weapon.factory_name) == index then
-        if weapon.online_name then
-          return self:sync_index_by_name(Idstring(weapon.online_name))
-        elseif type_replacements[weapon.type] then
-          return self:sync_index_by_name(type_replacements[weapon.type])
-        else
-          return self:sync_index_by_name(type_replacements.rifle)
-        end
-      end
-    end
-    return self:sync_index_by_name(type_replacements.rifle)
-  end
-  
+   
   function BotWeapons:get_masks_data()
     if not self._masks_data then
       self._masks_data = {}
@@ -295,47 +202,78 @@ if not _G.BotWeapons then
     return self._masks_data
   end
   
-  Hooks:Add("BaseNetworkSessionOnLoadComplete", "BaseNetworkSessionOnLoadCompleteBotWeapons", function()
-    if LuaNetworking:IsClient() then
-      LuaNetworking:SendToPeer(1, "bot_weapons_active", BotWeapons._revision)
+  function BotWeapons:set_loadout(char_name, original_loadout)
+    local loadout = deep_clone(original_loadout)
+    if LuaNetworking:IsHost() then
+    
+      -- choose mask
+      if loadout.mask == "character_locked" then
+        log("[BotWeapons] " .. char_name .. " uses default mask, using own settings")
+        loadout.mask_slot = nil
+        
+        local masks_data = self:get_masks_data()
+        local index = self._data[char_name .. "_mask"] or 1
+        if self._data.toggle_override_masks then
+          index = self._data.override_masks or (#self.masks + 1)
+        end
+        if index > #self.masks then
+          loadout.mask = masks_data.masks[math.random(#masks_data.masks)]
+          if math.random() < (self._data.slider_mask_customized_chance or 0.5) then
+            loadout.mask_blueprint = {
+              color = {id = masks_data.colors[math.random(#masks_data.colors)]},
+              pattern = {id = masks_data.patterns[math.random(#masks_data.patterns)]},
+              material = {id = masks_data.materials[math.random(#masks_data.materials)]}
+            }
+          end
+        else
+          if self.masks[index][char_name] or self.masks[index].pool then
+            local selection = self.masks[index][char_name] or self.masks[index].pool[math.random(#self.masks[index].pool)]
+            loadout.mask = selection.loadout.mask
+            loadout.mask_blueprint = selection.loadout.mask_blueprint
+          elseif self.masks[index].menu_name == "item_same_as_me" then
+            local player_mask = managers.blackmarket:equipped_mask()
+            if player_mask then
+              loadout.mask = player_mask.mask_loadout.mask
+              loadout.mask_blueprint = player_mask.loadout.mask_blueprint
+            end
+          end
+        end
+      end
+      
+      -- choose weapon
+      if not loadout.primary then
+        log("[BotWeapons] " .. char_name .. " uses default weapon, using own settings")
+        loadout.primary_slot = nil
+        
+        local weapon_index = self._data[char_name .. "_weapon"] or 1
+        if self._data.toggle_override_weapons then
+          weapon_index = self._data.override_weapons or (#self.weapons + 1)
+        end
+        if weapon_index > #self.weapons then
+          weapon_index = math.random(#self.weapons)
+        end
+        local weapon = self.weapons[weapon_index]
+        loadout.primary = weapon.factory_name
+        loadout.primary_blueprint = weapon.blueprint
+      end
+      
     end
-  end)
+    return loadout
+  end
 
   Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function(sender, id, data)
     local peer = LuaNetworking:GetPeers()[sender]
     local params = string.split(data or "", ",", true)
-    if id == "bot_weapons_active" and peer then
-      if #params == 1 then
-        if tonumber(params[1]) == BotWeapons._revision then
-          peer._has_bot_weapons = true
-        else
-          log("[BotWeapons] Client version mismatch")
-        end
-      end
-    elseif id == "bot_weapons_equipment" and managers.criminals then
+    if id == "bot_weapons_equipment" and managers.criminals then
       if #params == 2 then
         local name = params[1]
         local equipment = tonumber(params[2])
         BotWeapons:set_equipment(managers.criminals:character_unit_by_name(name), equipment)
       end
-    elseif id == "bot_weapons_mask" and managers.criminals then
-      if #params >= 2 then
-        local name = params[1]
-        local mask_id = params[2]
-        local blueprint
-        if #params == 5 then
-          blueprint = {
-            color = {id = params[3]},
-            pattern = {id = params[4]},
-            material = {id = params[5]}
-          }
-        end
-        BotWeapons:set_mask(managers.criminals:character_unit_by_name(name), mask_id, blueprint)
-      end
     end
   end)
 
-  function BotWeapons:Save()
+  function BotWeapons:save()
     local file = io.open(self._data_path .. "bot_weapons_data.txt", "w+")
     if file then
       file:write(json.encode(self._data))
@@ -343,7 +281,7 @@ if not _G.BotWeapons then
     end
   end
 
-  function BotWeapons:Load()
+  function BotWeapons:load()
     local file = io.open(self._data_path .. "bot_weapons_data.txt", "r")
     if file then
       self._data = json.decode(file:read("*all"))

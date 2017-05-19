@@ -1,32 +1,21 @@
 dofile(ModPath .. "lua/botweapons.lua")
 
-local _post_init_original = TeamAIMovement._post_init
-function TeamAIMovement:_post_init()
-  if LuaNetworking:IsHost() then
-    -- choose weapon
-    local weapon_index = BotWeapons._data[self._ext_base._tweak_table .. "_weapon"] or 1
-    if BotWeapons._data.toggle_override_weapons then
-      weapon_index = BotWeapons._data.override_weapons or (#BotWeapons.weapons + 1)
-    end
-    if weapon_index > #BotWeapons.weapons then
-      weapon_index = math.random(#BotWeapons.weapons)
-    end
-    local weapon = BotWeapons.weapons[weapon_index]
-    local factory_weapon = tweak_data.weapon.factory[weapon.factory_name]
-    if not factory_weapon or not factory_weapon.unit then
-      log("[BotWeapons] " .. weapon.factory_name .. " or its unit does not exist")
-      return _post_init_original(self)
-    end
-    local blueprint_string = managers.weapon_factory:blueprint_to_string(weapon.factory_name, weapon.blueprint or factory_weapon.default_blueprint)
-    -- remove previously added selections
-    self._ext_inventory:remove_all_selections()
-    self._ext_inventory:add_unit_by_factory_name(weapon.factory_name, true, true, blueprint_string, "")
-    self._ext_inventory:equipped_unit():base()._alert_events = not self._ext_inventory:equipped_unit():base():got_silencer() and {} or nil
-    if managers.groupai:state():whisper_mode() then
-      self._ext_inventory:set_weapon_enabled(false)
-    end
-  end
-  return _post_init_original(self)
+function TeamAIMovement:add_weapons()
+	if Network:is_server() then
+		local char_name = self._ext_base._tweak_table
+		local loadout = managers.criminals:get_loadout_for(char_name)
+		local crafted = managers.blackmarket:get_crafted_category_slot("primaries", loadout.primary_slot)
+		if crafted then
+			self._unit:inventory():add_unit_by_factory_blueprint(loadout.primary, false, false, crafted.blueprint, crafted.cosmetics)
+		elseif loadout.primary then
+      self._unit:inventory():add_unit_by_factory_blueprint(loadout.primary, false, false, loadout.primary_blueprint or tweak_data.weapon.factory[loadout.primary].default_blueprint, loadout.primary_cosmetics)
+		else
+			local weapon = self._ext_base:default_weapon_name("primary")
+			local _ = weapon and self._unit:inventory():add_unit_by_factory_name(weapon, false, false, nil, "")
+		end
+	else
+		TeamAIMovement.super.add_weapons(self)
+	end
 end
 
 local play_redirect_original = TeamAIMovement.play_redirect
@@ -83,15 +72,6 @@ function TeamAIMovement:check_visual_equipment()
   self._equipment_index = equipment_index
   BotWeapons:set_armor(self._unit, armor_index)
   BotWeapons:set_equipment(self._unit, equipment_index)
-  BotWeapons:sync_armor_and_equipment(self._unit, armor_index, equipment_index)
-  -- run heist specific sequences
-  local current_level = managers.job and managers.job:current_level_id()
-	if current_level then
-		local sequence = tweak_data.levels[current_level] and tweak_data.levels[current_level].player_sequence
-		if sequence then
-			self._unit:damage():run_sequence_simple(sequence)
-		end
-	end
 end
 
 local set_carrying_bag_original = TeamAIMovement.set_carrying_bag

@@ -16,11 +16,11 @@ function WeaponTweakData:init(...)
   self.judge_crew.is_shotgun = true
   self.judge_crew.usage = "mossberg"
   self.m14_crew.usage = "m14"
+  self.rota_crew.usage = "mossberg"
   self.g22c_crew.auto = nil
   self.usp_crew.auto = nil
   self.tecci_crew.auto = { fire_rate = 0.09 }
   self.desertfox_crew.auto = { fire_rate = 1 }
-  self.rota_crew.usage = "mossberg"
   
   local m4_dps = self.m4_crew.DAMAGE / self.m4_crew.auto.fire_rate
   
@@ -33,6 +33,10 @@ function WeaponTweakData:init(...)
           v.usage = "akimbo_auto"
           log(k .. ".usage -> akimbo_auto")
         end 
+      end
+      -- fix shotguns
+      if v.is_shotgun and v.usage ~= "r870" and v.usage ~= "mossberg" and v.usage ~= "saiga" then
+        v.usage = "r870"
       end
     
       -- fix auto damage
@@ -70,7 +74,7 @@ function WeaponTweakData:init(...)
       end
       -- fix shotgun damage
       if v.usage == "r870" then
-        if v.CLIP_AMMO_MAX <= 2 or v.auto and v.auto.fire_rate and v.auto.fire_rate < 0.33 and v.usage ~= "mossberg" then
+        if v.CLIP_AMMO_MAX <= 2 or v.auto and v.auto.fire_rate and v.auto.fire_rate < 0.33 and v.usage ~= "mossberg" and v.is_shotgun then
           v.usage = "mossberg"
           log(k .. ".usage -> mossberg")
         else

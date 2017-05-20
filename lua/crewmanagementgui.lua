@@ -34,7 +34,7 @@ end
 function CrewManagementGui:open_weapon_category_menu(category, henchmen_index)
   local loadout = managers.blackmarket:henchman_loadout(henchmen_index)
 	local new_node_data = {category = category}
-	local selected_tab = self:create_pages(new_node_data, henchmen_index, "weapon", loadout.primary_slot, loadout.primary_category or "primaries", tweak_data.gui.WEAPON_ROWS_PER_PAGE, tweak_data.gui.WEAPON_COLUMNS_PER_PAGE, tweak_data.gui.MAX_WEAPON_PAGES)
+	local selected_tab = self:create_pages(new_node_data, henchmen_index, "weapon", loadout.primary_slot, tweak_data.gui.WEAPON_ROWS_PER_PAGE, tweak_data.gui.WEAPON_COLUMNS_PER_PAGE, tweak_data.gui.MAX_WEAPON_PAGES, loadout.primary_category or "primaries")
 	new_node_data.can_move_over_tabs = true
 	new_node_data.selected_tab = selected_tab
 	new_node_data.scroll_tab_anywhere = true
@@ -51,7 +51,7 @@ function CrewManagementGui:open_weapon_category_menu(category, henchmen_index)
 	managers.menu:open_node("blackmarket_node", {new_node_data})
 end
 
-function CrewManagementGui:create_pages(new_node_data, params, identifier, selected_slot, selected_category, rows, columns, max_pages)
+function CrewManagementGui:create_pages(new_node_data, params, identifier, selected_slot, rows, columns, max_pages, selected_category)
 	local category = new_node_data.category
 	rows = rows or 3
 	columns = columns or 3
@@ -66,7 +66,7 @@ function CrewManagementGui:create_pages(new_node_data, params, identifier, selec
 		for i = start_i, items_per_page * page do
 			item_data[index] = i
 			index = index + 1
-			if i == selected_slot and category == selected_category then
+			if i == selected_slot and (category == selected_category or selected_category == nil) then
 				selected_tab = page
 			end
 		end

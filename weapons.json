@@ -5,8 +5,7 @@
     "online_name": "units/payday2/weapons/wpn_npc_c45/wpn_npc_c45",
     "type": "pistol",
     "tweak_data": {
-      "name": "g17_crew",
-      "DAMAGE": 3
+      "name": "g17_crew"
     },
     "blueprint": [
       "wpn_fps_pis_g17_body_standard",
@@ -21,8 +20,7 @@
     "online_name": "units/payday2/weapons/wpn_npc_beretta92/wpn_npc_beretta92",
     "type": "pistol",
     "tweak_data": {
-      "name": "beretta92_crew",
-      "DAMAGE": 3
+      "name": "beretta92_crew"
     },
     "blueprint": [
       "wpn_fps_pis_beretta_body_beretta",
@@ -40,8 +38,7 @@
     "online_name": "units/payday2/weapons/wpn_npc_raging_bull/wpn_npc_raging_bull",
     "type": "pistol",
     "tweak_data": {
-      "name": "raging_bull_crew",
-      "DAMAGE": 7.5
+      "name": "raging_bull_crew"
     }
   },
   {
@@ -49,8 +46,7 @@
     "factory_name": "wpn_fps_pis_deagle_npc",
     "type": "pistol",
     "tweak_data": {
-      "name": "deagle_crew",
-      "DAMAGE": 7.5
+      "name": "deagle_crew"
     }
   },
   {
@@ -75,8 +71,7 @@
     "factory_name": "wpn_fps_pis_ppk_npc",
     "type": "pistol",
     "tweak_data": {
-      "name": "ppk_crew",
-      "DAMAGE": 3
+      "name": "ppk_crew"
     }
   },
   {
@@ -84,9 +79,7 @@
     "factory_name": "wpn_fps_pis_peacemaker_npc",
     "type": "pistol",
     "tweak_data": {
-      "name": "peacemaker_crew",
-      "usage": "raging_bull",
-      "DAMAGE": 7.5
+      "name": "peacemaker_crew"
     }
   },
   {
@@ -94,9 +87,7 @@
     "factory_name": "wpn_fps_pis_chinchilla_npc",
     "type": "pistol",
     "tweak_data": {
-      "name": "chinchilla_crew",
-      "usage": "raging_bull",
-      "DAMAGE": 7.5
+      "name": "chinchilla_crew"
     },
     "blueprint": [
       "wpn_fps_pis_chinchilla_b_satan",
@@ -215,9 +206,7 @@
     "factory_name": "wpn_fps_ass_m14_npc",
     "type": "rifle",
     "tweak_data": {
-      "name": "m14_crew",
-      "usage": "m14",
-      "DAMAGE": 4
+      "name": "m14_crew"
     },
     "blueprint": [
       "wpn_fps_ass_m14_b_standard",
@@ -260,8 +249,7 @@
     "factory_name": "wpn_fps_ass_tecci_npc",
     "type": "rifle",
     "tweak_data": {
-      "name": "tecci_crew",
-      "usage": "lmg"
+      "name": "tecci_crew"
     },
     "blueprint": [
       "wpn_fps_ass_tecci_b_long",
@@ -326,8 +314,7 @@
     "online_name": "units/payday2/weapons/wpn_npc_r870/wpn_npc_r870",
     "type": "shotgun",
     "tweak_data": {
-      "name": "r870_crew",
-      "DAMAGE": 12
+      "name": "r870_crew"
     },
     "blueprint": [
       "wpn_fps_shot_r870_body_standard",
@@ -345,9 +332,7 @@
     "online_name": "units/payday2/weapons/wpn_npc_sawnoff_shotgun/wpn_npc_sawnoff_shotgun",
     "type": "shotgun",
     "tweak_data": {
-      "name": "huntsman_crew",
-      "usage": "mossberg",
-      "DAMAGE": 10
+      "name": "huntsman_crew"
     },
     "blueprint": [
       "wpn_fps_shot_huntsman_body_standard",
@@ -361,9 +346,7 @@
     "online_name": "units/payday2/weapons/wpn_npc_benelli/wpn_npc_benelli",
     "type": "shotgun",
     "tweak_data": {
-      "name": "ben_crew",
-      "usage": "mossberg",
-      "DAMAGE": 6
+      "name": "ben_crew"
     }
   },
   {
@@ -372,8 +355,7 @@
     "online_name": "units/payday2/weapons/wpn_npc_ak47/wpn_npc_ak47",
     "type": "shotgun",
     "tweak_data": {
-      "name": "saiga_crew",
-      "DAMAGE": 3
+      "name": "saiga_crew"
     },
     "blueprint": [
       "wpn_fps_smg_akmsu_body_lowerreceiver",
@@ -391,10 +373,7 @@
     "factory_name": "wpn_fps_pis_judge_npc",
     "type": "shotgun",
     "tweak_data": {
-      "name": "judge_crew",
-      "usage": "mossberg",
-      "DAMAGE": 6,
-      "is_shotgun": true
+      "name": "judge_crew"
     },
     "blueprint": [
       "wpn_fps_pis_judge_body_standard",
@@ -408,8 +387,7 @@
     "factory_name": "wpn_fps_sho_boot_npc",
     "type": "shotgun",
     "tweak_data": {
-      "name": "boot_crew",
-      "DAMAGE": 12
+      "name": "boot_crew"
     }
   },
   {
@@ -417,8 +395,7 @@
     "factory_name": "wpn_fps_sho_ksg_npc",
     "type": "shotgun",
     "tweak_data": {
-      "name": "ksg_crew",
-      "DAMAGE": 12
+      "name": "ksg_crew"
     },
     "blueprint": [
       "wpn_fps_sho_ksg_b_standard",
@@ -433,9 +410,7 @@
     "factory_name": "wpn_fps_sho_spas12_npc",
     "type": "shotgun",
     "tweak_data": {
-      "name": "spas12_crew",
-      "usage": "mossberg",
-      "DAMAGE": 6
+      "name": "spas12_crew"
     },
     "blueprint": [
       "wpn_fps_sho_b_spas12_short",
@@ -449,9 +424,7 @@
     "factory_name": "wpn_fps_shot_b682_npc",
     "type": "shotgun",
     "tweak_data": {
-      "name": "b682_crew",
-      "usage": "mossberg",
-      "DAMAGE": 10
+      "name": "b682_crew"
     },
     "blueprint": [
       "wpn_fps_shot_b682_body_standard",
@@ -653,8 +626,7 @@
     "factory_name": "wpn_fps_pis_x_g17_npc",
     "type": "akimbo_pistol",
     "tweak_data": {
-      "name": "x_g17_crew",
-      "DAMAGE": 1.5
+      "name": "x_g17_crew"
     }
   },
   {
@@ -662,8 +634,7 @@
     "factory_name": "wpn_fps_x_b92fs_npc",
     "type": "akimbo_pistol",
     "tweak_data": {
-      "name": "x_b92fs_crew",
-      "DAMAGE": 1.5
+      "name": "x_b92fs_crew"
     },
     "blueprint": [
       "wpn_fps_pis_beretta_body_beretta",
@@ -679,9 +650,7 @@
     "factory_name": "wpn_fps_x_deagle_npc",
     "type": "akimbo_pistol",
     "tweak_data": {
-      "name": "x_deagle_crew",
-      "usage": "akimbo_deagle",
-      "DAMAGE": 4.5
+      "name": "x_deagle_crew"
     },
     "blueprint": [
       "wpn_fps_pis_deagle_body_standard",
@@ -696,9 +665,7 @@
     "factory_name": "wpn_fps_pis_x_chinchilla_npc",
     "type": "akimbo_pistol",
     "tweak_data": {
-      "name": "x_chinchilla_crew",
-      "usage": "akimbo_deagle",
-      "DAMAGE": 4.5
+      "name": "x_chinchilla_crew"
     },
     "blueprint": [
       "wpn_fps_pis_chinchilla_b_satan",
@@ -748,8 +715,7 @@
     "factory_name": "wpn_fps_snp_m95_npc",
     "type": "sniper",
     "tweak_data": {
-      "name": "m95_crew",
-      "DAMAGE": 15
+      "name": "m95_crew"
     },
     "blueprint": [
       "wpn_fps_snp_m95_barrel_standard",
@@ -766,8 +732,7 @@
     "factory_name": "wpn_fps_snp_model70_npc",
     "type": "sniper",
     "tweak_data": {
-      "name": "model70_crew",
-      "DAMAGE": 15
+      "name": "model70_crew"
     }
   },
   {
@@ -775,8 +740,7 @@
     "factory_name": "wpn_fps_snp_desertfox_npc",
     "type": "sniper",
     "tweak_data": {
-      "name": "desertfox_crew",
-      "DAMAGE": 15
+      "name": "desertfox_crew"
     },
     "blueprint": [
       "wpn_fps_snp_desertfox_b_silencer",
@@ -791,8 +755,7 @@
     "factory_name": "wpn_fps_snp_siltstone_npc",
     "type": "sniper",
     "tweak_data": {
-      "name": "siltstone_crew",
-      "DAMAGE": 15
+      "name": "siltstone_crew"
     },
     "blueprint": [
       "wpn_fps_snp_siltstone_b_standard",

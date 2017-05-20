@@ -12,6 +12,8 @@
     { "hook_id" : "lib/managers/blackmarketmanager", "script_path" : "lua/blackmarketmanager.lua" },
     { "hook_id" : "lib/managers/criminalsmanager", "script_path" : "lua/criminalsmanager.lua" },
     { "hook_id" : "lib/managers/menumanager", "script_path" : "lua/menumanager.lua" },
+    { "hook_id" : "lib/managers/menu/crewmanagementgui", "script_path" : "lua/crewmanagementgui.lua" },
+    { "hook_id" : "lib/managers/menu/menuscenemanager", "script_path" : "lua/menuscenemanager.lua" },
     { "hook_id" : "lib/tweak_data/weapontweakdata", "script_path" : "lua/weapontweakdata.lua" },
     { "hook_id" : "lib/tweak_data/charactertweakdata", "script_path" : "lua/charactertweakdata.lua" },
     { "hook_id" : "lib/units/player_team/teamaimovement", "script_path" : "lua/teamaimovement.lua" },

@@ -208,7 +208,6 @@ if not _G.BotWeapons then
     
       -- choose mask
       if loadout.mask == "character_locked" then
-        log("[BotWeapons] " .. char_name .. " uses default mask, using own settings")
         loadout.mask_slot = nil
         
         local masks_data = self:get_masks_data()

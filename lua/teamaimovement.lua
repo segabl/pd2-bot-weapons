@@ -4,7 +4,7 @@ function TeamAIMovement:add_weapons()
 	if Network:is_server() then
 		local char_name = self._ext_base._tweak_table
 		local loadout = managers.criminals:get_loadout_for(char_name)
-		local crafted = managers.blackmarket:get_crafted_category_slot("primaries", loadout.primary_slot)
+		local crafted = managers.blackmarket:get_crafted_category_slot(loadout.primary_category or "primaries", loadout.primary_slot)
 		if crafted then
 			self._unit:inventory():add_unit_by_factory_blueprint(loadout.primary, false, false, crafted.blueprint, crafted.cosmetics)
 		elseif loadout.primary then

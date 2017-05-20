@@ -10,7 +10,7 @@
   "BotWeapons_menu_weapons_name" : "Armi bot",
   "BotWeapons_menu_weapons_desc" : "Imposta le armi per la squadra IA",
   "BotWeapons_menu_category_select_name" : "Seleziona categoria",
-  "BotWeapons_menu_category_select_desc" : "Seleziona la categoria che vuoi scegliere un'arma"
+  "BotWeapons_menu_category_select_desc" : "Per favore seleziona una categoria dalla quale vuoi scegliere un'arma."
   "toggle_override_armor_name" : "Sostituzione Armatura",
   "toggle_override_armor_desc" : "Sostituisce le singole impostazioni dell'armatura della squadra IA",
   "toggle_player_carry_name" : "Trasporta i borsoni come i giocatori",

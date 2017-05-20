@@ -9,6 +9,8 @@
   "BotWeapons_menu_masks_desc" : "Stelle die Masken für die Team KI ein",
   "BotWeapons_menu_weapons_name" : "Bot Waffen",
   "BotWeapons_menu_weapons_desc" : "Stelle die Waffen für die Team KI ein",
+  "BotWeapons_menu_category_select_name" : "Kategorie wählen",
+  "BotWeapons_menu_category_select_desc" : "Bitte wähle die Kategorie aus der du eine Waffe wählen möchstest"
   "toggle_override_armor_name" : "Panzerung Override",
   "toggle_override_armor_desc" : "Ersetze individuelle Panzerung der Team KI",
   "toggle_player_carry_name" : "Trage Taschen wie Spieler",

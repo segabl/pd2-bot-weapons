@@ -9,6 +9,8 @@
   "BotWeapons_menu_masks_desc" : "Set the masks for the team AI",
   "BotWeapons_menu_weapons_name" : "Bot weapons",
   "BotWeapons_menu_weapons_desc" : "Set the weapons for the team AI",
+  "BotWeapons_menu_category_select_name" : "Select category",
+  "BotWeapons_menu_category_select_desc" : "Please select the category you want to choose a weapon from"
   "toggle_override_armor_name" : "Armor override",
   "toggle_override_armor_desc" : "Override individual armor settings of the team AI",
   "toggle_player_carry_name" : "Carry bags like players",

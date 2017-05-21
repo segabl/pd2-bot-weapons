@@ -77,7 +77,7 @@ if not _G.BotWeapons then
     self:load()
   end
   
-  function BotWeapons:get_menu_list(tbl)
+  function BotWeapons:get_menu_list(tbl, add)
     local menu_list = {}
     local names = {}
     local item_name
@@ -91,7 +91,11 @@ if not _G.BotWeapons then
       table.insert(menu_list, item_name)
       names[item_name] = localized_name
     end
-    table.insert(menu_list, "item_random")
+    if add then
+      for _, v in ipairs(add) do
+        table.insert(menu_list, v)
+      end
+    end
     managers.localization:add_localized_strings(names)
     return menu_list
   end
@@ -207,6 +211,47 @@ if not _G.BotWeapons then
     end
     return self._masks_data
   end
+
+  function BotWeapons:get_random_weapon(category)
+    local weapons = {}
+    for weapon, data in pairs(tweak_data.weapon) do
+      if data.autohit then
+        if (type(category) ~= "string" or data.categories[1] == category) and managers.blackmarket:is_weapon_category_allowed_for_crew(data.categories[1]) then
+          local data = {
+            category = data.use_data.selection_index == 2 and "primaries" or "secondaries",
+            factory_id = managers.weapon_factory:get_factory_id_by_weapon_id(weapon) .. "_npc"
+          }
+          table.insert(weapons, data)
+        end
+      end
+    end
+    local weapon = weapons[math.random(#weapons)]
+    if not weapon then
+      return {}
+    end
+    weapon.blueprint = {}
+    local has_part_of_type = {}
+    local parts = deep_clone(tweak_data.weapon.factory[weapon.factory_id].uses_parts)
+    local must_use = {}
+    for _, part_name in ipairs(tweak_data.weapon.factory[weapon.factory_id].default_blueprint) do
+      local part_type = tweak_data.weapon.factory.parts[part_name].type
+      must_use[part_type] = true
+    end   
+    while #parts > 0 do
+      local index = math.random(#parts)
+      local part_name = parts[index]
+      local part = tweak_data.weapon.factory.parts[part_name]
+      local is_forbidden = part.forbids and table.contains_any(weapon.blueprint, part.forbids)
+      if part and not part.unatainable and not has_part_of_type[part.type] and not is_forbidden then
+        if (must_use[part.type] or math.random() < 0.5) then
+          table.insert(weapon.blueprint, part_name)
+        end
+        has_part_of_type[part.type] = true
+      end
+      table.remove(parts, index)
+    end
+    return weapon
+  end
   
   function BotWeapons:get_loadout(char_name, original_loadout)
     local loadout = original_loadout and deep_clone(original_loadout) or {}
@@ -245,19 +290,23 @@ if not _G.BotWeapons then
       end
       
       -- choose weapon
-      if not loadout.primary then      
-        loadout.primary_slot = nil
-        
+      if not loadout.primary or loadout.primary_random then      
         local weapon_index = self._data[char_name .. "_weapon"] or 1
         if self._data.toggle_override_weapons then
           weapon_index = self._data.override_weapons or (#self.weapons + 1)
         end
-        if weapon_index > #self.weapons then
-          weapon_index = math.random(#self.weapons)
+        if weapon_index > #self.weapons or loadout.primary_random then
+          local weapon = self:get_random_weapon(type(loadout.primary_random) == "string" and loadout.primary_random or nil)
+          loadout.primary_slot = nil
+          loadout.primary = weapon.factory_id
+          loadout.primary_category = weapon.category
+          loadout.primary_blueprint = weapon.blueprint
+        else
+          local weapon = self.weapons[weapon_index]
+          loadout.primary_slot = nil
+          loadout.primary = weapon.factory_name
+          loadout.primary_blueprint = weapon.blueprint
         end
-        local weapon = self.weapons[weapon_index]
-        loadout.primary = weapon.factory_name
-        loadout.primary_blueprint = weapon.blueprint
       end
       
       -- choose armor models
@@ -269,6 +318,7 @@ if not _G.BotWeapons then
         armor_index = math.random(#BotWeapons.armor)
       end
       loadout.armor_index = armor_index
+      
       -- choose equipment models
       local equipment_index = BotWeapons._data[char_name .. "_equipment"] or 1
       if BotWeapons._data.toggle_override_equipment then

@@ -13,7 +13,6 @@ local make_fine_text = function(text)
 	text:set_size(w, h)
 	text:set_position(math.round(text:x()), math.round(text:y()))
 end
-
 local fit_texture = function(bitmap, target_w, target_h)
 	local texture_width = bitmap:texture_width()
 	local texture_height = bitmap:texture_height()
@@ -28,10 +27,11 @@ local fit_texture = function(bitmap, target_w, target_h)
 	bitmap:set_size(math.round(dw * target_w), math.round(dh * target_h))
 end
 
---[[
 local init_original = CrewManagementGui.init
-function CrewManagementGui:init(...)
-  init_original(self, ...)
+function CrewManagementGui:init(ws, fullscreen_ws, node)
+  init_original(self, ws, fullscreen_ws, node)
+  self._node = node
+  --[[
   local character_button = self._panel:text({
 		text = managers.localization:to_upper_text("BotWeapons_menu_main_name"),
 		font = medium_font,
@@ -47,8 +47,8 @@ function CrewManagementGui:init(...)
 	button._select_col = tweak_data.screen_colors.button_stage_2
 	button._normal_col = tweak_data.screen_colors.button_stage_3
 	button._selected_changed = CrewManagementGuiTextButton._selected_changed
+  ]]
 end
-]]
 
 function CrewManagementGui:create_mask_button(panel, index)
 	local loadout = managers.blackmarket:henchman_loadout(index)
@@ -64,7 +64,11 @@ function CrewManagementGui:create_weapon_button(panel, index)
 	local texture, rarity = managers.blackmarket:get_weapon_icon_path(data.weapon_id, data.cosmetics)
 	local text = loadout.primary_slot and managers.blackmarket:get_weapon_name_by_category_slot(loadout.primary_category or "primaries", loadout.primary_slot) or ""
 	local cat_text = managers.localization:to_upper_text("bm_menu_primaries")
-	local item = CrewManagementGuiLoadoutItem:new(self, panel, texture and {texture = texture, layer = 1} or managers.localization:to_upper_text("menu_crew_defualt"), text, cat_text, callback(self, self, "show_category_selection", index))
+  local weapon_text = loadout.primary_random and managers.localization:to_upper_text("item_random") or managers.localization:to_upper_text("menu_crew_defualt")
+  if type(loadout.primary_random) == "string" then
+    weapon_text = managers.localization:to_upper_text("menu_" .. loadout.primary_random)
+  end
+	local item = CrewManagementGuiLoadoutItem:new(self, panel, texture and {texture = texture, layer = 1} or weapon_text, text, cat_text, callback(self, self, "show_category_selection", index))
 	if rarity then
 		local rare_item = item._panel:bitmap({
 			texture = rarity,
@@ -164,36 +168,130 @@ function CrewManagementGui:select_weapon(index, data, gui)
 		loadout.primary = nil
 		loadout.primary_slot = nil
     loadout.primary_category = nil
+    loadout.primary_random = nil
+  elseif data.random then
+    loadout.primary = nil
+		loadout.primary_slot = nil
+    loadout.primary_category = nil
+    loadout.primary_random = data.random
 	else
 		local crafted = managers.blackmarket:get_crafted_category_slot(data.category, data.slot)
 		loadout.primary = crafted.factory_id .. "_npc"
 		loadout.primary_slot = data.slot
     loadout.primary_category = data.category
+    loadout.primary_random = nil
 	end
   if gui then
     gui:reload()
   end
 end
 
+function CrewManagementGui:reload()
+  managers.menu_component:close_crew_management_gui()
+  managers.menu_component:create_crew_management_gui(self._node)
+end
+
 function CrewManagementGui:show_category_selection(henchmen_index)
   local menu_title = managers.localization:text("BotWeapons_menu_category_select_name")
   local menu_message = managers.localization:text("BotWeapons_menu_category_select_desc")
   local menu_options = {
-    [1] = {
-        text = managers.localization:text("bm_menu_primaries"),
-        callback = function ()
-          self:open_weapon_category_menu("primaries", henchmen_index)
-        end
+    {
+      text = managers.localization:text("bm_menu_primaries"),
+      callback = function () self:open_weapon_category_menu("primaries", henchmen_index) end
     },
-    [2] = {
-        text = managers.localization:text("bm_menu_secondaries"),
-        callback = function ()
-          self:open_weapon_category_menu("secondaries", henchmen_index)
-        end
+    {
+      text = managers.localization:text("bm_menu_secondaries"),
+      callback = function () self:open_weapon_category_menu("secondaries", henchmen_index) end
     },
-    [3] = {
-        text = managers.localization:text("menu_back"),
-        is_cancel_button = true
+    {
+      text = managers.localization:text("item_random"),
+      callback = function () self:show_random_selection(henchmen_index) end
+    },
+    {--[[seperator]]},
+    {
+      text = managers.localization:text("menu_back"),
+      is_cancel_button = true
+    }
+  }
+  local loadout = managers.blackmarket:henchman_loadout(henchmen_index)
+  if loadout.primary or loadout.primary_random then
+    table.insert(menu_options, #menu_options, {
+      text = managers.localization:text("bm_menu_btn_unequip_weapon"),
+      callback = function ()
+        self:select_weapon(henchmen_index)
+        self:reload()
+      end
+    })
+    table.insert(menu_options, #menu_options, {--[[seperator]]})
+  end
+  QuickMenu:new(menu_title, menu_message, menu_options):Show()
+end
+
+function CrewManagementGui:show_random_selection(henchmen_index)
+  local menu_title = managers.localization:text("BotWeapons_menu_category_select_name")
+  local menu_message = managers.localization:text("BotWeapons_menu_category_select_desc")
+  local menu_options = {
+    {
+      text = managers.localization:text("menu_assault_rifle"),
+      callback = function () 
+        self:select_weapon(henchmen_index, { random = "assault_rifle" })
+        self:reload()
+      end
+    },
+    {
+      text = managers.localization:text("menu_akimbo"),
+      callback = function () 
+        self:select_weapon(henchmen_index, { random = "akimbo" })
+        self:reload()
+      end
+    },
+    {
+      text = managers.localization:text("menu_snp"),
+      callback = function () 
+        self:select_weapon(henchmen_index, { random = "snp" })
+        self:reload()
+      end
+    },
+    {
+      text = managers.localization:text("menu_shotgun"),
+      callback = function () 
+        self:select_weapon(henchmen_index, { random = "shotgun" })
+        self:reload()
+      end
+    },
+    {
+      text = managers.localization:text("menu_lmg"),
+      callback = function () 
+        self:select_weapon(henchmen_index, { random = "lmg" })
+        self:reload()
+      end
+    },
+    {
+      text = managers.localization:text("menu_pistol"),
+      callback = function () 
+        self:select_weapon(henchmen_index, { random = "pistol" })
+        self:reload()
+      end
+    },
+    {
+      text = managers.localization:text("menu_smg"),
+      callback = function () 
+        self:select_weapon(henchmen_index, { random = "smg" })
+        self:reload()
+      end
+    },
+    {
+      text = managers.localization:text("item_random"),
+      callback = function () 
+        self:select_weapon(henchmen_index, { random = true })
+        self:reload()
+      end
+    },
+    {--[[seperator]]},
+    {
+      text = managers.localization:text("menu_back"),
+      callback = function () self:show_category_selection(henchmen_index) end,
+      is_cancel_button = true
     }
   }
   QuickMenu:new(menu_title, menu_message, menu_options):Show()

@@ -232,6 +232,7 @@ if not _G.BotWeapons then
     weapon.blueprint = {}
     local has_part_of_type = {}
     local parts = deep_clone(tweak_data.weapon.factory[weapon.factory_id].uses_parts)
+    local adds = tweak_data.weapon.factory[weapon.factory_id].adds or {}
     local must_use = {}
     for _, part_name in ipairs(tweak_data.weapon.factory[weapon.factory_id].default_blueprint) do
       local part_type = tweak_data.weapon.factory.parts[part_name].type
@@ -241,12 +242,17 @@ if not _G.BotWeapons then
       local index = math.random(#parts)
       local part_name = parts[index]
       local part = tweak_data.weapon.factory.parts[part_name]
-      local is_forbidden = part.forbids and table.contains_any(weapon.blueprint, part.forbids)
-      if part and not part.unatainable and not has_part_of_type[part.type] and not is_forbidden then
+      local is_forbidden = part.unatainable or table.contains(adds, part_name) or managers.weapon_factory:_get_forbidden_parts(weapon.factory_id, weapon.blueprint)[part_name]
+      if not has_part_of_type[part.type] and not is_forbidden then
         if (must_use[part.type] or math.random() < 0.5) then
           table.insert(weapon.blueprint, part_name)
+          for i, v in ipairs(adds[part_name] or {}) do
+            table.insert(weapon.blueprint, v)
+            local add_type = tweak_data.weapon.factory.parts[v].type
+            has_part_of_type[add_type] = v
+          end
         end
-        has_part_of_type[part.type] = true
+        has_part_of_type[part.type] = part_name
       end
       table.remove(parts, index)
     end

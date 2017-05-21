@@ -4,7 +4,7 @@ local _presets_original = CharacterTweakData._presets
 function CharacterTweakData:_presets(...)
   local presets = _presets_original(self, ...)
   
-  log("[BotWeapons] Creating gang presets")
+  BotWeapons:log("Creating gang presets")
   
   -- gang_member presets
   local gang_presets = presets.weapon.gang_member

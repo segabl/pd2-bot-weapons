@@ -5,6 +5,12 @@ if not _G.BotWeapons then
   BotWeapons._data_path = SavePath
   BotWeapons._data = {}
 
+  function BotWeapons:log(message, condition)
+    if condition or condition == nil then
+      log("[BotWeapons] " .. message)
+    end
+  end
+  
   function BotWeapons:init()
     self._revision = 0
     local file = io.open(BotWeapons._path .. "mod.txt", "r")
@@ -13,7 +19,7 @@ if not _G.BotWeapons then
       file:close()
       self._revision = data and data.updates and data.updates[1] and data.updates[1].revision or 0
     end
-    log("[BotWeapons] Revision " .. self._revision)
+    self:log("Revision " .. self._revision)
   
     self.armor = {
       { menu_name = "bm_armor_level_1" },
@@ -47,7 +53,7 @@ if not _G.BotWeapons then
     -- load user overrides
     file = io.open(BotWeapons._data_path .. "bot_weapons_overrides.json", "r")
     if file then
-      log("[BotWeapons] Found custom weapon override file, loading it")
+      self:log("Found custom weapon override file, loading it")
       local overrides = json.decode(file:read("*all"))
       file:close()
       if overrides then
@@ -103,7 +109,7 @@ if not _G.BotWeapons then
   end
   
   function BotWeapons:create_interpolated_falloff_data(presets, steps)
-    log("[BotWeapons] Interpolating FALLOFF in " .. steps .. " steps for gang presets")
+    self:log("Interpolating FALLOFF in " .. steps .. " steps for gang presets")
     for _, weapon in pairs(presets) do
       if not weapon._interpolation_done then
         local first = weapon.FALLOFF[1]
@@ -150,7 +156,7 @@ if not _G.BotWeapons then
     if level_sequence then
       unit:damage():run_sequence_simple(level_sequence)
     end
-    if not Global.game_settings.single_player and LuaNetworking:IsHost() then
+    if not Global.game_settings.single_player and LuaNetworking:IsHost() and Utils:IsInGameState() then
       managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, "var_model_0" .. (armor_index or 1))
       -- run heist specific sequence
       if level_sequence then
@@ -169,7 +175,7 @@ if not _G.BotWeapons then
         mesh_obj:set_visibility(v)
       end
     end
-    if not Global.game_settings.single_player and LuaNetworking:IsHost() then
+    if not Global.game_settings.single_player and LuaNetworking:IsHost() and Utils:IsInGameState() then
       local name = unit:base()._tweak_table
       DelayedCalls:Add("bot_weapons_sync_equipment_" .. name, 1, function ()
         LuaNetworking:SendToPeers("bot_weapons_equipment", name .. "," .. (equipment_index or 1))
@@ -202,7 +208,7 @@ if not _G.BotWeapons then
     return self._masks_data
   end
   
-  function BotWeapons:set_loadout(char_name, original_loadout)
+  function BotWeapons:get_loadout(char_name, original_loadout)
     local loadout = deep_clone(original_loadout)
     if LuaNetworking:IsHost() then
     
@@ -215,6 +221,7 @@ if not _G.BotWeapons then
         if self._data.toggle_override_masks then
           index = self._data.override_masks or (#self.masks + 1)
         end
+        
         if index > #self.masks then
           loadout.mask = masks_data.masks[math.random(#masks_data.masks)]
           if math.random() < (self._data.slider_mask_customized_chance or 0.5) then
@@ -224,24 +231,21 @@ if not _G.BotWeapons then
               material = {id = masks_data.materials[math.random(#masks_data.materials)]}
             }
           end
-        else
-          if self.masks[index][char_name] or self.masks[index].pool then
-            local selection = self.masks[index][char_name] or self.masks[index].pool[math.random(#self.masks[index].pool)]
-            loadout.mask = selection.id
-            loadout.mask_blueprint = selection.blueprint
-          elseif self.masks[index].menu_name == "item_same_as_me" then
-            local player_mask = managers.blackmarket:equipped_mask()
-            if player_mask then
-              loadout.mask = player_mask.id
-              loadout.mask_blueprint = player_mask.blueprint
-            end
+        elseif self.masks[index].menu_name == "item_same_as_me" then
+          local player_mask = managers.blackmarket:equipped_mask()
+          if player_mask then
+            loadout.mask = player_mask.mask_id
+            loadout.mask_blueprint = player_mask.blueprint
           end
+        elseif self.masks[index][char_name] or self.masks[index].pool then
+          local selection = self.masks[index][char_name] or self.masks[index].pool[math.random(#self.masks[index].pool)]
+          loadout.mask = selection.id
+          loadout.mask_blueprint = selection.blueprint
         end
       end
       
       -- choose weapon
       if not loadout.primary then
-        log("[BotWeapons] " .. char_name .. " uses default weapon, using own settings")
         loadout.primary_slot = nil
         
         local weapon_index = self._data[char_name .. "_weapon"] or 1
@@ -255,6 +259,25 @@ if not _G.BotWeapons then
         loadout.primary = weapon.factory_name
         loadout.primary_blueprint = weapon.blueprint
       end
+      
+      -- choose armor models
+      local armor_index = BotWeapons._data[char_name .. "_armor"] or 1
+      if BotWeapons._data.toggle_override_armor then
+        armor_index = BotWeapons._data.override_armor or (#BotWeapons.armor + 1)
+      end
+      if armor_index > #BotWeapons.armor then
+        armor_index = math.random(#BotWeapons.armor)
+      end
+      loadout.armor_index = armor_index
+      -- choose equipment models
+      local equipment_index = BotWeapons._data[char_name .. "_equipment"] or 1
+      if BotWeapons._data.toggle_override_equipment then
+        equipment_index = BotWeapons._data.override_equipment or (#BotWeapons.equipment + 1)
+      end
+      if equipment_index > #BotWeapons.equipment then
+        equipment_index = math.random(#BotWeapons.equipment)
+      end
+      loadout.equipment_index = equipment_index
       
     end
     return loadout

@@ -7,16 +7,15 @@ function NetworkPeer:spawn_unit(spawn_point_id, is_drop_in, spawn_as)
   if LuaNetworking:IsHost() and is_drop_in and managers.groupai then
     for _, data in pairs(managers.groupai:state():all_AI_criminals()) do
       if alive(data.unit) then
-        local movement = data.unit:movement()
-        local inventory = data.unit:inventory()
         local name = data.unit:base()._tweak_table
-        self:send_queued_sync("sync_run_sequence_char", data.unit, "var_model_0" .. (movement._armor_index or 1))
+        local loadout = data.unit:base()._loadout
+        self:send_queued_sync("sync_run_sequence_char", data.unit, "var_model_0" .. (loadout._armor_index or 1))
         -- run heist specific sequence
         local level_sequence = BotWeapons:get_level_sequence()
         if level_sequence then
           self:send_queued_sync("sync_run_sequence_char", data.unit, level_sequence)
         end
-        LuaNetworking:SendToPeer(self:id(), "bot_weapons_equipment", name .. "," .. (movement._equipment_index or 1))
+        LuaNetworking:SendToPeer(self:id(), "bot_weapons_equipment", name .. "," .. (loadout._equipment_index or 1))
       end
     end 
   end

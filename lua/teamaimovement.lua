@@ -51,27 +51,9 @@ function TeamAIMovement:check_visual_equipment()
     return
   end
   -- set armor & deployables for team ai
-  local name = self._unit:base()._tweak_table
-  -- choose armor models
-  local armor_index = BotWeapons._data[name .. "_armor"] or 1
-  if BotWeapons._data.toggle_override_armor then
-    armor_index = BotWeapons._data.override_armor or (#BotWeapons.armor + 1)
-  end
-  if armor_index > #BotWeapons.armor then
-    armor_index = math.random(#BotWeapons.armor)
-  end
-  -- choose equipment models
-  local equipment_index = BotWeapons._data[name .. "_equipment"] or 1
-  if BotWeapons._data.toggle_override_equipment then
-    equipment_index = BotWeapons._data.override_equipment or (#BotWeapons.equipment + 1)
-  end
-  if equipment_index > #BotWeapons.equipment then
-    equipment_index = math.random(#BotWeapons.equipment)
-  end
-  self._armor_index = armor_index
-  self._equipment_index = equipment_index
-  BotWeapons:set_armor(self._unit, armor_index)
-  BotWeapons:set_equipment(self._unit, equipment_index)
+  local loadout = self._unit:base()._loadout
+  BotWeapons:set_armor(self._unit, loadout.armor_index)
+  BotWeapons:set_equipment(self._unit, loadout.equipment_index)
 end
 
 local set_carrying_bag_original = TeamAIMovement.set_carrying_bag

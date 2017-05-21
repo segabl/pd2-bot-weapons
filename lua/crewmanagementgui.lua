@@ -1,3 +1,19 @@
+local massive_font = tweak_data.menu.pd2_massive_font
+local large_font = tweak_data.menu.pd2_large_font
+local medium_font = tweak_data.menu.pd2_medium_font
+local small_font = tweak_data.menu.pd2_small_font
+local tiny_font = tweak_data.menu.tiny_font
+local massive_font_size = tweak_data.menu.pd2_massive_font_size
+local large_font_size = tweak_data.menu.pd2_large_font_size
+local medium_font_size = tweak_data.menu.pd2_medium_font_size
+local small_font_size = tweak_data.menu.pd2_small_font_size
+local tiny_font_size = tweak_data.menu.pd2_tiny_font_size
+local make_fine_text = function(text)
+	local x, y, w, h = text:text_rect()
+	text:set_size(w, h)
+	text:set_position(math.round(text:x()), math.round(text:y()))
+end
+
 local fit_texture = function(bitmap, target_w, target_h)
 	local texture_width = bitmap:texture_width()
 	local texture_height = bitmap:texture_height()
@@ -10,6 +26,36 @@ local fit_texture = function(bitmap, target_w, target_h)
 	local dw = texture_width / sw
 	local dh = texture_height / sh
 	bitmap:set_size(math.round(dw * target_w), math.round(dh * target_h))
+end
+
+--[[
+local init_original = CrewManagementGui.init
+function CrewManagementGui:init(...)
+  init_original(self, ...)
+  local character_button = self._panel:text({
+		text = managers.localization:to_upper_text("BotWeapons_menu_main_name"),
+		font = medium_font,
+		font_size = medium_font_size,
+		y = 20
+	})
+	make_fine_text(character_button)
+  character_button:set_right(self._panel:right() - 10)
+  local button = CrewManagementGuiButton:new(self, function()
+		managers.menu:open_node("BotWeapons_menu_main")
+	end, true)
+	button._panel = character_button
+	button._select_col = tweak_data.screen_colors.button_stage_2
+	button._normal_col = tweak_data.screen_colors.button_stage_3
+	button._selected_changed = CrewManagementGuiTextButton._selected_changed
+end
+]]
+
+function CrewManagementGui:create_mask_button(panel, index)
+	local loadout = managers.blackmarket:henchman_loadout(index)
+	local texture = loadout.mask ~= "character_locked" and managers.blackmarket:get_mask_icon(loadout.mask)
+	local text = loadout.mask ~= "character_locked" and managers.blackmarket:get_mask_name_by_category_slot("masks", loadout.mask_slot) or ""
+	local cat_text = managers.localization:to_upper_text("bm_menu_masks")
+	return CrewManagementGuiLoadoutItem:new(self, panel, texture and {texture = texture, layer = 1} or managers.localization:to_upper_text("menu_crew_defualt"), text, cat_text, callback(self, self, "open_mask_category_menu", index))
 end
 
 function CrewManagementGui:create_weapon_button(panel, index)
@@ -137,28 +183,18 @@ function CrewManagementGui:show_category_selection(henchmen_index)
         text = managers.localization:text("bm_menu_primaries"),
         callback = function ()
           self:open_weapon_category_menu("primaries", henchmen_index)
-        end,
+        end
     },
     [2] = {
         text = managers.localization:text("bm_menu_secondaries"),
         callback = function ()
           self:open_weapon_category_menu("secondaries", henchmen_index)
-        end,
+        end
     },
     [3] = {
         text = managers.localization:text("menu_back"),
-        is_cancel_button = true,
+        is_cancel_button = true
     }
   }
-  --[[
-  if managers.blackmarket:henchman_loadout(henchmen_index).primary then
-    table.insert(menu_options, 3, {
-        text = managers.localization:text("bm_menu_btn_unequip_weapon"),
-        callback = function ()
-          self:select_weapon(henchmen_index)
-          managers.menu_scene:set_henchmen_loadout(henchmen_index)
-        end})
-  end
-  ]]
   QuickMenu:new(menu_title, menu_message, menu_options):Show()
 end

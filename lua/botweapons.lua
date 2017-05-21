@@ -209,7 +209,7 @@ if not _G.BotWeapons then
   end
   
   function BotWeapons:get_loadout(char_name, original_loadout)
-    local loadout = deep_clone(original_loadout)
+    local loadout = original_loadout and deep_clone(original_loadout) or {}
     if LuaNetworking:IsHost() then
     
       -- choose mask
@@ -245,7 +245,7 @@ if not _G.BotWeapons then
       end
       
       -- choose weapon
-      if not loadout.primary then
+      if not loadout.primary then      
         loadout.primary_slot = nil
         
         local weapon_index = self._data[char_name .. "_weapon"] or 1
@@ -282,7 +282,7 @@ if not _G.BotWeapons then
     end
     return loadout
   end
-
+  
   Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function(sender, id, data)
     local peer = LuaNetworking:GetPeers()[sender]
     local params = string.split(data or "", ",", true)

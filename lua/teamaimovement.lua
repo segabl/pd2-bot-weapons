@@ -46,14 +46,16 @@ function TeamAIMovement:clbk_inventory(...)
   end
 end
 
-function TeamAIMovement:check_visual_equipment()
+local check_visual_equipment_original = TeamAIMovement.check_visual_equipment
+function TeamAIMovement:check_visual_equipment(...)
   if not LuaNetworking:IsHost() then
-    return
+    return check_visual_equipment_original(self, ...)
   end
   -- set armor & deployables for team ai
   local loadout = self._unit:base()._loadout
   BotWeapons:set_armor(self._unit, loadout.armor_index)
   BotWeapons:set_equipment(self._unit, loadout.equipment_index)
+  return check_visual_equipment_original(self, ...)
 end
 
 local set_carrying_bag_original = TeamAIMovement.set_carrying_bag

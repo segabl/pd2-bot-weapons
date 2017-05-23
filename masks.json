@@ -1,32 +1,28 @@
 [
   {
-    "menu_name": "bm_msk_character_locked"
-  },
-  {
-    "menu_name": "item_same_as_me"
-  },
-  {
     "menu_name": "item_mega",
-    "russian": {
-      "id": "dallas_glow"
-    },
-    "german": {
-      "id": "wolf_glow"
-    },
-    "spanish": {
-      "id": "chains_glow"
-    },
-    "old_hoxton": {
-      "id": "hoxton_glow"
-    },
-    "female_1": {
-      "id": "pdc16_clover"
-    },
-    "sydney": {
-      "id": "swm_sydney"
-    },
-    "wild": {
-      "id": "mrm"
+    "character": {
+      "russian": {
+        "id": "dallas_glow"
+      },
+      "german": {
+        "id": "wolf_glow"
+      },
+      "spanish": {
+        "id": "chains_glow"
+      },
+      "old_hoxton": {
+        "id": "hoxton_glow"
+      },
+      "female_1": {
+        "id": "pdc16_clover"
+      },
+      "sydney": {
+        "id": "swm_sydney"
+      },
+      "wild": {
+        "id": "mrm"
+      }
     },
     "pool": [
       { "id": "megacthulhu" },
@@ -57,6 +53,26 @@
       { "id": "bny_02" },
       { "id": "bny_03" },
       { "id": "bny_04" }
+    ]
+  },
+  {
+    "menu_name": "item_hotline",
+    "pool": [
+      { "id": "jake" },
+      { "id": "tonys_revenge" },
+      { "id": "richter" },
+      { "id": "alex" },
+      { "id": "biker" },
+      { "id": "corey" },
+      { "id": "richard_returns" },
+      { "id": "rooster" },
+      { "id": "owl" },
+      { "id": "pig" },
+      { "id": "white_wolf" },
+      { "id": "rabbit" },
+      { "id": "horse" },
+      { "id": "tiger" },
+      { "id": "panther" }
     ]
   }
 ]

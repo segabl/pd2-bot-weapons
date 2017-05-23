@@ -48,13 +48,12 @@ end
 
 local check_visual_equipment_original = TeamAIMovement.check_visual_equipment
 function TeamAIMovement:check_visual_equipment(...)
-  if not LuaNetworking:IsHost() then
-    return check_visual_equipment_original(self, ...)
+  if LuaNetworking:IsHost() then
+    -- set armor & deployables for team ai
+    local loadout = managers.criminals:get_loadout_for(self._ext_base._tweak_table)
+    BotWeapons:set_armor(self._unit, loadout.armor_index)
+    BotWeapons:set_equipment(self._unit, loadout.equipment_index)
   end
-  -- set armor & deployables for team ai
-  local loadout = self._unit:base()._loadout
-  BotWeapons:set_armor(self._unit, loadout.armor_index)
-  BotWeapons:set_equipment(self._unit, loadout.equipment_index)
   return check_visual_equipment_original(self, ...)
 end
 

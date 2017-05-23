@@ -1,17 +1,16 @@
 dofile(ModPath .. "lua/botweapons.lua")
 
-local ALLOWED_CREW_WEAPON_CATEGORIES = {
-	assault_rifle = true,
-	shotgun = true,
-	snp = true,
-	lmg = true,
-	smg = true,
-  akimbo = true,
-  pistol = true,
-  revolver = true
-}
 function BlackMarketManager:is_weapon_category_allowed_for_crew(weapon_category)
-	return ALLOWED_CREW_WEAPON_CATEGORIES[weapon_category]
+  local allowed = {
+    assault_rifle = true,
+    shotgun = true,
+    snp = true,
+    lmg = true,
+    smg = true,
+    akimbo = true,
+    pistol = true
+  }
+	return allowed[weapon_category]
 end
 
 function BlackMarketManager:verfify_crew_loadout()
@@ -28,4 +27,11 @@ function BlackMarketManager:verfify_crew_loadout()
 		v.mask_slot = valid and v.mask_slot or nil
 		v.mask = valid and v.mask or self._defaults.henchman.mask
 	end
+end
+
+local henchman_loadout_string_from_loadout_original = BlackMarketManager.henchman_loadout_string_from_loadout
+function BlackMarketManager:henchman_loadout_string_from_loadout(loadout, ...)
+  local loadout = deep_clone(loadout)
+  loadout.primary = nil
+  return henchman_loadout_string_from_loadout_original(self, loadout, ...)
 end

@@ -179,7 +179,7 @@ if not _G.BotWeapons then
         mesh_obj:set_visibility(v)
       end
     end
-    if not Global.game_settings.single_player and LuaNetworking:IsHost() and Utils:IsInGameState() then
+    if Utils:IsInGameState() and not Global.game_settings.single_player and LuaNetworking:IsHost() then
       local name = unit:base()._tweak_table
       DelayedCalls:Add("bot_weapons_sync_equipment_" .. name, 1, function ()
         LuaNetworking:SendToPeers("bot_weapons_equipment", name .. "," .. (equipment_index or 1))
@@ -260,20 +260,28 @@ if not _G.BotWeapons then
   end
   
   function BotWeapons:get_loadout(char_name, original_loadout)
-    local loadout = original_loadout and deep_clone(original_loadout) or {}
+    if not char_name or not original_loadout then
+      return
+    end
+    local loadout = deep_clone(original_loadout)
     if LuaNetworking:IsHost() then
     
       -- choose mask
-      if loadout.mask == "character_locked" then
+      if loadout.mask == "character_locked" or loadout.mask_random then
         loadout.mask_slot = nil
-        
-        local masks_data = self:get_masks_data()
+
         local index = self._data[char_name .. "_mask"] or 1
         if self._data.toggle_override_masks then
           index = self._data.override_masks or (#self.masks + 1)
         end
+        if type(loadout.mask_random) == "boolean" then
+          index = #self.masks + 1
+        elseif loadout.mask_random then
+          index = loadout.mask_random
+        end
         
         if index > #self.masks then
+          local masks_data = self:get_masks_data()
           loadout.mask = masks_data.masks[math.random(#masks_data.masks)]
           if math.random() < (self._data.slider_mask_customized_chance or 0.5) then
             loadout.mask_blueprint = {
@@ -288,8 +296,8 @@ if not _G.BotWeapons then
             loadout.mask = player_mask.mask_id
             loadout.mask_blueprint = player_mask.blueprint
           end
-        elseif self.masks[index][char_name] or self.masks[index].pool then
-          local selection = self.masks[index][char_name] or self.masks[index].pool[math.random(#self.masks[index].pool)]
+        elseif self.masks[index].character and self.masks[index].character[char_name] or self.masks[index].pool then
+          local selection = self.masks[index].character and self.masks[index].character[char_name] or self.masks[index].pool[math.random(#self.masks[index].pool)]
           loadout.mask = selection.id
           loadout.mask_blueprint = selection.blueprint
         end

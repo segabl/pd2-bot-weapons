@@ -1,5 +1,11 @@
 [
   {
+    "menu_name": "bm_msk_character_locked"
+  },
+  {
+    "menu_name": "item_same_as_me"
+  },
+  {
     "menu_name": "item_mega",
     "character": {
       "russian": {

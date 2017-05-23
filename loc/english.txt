@@ -9,8 +9,19 @@
   "BotWeapons_menu_masks_desc" : "Set the masks for the team AI",
   "BotWeapons_menu_weapons_name" : "Bot weapons",
   "BotWeapons_menu_weapons_desc" : "Set the weapons for the team AI",
-  "BotWeapons_menu_category_select_name" : "Select category",
-  "BotWeapons_menu_category_select_desc" : "Please select the category you want to choose a weapon from."
+  "menu_action_select_name" : "Select action",
+  "menu_action_select_desc" : "Please select the action you want to perform.",
+  "menu_category_select_name" : "Select category",
+  "menu_category_select_desc" : "Please select the category you want to choose a weapon from.",
+  "menu_mask_set_select_name" : "Select mask set",
+  "menu_mask_set_select_desc" : "Please select which mask set to use.",
+  "menu_action_inventory_masks_name" : "Select mask from inventory",
+  "menu_action_mask_set_name" : "Use mask from mask set",
+  "menu_action_random_mask_name" : "Use random mask",
+  "menu_action_unequip_mask" : "Unequip mask",
+  "menu_action_inventory_primaries_name" : "Select weapon from primaries",
+  "menu_action_inventory_secondaries_name" : "Select weapon from secondaries",
+  "menu_action_random_weapon_name" : "Use random weapon from a category",
   "toggle_override_armor_name" : "Armor override",
   "toggle_override_armor_desc" : "Override individual armor settings of the team AI",
   "toggle_player_carry_name" : "Carry bags like players",
@@ -24,10 +35,12 @@
   "toggle_override_weapons_name" : "Weapon override",
   "toggle_override_weapons_desc" : "Override individual weapon settings of the team AI",
   "menu_override_name" : "Override",
+  "item_weapon" : "Weapon"
   "item_none" : "None",
   "item_random" : "Random",
   "item_same_as_me" : "Same as me",
   "item_mega" : "Mega Masks",
   "item_shades" : "Shades",
-  "item_beanies" : "Beanies"
+  "item_beanies" : "Beanies",
+  "item_hotline" : "Hotline Miami"
 }

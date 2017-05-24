@@ -252,26 +252,23 @@ function CrewManagementGui:create_mask_button(panel, index)
 	local text = loadout.mask ~= "character_locked" and managers.blackmarket:get_mask_name_by_category_slot("masks", loadout.mask_slot) or ""
 	local cat_text = managers.localization:to_upper_text("bm_menu_masks")
   local mask_text = loadout.mask_random and managers.localization:to_upper_text("item_random") or managers.localization:to_upper_text("menu_crew_defualt")
-  if type(loadout.mask_random) == "number" then
-    mask_text = managers.localization:to_upper_text(BotWeapons.masks[loadout.mask_random].menu_name)
+  if type(loadout.mask_random) == "string" then
+    mask_text = managers.localization:to_upper_text("item_" .. loadout.mask_random)
   end
 	return CrewManagementGuiLoadoutItem:new(self, panel, texture and {texture = texture, layer = 1} or mask_text, text, cat_text, callback(self, self, "show_mask_selection", index))
 end
 
 function CrewManagementGui:select_mask(index, data, gui)
 	local loadout = managers.blackmarket:henchman_loadout(index)
-  log("mask selected")
   if not data then
     loadout.mask = "character_locked"
     loadout.mask_slot = 1
     loadout.mask_random = nil
   elseif data.random then
-    log("random")
     loadout.mask = "character_locked"
     loadout.mask_slot = 1
     loadout.mask_random = data.random
   else
-    log("inventory")
     loadout.mask = data.name
     loadout.mask_slot = data.slot
     loadout.mask_random = nil
@@ -302,16 +299,14 @@ function CrewManagementGui:show_mask_selection(henchmen_index)
             is_cancel_button = true
           }
         }
-        for i, v in ipairs(BotWeapons.masks) do
-          if v.character or v.pool then
-            table.insert(menu_options, #menu_options - 1, {
-              text = managers.localization:text(v.menu_name),
-              callback = function () 
-                self:select_mask(henchmen_index, { random = i })
-                self:reload()
-              end
-            })
-          end
+        for k, v in pairs(BotWeapons.masks) do
+          table.insert(menu_options, #menu_options - 1, {
+            text = managers.localization:text("item_" .. k),
+            callback = function () 
+              self:select_mask(henchmen_index, { random = k })
+              self:reload()
+            end
+          })
         end
         QuickMenu:new(menu_title, menu_message, menu_options, true)
       end

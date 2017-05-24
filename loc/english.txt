@@ -42,5 +42,6 @@
   "item_mega" : "Mega Masks",
   "item_shades" : "Shades",
   "item_beanies" : "Beanies",
-  "item_hotline" : "Hotline Miami"
+  "item_hotline" : "Hotline Miami",
+  "item_baby" : "Better Bots"
 }

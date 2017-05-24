@@ -1,12 +1,5 @@
-[
-  {
-    "menu_name": "bm_msk_character_locked"
-  },
-  {
-    "menu_name": "item_same_as_me"
-  },
-  {
-    "menu_name": "item_mega",
+{
+  "mega": {
     "character": {
       "russian": {
         "id": "dallas_glow"
@@ -44,16 +37,15 @@
       { "id": "mdm" }
     ]
   },
-  {
-    "menu_name": "item_shades",
+  "shades": {
     "pool": [
       { "id": "aviator" },
       { "id": "stoneface" },
-      { "id": "wayfarer" }
+      { "id": "wayfarer" },
+      { "id": "sfm_03" }
     ]
   },
-  {
-    "menu_name": "item_beanies",
+  "beanies": {
     "pool": [
       { "id": "bny_01" },
       { "id": "bny_02" },
@@ -61,8 +53,7 @@
       { "id": "bny_04" }
     ]
   },
-  {
-    "menu_name": "item_hotline",
+  "hotline": {
     "pool": [
       { "id": "jake" },
       { "id": "tonys_revenge" },
@@ -80,5 +71,13 @@
       { "id": "tiger" },
       { "id": "panther" }
     ]
+  },
+  "baby": {
+    "pool": [
+      { "id": "baby_angry" },
+      { "id": "baby_cry" },
+      { "id": "baby_happy" },
+      { "id": "brazil_baby" }
+    ]
   }
-]
+}

@@ -20,6 +20,8 @@ function WeaponTweakData:init(...)
   self.judge_crew.usage = "mossberg"
   self.m14_crew.usage = "m14"
   self.rota_crew.usage = "mossberg"
+  self.m37_crew.usage = "r870"
+  self.m37_crew.anim = "r870"
   self.g22c_crew.auto = nil
   self.usp_crew.auto = nil
   self.tecci_crew.auto = { fire_rate = 0.09 }

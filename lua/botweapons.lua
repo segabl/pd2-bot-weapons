@@ -222,17 +222,24 @@ if not _G.BotWeapons then
     return self._masks_data
   end
 
+  function BotWeapons:get_npc_version(weapon_id)
+    local factory_id = weapon_id and managers.weapon_factory:get_factory_id_by_weapon_id(weapon_id)
+    local tweak = factory_id and tweak_data.weapon.factory[factory_id .. "_npc"]
+    return tweak and (not tweak.custom or DB:has(tweak.unit)) and factory_id .. "_npc"
+  end
+  
   function BotWeapons:get_random_weapon(category)
     local cat = type(category) ~= "string" and "all" or category
     if not self.weapons or not self.weapons[cat] then
       self.weapons = self.weapons or {}
       self.weapons[cat] = {}
-      for weapon, data in pairs(tweak_data.weapon) do
+      for weapon_id, data in pairs(tweak_data.weapon) do
         if data.autohit then
-          if (type(category) ~= "string" or data.categories[1] == category) and managers.blackmarket:is_weapon_category_allowed_for_crew(data.categories[1]) then
+          local factory_id = self:get_npc_version(weapon_id)
+          if factory_id and (type(category) ~= "string" or data.categories[1] == category) and managers.blackmarket:is_weapon_category_allowed_for_crew(data.categories[1]) then
             local data = {
               category = data.use_data.selection_index == 2 and "primaries" or "secondaries",
-              factory_id = managers.weapon_factory:get_factory_id_by_weapon_id(weapon) .. "_npc"
+              factory_id = factory_id
             }
             table.insert(self.weapons[cat], data)
           end

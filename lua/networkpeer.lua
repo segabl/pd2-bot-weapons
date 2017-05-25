@@ -8,7 +8,7 @@ function NetworkPeer:spawn_unit(spawn_point_id, is_drop_in, spawn_as)
     for _, data in pairs(managers.groupai:state():all_AI_criminals()) do
       if alive(data.unit) then
         local name = data.unit:base()._tweak_table
-        local loadout = data.unit:base()._loadout
+        local loadout = managers.criminals:get_loadout_for(name)
         self:send_queued_sync("sync_run_sequence_char", data.unit, "var_model_0" .. (loadout._armor_index or 1))
         -- run heist specific sequence
         local level_sequence = BotWeapons:get_level_sequence()

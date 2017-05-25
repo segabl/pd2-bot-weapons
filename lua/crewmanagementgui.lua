@@ -52,42 +52,11 @@ function CrewManagementGui:init(ws, fullscreen_ws, node)
   ]]
 end
 
+local create_pages_original = CrewManagementGui.create_pages
 function CrewManagementGui:create_pages(new_node_data, params, identifier, selected_slot, rows, columns, max_pages, selected_category)
-	local category = new_node_data.category
-	rows = rows or 3
-	columns = columns or 3
-	max_pages = max_pages or 8
-	local items_per_page = rows * columns
-	local item_data
-	local selected_tab = 1
-	for page = 1, max_pages do
-		local index = 1
-		local start_i = 1 + items_per_page * (page - 1)
-		item_data = {}
-		for i = start_i, items_per_page * page do
-			item_data[index] = i
-			index = index + 1
-			if i == selected_slot and (category == selected_category or selected_category == nil) then
-				selected_tab = page
-			end
-		end
-		local name_id = managers.localization:to_upper_text("bm_menu_page", {
-			page = tostring(page)
-		})
-		table.insert(new_node_data, {
-			name = category,
-			category = category,
-			prev_node_data = false,
-			start_i = start_i,
-			allow_preview = true,
-			name_localized = name_id,
-			on_create_func = callback(self, self, "populate_" .. category, params),
-			on_create_data = item_data,
-			identifier = BlackMarketGui.identifiers[identifier],
-			override_slots = {columns, rows}
-		})
-	end
-	return selected_tab
+  local correct_category = not new_node_data.category or not selected_category or new_node_data.category == selected_category
+  local selected_tab = create_pages_original(self, new_node_data, params, identifier, selected_slot, rows, columns, max_pages, selected_category)
+  return correct_category and selected_tab or 1
 end
 
 -- weapon stuff
@@ -158,16 +127,11 @@ CrewManagementGui.populate_secondaries = CrewManagementGui.populate_primaries
 
 function CrewManagementGui:select_weapon(index, data, gui)
   local loadout = managers.blackmarket:henchman_loadout(index)
-	if not data or data.equipped then
+	if not data or data.equipped or data.random then
 		loadout.primary = nil
 		loadout.primary_slot = nil
     loadout.primary_category = nil
-    loadout.primary_random = nil
-  elseif data.random then
-    loadout.primary = nil
-		loadout.primary_slot = nil
-    loadout.primary_category = nil
-    loadout.primary_random = data.random
+    loadout.primary_random = data and not data.equipped and data.random
 	else
 		local crafted = managers.blackmarket:get_crafted_category_slot(data.category, data.slot)
 		loadout.primary = crafted.factory_id .. "_npc"
@@ -260,14 +224,10 @@ end
 
 function CrewManagementGui:select_mask(index, data, gui)
 	local loadout = managers.blackmarket:henchman_loadout(index)
-  if not data then
+  if not data or data.random then
     loadout.mask = "character_locked"
     loadout.mask_slot = 1
-    loadout.mask_random = nil
-  elseif data.random then
-    loadout.mask = "character_locked"
-    loadout.mask_slot = 1
-    loadout.mask_random = data.random
+    loadout.mask_random = data and data.random
   else
     loadout.mask = data.name
     loadout.mask_slot = data.slot

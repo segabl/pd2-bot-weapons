@@ -88,6 +88,9 @@ if not _G.BotWeapons then
   end
   
   function BotWeapons:get_menu_list(tbl, add)
+    if not tbl then
+      return {}
+    end
     local menu_list = {}
     local names = {}
     local item_name
@@ -111,18 +114,27 @@ if not _G.BotWeapons then
   end
   
   function BotWeapons:set_single_fire_mode(weapon, rec)
+    if not weapon or not rec then
+      return
+    end
     for _, v in ipairs(weapon.FALLOFF) do
       v.recoil = rec
     end
   end
   
   function BotWeapons:set_auto_fire_mode(weapon, mode)
+    if not weapon or not mode then
+      return
+    end
     for _, v in ipairs(weapon.FALLOFF) do
       v.mode = mode
     end
   end
   
   function BotWeapons:create_interpolated_falloff_data(presets, steps)
+    if not presets or not steps then
+      return
+    end
     self:log("Interpolating FALLOFF in " .. steps .. " steps for gang presets")
     for _, weapon in pairs(presets) do
       if not weapon._interpolation_done then
@@ -161,7 +173,7 @@ if not _G.BotWeapons then
   end
   
   function BotWeapons:set_armor(unit, armor_index)
-    if not unit or not alive(unit) or not armor_index then
+    if not alive(unit) or not armor_index then
       return
     end
     unit:damage():run_sequence_simple("var_model_0" .. armor_index)
@@ -180,7 +192,7 @@ if not _G.BotWeapons then
   end
   
   function BotWeapons:set_equipment(unit, equipment_index)
-    if not unit or not alive(unit) or not equipment_index then
+    if not alive(unit) or not equipment_index then
       return
     end
     for k, v in pairs(self.equipment[equipment_index].parts) do

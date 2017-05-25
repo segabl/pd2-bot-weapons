@@ -225,7 +225,7 @@ if not _G.BotWeapons then
   function BotWeapons:get_npc_version(weapon_id)
     local factory_id = weapon_id and managers.weapon_factory:get_factory_id_by_weapon_id(weapon_id)
     local tweak = factory_id and tweak_data.weapon.factory[factory_id .. "_npc"]
-    return tweak and (not tweak.custom or DB:has(tweak.unit)) and factory_id .. "_npc"
+    return tweak and (not tweak.custom or DB:has(Idstring("unit"), tweak.unit:id())) and factory_id .. "_npc"
   end
   
   function BotWeapons:get_random_weapon(category)

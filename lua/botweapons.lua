@@ -292,8 +292,14 @@ if not _G.BotWeapons then
     return weapon
   end
   
-  function BotWeapons:get_loadout(char_name, original_loadout)
-    if not char_name or not original_loadout then
+  function BotWeapons:get_loadout(char_name, original_loadout, refresh)
+    if not char_name then
+      return original_loadout
+    end
+    if not refresh and self._loadouts and self._loadouts[char_name] then
+      return self._loadouts[char_name]
+    end
+    if not original_loadout then
       return
     end
     local loadout = deep_clone(original_loadout)
@@ -376,6 +382,8 @@ if not _G.BotWeapons then
       loadout.equipment_index = equipment_index
       
     end
+    self._loadouts = self._loadouts or {}
+    self._loadouts[char_name] = loadout
     return loadout
   end
   

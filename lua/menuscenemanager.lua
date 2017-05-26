@@ -3,7 +3,6 @@ dofile(ModPath .. "lua/botweapons.lua")
 function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
 
   self._picked_character_position = self._picked_character_position or {}
-  loadout = loadout or managers.blackmarket:henchman_loadout(index)
   character = character or managers.blackmarket:preferred_henchmen(index)
   
   if not character then
@@ -30,7 +29,7 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
   end
   
   -- get char loadout
-  loadout = BotWeapons:get_loadout(character, loadout or managers.blackmarket:henchman_loadout(index))
+  loadout = BotWeapons:get_loadout(character, loadout or managers.blackmarket:henchman_loadout(index), true)
   
   -- character
   self._picked_character_position[index] = character

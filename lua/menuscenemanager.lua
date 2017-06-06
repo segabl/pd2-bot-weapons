@@ -85,10 +85,12 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
   end
   
   -- armor
-  BotWeapons:set_armor(unit, loadout.armor_index)
+  if loadout.armor then
+    unit:damage():run_sequence_simple(tweak_data.blackmarket.armors[loadout.armor].sequence)
+  end
   
   -- equipment
-  BotWeapons:set_equipment(unit, loadout.equipment_index)
+  BotWeapons:set_equipment(unit, loadout.deployable)
   
   -- pose
   self:_select_henchmen_pose(unit, weapon_id, index)

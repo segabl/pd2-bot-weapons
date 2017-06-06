@@ -32,14 +32,14 @@ if not _G.BotWeapons then
     }
   
     self.equipment = {
-      { menu_name = "item_none", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = false }},
-      { menu_name = "bm_equipment_ammo_bag", parts = { g_ammobag = true, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = false }},
-      { menu_name = "bm_equipment_armor_kit", parts = { g_ammobag = false, g_armorbag = true, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = false }},
-      { menu_name = "bm_equipment_bodybags_bag", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = true, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = false }},
-      { menu_name = "bm_equipment_doctor_bag", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = true, g_sentrybag = false, g_toolbag = false }},
-      { menu_name = "bm_equipment_ecm_jammer", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = false, g_toolbag = true }},
-      { menu_name = "bm_equipment_first_aid_kit", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = true, g_medicbag = false, g_sentrybag = false, g_toolbag = false }},
-      { menu_name = "bm_equipment_sentry_gun", parts = { g_ammobag = false, g_armorbag = false, g_bodybagsbag = false, g_firstaidbag = false, g_medicbag = false, g_sentrybag = true, g_toolbag = false }}
+      { menu_name = "item_none" },
+      { menu_name = "bm_equipment_ammo_bag", name = "ammo_bag" },
+      { menu_name = "bm_equipment_armor_kit", name = "armor_kit" },
+      { menu_name = "bm_equipment_bodybags_bag", name = "bodybags_bag" },
+      { menu_name = "bm_equipment_doctor_bag", name = "doctor_bag" },
+      { menu_name = "bm_equipment_ecm_jammer", name = "ecm_jammer" },
+      { menu_name = "bm_equipment_first_aid_kit", name = "first_aid_kit" },
+      { menu_name = "bm_equipment_sentry_gun", name = "sentry_gun" }
     }
   
     -- load weapon definitions
@@ -162,49 +162,22 @@ if not _G.BotWeapons then
     end
   end
   
-  function BotWeapons:get_level_sequence()
-    local current_level = managers.job and managers.job:current_level_id()
-    if current_level then
-      local sequence = tweak_data.levels[current_level] and tweak_data.levels[current_level].player_sequence
-      if sequence then
-        return sequence
-      end
-    end
-  end
-  
-  function BotWeapons:set_armor(unit, armor_index)
-    if not alive(unit) or not armor_index then
+  function BotWeapons:set_equipment(unit, equipment)
+    if not alive(unit) then
       return
     end
-    unit:damage():run_sequence_simple("var_model_0" .. armor_index)
-    -- run heist specific sequence
-    local level_sequence = self:get_level_sequence()
-    if level_sequence then
-      unit:damage():run_sequence_simple(level_sequence)
-    end
-    if not Global.game_settings.single_player and LuaNetworking:IsHost() and Utils:IsInGameState() then
-      managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, "var_model_0" .. (armor_index or 1))
-      -- run heist specific sequence
-      if level_sequence then
-        managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, level_sequence)
-      end
-    end
-  end
-  
-  function BotWeapons:set_equipment(unit, equipment_index)
-    if not alive(unit) or not equipment_index then
-      return
-    end
-    for k, v in pairs(self.equipment[equipment_index].parts) do
-      local mesh_obj = unit:get_object(Idstring(k))
-      if mesh_obj then
-        mesh_obj:set_visibility(v)
+    for k, v in pairs(tweak_data.equipments) do
+      if v.visual_object then
+        local mesh_obj = unit:get_object(Idstring(v.visual_object))
+        if mesh_obj then
+          mesh_obj:set_visibility(k == equipment)
+        end
       end
     end
     if Utils:IsInGameState() and not Global.game_settings.single_player and LuaNetworking:IsHost() then
       local name = unit:base()._tweak_table
       DelayedCalls:Add("bot_weapons_sync_equipment_" .. name, 1, function ()
-        LuaNetworking:SendToPeers("bot_weapons_equipment", name .. "," .. (equipment_index or 1))
+        LuaNetworking:SendToPeers("bot_weapons_equipment", name .. "," .. tostring(equipment))
       end)
     end
   end
@@ -342,7 +315,7 @@ if not _G.BotWeapons then
       end
       
       -- choose weapon
-      if not loadout.primary or loadout.primary_random then      
+      if not loadout.primary or loadout.primary_random then
         local weapon_index = self._data[char_name .. "_weapon"] or 1
         if self._data.toggle_override_weapons then
           weapon_index = self._data.override_weapons or (#self.weapons_legacy + 1)
@@ -362,24 +335,28 @@ if not _G.BotWeapons then
       end
       
       -- choose armor models
-      local armor_index = BotWeapons._data[char_name .. "_armor"] or 1
-      if BotWeapons._data.toggle_override_armor then
-        armor_index = BotWeapons._data.override_armor or (#BotWeapons.armor + 1)
+      if not loadout.armor or loadout.armor_random then
+        local armor_index = BotWeapons._data[char_name .. "_armor"] or 1
+        if BotWeapons._data.toggle_override_armor then
+          armor_index = BotWeapons._data.override_armor or (#BotWeapons.armor + 1)
+        end
+        if armor_index > #BotWeapons.armor or loadout.armor_random then
+          armor_index = math.random(#BotWeapons.armor)
+        end
+        loadout.armor = "level_" .. tostring(armor_index)
       end
-      if armor_index > #BotWeapons.armor then
-        armor_index = math.random(#BotWeapons.armor)
-      end
-      loadout.armor_index = armor_index
       
       -- choose equipment models
-      local equipment_index = BotWeapons._data[char_name .. "_equipment"] or 1
-      if BotWeapons._data.toggle_override_equipment then
-        equipment_index = BotWeapons._data.override_equipment or (#BotWeapons.equipment + 1)
+      if not loadout.deployable or loadout.deployable_random then
+        local equipment_index = BotWeapons._data[char_name .. "_equipment"] or 1
+        if BotWeapons._data.toggle_override_equipment then
+          equipment_index = BotWeapons._data.override_equipment or (#BotWeapons.equipment + 1)
+        end
+        if equipment_index > #BotWeapons.equipment or loadout.deployable_random then
+          equipment_index = 1 + math.random(#BotWeapons.equipment - 1)
+        end
+        loadout.deployable = BotWeapons.equipment[equipment_index].name
       end
-      if equipment_index > #BotWeapons.equipment then
-        equipment_index = math.random(#BotWeapons.equipment)
-      end
-      loadout.equipment_index = equipment_index
       
     end
     self._loadouts = self._loadouts or {}
@@ -393,7 +370,7 @@ if not _G.BotWeapons then
     if id == "bot_weapons_equipment" and managers.criminals then
       if #params == 2 then
         local name = params[1]
-        local equipment = tonumber(params[2])
+        local equipment = params[2]
         BotWeapons:set_equipment(managers.criminals:character_unit_by_name(name), equipment)
       end
     end

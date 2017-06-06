@@ -35,3 +35,21 @@ function BlackMarketManager:henchman_loadout_string_from_loadout(loadout, ...)
   loadout.primary = nil
   return henchman_loadout_string_from_loadout_original(self, loadout, ...)
 end
+
+function BlackMarketManager:get_deployable_icon(deployable)
+  local guis_catalog = "guis/"
+  local bundle_folder = tweak_data.blackmarket.deployables[deployable] and tweak_data.blackmarket.deployables[deployable].texture_bundle_folder
+  if bundle_folder then
+    guis_catalog = guis_catalog .. "dlcs/" .. tostring(bundle_folder) .. "/"
+  end
+  return guis_catalog .. "textures/pd2/blackmarket/icons/deployables/" .. tostring(deployable)
+end
+
+function BlackMarketManager:get_armor_icon(armor)
+  local guis_catalog = "guis/"
+  local bundle_folder = tweak_data.blackmarket.armors[armor] and tweak_data.blackmarket.armors[armor].texture_bundle_folder
+  if bundle_folder then
+    guis_catalog = guis_catalog .. "dlcs/" .. tostring(bundle_folder) .. "/"
+  end
+  return guis_catalog .. "textures/pd2/blackmarket/icons/armors/" .. tostring(armor)
+end

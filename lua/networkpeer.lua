@@ -9,13 +9,16 @@ function NetworkPeer:spawn_unit(spawn_point_id, is_drop_in, spawn_as)
       if alive(data.unit) then
         local name = data.unit:base()._tweak_table
         local loadout = managers.criminals:get_loadout_for(name)
-        self:send_queued_sync("sync_run_sequence_char", data.unit, "var_model_0" .. (loadout._armor_index or 1))
+        local current_level = managers.job and managers.job:current_level_id()
+        if current_level ~= "glace" and loadout.armor then
+          self:send_queued_sync("sync_run_sequence_char", data.unit, tweak_data.blackmarket.armors[loadout.armor].sequence)
+        end
         -- run heist specific sequence
         local level_sequence = BotWeapons:get_level_sequence()
         if level_sequence then
           self:send_queued_sync("sync_run_sequence_char", data.unit, level_sequence)
         end
-        LuaNetworking:SendToPeer(self:id(), "bot_weapons_equipment", name .. "," .. (loadout._equipment_index or 1))
+        LuaNetworking:SendToPeer(self:id(), "bot_weapons_equipment", name .. "," .. tostring(loadout.deployable))
       end
     end 
   end

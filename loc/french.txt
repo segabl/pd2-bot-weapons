@@ -9,8 +9,8 @@
   "BotWeapons_menu_masks_desc" : "Définir les masques pour l'équipe des bots",
   "BotWeapons_menu_weapons_name" : "Armes des Bot",
   "BotWeapons_menu_weapons_desc" : "Choisir les armes des bots",
-  "BotWeapons_menu_category_select_name" : "Choisir une catégorie",
-  "BotWeapons_menu_category_select_desc" : "Sélectionnez la catégorie à laquelle vous souhaitez choisir une arme."
+  "menu_category_select_name" : "Choisir une catégorie",
+  "menu_category_select_desc" : "Sélectionnez la catégorie à laquelle vous souhaitez choisir une arme.",
   "toggle_override_armor_name" : "Passer outre l'armure",
   "toggle_override_armor_desc" : "Passer outre les paramètres d'armure individuelles des bots",
   "toggle_player_carry_name" : "Porter des sacs comme des joueurs",

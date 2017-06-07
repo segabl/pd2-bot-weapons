@@ -620,7 +620,7 @@ function CrewManagementGui:populate_armors(henchman_index, data, gui)
     v.lock_text = nil
     v.comparision_data = nil
     if v.equipped then
-      --v.buttons = {"a_mod"}
+      v.buttons = {--[["a_mod"]]}
     elseif not v.empty_slot then
       v.buttons = {"a_equip"}
     end

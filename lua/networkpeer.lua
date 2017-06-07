@@ -13,11 +13,6 @@ function NetworkPeer:spawn_unit(spawn_point_id, is_drop_in, spawn_as)
         if current_level ~= "glace" and loadout.armor then
           self:send_queued_sync("sync_run_sequence_char", data.unit, tweak_data.blackmarket.armors[loadout.armor].sequence)
         end
-        -- run heist specific sequence
-        local level_sequence = BotWeapons:get_level_sequence()
-        if level_sequence then
-          self:send_queued_sync("sync_run_sequence_char", data.unit, level_sequence)
-        end
         LuaNetworking:SendToPeer(self:id(), "bot_weapons_equipment", name .. "," .. tostring(loadout.deployable))
       end
     end 

@@ -162,15 +162,29 @@ if not _G.BotWeapons then
     end
   end
   
-  function BotWeapons:set_equipment(unit, equipment)
-    if not alive(unit) then
+  function BotWeapons:set_armor(unit, armor, armor_skin)
+    if not alive(unit) or not armor then
       return
     end
+    local current_level = managers.job and managers.job:current_level_id()
+    if current_level ~= "glace" then
+      unit:damage():run_sequence_simple(tweak_data.blackmarket.armors[armor].sequence)
+      if Utils:IsInGameState() and not Global.game_settings.single_player and LuaNetworking:IsHost() then
+        managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, tweak_data.blackmarket.armors[armor].sequence)
+      end
+    end
+  end
+  
+  function BotWeapons:set_equipment(unit, equipment)
+    if not alive(unit) or not equipment then
+      return
+    end
+    local visual_object = tweak_data.equipments[equipment] and tweak_data.equipments[equipment].visual_object
     for k, v in pairs(tweak_data.equipments) do
       if v.visual_object then
         local mesh_obj = unit:get_object(Idstring(v.visual_object))
         if mesh_obj then
-          mesh_obj:set_visibility(k == equipment)
+          mesh_obj:set_visibility(v.visual_object == visual_object)
         end
       end
     end

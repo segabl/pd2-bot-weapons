@@ -22,7 +22,7 @@ function CharacterTweakData:_presets(...)
   
   gang_presets.is_burst = deep_clone(gang_presets.is_rifle)
   gang_presets.is_burst.spread = gang_presets.is_rifle.spread * 0.75
-  gang_presets.is_burst.autofire_rounds = { 3, 4 }
+  gang_presets.is_burst.autofire_rounds = { 1, 3 }
   BotWeapons:set_single_fire_mode(gang_presets.is_burst, {0.75, 1})
   
   -- smgs
@@ -57,9 +57,6 @@ function CharacterTweakData:_presets(...)
   
   -- snipers
   gang_presets.is_sniper.spread = gang_presets.is_rifle.spread * 0.75
-  
-  -- create better range interpolation
-  BotWeapons:create_interpolated_falloff_data(gang_presets, 10)
 
   return presets
 end

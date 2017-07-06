@@ -98,37 +98,6 @@ if not _G.BotWeapons then
     end
   end
   
-  function BotWeapons:create_interpolated_falloff_data(presets, steps)
-    if not presets or not steps then
-      return
-    end
-    self:log("Interpolating FALLOFF in " .. steps .. " steps for gang presets")
-    for _, weapon in pairs(presets) do
-      if not weapon._interpolation_done then
-        local first = weapon.FALLOFF[1]
-        local last = weapon.FALLOFF[#weapon.FALLOFF]
-        local data = {}
-        local falloff, blend
-        for i = 1, steps + 1 do
-          falloff = deep_clone(last)
-          table.insert(data, 1, falloff)
-          blend = (i - 1) / steps
-          falloff.r = math.lerp(last.r, first.r, blend)
-          falloff.acc = { 
-            math.lerp(last.acc[1], first.acc[1], blend),
-            math.lerp(last.acc[2], first.acc[2], blend)
-          }
-          falloff.recoil = {
-            math.lerp(last.recoil[1], first.recoil[1], blend),
-            math.lerp(last.recoil[2], first.recoil[2], blend)
-          }
-        end
-        weapon.FALLOFF = data
-        weapon._interpolation_done = true
-      end
-    end
-  end
-  
   function BotWeapons:set_armor(unit, armor, armor_skin)
     if not alive(unit) or not armor then
       return

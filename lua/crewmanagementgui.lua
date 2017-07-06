@@ -365,7 +365,7 @@ function CrewManagementGui:create_weapon_button(panel, index)
   local texture, rarity = managers.blackmarket:get_weapon_icon_path(data.weapon_id, data.cosmetics)
   local text = loadout.primary_slot and managers.blackmarket:get_weapon_name_by_category_slot(loadout.primary_category or "primaries", loadout.primary_slot) or ""
   local cat_text = managers.localization:to_upper_text("item_weapon")
-  local weapon_text = loadout.primary_random and managers.localization:to_upper_text("item_random") or char_loadout.primary and managers.localization:to_upper_text("menu_crew_character") or managers.localization:to_upper_text("menu_crew_defualt")
+  local weapon_text = loadout.primary_random and managers.localization:to_upper_text("item_random") or (char_loadout.primary or char_loadout.primary_random) and managers.localization:to_upper_text("menu_crew_character") or managers.localization:to_upper_text("menu_crew_defualt")
   if type(loadout.primary_random) == "string" then
     weapon_text = managers.localization:to_upper_text("menu_" .. loadout.primary_random)
   end
@@ -513,7 +513,7 @@ function CrewManagementGui:create_mask_button(panel, index)
   local texture = loadout.mask ~= "character_locked" and managers.blackmarket:get_mask_icon(loadout.mask)
   local text = loadout.mask ~= "character_locked" and managers.blackmarket:get_mask_name_by_category_slot("masks", loadout.mask_slot) or ""
   local cat_text = managers.localization:to_upper_text("bm_menu_masks")
-  local mask_text = loadout.mask_random and managers.localization:to_upper_text("item_random") or char_loadout.mask and managers.localization:to_upper_text("menu_crew_character") or managers.localization:to_upper_text("menu_crew_defualt")
+  local mask_text = loadout.mask_random and managers.localization:to_upper_text("item_random") or (char_loadout.mask or char_loadout.mask_random) and managers.localization:to_upper_text("menu_crew_character") or managers.localization:to_upper_text("menu_crew_defualt")
   if type(loadout.mask_random) == "string" then
     mask_text = managers.localization:to_upper_text("item_" .. loadout.mask_random)
   end
@@ -601,7 +601,7 @@ function CrewManagementGui:create_deployable_button(panel, index)
   local texture = loadout.deployable and managers.blackmarket:get_deployable_icon(loadout.deployable)
   local text = loadout.deployable and managers.localization:to_upper_text(tweak_data.upgrades.definitions[loadout.deployable].name_id) or ""
   local cat_text = managers.localization:to_upper_text("bm_menu_deployables")
-  local deployable_text = loadout.deployable_random and managers.localization:to_upper_text("item_random") or char_loadout.deployable and managers.localization:to_upper_text("menu_crew_character") or managers.localization:to_upper_text("menu_crew_defualt")
+  local deployable_text = loadout.deployable_random and managers.localization:to_upper_text("item_random") or (char_loadout.deployable or char_loadout.deployable_random) and managers.localization:to_upper_text("menu_crew_character") or managers.localization:to_upper_text("menu_crew_defualt")
   return CrewManagementGuiLoadoutItem:new(self, panel, texture and {texture = texture, layer = 1} or deployable_text, text, cat_text, callback(self, self, "show_deployable_selection", index))
 end
 
@@ -695,7 +695,7 @@ function CrewManagementGui:create_armor_button(panel, index)
   local texture = loadout.armor and managers.blackmarket:get_armor_icon(loadout.armor)
   local text = loadout.armor and managers.localization:text(tweak_data.blackmarket.armors[loadout.armor].name_id) or ""
   local cat_text = managers.localization:to_upper_text("bm_menu_armor")
-  local armor_text = loadout.armor_random and managers.localization:to_upper_text("item_random") or char_loadout.armor and managers.localization:to_upper_text("menu_crew_character") or managers.localization:to_upper_text("menu_crew_defualt")
+  local armor_text = loadout.armor_random and managers.localization:to_upper_text("item_random") or (char_loadout.armor or char_loadout.armor_random) and managers.localization:to_upper_text("menu_crew_character") or managers.localization:to_upper_text("menu_crew_defualt")
   return CrewManagementGuiLoadoutItem:new(self, panel, texture and {texture = texture, layer = 1} or armor_text, text, cat_text, callback(self, self, "show_armor_selection", index))
 end
 

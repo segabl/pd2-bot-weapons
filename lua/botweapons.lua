@@ -41,29 +41,6 @@ if not _G.BotWeapons then
       { menu_name = "bm_equipment_first_aid_kit", name = "first_aid_kit" },
       { menu_name = "bm_equipment_sentry_gun", name = "sentry_gun" }
     }
-  
-    -- load weapon definitions
-    file = io.open(BotWeapons._path .. "weapons.json", "r")
-    if file then
-      self.weapons_legacy = json.decode(file:read("*all"))
-      file:close()
-    end
-    self.weapons_legacy = self.weapons_legacy or {}
-    
-    -- load user overrides
-    file = io.open(BotWeapons._data_path .. "bot_weapons_overrides.json", "r")
-    if file then
-      self:log("Found custom weapon override file, loading it")
-      local overrides = json.decode(file:read("*all"))
-      file:close()
-      if overrides then
-        for _, weapon in ipairs(self.weapons_legacy) do
-          if weapon.tweak_data and weapon.tweak_data.name and overrides[weapon.tweak_data.name] then
-            weapon.blueprint = overrides[weapon.tweak_data.name].blueprint or weapon.blueprint
-          end
-        end
-      end
-    end
     
     -- load mask sets
     file = io.open(BotWeapons._path .. "masks.json", "r")
@@ -72,16 +49,6 @@ if not _G.BotWeapons then
       file:close()
     end
     self.masks = self.masks or {}
-    
-    self.masks_legacy = {
-      { menu_name = "bm_msk_character_locked" },
-      { menu_name = "item_same_as_me" },
-    }
-    for k, v in pairs(self.masks) do
-      local msk = deep_clone(v)
-      msk.menu_name = "item_" .. k
-      table.insert(self.masks_legacy, msk)
-    end
     
     -- load settings
     self:load()
@@ -292,16 +259,19 @@ if not _G.BotWeapons then
     local loadout = deep_clone(original_loadout)
     if LuaNetworking:IsHost() then
     
-      -- choose mask
+      local char_loadout = self._data[char_name] or {}
+    
+      -- choose mask     
       if loadout.mask == "character_locked" or loadout.mask_random then
         loadout.mask_slot = nil
 
-        local index = self._data[char_name .. "_mask"] or 1
-        if self._data.toggle_override_masks then
-          index = self._data.override_masks or (#self.masks_legacy + 1)
+        if not loadout.mask_random then
+          loadout.mask = char_loadout.mask or "character_locked"
+          loadout.mask_random = char_loadout.mask_random
+          loadout.mask_blueprint = char_loadout.mask_blueprint
         end
         
-        if index > #self.masks_legacy or loadout.mask_random and type(loadout.mask_random) ~= "string" then
+        if loadout.mask_random and type(loadout.mask_random) ~= "string" then
           local masks_data = self:get_masks_data()
           loadout.mask = masks_data.masks[math.random(#masks_data.masks)]
           if math.random() < (self._data.slider_mask_customized_chance or 0.5) then
@@ -315,67 +285,75 @@ if not _G.BotWeapons then
           local selection = self.masks[loadout.mask_random].character and self.masks[loadout.mask_random].character[char_name] or self.masks[loadout.mask_random].pool[math.random(#self.masks[loadout.mask_random].pool)]
           loadout.mask = selection.id
           loadout.mask_blueprint = selection.blueprint
-        elseif self.masks_legacy[index].character and self.masks_legacy[index].character[char_name] or self.masks_legacy[index].pool then
-          local selection = self.masks_legacy[index].character and self.masks_legacy[index].character[char_name] or self.masks_legacy[index].pool[math.random(#self.masks_legacy[index].pool)]
-          loadout.mask = selection.id
-          loadout.mask_blueprint = selection.blueprint
-        elseif self.masks_legacy[index].menu_name == "item_same_as_me" then
-          local player_mask = managers.blackmarket:equipped_mask()
-          if player_mask then
-            loadout.mask = player_mask.mask_id
-            loadout.mask_blueprint = player_mask.blueprint
-          end
         end
       end
       
       -- choose weapon
       if not loadout.primary or loadout.primary_random then
-        local weapon_index = self._data[char_name .. "_weapon"] or 1
-        if self._data.toggle_override_weapons then
-          weapon_index = self._data.override_weapons or (#self.weapons_legacy + 1)
+        loadout.primary_slot = nil
+        
+        if not loadout.primary_random then
+          loadout.primary = char_loadout.primary
+          loadout.primary_random = char_loadout.primary_random
+          loadout.primary_blueprint = char_loadout.primary_blueprint
         end
-        if weapon_index > #self.weapons_legacy or loadout.primary_random then
+        
+        if loadout.primary_random then
           local weapon = self:get_random_weapon(type(loadout.primary_random) == "string" and loadout.primary_random or nil)
-          loadout.primary_slot = nil
           loadout.primary = weapon.factory_id
           loadout.primary_category = weapon.category
-          loadout.primary_blueprint = weapon.blueprint
-        else
-          local weapon = self.weapons_legacy[weapon_index]
-          loadout.primary_slot = nil
-          loadout.primary = weapon.factory_name
           loadout.primary_blueprint = weapon.blueprint
         end
       end
       
       -- choose armor models
       if not loadout.armor or loadout.armor_random then
-        local armor_index = BotWeapons._data[char_name .. "_armor"] or 1
-        if BotWeapons._data.toggle_override_armor then
-          armor_index = BotWeapons._data.override_armor or (#BotWeapons.armor + 1)
+      
+        if not loadout.armor_random then
+          loadout.armor = char_loadout.armor
+          loadout.armor_random = char_loadout.armor_random
         end
-        if armor_index > #BotWeapons.armor or loadout.armor_random then
-          armor_index = math.random(#BotWeapons.armor)
+
+        if loadout.armor_random then
+          loadout.armor = "level_" .. math.random(#BotWeapons.armor)
         end
-        loadout.armor = "level_" .. tostring(armor_index)
       end
       
       -- choose equipment models
       if not loadout.deployable or loadout.deployable_random then
-        local equipment_index = BotWeapons._data[char_name .. "_equipment"] or 1
-        if BotWeapons._data.toggle_override_equipment then
-          equipment_index = BotWeapons._data.override_equipment or (#BotWeapons.equipment + 1)
+      
+        if not loadout.deployable_random then
+          loadout.deployable = char_loadout.deployable
+          loadout.deployable_random = char_loadout.deployable_random
         end
-        if equipment_index > #BotWeapons.equipment or loadout.deployable_random then
-          equipment_index = 1 + math.random(#BotWeapons.equipment - 1)
+      
+        if loadout.deployable_random then
+          loadout.deployable = BotWeapons.equipment[1 + math.random(#BotWeapons.equipment - 1)].name
         end
-        loadout.deployable = BotWeapons.equipment[equipment_index].name
       end
       
     end
     self._loadouts = self._loadouts or {}
     self._loadouts[char_name] = loadout
     return loadout
+  end
+  
+  function BotWeapons:set_character_loadout(char_name, loadout)
+    if not char_name then
+      return
+    end
+    self._data[char_name] = {
+      armor = not loadout.armor_random and loadout.armor or nil,
+      armor_random = loadout.armor_random,
+      deployable = not loadout.deployable_random and loadout.deployable or nil,
+      deployable_random = loadout.deployable_random,
+      mask = not loadout.mask_random and loadout.mask or nil,
+      mask_blueprint = not loadout.mask_random and loadout.mask_blueprint or nil,
+      mask_random = loadout.mask_random,
+      primary = not loadout.primary_random and loadout.primary or nil,
+      primary_blueprint = not loadout.primary_random and loadout.primary_blueprint or nil,
+      primary_random = loadout.primary_random
+    }
   end
   
   Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function(sender, id, data)

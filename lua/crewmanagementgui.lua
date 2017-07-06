@@ -178,6 +178,26 @@ function CrewManagementGui:init(ws, fullscreen_ws, node)
     panel:set_top(slot_text:bottom())
   end
   loadout_text:set_left(self._1_panel:left())
+  
+    -- character specific settings here
+  local character_text = self._panel:text({
+    text = managers.localization:to_upper_text("menu_crew_character_settings"),
+    font = medium_font,
+    font_size = medium_font_size,
+    y = 20
+  })
+  make_fine_text(character_text)
+  character_text:set_right(self._3_panel:right())
+  
+  local character_settings = CrewManagementGuiButton:new(self, function()
+    self:show_character_specific_settings()
+  end, true)
+  character_settings._panel = character_text
+  character_settings._select_col = tweak_data.screen_colors.button_stage_2
+  character_settings._normal_col = tweak_data.screen_colors.button_stage_3
+  character_settings._selected_changed = CrewManagementGuiTextButton._selected_changed
+  -- end of char specific stuff
+  
   if info_panel then
     info_panel:set_center_y(loadout_text:center_y())
     info_panel:set_left(loadout_text:right())
@@ -340,11 +360,12 @@ end
 --[[ WEAPONS ]]
 function CrewManagementGui:create_weapon_button(panel, index)
   local loadout = managers.blackmarket:henchman_loadout(index)
+  local char_loadout = BotWeapons._data[managers.menu_scene._picked_character_position[index]] or {}
   local data = managers.blackmarket:get_crafted_category_slot(loadout.primary_category or "primaries", loadout.primary_slot) or {}
   local texture, rarity = managers.blackmarket:get_weapon_icon_path(data.weapon_id, data.cosmetics)
   local text = loadout.primary_slot and managers.blackmarket:get_weapon_name_by_category_slot(loadout.primary_category or "primaries", loadout.primary_slot) or ""
   local cat_text = managers.localization:to_upper_text("item_weapon")
-  local weapon_text = loadout.primary_random and managers.localization:to_upper_text("item_random") or managers.localization:to_upper_text("menu_crew_defualt")
+  local weapon_text = loadout.primary_random and managers.localization:to_upper_text("item_random") or char_loadout.primary and managers.localization:to_upper_text("menu_crew_character") or managers.localization:to_upper_text("menu_crew_defualt")
   if type(loadout.primary_random) == "string" then
     weapon_text = managers.localization:to_upper_text("menu_" .. loadout.primary_random)
   end
@@ -488,10 +509,11 @@ end
 --[[ MASKS ]]
 function CrewManagementGui:create_mask_button(panel, index)
   local loadout = managers.blackmarket:henchman_loadout(index)
+  local char_loadout = BotWeapons._data[managers.menu_scene._picked_character_position[index]] or {}
   local texture = loadout.mask ~= "character_locked" and managers.blackmarket:get_mask_icon(loadout.mask)
   local text = loadout.mask ~= "character_locked" and managers.blackmarket:get_mask_name_by_category_slot("masks", loadout.mask_slot) or ""
   local cat_text = managers.localization:to_upper_text("bm_menu_masks")
-  local mask_text = loadout.mask_random and managers.localization:to_upper_text("item_random") or managers.localization:to_upper_text("menu_crew_defualt")
+  local mask_text = loadout.mask_random and managers.localization:to_upper_text("item_random") or char_loadout.mask and managers.localization:to_upper_text("menu_crew_character") or managers.localization:to_upper_text("menu_crew_defualt")
   if type(loadout.mask_random) == "string" then
     mask_text = managers.localization:to_upper_text("item_" .. loadout.mask_random)
   end
@@ -575,10 +597,11 @@ end
 --[[ DEPLOYABLES ]]
 function CrewManagementGui:create_deployable_button(panel, index)
   local loadout = managers.blackmarket:henchman_loadout(index)
+  local char_loadout = BotWeapons._data[managers.menu_scene._picked_character_position[index]] or {}
   local texture = loadout.deployable and managers.blackmarket:get_deployable_icon(loadout.deployable)
   local text = loadout.deployable and managers.localization:to_upper_text(tweak_data.upgrades.definitions[loadout.deployable].name_id) or ""
   local cat_text = managers.localization:to_upper_text("bm_menu_deployables")
-  local deployable_text = loadout.deployable_random and managers.localization:to_upper_text("item_random") or managers.localization:to_upper_text("menu_crew_defualt")
+  local deployable_text = loadout.deployable_random and managers.localization:to_upper_text("item_random") or char_loadout.deployable and managers.localization:to_upper_text("menu_crew_character") or managers.localization:to_upper_text("menu_crew_defualt")
   return CrewManagementGuiLoadoutItem:new(self, panel, texture and {texture = texture, layer = 1} or deployable_text, text, cat_text, callback(self, self, "show_deployable_selection", index))
 end
 
@@ -668,10 +691,11 @@ end
 --[[ ARMOR ]]
 function CrewManagementGui:create_armor_button(panel, index)
   local loadout = managers.blackmarket:henchman_loadout(index)
+  local char_loadout = BotWeapons._data[managers.menu_scene._picked_character_position[index]] or {}
   local texture = loadout.armor and managers.blackmarket:get_armor_icon(loadout.armor)
   local text = loadout.armor and managers.localization:text(tweak_data.blackmarket.armors[loadout.armor].name_id) or ""
   local cat_text = managers.localization:to_upper_text("bm_menu_armor")
-  local armor_text = loadout.armor_random and managers.localization:to_upper_text("item_random") or managers.localization:to_upper_text("menu_crew_defualt")
+  local armor_text = loadout.armor_random and managers.localization:to_upper_text("item_random") or char_loadout.armor and managers.localization:to_upper_text("menu_crew_character") or managers.localization:to_upper_text("menu_crew_defualt")
   return CrewManagementGuiLoadoutItem:new(self, panel, texture and {texture = texture, layer = 1} or armor_text, text, cat_text, callback(self, self, "show_armor_selection", index))
 end
 
@@ -768,6 +792,7 @@ function CrewManagementGui:show_armor_selection(henchman_index)
 end
 
 --[[ ARMOR SKIS ]]
+--[[
 function CrewManagementGui:open_armor_skins_category_menu(henchman_index)
   local loadout = managers.blackmarket:henchman_loadout(henchman_index)
   local new_node_data = {category = "armor_skins"}
@@ -824,7 +849,7 @@ function CrewManagementGui:show_armor_skin_selection(henchman_index)
         self:reload()
       end
     },
-    {--[[seperator]]},
+    {},
     {
       text = managers.localization:text("menu_back"),
       is_cancel_button = true
@@ -839,8 +864,55 @@ function CrewManagementGui:show_armor_skin_selection(henchman_index)
         self:reload()
       end
     })
-    table.insert(menu_options, #menu_options, {--[[seperator]]})
+    table.insert(menu_options, #menu_options, {})
   end
+  QuickMenu:new(menu_title, menu_message, menu_options, true)
+end
+]]
+
+function CrewManagementGui:show_character_specific_settings()
+  local menu_title = managers.localization:text("menu_character_settings_name")
+  local menu_message = managers.localization:text("menu_character_settings_desc")
+  local menu_options = {
+    {
+      text = managers.localization:text("menu_action_set_character_loadout"),
+      callback = function ()
+        for i = 1, 3 do
+          local character = managers.menu_scene._picked_character_position[i]
+          BotWeapons:set_character_loadout(character, BotWeapons:get_loadout(character, managers.blackmarket:henchman_loadout(i), true))
+          self:select_armor(i, nil)
+          self:select_deployable(i, nil)
+          self:select_mask(i, nil)
+          self:select_weapon(i, nil)
+        end
+        BotWeapons:save()
+        self:reload()
+      end
+    },
+    {
+      text = managers.localization:text("menu_action_clear_character_loadout"),
+      callback = function ()
+        for i = 1, 3 do
+          BotWeapons:set_character_loadout(managers.menu_scene._picked_character_position[i], nil)
+        end
+        BotWeapons:save()
+      end
+    },
+    {
+      text = managers.localization:text("menu_action_clear_all_character_loadout"),
+      callback = function ()
+        for _, char_name in ipairs(CriminalsManager.character_names()) do
+          BotWeapons:set_character_loadout(char_name, nil)
+        end
+        BotWeapons:save()
+      end
+    },
+    {--[[seperator]]},
+    {
+      text = managers.localization:text("menu_back"),
+      is_cancel_button = true
+    }
+  }
   QuickMenu:new(menu_title, menu_message, menu_options, true)
 end
 

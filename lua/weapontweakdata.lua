@@ -17,7 +17,6 @@ function WeaponTweakData:init(...)
   self.m14_crew.usage = "is_burst"
   self.g22c_crew.auto = nil
   self.usp_crew.auto = nil
-  self.tecci_crew.auto = { fire_rate = 0.09 }
   self.desertfox_crew.auto = { fire_rate = 1 }
   
   local m4_dps = self.m4_crew.DAMAGE / self.m4_crew.auto.fire_rate

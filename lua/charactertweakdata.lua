@@ -38,7 +38,7 @@ function CharacterTweakData:_presets(...)
   gang_presets.is_shotgun_pump.spread = gang_presets.is_rifle.spread * 0.75
 
   gang_presets.is_shotgun = deep_clone(gang_presets.is_shotgun_pump)
-  BotWeapons:set_single_fire_mode(gang_presets.mossberg, {0.4, 0.6})
+  BotWeapons:set_single_fire_mode(gang_presets.is_shotgun, {0.4, 0.6})
   
   -- auto shotguns
   --gang_presets.saiga = deep_clone(gang_presets.mossberg)

@@ -273,6 +273,11 @@ if not _G.BotWeapons then
           loadout.primary_category = weapon.category
           loadout.primary_blueprint = weapon.blueprint
         end
+      elseif loadout.primary_slot then
+        local crafted = managers.blackmarket:get_crafted_category_slot(loadout.primary_category or "primaries", loadout.primary_slot)
+        if crafted then
+          loadout.primary_blueprint = crafted.blueprint
+        end
       end
       
       -- choose armor models

@@ -80,7 +80,7 @@ if not _G.BotWeapons then
     return menu_list
   end
   
-  function BotWeapons:set_single_fire_mode(weapon, rec)
+  function BotWeapons:set_recoil(weapon, rec)
     if not weapon or not rec then
       return
     end
@@ -89,7 +89,7 @@ if not _G.BotWeapons then
     end
   end
   
-  function BotWeapons:set_auto_fire_mode(weapon, mode)
+  function BotWeapons:set_mode(weapon, mode)
     if not weapon or not mode then
       return
     end

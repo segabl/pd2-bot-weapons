@@ -13,8 +13,8 @@ function WeaponTweakData:init(...)
     end
   end
   
-  -- fix stuff
-  self.m14_crew.usage = "is_burst"
+  -- manual stuff fixing
+  self.deagle_crew.usage = "is_revolver"
   self.g22c_crew.auto = nil
   self.usp_crew.auto = nil
   self.desertfox_crew.auto = { fire_rate = 1 }
@@ -27,8 +27,8 @@ function WeaponTweakData:init(...)
       if k:match("^x_") and self[k:gsub("^x_", "")] then
         v.auto = self[k:gsub("^x_", "")].auto or v.auto
         if v.auto and v.auto.fire_rate then
-          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"akimbo_auto\"", v.usage ~= "akimbo_auto")
-          v.usage = "akimbo_auto"
+          --BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"akimbo_smg\"", v.usage ~= "akimbo_smg")
+          v.usage = "akimbo_smg"
         end 
       end
       
@@ -40,19 +40,22 @@ function WeaponTweakData:init(...)
       -- fix auto damage
       if v.auto and v.auto.fire_rate and not v.is_shotgun then
         if v.CLIP_AMMO_MAX >= 100 then
-          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_lmg\"", v.usage ~= "is_lmg")
+          --BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_lmg\"", v.usage ~= "is_lmg")
           v.usage = "is_lmg"
         elseif v.usage == "is_pistol" then
-          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_smg\"", v.usage ~= "is_smg")
+          --BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_smg\"", v.usage ~= "is_smg")
           v.usage = "is_smg"
+        elseif (v.usage == "is_rifle" or v.usage == "is_bullpup") and v.CLIP_AMMO_MAX < 20 then
+          --BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_burst\"", v.usage ~= "is_burst")
+          v.usage = "is_burst"
         end
-        v.DAMAGE = m4_dps * v.auto.fire_rate
+        v.DAMAGE = v.usage == "is_burst" and m4_dps * v.auto.fire_rate * 3 or m4_dps * v.auto.fire_rate
       end
       
       -- fix pistol damage
       if v.usage == "is_pistol" or v.usage == "is_revolver" then
         if v.CLIP_AMMO_MAX <= 6 then
-          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_revolver\"", v.usage ~= "is_revolver")
+          --BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_revolver\"", v.usage ~= "is_revolver")
           v.usage = "is_revolver"
         end
         v.DAMAGE = v.usage == "is_revolver" and m4_dps * 0.5 or m4_dps * 0.2
@@ -60,27 +63,24 @@ function WeaponTweakData:init(...)
       
       -- fix akimbo pistol damage
       if v.usage == "akimbo_pistol" then
-        if self[k:gsub("^x_", "")] and (self[k:gsub("^x_", "")].CLIP_AMMO_MAX <= 6 or self[k:gsub("^x_", "")].usage == "is_revolver") then
-          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"akimbo_deagle\"", v.usage ~= "akimbo_deagle")
-          v.usage = "akimbo_deagle"
+        local single = self[k:gsub("^x_", "")]
+        if single and (single.CLIP_AMMO_MAX <= 6 or single.usage == "is_revolver") then
+          --BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"akimbo_revolver\"", v.usage ~= "akimbo_revolver")
+          v.usage = "akimbo_revolver"
         end
-        v.DAMAGE = v.usage == "akimbo_deagle" and m4_dps * 0.3 or m4_dps * 0.1
+        v.DAMAGE = v.usage == "akimbo_revolver" and m4_dps * 0.3 or m4_dps * 0.1
       end
       
       -- fix shotgun damage
-      if v.usage == "is_shotgun_pump" or v.usage == "is_shotgun" then
+      if v.is_shotgun and (v.usage == "is_shotgun_pump" or v.usage == "is_shotgun") then
         if v.CLIP_AMMO_MAX <= 2 or v.auto and v.auto.fire_rate and v.auto.fire_rate < 0.33 and v.is_shotgun then
-          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_shotgun\"", v.usage ~= "is_shotgun")
+          --BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_shotgun\"", v.usage ~= "is_shotgun")
           v.usage = "is_shotgun"
+          v.auto = {}
           v.DAMAGE = v.CLIP_AMMO_MAX <= 2 and m4_dps * 0.8 or m4_dps * 0.4
         else
           v.DAMAGE = "is_shotgun" and m4_dps * 0.4 or m4_dps * 0.75
         end
-      end
-
-      -- fix m14 damage
-      if v.usage == "is_burst" then
-        v.DAMAGE = v.DAMAGE * 2 
       end
       
     end

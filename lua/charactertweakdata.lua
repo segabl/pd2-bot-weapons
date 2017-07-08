@@ -11,52 +11,39 @@ function CharacterTweakData:_presets(...)
 
   -- pistols
   gang_presets.is_pistol.spread = gang_presets.is_rifle.spread * 0.75
-  BotWeapons:set_single_fire_mode(gang_presets.is_pistol, {0.2, 0.3})
+  BotWeapons:set_recoil(gang_presets.is_pistol, {0.2, 0.3})
   
   gang_presets.is_revolver = deep_clone(gang_presets.is_pistol)
-  BotWeapons:set_single_fire_mode(gang_presets.is_revolver, {0.5, 0.75})
+  BotWeapons:set_recoil(gang_presets.is_revolver, {0.5, 0.75})
 
   -- rifles
-  BotWeapons:set_single_fire_mode(gang_presets.is_rifle, {0.25, 0.45})
+  BotWeapons:set_recoil(gang_presets.is_rifle, {0.25, 0.45})
   gang_presets.is_bullpup = gang_presets.is_rifle
   
   gang_presets.is_burst = deep_clone(gang_presets.is_rifle)
-  gang_presets.is_burst.spread = gang_presets.is_rifle.spread * 0.75
   gang_presets.is_burst.autofire_rounds = { 1, 3 }
-  BotWeapons:set_single_fire_mode(gang_presets.is_burst, {0.75, 1})
+  BotWeapons:set_recoil(gang_presets.is_burst, {0.5, 0.75})
+  BotWeapons:set_mode(gang_presets.is_burst, {0, 0, 0, 1})
   
   -- smgs
   gang_presets.is_smg = gang_presets.is_rifle
   
-  -- lmgs
-  --gang_presets.is_lmg = deep_clone(gang_presets.is_rifle)
-  --gang_presets.lmg.autofire_rounds = { 15, 40 }
-  --gang_presets.lmg.FALLOFF[#gang_presets.lmg.FALLOFF].acc = { 0.5, 0.5 }
-  
   -- shotguns
-  BotWeapons:set_single_fire_mode(gang_presets.is_shotgun_pump, {0.75, 1.125})
+  BotWeapons:set_recoil(gang_presets.is_shotgun_pump, {0.75, 1.125})
   gang_presets.is_shotgun_pump.spread = gang_presets.is_rifle.spread * 0.75
 
   gang_presets.is_shotgun = deep_clone(gang_presets.is_shotgun_pump)
-  BotWeapons:set_single_fire_mode(gang_presets.is_shotgun, {0.4, 0.6})
-  
-  -- auto shotguns
-  --gang_presets.saiga = deep_clone(gang_presets.mossberg)
-  --gang_presets.saiga.autofire_rounds = { 2, 5 }
+  BotWeapons:set_recoil(gang_presets.is_shotgun, {0.4, 0.6})
   
   -- akimbo
   gang_presets.akimbo_pistol = deep_clone(gang_presets.is_pistol)
-  BotWeapons:set_single_fire_mode(gang_presets.akimbo_pistol, {0.1, 0.2})
+  BotWeapons:set_recoil(gang_presets.akimbo_pistol, {0.1, 0.2})
   
-  gang_presets.akimbo_deagle = deep_clone(gang_presets.is_pistol)
-  BotWeapons:set_single_fire_mode(gang_presets.akimbo_deagle, {0.3, 0.5})
+  gang_presets.akimbo_revolver = deep_clone(gang_presets.is_pistol)
+  BotWeapons:set_recoil(gang_presets.akimbo_revolver, {0.3, 0.5})
   
-  gang_presets.akimbo_auto = deep_clone(gang_presets.is_rifle)
-  gang_presets.akimbo_auto.autofire_rounds = { 10, 25 }
-  gang_presets.akimbo_auto.FALLOFF[#gang_presets.akimbo_auto.FALLOFF].acc = { 0.8, 0.8 }
-  
-  -- snipers
-  gang_presets.is_sniper.spread = gang_presets.is_rifle.spread * 0.75
+  gang_presets.akimbo_smg = deep_clone(gang_presets.is_rifle)
+  gang_presets.akimbo_smg.FALLOFF[#gang_presets.akimbo_smg.FALLOFF].acc = { 0.5, 0.7 }
 
   return presets
 end

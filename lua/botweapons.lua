@@ -215,6 +215,10 @@ if not _G.BotWeapons then
     return weapon
   end
   
+  function BotWeapons:get_char_loadout(char_name)
+    return char_name and type(self._data[char_name]) == "table" and self._data[char_name] or {}
+  end
+  
   function BotWeapons:get_loadout(char_name, original_loadout, refresh)
     if not char_name then
       return original_loadout
@@ -228,7 +232,7 @@ if not _G.BotWeapons then
     local loadout = deep_clone(original_loadout)
     if LuaNetworking:IsHost() then
     
-      local char_loadout = type(self._data[char_name]) == "table" and self._data[char_name] or {}
+      local char_loadout = self:get_char_loadout(char_name)
     
       -- choose mask     
       if loadout.mask == "character_locked" or loadout.mask_random then

@@ -360,7 +360,7 @@ end
 --[[ WEAPONS ]]
 function CrewManagementGui:create_weapon_button(panel, index)
   local loadout = managers.blackmarket:henchman_loadout(index)
-  local char_loadout = BotWeapons._data[managers.menu_scene._picked_character_position[index]] or {}
+  local char_loadout = BotWeapons:get_char_loadout(managers.menu_scene._picked_character_position[index])
   local data = managers.blackmarket:get_crafted_category_slot(loadout.primary_category or "primaries", loadout.primary_slot) or {}
   local texture, rarity = managers.blackmarket:get_weapon_icon_path(data.weapon_id, data.cosmetics)
   local text = loadout.primary_slot and managers.blackmarket:get_weapon_name_by_category_slot(loadout.primary_category or "primaries", loadout.primary_slot) or ""
@@ -509,7 +509,7 @@ end
 --[[ MASKS ]]
 function CrewManagementGui:create_mask_button(panel, index)
   local loadout = managers.blackmarket:henchman_loadout(index)
-  local char_loadout = BotWeapons._data[managers.menu_scene._picked_character_position[index]] or {}
+  local char_loadout = BotWeapons:get_char_loadout(managers.menu_scene._picked_character_position[index])
   local texture = loadout.mask ~= "character_locked" and managers.blackmarket:get_mask_icon(loadout.mask)
   local text = loadout.mask ~= "character_locked" and managers.blackmarket:get_mask_name_by_category_slot("masks", loadout.mask_slot) or ""
   local cat_text = managers.localization:to_upper_text("bm_menu_masks")
@@ -597,7 +597,7 @@ end
 --[[ DEPLOYABLES ]]
 function CrewManagementGui:create_deployable_button(panel, index)
   local loadout = managers.blackmarket:henchman_loadout(index)
-  local char_loadout = BotWeapons._data[managers.menu_scene._picked_character_position[index]] or {}
+  local char_loadout = BotWeapons:get_char_loadout(managers.menu_scene._picked_character_position[index])
   local texture = loadout.deployable and managers.blackmarket:get_deployable_icon(loadout.deployable)
   local text = loadout.deployable and managers.localization:to_upper_text(tweak_data.upgrades.definitions[loadout.deployable].name_id) or ""
   local cat_text = managers.localization:to_upper_text("bm_menu_deployables")
@@ -691,7 +691,7 @@ end
 --[[ ARMOR ]]
 function CrewManagementGui:create_armor_button(panel, index)
   local loadout = managers.blackmarket:henchman_loadout(index)
-  local char_loadout = BotWeapons._data[managers.menu_scene._picked_character_position[index]] or {}
+  local char_loadout = BotWeapons:get_char_loadout(managers.menu_scene._picked_character_position[index])
   local texture = loadout.armor and managers.blackmarket:get_armor_icon(loadout.armor)
   local text = loadout.armor and managers.localization:text(tweak_data.blackmarket.armors[loadout.armor].name_id) or ""
   local cat_text = managers.localization:to_upper_text("bm_menu_armor")

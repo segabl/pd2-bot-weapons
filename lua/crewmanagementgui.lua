@@ -762,16 +762,6 @@ function CrewManagementGui:show_armor_selection(henchman_index)
       end
     },
     {--[[seperator]]},
-    --[[
-    {
-      text = managers.localization:text("menu_action_armor_skins_name"),
-      callback = function () 
-        self:show_armor_skin_selection(henchman_index)
-        self:reload()
-      end
-    },
-    {seperator},
-    ]]
     {
       text = managers.localization:text("menu_back"),
       is_cancel_button = true
@@ -790,85 +780,6 @@ function CrewManagementGui:show_armor_selection(henchman_index)
   end
   QuickMenu:new(menu_title, menu_message, menu_options, true)
 end
-
---[[ ARMOR SKIS ]]
---[[
-function CrewManagementGui:open_armor_skins_category_menu(henchman_index)
-  local loadout = managers.blackmarket:henchman_loadout(henchman_index)
-  local new_node_data = {category = "armor_skins"}
-  local selected_tab = self:create_pages(new_node_data, henchman_index, "armor_skin", nil, 3, 3, 1)
-  new_node_data.can_move_over_tabs = true
-  new_node_data.custom_callback = {
-    as_equip = callback(self, self, "select_armor_skin", henchman_index)
-  }
-  new_node_data.topic_id = "bm_menu_armor_skins"
-  new_node_data.topic_params = {
-    weapon_category = managers.localization:text("bm_menu_armor_skins")
-  }
-  managers.menu:open_node("blackmarket_node", {new_node_data})
-end
-
-function CrewManagementGui:populate_armor_skins(henchman_index, data, gui)
-  gui:populate_armor_skins(data)
-  local loadout = managers.blackmarket:henchman_loadout(henchman_index)
-  for k, v in ipairs(data) do
-    v.equipped = loadout.armor_skin == v.name
-    v.lock_texture = not v.cosmetic_unlocked and BlackMarketGui.get_lock_icon(v, "guis/textures/pd2/lock_incompatible")
-    if v.equipped or not v.cosmetic_unlocked then
-      v.buttons = {}
-    else
-      v.buttons = {"as_equip"}
-    end
-  end
-end
-
-function CrewManagementGui:select_armor_skin(henchman_index, data, gui)
-  local loadout = managers.blackmarket:henchman_loadout(henchman_index)
-  if not data or data.random then
-    loadout.armor_skin = "none"
-    loadout.armor_skin_random = data and data.random and true
-  else
-    loadout.armor_skin = data.name
-    loadout.armor_skin_random = nil
-  end
-  return gui and gui:reload()
-end
-
-function CrewManagementGui:show_armor_skin_selection(henchman_index)
-  local menu_title = managers.localization:text("menu_action_select_name")
-  local menu_message = managers.localization:text("menu_action_select_desc")
-  local menu_options = {
-    {
-      text = managers.localization:text("menu_action_armor_skins_name"),
-      callback = function () self:open_armor_skins_category_menu(henchman_index) end
-    },
-    {
-      text = managers.localization:text("menu_action_random_armor_skin_name"),
-      callback = function () 
-        self:select_armor_skin(henchman_index, { random = true })
-        self:reload()
-      end
-    },
-    {},
-    {
-      text = managers.localization:text("menu_back"),
-      is_cancel_button = true
-    }
-  }
-  local loadout = managers.blackmarket:henchman_loadout(henchman_index)
-  if loadout.armor_skin or loadout.armor_skin_random then
-    table.insert(menu_options, #menu_options, {
-      text = managers.localization:text("menu_action_unequip_armor_skin"),
-      callback = function ()
-        self:select_armor_skin(henchman_index)
-        self:reload()
-      end
-    })
-    table.insert(menu_options, #menu_options, {})
-  end
-  QuickMenu:new(menu_title, menu_message, menu_options, true)
-end
-]]
 
 function CrewManagementGui:show_character_specific_settings()
   local menu_title = managers.localization:text("menu_character_settings_name")
@@ -896,6 +807,7 @@ function CrewManagementGui:show_character_specific_settings()
           BotWeapons:set_character_loadout(managers.menu_scene._picked_character_position[i], nil)
         end
         BotWeapons:save()
+        self:reload()
       end
     },
     {
@@ -905,6 +817,7 @@ function CrewManagementGui:show_character_specific_settings()
           BotWeapons:set_character_loadout(char_name, nil)
         end
         BotWeapons:save()
+        self:reload()
       end
     },
     {--[[seperator]]},

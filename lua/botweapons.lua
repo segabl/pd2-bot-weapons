@@ -98,10 +98,11 @@ if not _G.BotWeapons then
     end
   end
   
-  function BotWeapons:set_armor(unit, armor, armor_skin)
-    if not alive(unit) or not armor then
+  function BotWeapons:set_armor(unit, armor)
+    if not alive(unit) then
       return
     end
+    armor = armor or "level_1"
     local current_level = managers.job and managers.job:current_level_id()
     if current_level ~= "glace" then
       unit:damage():run_sequence_simple(tweak_data.blackmarket.armors[armor].sequence)
@@ -112,10 +113,10 @@ if not _G.BotWeapons then
   end
   
   function BotWeapons:set_equipment(unit, equipment)
-    if not alive(unit) or not equipment then
+    if not alive(unit) then
       return
     end
-    local visual_object = tweak_data.equipments[equipment] and tweak_data.equipments[equipment].visual_object
+    local visual_object = equipment and tweak_data.equipments[equipment] and tweak_data.equipments[equipment].visual_object
     for k, v in pairs(tweak_data.equipments) do
       if v.visual_object then
         local mesh_obj = unit:get_object(Idstring(v.visual_object))
@@ -259,6 +260,11 @@ if not _G.BotWeapons then
           loadout.mask = selection.id
           loadout.mask_blueprint = selection.blueprint
         end
+      elseif loadout.mask_slot then
+        local crafted = managers.blackmarket:get_crafted_category_slot("masks", loadout.mask_slot)
+        if crafted then
+          loadout.mask_blueprint = crafted.blueprint
+        end
       end
       
       -- choose weapon
@@ -318,6 +324,10 @@ if not _G.BotWeapons then
   
   function BotWeapons:set_character_loadout(char_name, loadout)
     if not char_name then
+      return
+    end
+    if not loadout then
+      self._data[char_name] = nil
       return
     end
     self._data[char_name] = {

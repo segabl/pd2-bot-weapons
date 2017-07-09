@@ -228,7 +228,7 @@ if not _G.BotWeapons then
     local loadout = deep_clone(original_loadout)
     if LuaNetworking:IsHost() then
     
-      local char_loadout = self._data[char_name] or {}
+      local char_loadout = type(self._data[char_name]) == "table" and self._data[char_name] or {}
     
       -- choose mask     
       if loadout.mask == "character_locked" or loadout.mask_random then

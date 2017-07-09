@@ -3,7 +3,7 @@ dofile(ModPath .. "lua/botweapons.lua")
 Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInit_BotWeapons", function(loc)
   -- load english localization as base
   loc:load_localization_file(BotWeapons._path .. "loc/english.txt")
-  for _, filename in pairs(file.GetFiles(BotWeapons._path .. "loc/")) do
+  for _, filename in pairs(file.GetFiles(BotWeapons._path .. "loc/") or {}) do
     local str = filename:match('^(.*).txt$')
     if str and Idstring(str) and Idstring(str):key() == SystemInfo:language():key() then
       loc:load_localization_file(BotWeapons._path .. "loc/" .. filename)

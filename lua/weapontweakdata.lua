@@ -83,6 +83,12 @@ function WeaponTweakData:init(...)
         end
       end
       
+      -- fix sniper damage
+      if v.usage == "is_sniper" then
+        v.auto = {}
+        v.DAMAGE = m4_dps * 1.5
+      end
+      
     end
   end
 end

@@ -44,6 +44,10 @@ function CharacterTweakData:_presets(...)
   
   gang_presets.akimbo_smg = deep_clone(gang_presets.is_rifle)
   gang_presets.akimbo_smg.FALLOFF[#gang_presets.akimbo_smg.FALLOFF].acc = { 0.5, 0.7 }
+  
+  -- sniper
+  gang_presets.is_sniper.spread = gang_presets.is_rifle.spread * 0.75
+  BotWeapons:set_recoil(gang_presets.is_sniper, {1.0, 1.5})
 
   return presets
 end

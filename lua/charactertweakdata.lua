@@ -18,12 +18,11 @@ function CharacterTweakData:_presets(...)
 
   -- rifles
   BotWeapons:set_recoil(gang_presets.is_rifle, {0.25, 0.45})
-  gang_presets.is_bullpup = gang_presets.is_rifle
   
-  gang_presets.is_burst = deep_clone(gang_presets.is_rifle)
-  gang_presets.is_burst.autofire_rounds = { 1, 3 }
-  BotWeapons:set_recoil(gang_presets.is_burst, {0.5, 0.75})
-  BotWeapons:set_mode(gang_presets.is_burst, {0, 0, 0, 1})
+  gang_presets.is_bullpup = deep_clone(gang_presets.is_rifle)
+  gang_presets.is_bullpup.autofire_rounds = { 1, 3 }
+  BotWeapons:set_recoil(gang_presets.is_bullpup, {0.5, 0.75})
+  BotWeapons:set_mode(gang_presets.is_bullpup, {0, 0, 0, 1})
   
   -- smgs
   gang_presets.is_smg = gang_presets.is_rifle
@@ -47,7 +46,10 @@ function CharacterTweakData:_presets(...)
   
   -- sniper
   gang_presets.is_sniper.spread = gang_presets.is_rifle.spread * 0.75
-  BotWeapons:set_recoil(gang_presets.is_sniper, {1.0, 1.5})
+  BotWeapons:set_recoil(gang_presets.is_sniper, {1.25, 1.5})
+  
+  gang_presets.is_sniper_fast = deep_clone(gang_presets.is_sniper)
+  BotWeapons:set_recoil(gang_presets.is_sniper_fast, {0.5, 0.75})
 
   return presets
 end

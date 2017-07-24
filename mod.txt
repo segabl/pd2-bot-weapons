@@ -4,7 +4,7 @@
   "author" : "Nebby",
   "updates" : [
     {
-      "revision" : 87,
+      "revision" : 88,
       "identifier" : "bot_weapons"
     }
   ],

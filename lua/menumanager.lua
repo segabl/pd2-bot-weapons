@@ -12,15 +12,13 @@ Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInit_BotWeapons
   end
 end)
 
--- Menu setup
+
 local menu_id_main = "BotWeapons_menu_main"
 
--- Register our new menu
 Hooks:Add("MenuManagerSetupCustomMenus", "MenuManagerSetupCustomMenus_BotWeapons", function(menu_manager, nodes)
   MenuHelper:NewMenu(menu_id_main)
 end)
 
--- Populate it with items and callbacks
 Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotWeapons", function(menu_manager, nodes)
 
   MenuCallbackHandler.BotWeapons_select = function(self, item)
@@ -61,5 +59,5 @@ end)
 -- Build the menus and add it to the Mod Options menu
 Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenus_BotWeapons", function(menu_manager, nodes)
   nodes[menu_id_main] = MenuHelper:BuildMenu(menu_id_main)
-  MenuHelper:AddMenuItem(MenuHelper:GetMenu("lua_mod_options_menu"), menu_id_main, "BotWeapons_menu_main_name", "BotWeapons_menu_main_desc")
+  MenuHelper:AddMenuItem(nodes["blt_options"], menu_id_main, "BotWeapons_menu_main_name", "BotWeapons_menu_main_desc")
 end)

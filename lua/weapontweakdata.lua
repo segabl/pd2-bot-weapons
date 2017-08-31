@@ -1,27 +1,28 @@
 dofile(ModPath .. "lua/botweapons.lua")
 
+local _create_table_structure_original = WeaponTweakData._create_table_structure
+function WeaponTweakData:_create_table_structure(...)
+  _create_table_structure_original(self, ...)
+  -- copy animations from usage
+  for k, v in pairs(self) do
+    if type(v) == "table" and k:match("_crew$") and v.anim_usage == nil then
+      v.anim_usage = v.usage
+    end
+  end
+end
+
 local init_original = WeaponTweakData.init
 function WeaponTweakData:init(...)
   init_original(self, ...)
   
   BotWeapons:log("Setting up weapons")
 
-  -- copy reload animations from usage
-  for k, v in pairs(self) do
-    if type(v) == "table" and k:match("_crew$") then
-      v.anim = v.usage
-    end
-  end
-  
   -- manual stuff fixing
-  self.sub2000_crew.pull_magazine_during_reload = "pistol"
-  self.sub2000_crew.anim = "is_pistol"
-  self.tti_crew.anim = "is_rifle"
   self.siltstone_crew.pull_magazine_during_reload = "rifle"
-  self.siltstone_crew.anim = "is_rifle"
-  self.msr_crew.anim = "is_rifle"
-  self.wa2000_crew.anim = "is_bullpup"
-  
+  self.erma_crew.anim_usage = "is_smg"
+  self.erma_crew.usage = "is_smg"
+  self.ching_crew.usage = "is_sniper_fast"
+  self.ching_crew.pull_magazine_during_reload = nil
   self.rota_crew.usage = "is_shotgun"
   self.deagle_crew.usage = "is_revolver"
   self.g22c_crew.auto = nil
@@ -90,7 +91,7 @@ function WeaponTweakData:init(...)
         end
       end
       -- fix sniper damage
-      if v.usage == "is_sniper" then
+      if v.usage == "is_sniper" or v.usage == "is_sniper_fast" then
         if v.auto and v.auto.fire_rate and v.auto.fire_rate <= 0.5 then
           BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_sniper_fast\"", v.usage ~= "is_sniper_fast")
           v.usage = "is_sniper_fast"

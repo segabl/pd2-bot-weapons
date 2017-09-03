@@ -7,7 +7,7 @@
   "image" : "mod.png",
   "updates" : [
     {
-      "revision" : 90,
+      "revision" : 91,
       "identifier" : "bot_weapons"
     }
   ],

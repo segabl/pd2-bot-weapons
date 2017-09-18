@@ -5,12 +5,8 @@
   "blt_version" : 2,
   "color" : "0.043 0.808 0.6",
   "image" : "mod.png",
-  "updates" : [
-    {
-      "revision" : 91,
-      "identifier" : "bot_weapons"
-    }
-  ],
+  "version" : "9.1",
+  "updates" : [ { "identifier" : "bot_weapons" } ],
   "hooks" : [
     { "hook_id" : "lib/managers/blackmarketmanager", "script_path" : "lua/blackmarketmanager.lua" },
     { "hook_id" : "lib/managers/criminalsmanager", "script_path" : "lua/criminalsmanager.lua" },

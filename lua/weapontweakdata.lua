@@ -18,6 +18,7 @@ function WeaponTweakData:init(...)
   BotWeapons:log("Setting up weapons")
 
   -- manual stuff fixing
+  self.sub2000_crew.pull_magazine_during_reload = "pistol"
   self.siltstone_crew.pull_magazine_during_reload = "rifle"
   self.erma_crew.anim_usage = "is_smg"
   self.erma_crew.usage = "is_smg"
@@ -81,7 +82,7 @@ function WeaponTweakData:init(...)
       end
       -- fix shotgun damage
       if v.is_shotgun and (v.usage == "is_shotgun_pump" or v.usage == "is_shotgun") then
-        if v.CLIP_AMMO_MAX <= 2 or v.auto and v.auto.fire_rate and v.is_shotgun then
+        if v.CLIP_AMMO_MAX <= 2 or v.auto and v.auto.fire_rate and v.auto.fire_rate <= 0.5 then
           BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_shotgun\"", v.usage ~= "is_shotgun")
           v.usage = "is_shotgun"
           v.DAMAGE = v.CLIP_AMMO_MAX <= 2 and m4_dps * 0.8 or m4_dps * 0.4

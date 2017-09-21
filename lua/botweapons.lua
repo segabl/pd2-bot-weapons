@@ -12,14 +12,14 @@ if not _G.BotWeapons then
   end
   
   function BotWeapons:init()
-    self._revision = 0
+    self._version = "1.0"
     local file = io.open(BotWeapons._path .. "mod.txt", "r")
     if file then
       local data = json.decode(file:read("*all"))
       file:close()
-      self._revision = data and data.updates and data.updates[1] and data.updates[1].revision or 0
+      self._version = data and data.version or self._version
     end
-    self:log("Revision " .. self._revision)
+    self:log("Version " .. self._version)
   
     self.armor = {
       { menu_name = "bm_armor_level_1" },

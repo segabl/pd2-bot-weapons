@@ -18,7 +18,6 @@ function WeaponTweakData:init(...)
   BotWeapons:log("Setting up weapons")
 
   -- manual stuff fixing
-  self.sub2000_crew.pull_magazine_during_reload = "pistol"
   self.siltstone_crew.pull_magazine_during_reload = "rifle"
   self.erma_crew.anim_usage = "is_smg"
   self.erma_crew.usage = "is_smg"

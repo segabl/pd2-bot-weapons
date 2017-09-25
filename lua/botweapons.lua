@@ -42,6 +42,8 @@ if not _G.BotWeapons then
       { menu_name = "bm_equipment_sentry_gun", name = "sentry_gun" }
     }
     
+    self.allowed_weapon_categories = { "assault_rifle", "shotgun", "snp", "lmg", "smg", "akimbo", "pistol" }
+    
     -- load mask sets
     file = io.open(BotWeapons._path .. "masks.json", "r")
     if file then
@@ -165,14 +167,14 @@ if not _G.BotWeapons then
   end
   
   function BotWeapons:get_random_weapon(category)
-    local cat = type(category) ~= "string" and "all" or category
+    local cat = type(category) ~= "string" and self.allowed_weapon_categories[math.random(#self.allowed_weapon_categories)] or category
     if not self.weapons or not self.weapons[cat] then
       self.weapons = self.weapons or {}
       self.weapons[cat] = {}
       for weapon_id, data in pairs(tweak_data.weapon) do
-        if data.autohit then
+        if data.autohit and data.categories[1] == cat then
           local factory_id = self:get_npc_version(weapon_id)
-          if factory_id and (type(category) ~= "string" or data.categories[1] == category) and managers.blackmarket:is_weapon_category_allowed_for_crew(data.categories[1]) then
+          if factory_id then
             local data = {
               category = data.use_data.selection_index == 2 and "primaries" or "secondaries",
               factory_id = factory_id
@@ -235,7 +237,7 @@ if not _G.BotWeapons then
     
       local char_loadout = self:get_char_loadout(char_name)
     
-      -- choose mask     
+      -- choose mask
       if loadout.mask == "character_locked" or loadout.mask_random then
         loadout.mask_slot = nil
 

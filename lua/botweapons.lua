@@ -2,7 +2,7 @@ if not _G.BotWeapons then
 
   _G.BotWeapons = {}
   BotWeapons._path = ModPath
-  BotWeapons._data_path = SavePath
+  BotWeapons._data_path = SavePath .. "bot_weapons_data.txt"
   BotWeapons._data = {}
 
   function BotWeapons:log(message, condition)
@@ -12,6 +12,8 @@ if not _G.BotWeapons then
   end
   
   function BotWeapons:init()
+    self.debug = false
+    
     self._version = "1.0"
     local file = io.open(BotWeapons._path .. "mod.txt", "r")
     if file then
@@ -20,27 +22,6 @@ if not _G.BotWeapons then
       self._version = data and data.version or self._version
     end
     self:log("Version " .. self._version)
-  
-    self.armor = {
-      { menu_name = "bm_armor_level_1" },
-      { menu_name = "bm_armor_level_2" },
-      { menu_name = "bm_armor_level_3" },
-      { menu_name = "bm_armor_level_4" },
-      { menu_name = "bm_armor_level_5" },
-      { menu_name = "bm_armor_level_6" },
-      { menu_name = "bm_armor_level_7" }
-    }
-  
-    self.equipment = {
-      { menu_name = "item_none" },
-      { menu_name = "bm_equipment_ammo_bag", name = "ammo_bag" },
-      { menu_name = "bm_equipment_armor_kit", name = "armor_kit" },
-      { menu_name = "bm_equipment_bodybags_bag", name = "bodybags_bag" },
-      { menu_name = "bm_equipment_doctor_bag", name = "doctor_bag" },
-      { menu_name = "bm_equipment_ecm_jammer", name = "ecm_jammer" },
-      { menu_name = "bm_equipment_first_aid_kit", name = "first_aid_kit" },
-      { menu_name = "bm_equipment_sentry_gun", name = "sentry_gun" }
-    }
     
     self.allowed_weapon_categories = { "assault_rifle", "shotgun", "snp", "lmg", "smg", "akimbo", "pistol" }
     
@@ -54,32 +35,6 @@ if not _G.BotWeapons then
     
     -- load settings
     self:load()
-  end
-  
-  function BotWeapons:get_menu_list(tbl, add)
-    if not tbl then
-      return {}
-    end
-    local menu_list = {}
-    local names = {}
-    local item_name
-    local localized_name
-    for _, v in ipairs(tbl) do
-      item_name = v.menu_name:gsub("^bm_w_", "item_")
-      localized_name = managers.localization:text(v.menu_name):upper()     
-      if v.menu_name:match("^bm_w_.+") then
-        localized_name = localized_name:gsub(" PISTOLS?$", ""):gsub(" REVOLVERS?$", ""):gsub(" RIFLES?$", ""):gsub(" SHOTGUNS?$", ""):gsub(" GUNS?$", ""):gsub(" LIGHT MACHINE$", ""):gsub(" SUBMACHINE$", ""):gsub(" ASSAULT$", ""):gsub(" SNIPER$", "")
-      end
-      table.insert(menu_list, item_name)
-      names[item_name] = localized_name
-    end
-    if add then
-      for _, v in ipairs(add) do
-        table.insert(menu_list, v)
-      end
-    end
-    managers.localization:add_localized_strings(names)
-    return menu_list
   end
   
   function BotWeapons:set_recoil(weapon, rec)
@@ -108,7 +63,7 @@ if not _G.BotWeapons then
     local current_level = managers.job and managers.job:current_level_id()
     if current_level ~= "glace" then
       unit:damage():run_sequence_simple(tweak_data.blackmarket.armors[armor].sequence)
-      if Utils:IsInGameState() and not Global.game_settings.single_player and LuaNetworking:IsHost() then
+      if Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
         managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, tweak_data.blackmarket.armors[armor].sequence)
       end
     end
@@ -127,7 +82,7 @@ if not _G.BotWeapons then
         end
       end
     end
-    if Utils:IsInGameState() and not Global.game_settings.single_player and LuaNetworking:IsHost() then
+    if Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
       local name = unit:base()._tweak_table
       DelayedCalls:Add("bot_weapons_sync_equipment_" .. name, 1, function ()
         LuaNetworking:SendToPeers("bot_weapons_equipment", name .. "," .. tostring(equipment))
@@ -135,85 +90,70 @@ if not _G.BotWeapons then
     end
   end
    
-  function BotWeapons:get_masks_data()
+  function BotWeapons:masks_data()
     if not self._masks_data then
       self._masks_data = {}
-      self._masks_data.masks = {}
-      for k, v in pairs(tweak_data.blackmarket.masks) do
-        if not v.inaccessible then
-          table.insert(self._masks_data.masks, k)
-        end
-      end
-      self._masks_data.colors = {}
-      for k, _ in pairs(tweak_data.blackmarket.colors) do
-        table.insert(self._masks_data.colors, k)
-      end
-      self._masks_data.patterns = {}
-      for k, _ in pairs(tweak_data.blackmarket.textures) do
-        table.insert(self._masks_data.patterns, k)
-      end
-      self._masks_data.materials = {}
-      for k, _ in pairs(tweak_data.blackmarket.materials) do
-        table.insert(self._masks_data.materials, k)
-      end
+      self._masks_data.masks = table.map_keys(table.filter(tweak_data.blackmarket.masks, function (v, k) return not v.inaccessible end))
+      self._masks_data.colors = table.map_keys(tweak_data.blackmarket.colors)
+      self._masks_data.patterns = table.map_keys(tweak_data.blackmarket.textures)
+      self._masks_data.materials = table.map_keys(tweak_data.blackmarket.materials)
     end
     return self._masks_data
   end
+  
+  function BotWeapons:armors()
+    if not self._armors then
+      self._armors = table.map_keys(tweak_data.blackmarket.armors)
+    end
+    return self._armors
+  end
+  
+  function BotWeapons:deployables()
+    if not self._deployables then
+      self._deployables = table.map_keys(tweak_data.blackmarket.deployables)
+    end
+    return self._deployables
+  end
 
+  -- returns npc version of weapon if it exists
   function BotWeapons:get_npc_version(weapon_id)
     local factory_id = weapon_id and managers.weapon_factory:get_factory_id_by_weapon_id(weapon_id)
     local tweak = factory_id and tweak_data.weapon.factory[factory_id .. "_npc"]
     return tweak and (not tweak.custom or DB:has(Idstring("unit"), tweak.unit:id())) and factory_id .. "_npc"
   end
-  
+
+  -- selects a random weapon and constructs a random blueprint for it
   function BotWeapons:get_random_weapon(category)
-    local cat = type(category) ~= "string" and self.allowed_weapon_categories[math.random(#self.allowed_weapon_categories)] or category
-    if not self.weapons or not self.weapons[cat] then
-      self.weapons = self.weapons or {}
-      self.weapons[cat] = {}
+    local cat = type(category) ~= "string" and table.random(self.allowed_weapon_categories) or category
+    if not self._weapons or not self._weapons[cat] then
+      self._weapons = self._weapons or {}
+      self._weapons[cat] = {}
       for weapon_id, data in pairs(tweak_data.weapon) do
         if data.autohit and data.categories[1] == cat then
           local factory_id = self:get_npc_version(weapon_id)
           if factory_id then
             local data = {
               category = data.use_data.selection_index == 2 and "primaries" or "secondaries",
-              factory_id = factory_id
+              factory_id = factory_id,
+              weapon_id = weapon_id,
             }
-            table.insert(self.weapons[cat], data)
+            table.insert(self._weapons[cat], data)
           end
         end
       end
     end
-    local weapon = self.weapons[cat][math.random(#self.weapons[cat])]
+    local weapon = table.random(self._weapons[cat])
     if not weapon then
       return {}
     end
-    weapon.blueprint = {}
-    local has_part_of_type = {}
-    local parts = deep_clone(tweak_data.weapon.factory[weapon.factory_id].uses_parts)
-    local adds = tweak_data.weapon.factory[weapon.factory_id].adds or {}
-    local must_use = {}
-    for _, part_name in ipairs(tweak_data.weapon.factory[weapon.factory_id].default_blueprint) do
-      local part_type = tweak_data.weapon.factory.parts[part_name].type
-      must_use[part_type] = true
-    end   
-    while #parts > 0 do
-      local index = math.random(#parts)
-      local part_name = parts[index]
-      local part = tweak_data.weapon.factory.parts[part_name]
-      local is_forbidden = part.unatainable or table.contains(adds, part_name) or managers.weapon_factory:_get_forbidden_parts(weapon.factory_id, weapon.blueprint)[part_name]
-      if not has_part_of_type[part.type] and not is_forbidden then
-        if (must_use[part.type] or math.random() < 0.5) then
-          table.insert(weapon.blueprint, part_name)
-          for i, v in ipairs(adds[part_name] or {}) do
-            table.insert(weapon.blueprint, v)
-            local add_type = tweak_data.weapon.factory.parts[v].type
-            has_part_of_type[add_type] = v
-          end
+    weapon.blueprint = deep_clone(tweak_data.weapon.factory[weapon.factory_id].default_blueprint)
+    for part_type, parts_data in pairs(managers.blackmarket:get_dropable_mods_by_weapon_id(weapon.weapon_id)) do
+      if math.random() < 0.5 then
+        local part_data = table.random(parts_data)
+        if part_data then
+          managers.weapon_factory:change_part_blueprint_only(weapon.factory_id, part_data[1], weapon.blueprint)
         end
-        has_part_of_type[part.type] = part_name
       end
-      table.remove(parts, index)
     end
     return weapon
   end
@@ -233,32 +173,29 @@ if not _G.BotWeapons then
       return
     end
     local loadout = deep_clone(original_loadout)
-    if LuaNetworking:IsHost() then
+    if Network:is_server() then
     
       local char_loadout = self:get_char_loadout(char_name)
     
       -- choose mask
       if loadout.mask == "character_locked" or loadout.mask_random then
         loadout.mask_slot = nil
-
         if not loadout.mask_random then
           loadout.mask = char_loadout.mask or "character_locked"
           loadout.mask_random = char_loadout.mask_random
           loadout.mask_blueprint = char_loadout.mask_blueprint
-        end
-        
-        if loadout.mask_random and type(loadout.mask_random) ~= "string" then
-          local masks_data = self:get_masks_data()
-          loadout.mask = masks_data.masks[math.random(#masks_data.masks)]
+        elseif type(loadout.mask_random) ~= "string" then
+          local masks_data = self:masks_data()
+          loadout.mask = table.random(masks_data.masks)
           if math.random() < (self._data.slider_mask_customized_chance or 0.5) then
             loadout.mask_blueprint = {
-              color = {id = masks_data.colors[math.random(#masks_data.colors)]},
-              pattern = {id = masks_data.patterns[math.random(#masks_data.patterns)]},
-              material = {id = masks_data.materials[math.random(#masks_data.materials)]}
+              color = { id = table.random(masks_data.colors) },
+              pattern = { id = table.random(masks_data.patterns) },
+              material = { id = table.random(masks_data.materials) }
             }
           end
-        elseif type(loadout.mask_random) == "string" and (self.masks[loadout.mask_random].character and self.masks[loadout.mask_random].character[char_name] or self.masks[loadout.mask_random].pool) then
-          local selection = self.masks[loadout.mask_random].character and self.masks[loadout.mask_random].character[char_name] or self.masks[loadout.mask_random].pool[math.random(#self.masks[loadout.mask_random].pool)]
+        elseif self.masks[loadout.mask_random].character and self.masks[loadout.mask_random].character[char_name] or self.masks[loadout.mask_random].pool then
+          local selection = self.masks[loadout.mask_random].character and self.masks[loadout.mask_random].character[char_name] or table.random(self.masks[loadout.mask_random].pool)
           loadout.mask = selection.id
           loadout.mask_blueprint = selection.blueprint
         end
@@ -272,15 +209,12 @@ if not _G.BotWeapons then
       -- choose weapon
       if not loadout.primary or loadout.primary_random then
         loadout.primary_slot = nil
-        
         if not loadout.primary_random then
           loadout.primary = char_loadout.primary
           loadout.primary_random = char_loadout.primary_random
           loadout.primary_blueprint = char_loadout.primary_blueprint
-        end
-        
-        if loadout.primary_random then
-          local weapon = self:get_random_weapon(type(loadout.primary_random) == "string" and loadout.primary_random or nil)
+        else
+          local weapon = self:get_random_weapon(loadout.primary_random)
           loadout.primary = weapon.factory_id
           loadout.primary_category = weapon.category
           loadout.primary_blueprint = weapon.blueprint
@@ -294,27 +228,21 @@ if not _G.BotWeapons then
       
       -- choose armor models
       if not loadout.armor or loadout.armor_random then
-      
         if not loadout.armor_random then
           loadout.armor = char_loadout.armor
           loadout.armor_random = char_loadout.armor_random
-        end
-
-        if loadout.armor_random then
-          loadout.armor = "level_" .. math.random(#BotWeapons.armor)
+        else
+          loadout.armor = table.random(self:armors())
         end
       end
       
       -- choose equipment models
       if not loadout.deployable or loadout.deployable_random then
-      
         if not loadout.deployable_random then
           loadout.deployable = char_loadout.deployable
           loadout.deployable_random = char_loadout.deployable_random
-        end
-      
-        if loadout.deployable_random then
-          loadout.deployable = BotWeapons.equipment[1 + math.random(#BotWeapons.equipment - 1)].name
+        else
+          loadout.deployable = table.random(self:deployables())
         end
       end
       
@@ -323,7 +251,7 @@ if not _G.BotWeapons then
     self._loadouts[char_name] = loadout
     return loadout
   end
-  
+
   function BotWeapons:set_character_loadout(char_name, loadout)
     if not char_name then
       return
@@ -345,7 +273,7 @@ if not _G.BotWeapons then
       primary_random = loadout.primary_random
     }
   end
-  
+
   Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function(sender, id, data)
     local peer = LuaNetworking:GetPeers()[sender]
     local params = string.split(data or "", ",", true)
@@ -359,7 +287,7 @@ if not _G.BotWeapons then
   end)
 
   function BotWeapons:save()
-    local file = io.open(self._data_path .. "bot_weapons_data.txt", "w+")
+    local file = io.open(self._data_path, "w+")
     if file then
       file:write(json.encode(self._data))
       file:close()
@@ -367,14 +295,14 @@ if not _G.BotWeapons then
   end
 
   function BotWeapons:load()
-    local file = io.open(self._data_path .. "bot_weapons_data.txt", "r")
+    local file = io.open(self._data_path, "r")
     if file then
       self._data = json.decode(file:read("*all"))
       file:close()
     end
   end
-  
+
   -- initialize
   BotWeapons:init()
-  
+
 end

@@ -12,7 +12,6 @@ Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInit_BotWeapons
   end
 end)
 
-
 local menu_id_main = "BotWeapons_menu_main"
 
 Hooks:Add("MenuManagerSetupCustomMenus", "MenuManagerSetupCustomMenus_BotWeapons", function(menu_manager, nodes)
@@ -49,6 +48,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     value = BotWeapons._data["slider_mask_customized_chance"] or 0.5,
     min = 0,
     max = 1,
+    step = 0.01,
     show_value = true,
     menu_id = menu_id_main,
     priority = 99

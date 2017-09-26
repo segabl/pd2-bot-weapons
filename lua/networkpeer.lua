@@ -4,7 +4,7 @@ local spawn_unit_original = NetworkPeer.spawn_unit
 function NetworkPeer:spawn_unit(spawn_point_id, is_drop_in, spawn_as)
   spawn_unit_original(self, spawn_point_id, is_drop_in, spawn_as)
   -- handle sync with dropped in peers
-  if LuaNetworking:IsHost() and is_drop_in and managers.groupai then
+  if Network:is_server() and is_drop_in then
     for _, data in pairs(managers.groupai:state():all_AI_criminals()) do
       if alive(data.unit) then
         local name = data.unit:base()._tweak_table

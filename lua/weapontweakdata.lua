@@ -37,7 +37,7 @@ function WeaponTweakData:init(...)
       if k:match("^x_") and self[k:gsub("^x_", "")] then
         v.auto = self[k:gsub("^x_", "")].auto or v.auto
         if v.auto and v.auto.fire_rate then
-          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"akimbo_smg\"", v.usage ~= "akimbo_smg")
+          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"akimbo_smg\"", BotWeapons.debug and v.usage ~= "akimbo_smg")
           v.usage = "akimbo_smg"
         end 
       end
@@ -48,16 +48,16 @@ function WeaponTweakData:init(...)
       -- fix auto damage and presets (use is_bullpup as burst fire preset)
       if v.auto and v.auto.fire_rate and not v.is_shotgun then
         if v.CLIP_AMMO_MAX >= 100 then
-          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_lmg\"", v.usage ~= "is_lmg")
+          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_lmg\"", BotWeapons.debug and v.usage ~= "is_lmg")
           v.usage = "is_lmg"
         elseif v.usage == "is_pistol" then
-          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_smg\"", v.usage ~= "is_smg")
+          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_smg\"", BotWeapons.debug and v.usage ~= "is_smg")
           v.usage = "is_smg"
         elseif (v.usage == "is_rifle" or v.usage == "is_bullpup") and v.CLIP_AMMO_MAX < 20 then
-          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_bullpup\"", v.usage ~= "is_bullpup")
+          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_bullpup\"", BotWeapons.debug and v.usage ~= "is_bullpup")
           v.usage = "is_bullpup"
         elseif v.usage == "is_bullpup" then
-          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_rifle\"", v.usage ~= "is_rifle")
+          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_rifle\"", BotWeapons.debug and v.usage ~= "is_rifle")
           v.usage = "is_rifle"
         end
         v.DAMAGE = v.usage == "is_bullpup" and m4_dps * v.auto.fire_rate * 3 or m4_dps * v.auto.fire_rate
@@ -65,7 +65,7 @@ function WeaponTweakData:init(...)
       -- fix pistol damage
       if v.usage == "is_pistol" or v.usage == "is_revolver" then
         if v.CLIP_AMMO_MAX <= 6 then
-          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_revolver\"", v.usage ~= "is_revolver")
+          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_revolver\"", BotWeapons.debug and v.usage ~= "is_revolver")
           v.usage = "is_revolver"
         end
         v.DAMAGE = v.usage == "is_revolver" and m4_dps * 0.5 or m4_dps * 0.2
@@ -74,7 +74,7 @@ function WeaponTweakData:init(...)
       if v.usage == "akimbo_pistol" then
         local single = self[k:gsub("^x_", "")]
         if single and (single.CLIP_AMMO_MAX <= 6 or single.usage == "is_revolver") then
-          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"akimbo_revolver\"", v.usage ~= "akimbo_revolver")
+          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"akimbo_revolver\"", BotWeapons.debug and v.usage ~= "akimbo_revolver")
           v.usage = "akimbo_revolver"
         end
         v.DAMAGE = v.usage == "akimbo_revolver" and m4_dps * 0.3 or m4_dps * 0.1
@@ -82,7 +82,7 @@ function WeaponTweakData:init(...)
       -- fix shotgun damage
       if v.is_shotgun and (v.usage == "is_shotgun_pump" or v.usage == "is_shotgun") then
         if v.CLIP_AMMO_MAX <= 2 or v.auto and v.auto.fire_rate and v.auto.fire_rate <= 0.5 then
-          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_shotgun\"", v.usage ~= "is_shotgun")
+          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_shotgun\"", BotWeapons.debug and v.usage ~= "is_shotgun")
           v.usage = "is_shotgun"
           v.DAMAGE = v.CLIP_AMMO_MAX <= 2 and m4_dps * 0.8 or m4_dps * 0.4
           v.auto = {}
@@ -93,7 +93,7 @@ function WeaponTweakData:init(...)
       -- fix sniper damage
       if v.usage == "is_sniper" or v.usage == "is_sniper_fast" then
         if v.auto and v.auto.fire_rate and v.auto.fire_rate <= 0.5 then
-          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_sniper_fast\"", v.usage ~= "is_sniper_fast")
+          BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_sniper_fast\"", BotWeapons.debug and v.usage ~= "is_sniper_fast")
           v.usage = "is_sniper_fast"
           v.DAMAGE = m4_dps * 0.5
         else

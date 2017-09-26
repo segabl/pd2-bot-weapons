@@ -89,6 +89,35 @@ if not _G.BotWeapons then
       end)
     end
   end
+  
+  function BotWeapons:set_special_character_material(unit, char_name)
+    if not alive(unit) then
+      return
+    end
+    char_name = char_name or unit:base()._tweak_table
+    local char_tweak = tweak_data.blackmarket.characters.locked[char_name] or tweak_data.blackmarket.characters[char_name]
+    if char_tweak and char_tweak.special_materials then
+      local special_material = nil
+      local special_materials = char_tweak.special_materials
+      for material, chance in pairs(special_materials) do
+        if type(chance) == "number" then
+          local rand = math.rand(chance)
+          if rand <= 1 then
+            special_material = material
+            break
+          end
+        end
+      end
+      special_material = special_material or table.random(special_materials)
+      local mtr_ids = Idstring(special_material)
+      if DB:has(Idstring("material_config"), mtr_ids) then
+        unit:set_material_config(mtr_ids, true)
+        if Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
+          managers.network:session():send_to_peers_synched("sync_special_character_material", unit, special_material)
+        end
+      end
+    end
+  end
    
   function BotWeapons:masks_data()
     if not self._masks_data then
@@ -173,7 +202,7 @@ if not _G.BotWeapons then
       return
     end
     local loadout = deep_clone(original_loadout)
-    if Network:is_server() then
+    if not Utils:IsInGameState() or Network:is_server() then
     
       local char_loadout = self:get_char_loadout(char_name)
     

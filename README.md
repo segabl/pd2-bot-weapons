@@ -1,4 +1,11 @@
 # Bot Weapons and Equipment
-This BLT mod allows you to choose the Team AIs weapons as well as their visual appearence via ingame menus. Weapons as well as the visual appearence like armor, masks and deployables will be synchronized with other players in your lobby (deployables are only visible to people also using the mod). Keep in mind that most of the changes are purely cosmetic and it will not enable Bots to place deployables or tank more damage. This mod will allow you to choose from your secondary and akimbo weapons in the crew management screen, add some advanced selection options to mask and weapon selection as well as fix some vanilla NPC weapon bugs.
-
-If you want to use any parts of this mod in your own project please make sure to read the license. In addition it would be nice if you notify me about it.
+This started out as a mod that would let you select different weapons for the team AI to use but has evolved into much more over time. With an official implementation by Overkill, it is now based around the Crew Management and improves on that with a variety of features:
+* Lets you select secondary and akimbo weapons for the team AI
+* Lets you choose mask sets for the team AI with character specific masks or a mask of a random pool
+* Lets you select deployables the team AI will carry (only visual, not actually usable)
+* Lets you select armor the team AI will wear (only visual, does not effect their survivability)
+* Adds advanced options to all loadout selections like randomized gear or selection from categories
+* Lets you save selected loadouts as character specific so a certain character will always show up with their selected gear independend of character priority
+* Adds a variety of weapon presets to represent the weapons better and fixes some of Overkill's weapon bugs
+* All the selected team AI gear will perfectly sync to other clients (deployables only to clients also using this mod)
+* Enables the random shirt feature for Sangres as a team AI

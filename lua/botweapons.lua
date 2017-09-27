@@ -111,6 +111,7 @@ if not _G.BotWeapons then
       special_material = special_material or table.random(special_materials)
       local mtr_ids = Idstring(special_material)
       if DB:has(Idstring("material_config"), mtr_ids) then
+        unit:base()._special_material_name = special_material
         unit:set_material_config(mtr_ids, true)
         if Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
           managers.network:session():send_to_peers_synched("sync_special_character_material", unit, special_material)

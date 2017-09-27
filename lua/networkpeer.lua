@@ -7,6 +7,10 @@ function NetworkPeer:spawn_unit(spawn_point_id, is_drop_in, spawn_as)
   if Network:is_server() and is_drop_in then
     for _, data in pairs(managers.groupai:state():all_AI_criminals()) do
       if alive(data.unit) then
+        local special_material = unit:base()._special_material_name
+        if special_material then
+          self:send_queued_sync("sync_special_character_material", data.unit, special_material)
+        end
         local name = data.unit:base()._tweak_table
         local loadout = managers.criminals:get_loadout_for(name)
         local current_level = managers.job and managers.job:current_level_id()

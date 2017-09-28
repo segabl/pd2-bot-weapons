@@ -1,4 +1,4 @@
-dofile(ModPath .. "lua/botweapons.lua")
+dofile(ModPath .. "botweapons.lua")
 
 local _reserve_loadout_for_original = CriminalsManager._reserve_loadout_for
 function CriminalsManager:_reserve_loadout_for(char_name, ...)

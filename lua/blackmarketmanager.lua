@@ -1,4 +1,4 @@
-dofile(ModPath .. "lua/botweapons.lua")
+dofile(ModPath .. "botweapons.lua")
 
 function BlackMarketManager:is_weapon_category_allowed_for_crew(weapon_category)
   return table.contains(BotWeapons.allowed_weapon_categories, weapon_category)

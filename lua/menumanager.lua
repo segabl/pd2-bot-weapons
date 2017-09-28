@@ -1,4 +1,4 @@
-dofile(ModPath .. "lua/botweapons.lua")
+dofile(ModPath .. "botweapons.lua")
 
 Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInit_BotWeapons", function(loc)
   -- load english localization as base

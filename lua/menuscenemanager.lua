@@ -1,4 +1,4 @@
-dofile(ModPath .. "lua/botweapons.lua")
+dofile(ModPath .. "botweapons.lua")
 
 function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
 

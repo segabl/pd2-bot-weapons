@@ -1,4 +1,4 @@
-dofile(ModPath .. "lua/botweapons.lua")
+dofile(ModPath .. "botweapons.lua")
 
 local _create_table_structure_original = WeaponTweakData._create_table_structure
 function WeaponTweakData:_create_table_structure(...)

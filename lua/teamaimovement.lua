@@ -1,4 +1,4 @@
-dofile(ModPath .. "lua/botweapons.lua")
+dofile(ModPath .. "botweapons.lua")
 
 function TeamAIMovement:add_weapons()
   if Network:is_server() then

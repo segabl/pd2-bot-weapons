@@ -1,4 +1,4 @@
-dofile(ModPath .. "lua/botweapons.lua")
+dofile(ModPath .. "botweapons.lua")
 
 local _presets_original = CharacterTweakData._presets
 function CharacterTweakData:_presets(...)

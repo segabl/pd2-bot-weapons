@@ -48,7 +48,7 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
     self:_init_character(unit, index)
     self._henchmen_characters[index] = unit
   end
-  BotWeapons:set_special_character_material(unit, character)
+  BotWeapons:set_special_material(unit, loadout.special_material)
   
   -- mask
   local sequence = managers.blackmarket:character_sequence_by_character_name(character)

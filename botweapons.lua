@@ -90,32 +90,15 @@ if not _G.BotWeapons then
     end
   end
   
-  function BotWeapons:set_special_character_material(unit, char_name)
-    if not alive(unit) then
+  function BotWeapons:set_special_material(unit, material_name)
+    if not alive(unit) or not material_name then
       return
     end
-    char_name = char_name or unit:base()._tweak_table
-    local char_tweak = tweak_data.blackmarket.characters.locked[char_name] or tweak_data.blackmarket.characters[char_name]
-    if char_tweak and char_tweak.special_materials then
-      local special_material = nil
-      local special_materials = char_tweak.special_materials
-      for material, chance in pairs(special_materials) do
-        if type(chance) == "number" then
-          local rand = math.rand(chance)
-          if rand <= 1 then
-            special_material = material
-            break
-          end
-        end
-      end
-      special_material = special_material or table.random(special_materials)
-      local mtr_ids = Idstring(special_material)
-      if DB:has(Idstring("material_config"), mtr_ids) then
-        unit:base()._special_material_name = special_material
-        unit:set_material_config(mtr_ids, true)
-        if Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
-          managers.network:session():send_to_peers_synched("sync_special_character_material", unit, special_material)
-        end
+    local mtr_ids = Idstring(material_name)
+    if DB:has(Idstring("material_config"), mtr_ids) then
+      unit:set_material_config(mtr_ids, true)
+      if Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
+        managers.network:session():send_to_peers_synched("sync_special_character_material", unit, material_name)
       end
     end
   end
@@ -214,7 +197,12 @@ if not _G.BotWeapons then
           loadout.mask = char_loadout.mask or "character_locked"
           loadout.mask_random = char_loadout.mask_random
           loadout.mask_blueprint = char_loadout.mask_blueprint
-        elseif type(loadout.mask_random) ~= "string" then
+        end
+        if type(loadout.mask_random) == "string" and self.masks[loadout.mask_random] and (self.masks[loadout.mask_random].character and self.masks[loadout.mask_random].character[char_name] or self.masks[loadout.mask_random].pool) then
+          local selection = self.masks[loadout.mask_random].character and self.masks[loadout.mask_random].character[char_name] or table.random(self.masks[loadout.mask_random].pool)
+          loadout.mask = selection.id
+          loadout.mask_blueprint = selection.blueprint
+        elseif loadout.mask_random then
           local masks_data = self:masks_data()
           loadout.mask = table.random(masks_data.masks)
           if math.random() < (self._data.slider_mask_customized_chance or 0.5) then
@@ -224,10 +212,6 @@ if not _G.BotWeapons then
               material = { id = table.random(masks_data.materials) }
             }
           end
-        elseif self.masks[loadout.mask_random].character and self.masks[loadout.mask_random].character[char_name] or self.masks[loadout.mask_random].pool then
-          local selection = self.masks[loadout.mask_random].character and self.masks[loadout.mask_random].character[char_name] or table.random(self.masks[loadout.mask_random].pool)
-          loadout.mask = selection.id
-          loadout.mask_blueprint = selection.blueprint
         end
       elseif loadout.mask_slot then
         local crafted = managers.blackmarket:get_crafted_category_slot("masks", loadout.mask_slot)
@@ -243,7 +227,8 @@ if not _G.BotWeapons then
           loadout.primary = char_loadout.primary
           loadout.primary_random = char_loadout.primary_random
           loadout.primary_blueprint = char_loadout.primary_blueprint
-        else
+        end
+        if loadout.primary_random then
           local weapon = self:get_random_weapon(loadout.primary_random)
           loadout.primary = weapon.factory_id
           loadout.primary_category = weapon.category
@@ -261,7 +246,8 @@ if not _G.BotWeapons then
         if not loadout.armor_random then
           loadout.armor = char_loadout.armor
           loadout.armor_random = char_loadout.armor_random
-        else
+        end
+        if loadout.armor_random then
           loadout.armor = table.random(self:armors())
         end
       end
@@ -271,9 +257,30 @@ if not _G.BotWeapons then
         if not loadout.deployable_random then
           loadout.deployable = char_loadout.deployable
           loadout.deployable_random = char_loadout.deployable_random
-        else
+        end
+        if loadout.deployable_random then
           loadout.deployable = table.random(self:deployables())
         end
+      end
+      
+      -- choose special material (Sangres)
+      local char_tweak = tweak_data.blackmarket.characters.locked[char_name] or tweak_data.blackmarket.characters[char_name]
+      if char_tweak and char_tweak.special_materials then
+        local special_material = nil
+        local special_materials = char_tweak.special_materials
+        for material, chance in pairs(special_materials) do
+          if type(chance) == "number" then
+            local rand = math.rand(chance)
+            if rand <= 1 then
+              special_material = material
+              break
+            end
+          end
+        end
+        special_material = special_material or table.random(special_materials)
+        loadout.special_material = special_material
+      else
+        loadout.special_material = nil
       end
       
     end

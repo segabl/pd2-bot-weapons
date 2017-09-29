@@ -126,24 +126,7 @@ function CrewManagementGui:init(ws, fullscreen_ws, node)
     y = 20
   })
   make_fine_text(loadout_text)
-  local info_panel
-  if managers.menu:is_pc_controller() then
-    info_panel = self._panel:panel({w = 30, h = 24})
-    do
-      local info_icon = info_panel:bitmap({
-        texture = "guis/textures/pd2/blackmarket/inv_newdrop"
-      })
-      info_icon:set_texture_coordinates(Vector3(0, 16, 0), Vector3(16, 16, 0), Vector3(0, 0, 0), Vector3(16, 0, 0))
-      info_icon:set_center(info_panel:center())
-      local info_button = CrewManagementGuiButton:new(self, callback(self, self, "show_help_dialog"), true)
-      info_button._panel = info_panel
-      info_button._select_col = Color.white:with_alpha(0.25)
-      info_button._normal_col = Color.white
-      function info_button:_selected_changed(state)
-        info_icon:set_color(state and self._select_col or self._normal_col)
-      end
-    end
-  end
+  -- removed info panel from here
   self._1_panel = self._panel:panel({
     h = 0,
     w = self._item_w,
@@ -178,7 +161,6 @@ function CrewManagementGui:init(ws, fullscreen_ws, node)
     panel:set_top(slot_text:bottom())
   end
   loadout_text:set_left(self._1_panel:left())
-  
     -- character specific settings here
   local character_text = self._panel:text({
     text = managers.localization:to_upper_text("menu_crew_character_settings"),
@@ -188,7 +170,6 @@ function CrewManagementGui:init(ws, fullscreen_ws, node)
   })
   make_fine_text(character_text)
   character_text:set_right(self._3_panel:right())
-  
   local character_settings = CrewManagementGuiButton:new(self, function()
     self:show_character_specific_settings()
   end, true)
@@ -197,11 +178,6 @@ function CrewManagementGui:init(ws, fullscreen_ws, node)
   character_settings._normal_col = tweak_data.screen_colors.button_stage_3
   character_settings._selected_changed = CrewManagementGuiTextButton._selected_changed
   -- end of char specific stuff
-  
-  if info_panel then
-    info_panel:set_center_y(loadout_text:center_y())
-    info_panel:set_left(loadout_text:right())
-  end
   self:create_mask_button(self._1_panel, 1)
   self:create_mask_button(self._2_panel, 2)
   self:create_mask_button(self._3_panel, 3)

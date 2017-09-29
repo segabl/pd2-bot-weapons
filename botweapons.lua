@@ -12,7 +12,7 @@ if not _G.BotWeapons then
   end
   
   function BotWeapons:init()
-    self.debug = false
+    self.debug = true
     
     self._version = "1.0"
     local file = io.open(BotWeapons._path .. "mod.txt", "r")
@@ -35,24 +35,6 @@ if not _G.BotWeapons then
     
     -- load settings
     self:load()
-  end
-  
-  function BotWeapons:set_recoil(weapon, rec)
-    if not weapon or not rec then
-      return
-    end
-    for _, v in ipairs(weapon.FALLOFF) do
-      v.recoil = rec
-    end
-  end
-  
-  function BotWeapons:set_mode(weapon, mode)
-    if not weapon or not mode then
-      return
-    end
-    for _, v in ipairs(weapon.FALLOFF) do
-      v.mode = mode
-    end
   end
   
   function BotWeapons:set_armor(unit, armor)

@@ -20,7 +20,7 @@ function CopActionShoot:init(action_desc, common_data, ...)
       end
       
       local mag = w_tweak.CLIP_AMMO_MAX
-      local burst_size = w_u_tweak.autofire_rounds and (w_u_tweak.autofire_rounds[1] + w_u_tweak.autofire_rounds[2]) * 0.5 or 1
+      local burst_size = w_tweak.fire_mode == "auto" and w_u_tweak.autofire_rounds and (w_u_tweak.autofire_rounds[1] + w_u_tweak.autofire_rounds[2]) * 0.5 or 1
       local shot_delay = w_tweak.fire_mode == "auto" and w_tweak.auto.fire_rate or w_tweak.auto.fire_rate * 1.5
       local burst_delay = w_tweak.auto.fire_rate * 1.5
       local reload = w_u_tweak.RELOAD_SPEED
@@ -28,11 +28,8 @@ function CopActionShoot:init(action_desc, common_data, ...)
       
       w_tweak.falloff = deep_clone(self._falloff)
       for _, v in ipairs(w_tweak.falloff) do
-        v.recoil = { shot_delay * 1.5, shot_delay * 2 }
+        v.recoil = { burst_delay, burst_delay * 1.35 }
       end
-      
-      con:print("DAMAGE for " .. self._weapon_base._name_id .. ": " .. w_tweak.DAMAGE)
-      con:print("recoil for " .. self._weapon_base._name_id .. ": {" .. (shot_delay * 1.5) .. ", " .. (shot_delay * 2) .. "}")
       
       self._unit:base()._saved_w_tweak = w_tweak
     end

@@ -53,6 +53,7 @@ function WeaponTweakData:init(...)
         local fire_rate = player_weapon.fire_mode_data and player_weapon.fire_mode_data.fire_rate or player_weapon[fire_mode] and player_weapon[fire_mode].fire_rate or 0.5
         v.auto = { fire_rate = fire_rate }
         v.fire_mode = fire_mode
+        v.burst_delay = math.min(fire_rate * 1.5, fire_rate + 0.25)
         if v.CLIP_AMMO_MAX >= 100 then
           BotWeapons:log("Change " .. k .. " usage from \"" .. v.usage .. "\" to \"is_lmg\"", BotWeapons.debug and v.usage ~= "is_lmg")
           v.usage = "is_lmg"

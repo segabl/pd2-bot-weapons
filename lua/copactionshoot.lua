@@ -36,7 +36,8 @@ function CopActionShoot:init(action_desc, common_data, ...)
         local burst_size = m4_tweak.fire_mode == "auto" and mean(m4_u_tweak.autofire_rounds) or 1
         local shot_delay = m4_tweak.auto.fire_rate
         local burst_delay = m4_tweak.burst_delay
-        local reload = m4_u_tweak.RELOAD_SPEED
+        local reload_time = 2 -- TODO: get actual animation time
+        local reload = reload_time / m4_u_tweak.RELOAD_SPEED
         CopActionShoot.TEAM_AI_TARGET_DAMAGE = (dmg * dmg_mul * mag) / ((mag / burst_size) * (burst_size - 1) * shot_delay + (mag / burst_size - 1) * burst_delay + reload)
       end
       -- calculate weapon damage based on m4 dps
@@ -45,7 +46,8 @@ function CopActionShoot:init(action_desc, common_data, ...)
       local burst_size = w_tweak.fire_mode == "auto" and mean(w_u_tweak.autofire_rounds) or 1
       local shot_delay = w_tweak.auto.fire_rate
       local burst_delay = w_tweak.burst_delay
-      local reload = w_u_tweak.RELOAD_SPEED
+      local reload_time = 2 -- TODO: get actual animation time
+      local reload = reload_time / w_u_tweak.RELOAD_SPEED
       self._weapon_base._damage = (CopActionShoot.TEAM_AI_TARGET_DAMAGE * ((mag / burst_size) * (burst_size - 1) * shot_delay + (mag / burst_size - 1) * burst_delay + reload)) / (mag * dmg_mul)
       -- customize falloff to allow usage independent single fire rates
       w_tweak.falloff = deep_clone(self._falloff)

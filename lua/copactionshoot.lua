@@ -1,4 +1,7 @@
 local function mean(tbl)
+  if not tbl or #tbl == 0 then
+    return
+  end
   local sum = 0
   for _, v in ipairs(tbl) do
     sum = sum + v
@@ -24,20 +27,22 @@ function CopActionShoot:init(action_desc, common_data, ...)
     local w_u_tweak = self._w_usage_tweak
     if not w_tweak.falloff then
       if not CopActionShoot.TEAM_AI_TARGET_DAMAGE then
+        local m4_tweak = tweak_data.weapon.m4_crew
+        local m4_u_tweak = common_data.char_tweak.weapon[m4_tweak.usage]
         -- calculate m4 dps as target dps for other weapons
-        local damage = tweak_data.weapon.m4_crew.DAMAGE
-        local dmg_mul = weighted_dmg_mul(common_data.char_tweak.weapon.is_rifle.FALLOFF)
-        local mag =  tweak_data.weapon.m4_crew.CLIP_AMMO_MAX
-        local burst_size = mean(common_data.char_tweak.weapon.is_rifle.autofire_rounds)
-        local shot_delay =  tweak_data.weapon.m4_crew.auto.fire_rate
-        local burst_delay = tweak_data.weapon.m4_crew.burst_delay
-        local reload = common_data.char_tweak.weapon.is_rifle.RELOAD_SPEED
-        CopActionShoot.TEAM_AI_TARGET_DAMAGE = (damage * dmg_mul * mag) / ((mag / burst_size) * (burst_size - 1) * shot_delay + (mag / burst_size - 1) * burst_delay + reload)
+        local dmg = m4_tweak.DAMAGE
+        local dmg_mul = weighted_dmg_mul(m4_u_tweak.FALLOFF)
+        local mag = m4_tweak.CLIP_AMMO_MAX
+        local burst_size = m4_tweak.fire_mode == "auto" and mean(m4_u_tweak.autofire_rounds) or 1
+        local shot_delay = m4_tweak.auto.fire_rate
+        local burst_delay = m4_tweak.burst_delay
+        local reload = m4_u_tweak.RELOAD_SPEED
+        CopActionShoot.TEAM_AI_TARGET_DAMAGE = (dmg * dmg_mul * mag) / ((mag / burst_size) * (burst_size - 1) * shot_delay + (mag / burst_size - 1) * burst_delay + reload)
       end
       -- calculate weapon damage based on m4 dps
       local dmg_mul = weighted_dmg_mul(w_u_tweak.FALLOFF)
       local mag = w_tweak.CLIP_AMMO_MAX
-      local burst_size = w_tweak.fire_mode == "auto" and w_u_tweak.autofire_rounds and mean(w_u_tweak.autofire_rounds) or 1
+      local burst_size = w_tweak.fire_mode == "auto" and mean(w_u_tweak.autofire_rounds) or 1
       local shot_delay = w_tweak.auto.fire_rate
       local burst_delay = w_tweak.burst_delay
       local reload = w_u_tweak.RELOAD_SPEED

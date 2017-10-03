@@ -5,7 +5,7 @@
   "blt_version" : 2,
   "color" : "0.043 0.808 0.6",
   "image" : "mod.png",
-  "version" : "9.3",
+  "version" : "9.4",
   "updates" : [ { "identifier" : "bot_weapons" } ],
   "hooks" : [
     { "hook_id" : "lib/managers/blackmarketmanager", "script_path" : "lua/blackmarketmanager.lua" },
@@ -13,6 +13,7 @@
     { "hook_id" : "lib/managers/menumanager", "script_path" : "lua/menumanager.lua" },
     { "hook_id" : "lib/managers/menu/crewmanagementgui", "script_path" : "lua/crewmanagementgui.lua" },
     { "hook_id" : "lib/managers/menu/menuscenemanager", "script_path" : "lua/menuscenemanager.lua" },
+    { "hook_id" : "lib/tweak_data/charactertweakdata", "script_path" : "lua/charactertweakdata.lua" },
     { "hook_id" : "lib/tweak_data/weapontweakdata", "script_path" : "lua/weapontweakdata.lua" },
     { "hook_id" : "lib/units/enemies/cop/actions/upper_body/copactionshoot", "script_path" : "lua/copactionshoot.lua" },
     { "hook_id" : "lib/units/player_team/teamaimovement", "script_path" : "lua/teamaimovement.lua" },

@@ -6,6 +6,6 @@ This started out as a mod that would let you select different weapons for the te
 * Lets you select armor the team AI will wear (only visual, does not effect their survivability)
 * Adds advanced options to all loadout selections like randomized gear or selection from categories
 * Lets you save selected loadouts as character specific so a certain character will always show up with their selected gear independend of character priority
-* Adds a variety of weapon presets to represent the weapons better and fixes some of Overkill's weapon bugs
+* Fixes the Team AI weapon balance by taking into account magazine and burst size and gives single fire weapon their correct ROF
 * All the selected team AI gear will perfectly sync to other clients (deployables only to clients also using this mod)
 * Enables the random shirt feature for Sangres as a team AI

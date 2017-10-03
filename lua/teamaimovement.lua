@@ -44,7 +44,7 @@ end
 
 local set_carrying_bag_original = TeamAIMovement.set_carrying_bag
 function TeamAIMovement:set_carrying_bag(unit, ...)
-  local enabled = BotWeapons._data.toggle_player_carry or BotWeapons._data.toggle_player_carry == nil
+  local enabled = BotWeapons._data.player_carry
   self:set_visual_carry(enabled and unit and unit:carry_data():carry_id())
   local bag_unit = unit or self._carry_unit
   if bag_unit then

@@ -3,7 +3,12 @@ if not _G.BotWeapons then
   _G.BotWeapons = {}
   BotWeapons._path = ModPath
   BotWeapons._data_path = SavePath .. "bot_weapons_data.txt"
-  BotWeapons._data = {}
+  BotWeapons._data = {
+    weapon_balance = true,
+    player_carry = true,
+    mask_customized_chance = 0.5,
+    weapon_customized_chance = 0.5
+  }
 
   function BotWeapons:log(message, condition)
     if condition or condition == nil then
@@ -143,7 +148,7 @@ if not _G.BotWeapons then
     end
     weapon.blueprint = deep_clone(tweak_data.weapon.factory[weapon.factory_id].default_blueprint)
     for part_type, parts_data in pairs(managers.blackmarket:get_dropable_mods_by_weapon_id(weapon.weapon_id)) do
-      if math.random() < 0.5 then
+      if math.random() < self._data.weapon_customized_chance then
         local part_data = table.random(parts_data)
         if part_data then
           managers.weapon_factory:change_part_blueprint_only(weapon.factory_id, part_data[1], weapon.blueprint)
@@ -187,7 +192,7 @@ if not _G.BotWeapons then
         elseif loadout.mask_random then
           local masks_data = self:masks_data()
           loadout.mask = table.random(masks_data.masks)
-          if math.random() < (self._data.slider_mask_customized_chance or 0.5) then
+          if math.random() < self._data.mask_customized_chance then
             loadout.mask_blueprint = {
               color = { id = table.random(masks_data.colors) },
               pattern = { id = table.random(masks_data.patterns) },
@@ -316,8 +321,13 @@ if not _G.BotWeapons then
   function BotWeapons:load()
     local file = io.open(self._data_path, "r")
     if file then
-      self._data = json.decode(file:read("*all"))
+      local data = json.decode(file:read("*all"))
       file:close()
+      if data then
+        for k, v in pairs(data) do
+          self._data[k] = v
+        end
+      end
     end
   end
 

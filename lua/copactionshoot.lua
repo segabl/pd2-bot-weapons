@@ -12,11 +12,9 @@ if BotWeapons._data.weapon_balance then
   
   local function average_burst_size(w_u_tweak)
     local mean_autofire = w_u_tweak.autofire_rounds and mean(w_u_tweak.autofire_rounds) or 1
-    local mode_sum = 0
     local average_burst_size = 0
     for _, v in ipairs(w_u_tweak.FALLOFF) do
-      mode_sum = v.mode[1] + v.mode[2] + v.mode[3] + v.mode[4]
-      average_burst_size = average_burst_size + (v.mode[1] * 1 + v.mode[2] * 2 + v.mode[3] * 3 + v.mode[4] * mean_autofire) / mode_sum
+      average_burst_size = average_burst_size + (v.mode[1] * 1 + (v.mode[2] - v.mode[1]) * 2 + (v.mode[3] - v.mode[2]) * 3 + (v.mode[4] - v.mode[3]) * mean_autofire)
     end
     return average_burst_size / #w_u_tweak.FALLOFF
   end

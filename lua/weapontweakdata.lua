@@ -34,10 +34,15 @@ function WeaponTweakData:init(...)
         local fire_rate = player_weapon.fire_mode_data and player_weapon.fire_mode_data.fire_rate or player_weapon[fire_mode] and player_weapon[fire_mode].fire_rate or 0.5
         v.auto = { fire_rate = fire_rate }
         v.fire_mode = fire_mode
-        v.burst_delay = math.min(fire_rate * 1.5, fire_rate + 0.25)
-        if v.usage == "akimbo_pistol" and fire_rate == "auto" then
-          v.anim_usage = v.usage
-          v.usage = "is_lmg"
+        v.burst_delay = { fire_rate, math.min(fire_rate * 1.5, fire_rate + 0.25) }
+        if fire_rate == "auto" then
+          if v.usage == "akimbo_pistol" then
+            v.anim_usage = v.usage
+            v.usage = "is_lmg"
+          elseif v.usage == "is_pistol" then
+            v.anim_usage = v.usage
+            v.usage = "is_smg"
+          end
         end
       else
         BotWeapons:log("Warning: Could not find player weapon version of " .. k .. "!")

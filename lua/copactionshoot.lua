@@ -37,16 +37,15 @@ if BotWeapons._data.weapon_balance then
           local mag = m4_tweak.CLIP_AMMO_MAX
           local burst_size = m4_tweak.fire_mode == "auto" and average_burst_size(m4_u_tweak) or 1
           local shot_delay = m4_tweak.auto.fire_rate
-          local burst_delay = m4_automatic and mean(m4_u_tweak.FALLOFF[1].recoil) or mean({ m4_tweak.auto.fire_rate, m4_tweak.auto.fire_rate * 1.5 })
+          local burst_delay = m4_automatic and mean(m4_u_tweak.FALLOFF[1].recoil) or mean(m4_tweak.burst_delay)
           local reload_time = HuskPlayerMovement:get_reload_animation_time(m4_tweak.hold)
           local reload = reload_time / m4_u_tweak.RELOAD_SPEED
           CopActionShoot.TEAM_AI_TARGET_DAMAGE = (dmg * mag) / ((mag / burst_size) * (burst_size - 1) * shot_delay + (mag / burst_size - 1) * burst_delay + reload)
         end
         if not w_automatic then
           w_tweak.falloff = deep_clone(w_u_tweak.FALLOFF)
-          local recoil = { w_tweak.auto.fire_rate, w_tweak.auto.fire_rate * 1.5 }
           for _, v in ipairs(w_tweak.falloff) do
-            v.recoil = recoil
+            v.recoil = w_tweak.burst_delay
           end
         else
           w_tweak.falloff = w_u_tweak.FALLOFF

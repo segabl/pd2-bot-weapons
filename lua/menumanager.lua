@@ -31,7 +31,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
   end
 
   MenuHelper:AddToggle({
-    id = "toggle_weapon_balance",
+    id = "weapon_balance",
     title = "toggle_weapon_balance_name",
     desc = "toggle_weapon_balance_desc",
     callback = "BotWeapons_toggle",
@@ -41,7 +41,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
   })
   
   MenuHelper:AddToggle({
-    id = "toggle_player_carry",
+    id = "player_carry",
     title = "toggle_player_carry_name",
     desc = "toggle_player_carry_desc",
     callback = "BotWeapons_toggle",
@@ -51,7 +51,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
   })
 
   MenuHelper:AddSlider({
-    id = "slider_mask_customized_chance",
+    id = "mask_customized_chance",
     title = "slider_mask_customized_chance_name",
     desc = "slider_mask_customized_chance_desc",
     callback = "BotWeapons_select",
@@ -65,7 +65,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
   })
   
   MenuHelper:AddSlider({
-    id = "slider_weapon_customized_chance",
+    id = "weapon_customized_chance",
     title = "slider_weapon_customized_chance_name",
     desc = "slider_weapon_customized_chance_desc",
     callback = "BotWeapons_select",

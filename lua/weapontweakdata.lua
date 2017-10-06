@@ -25,6 +25,15 @@ function WeaponTweakData:init(...)
     id = weapon_table[id] or id
     return self[id]
   end
+  
+  local function set_usage(key, weapon, usage)
+    if not weapon.anim_usage then
+      weapon.anim_usage = weapon.usage
+    end
+    BotWeapons:log(key .. " usage: " .. weapon.usage .. " -> " .. usage, BotWeapons.debug and weapon.usage ~= usage)
+    weapon.usage = usage
+  end
+  
   for k, v in pairs(self) do
     if type(v) == "table" and k:match("_crew$") then
       -- get player version of gun to copy fire rate and mode from
@@ -35,13 +44,17 @@ function WeaponTweakData:init(...)
         v.auto = { fire_rate = fire_rate }
         v.fire_mode = fire_mode
         v.burst_delay = { fire_rate, math.min(fire_rate * 1.5, fire_rate + 0.25) }
-        if fire_rate == "auto" then
+        if fire_mode == "auto" then
           if v.usage == "akimbo_pistol" then
-            v.anim_usage = v.usage
-            v.usage = "is_lmg"
+            set_usage(k, v, "is_lmg")
           elseif v.usage == "is_pistol" then
-            v.anim_usage = v.usage
-            v.usage = "is_smg"
+            set_usage(k, v, "is_smg")
+          elseif v.CLIP_AMMO_MAX >= 100 then
+            set_usage(k, v, "is_lmg")
+          end
+        else
+          if v.usage == "is_rifle" or v.usage == "is_bullpup" or v.usage == "is_smg" then
+            set_usage(k, v, "is_sniper")
           end
         end
       else

@@ -44,9 +44,9 @@ if BotWeapons._data.weapon_balance then
     
     -- single shotgun preset
     gang_presets.is_shotgun_pump.FALLOFF = {
-      { dmg_mul = rifle_dmg_mul * 1.5, r = 500, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
-      { dmg_mul = rifle_dmg_mul * 1, r = 1000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
-      { dmg_mul = rifle_dmg_mul * 0.6, r = 2000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
+      { dmg_mul = rifle_dmg_mul * 2, r = 500, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
+      { dmg_mul = rifle_dmg_mul * 1.5, r = 1000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
+      { dmg_mul = rifle_dmg_mul * 0.8, r = 2000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
       { dmg_mul = rifle_dmg_mul * 0.2, r = 3000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
       { dmg_mul = rifle_dmg_mul * 0.01, r = 10000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
     }
@@ -54,9 +54,9 @@ if BotWeapons._data.weapon_balance then
     
     -- auto shotgun preset
     gang_presets.is_shotgun_mag.FALLOFF = {
-      { dmg_mul = rifle_dmg_mul * 1.5, r = 500, acc = { 1, 1 }, recoil = { 0.1, 0.2 }, mode = { 0, 0, 0, 1 } },
-      { dmg_mul = rifle_dmg_mul * 1, r = 1000, acc = { 0.9, 1 }, recoil = { 0.15, 0.25 }, mode = { 0, 0, 1, 4 } },
-      { dmg_mul = rifle_dmg_mul * 0.6, r = 2000, acc = { 0.7, 0.9 }, recoil = { 0.2, 0.35 }, mode = { 0, 0, 1, 3 } },
+      { dmg_mul = rifle_dmg_mul * 2, r = 500, acc = { 1, 1 }, recoil = { 0.1, 0.2 }, mode = { 0, 0, 0, 1 } },
+      { dmg_mul = rifle_dmg_mul * 1.5, r = 1000, acc = { 0.9, 1 }, recoil = { 0.15, 0.25 }, mode = { 0, 0, 1, 4 } },
+      { dmg_mul = rifle_dmg_mul * 0.8, r = 2000, acc = { 0.7, 0.9 }, recoil = { 0.2, 0.35 }, mode = { 0, 0, 1, 3 } },
       { dmg_mul = rifle_dmg_mul * 0.2, r = 3000, acc = { 0.4, 0.7 }, recoil = { 0.4, 0.5 }, mode = { 0, 0, 1, 2 } },
       { dmg_mul = rifle_dmg_mul * 0.01, r = 10000, acc = { 0.1, 0.4 }, recoil = { 0.5, 1 }, mode = { 0, 0, 1, 1 } },
     }
@@ -64,15 +64,16 @@ if BotWeapons._data.weapon_balance then
     
     -- pistol preset
     gang_presets.is_pistol.FALLOFF = {
-      { dmg_mul = rifle_dmg_mul * 0.4, r = 10000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } }
+      { dmg_mul = rifle_dmg_mul * 0.5, r = 10000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } }
     }
-    gang_presets.is_pistol.spread = rifle_spread
+    gang_presets.is_pistol.spread = rifle_spread * 0.75
     gang_presets.is_revolver = gang_presets.is_pistol
     
     -- akimbo pistol preset
-    gang_presets.akimbo_pistol = deep_clone(gang_presets.is_pistol)
+    gang_presets.akimbo_pistol = deep_clone(gang_presets.is_rifle)
     gang_presets.akimbo_pistol.FALLOFF = {
-      { dmg_mul = rifle_dmg_mul * 0.6, r = 500, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
+      { dmg_mul = rifle_dmg_mul * 0.8, r = 500, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
+      { dmg_mul = rifle_dmg_mul * 0.6, r = 2000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
       { dmg_mul = rifle_dmg_mul * 0.4, r = 10000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } }
     }
     gang_presets.akimbo_pistol.spread = rifle_spread

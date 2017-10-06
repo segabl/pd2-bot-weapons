@@ -54,7 +54,7 @@ if BotWeapons._data.weapon_balance then
         local mag = w_tweak.CLIP_AMMO_MAX
         local burst_size = w_tweak.fire_mode == "auto" and average_burst_size(w_u_tweak) or 1
         local shot_delay = w_tweak.auto.fire_rate
-        local burst_delay = mean(w_u_tweak.FALLOFF[1].recoil)
+        local burst_delay = mean(w_tweak.falloff[1].recoil)
         local reload_time = HuskPlayerMovement:get_reload_animation_time(w_tweak.hold)
         local reload = reload_time / w_u_tweak.RELOAD_SPEED
         w_tweak.DAMAGE = (CopActionShoot.TEAM_AI_TARGET_DAMAGE * ((mag / burst_size) * (burst_size - 1) * shot_delay + (mag / burst_size - 1) * burst_delay + reload)) / mag

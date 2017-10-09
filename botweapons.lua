@@ -4,6 +4,7 @@ if not _G.BotWeapons then
   BotWeapons._path = ModPath
   BotWeapons._data_path = SavePath .. "bot_weapons_data.txt"
   BotWeapons._data = {
+    debug = true,
     weapon_balance = true,
     player_carry = true,
     mask_customized_chance = 0.5,
@@ -17,8 +18,6 @@ if not _G.BotWeapons then
   end
   
   function BotWeapons:init()
-    self.debug = true
-    
     self._version = "1.0"
     local file = io.open(BotWeapons._path .. "mod.txt", "r")
     if file then

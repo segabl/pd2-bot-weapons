@@ -30,7 +30,7 @@ function WeaponTweakData:init(...)
     if not weapon.anim_usage then
       weapon.anim_usage = weapon.usage
     end
-    BotWeapons:log(key .. " usage: " .. weapon.usage .. " -> " .. usage, BotWeapons.debug and weapon.usage ~= usage)
+    BotWeapons:log(key .. " usage: " .. weapon.usage .. " -> " .. usage, BotWeapons._data.debug and weapon.usage ~= usage)
     weapon.usage = usage
   end
   
@@ -43,7 +43,7 @@ function WeaponTweakData:init(...)
         local fire_rate = player_weapon.fire_mode_data and player_weapon.fire_mode_data.fire_rate or player_weapon[fire_mode] and player_weapon[fire_mode].fire_rate or 0.5
         v.auto = { fire_rate = fire_rate }
         v.fire_mode = fire_mode
-        v.burst_delay = { fire_rate, math.min(fire_rate * 1.5, fire_rate + 0.25) }
+        v.burst_delay = { fire_rate, math.max(math.min(fire_rate * 1.5, fire_rate + 0.25), fire_rate + 0.1) }
         if fire_mode == "auto" then
           if v.usage == "akimbo_pistol" then
             set_usage(k, v, "is_lmg")
@@ -55,6 +55,8 @@ function WeaponTweakData:init(...)
         else
           if v.usage == "is_rifle" or v.usage == "is_bullpup" or v.usage == "is_smg" then
             set_usage(k, v, "is_sniper")
+          elseif v.usage == "is_shotgun_mag" then
+            set_usage(k, v, "is_shotgun_pump")
           end
         end
       else

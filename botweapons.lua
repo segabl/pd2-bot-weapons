@@ -82,9 +82,9 @@ if not _G.BotWeapons then
     end
     local mtr_ids = Idstring(material_name)
     if DB:has(Idstring("material_config"), mtr_ids) then
-      unit:set_material_config(mtr_ids, true)
+      --unit:set_material_config(mtr_ids, true)
       if Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
-        managers.network:session():send_to_peers_synched("sync_special_character_material", unit, material_name)
+        --managers.network:session():send_to_peers_synched("sync_special_character_material", unit, material_name)
       end
     end
   end

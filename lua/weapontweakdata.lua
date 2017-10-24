@@ -45,7 +45,9 @@ function WeaponTweakData:init(...)
         v.fire_mode = fire_mode
         v.burst_delay = { fire_rate, math.max(math.min(fire_rate * 1.5, fire_rate + 0.25), fire_rate + 0.1) }
         if fire_mode == "auto" then
-          if v.usage == "akimbo_pistol" then
+          if v.is_shotgun or v.usage == "is_shotgun_pump" then
+            set_usage(k, v, "is_shotgun_mag")
+          elseif v.usage == "akimbo_pistol" then
             set_usage(k, v, "is_lmg")
           elseif v.usage == "is_pistol" then
             set_usage(k, v, "is_smg")
@@ -53,10 +55,10 @@ function WeaponTweakData:init(...)
             set_usage(k, v, "is_lmg")
           end
         else
-          if v.usage == "is_rifle" or v.usage == "is_bullpup" or v.usage == "is_smg" then
-            set_usage(k, v, "is_sniper")
-          elseif v.usage == "is_shotgun_mag" then
+          if v.is_shotgun or v.usage == "is_shotgun_mag" then
             set_usage(k, v, "is_shotgun_pump")
+          elseif v.usage == "is_rifle" or v.usage == "is_bullpup" or v.usage == "is_smg" then
+            set_usage(k, v, "is_sniper")
           end
         end
       else

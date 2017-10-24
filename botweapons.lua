@@ -4,7 +4,7 @@ if not _G.BotWeapons then
   BotWeapons._path = ModPath
   BotWeapons._data_path = SavePath .. "bot_weapons_data.txt"
   BotWeapons._data = {
-    debug = true,
+    debug = false,
     weapon_balance = true,
     player_carry = true,
     mask_customized_chance = 0.5,

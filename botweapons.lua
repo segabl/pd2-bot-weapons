@@ -8,7 +8,8 @@ if not _G.BotWeapons then
     weapon_balance = true,
     player_carry = true,
     mask_customized_chance = 0.5,
-    weapon_customized_chance = 0.5
+    weapon_customized_chance = 0.5,
+    use_flashlights = true
   }
 
   function BotWeapons:log(message, condition)
@@ -91,7 +92,15 @@ if not _G.BotWeapons then
       end
     end
   end
-   
+
+  function BotWeapons:should_use_flashlights()
+    if not self._data.use_flashlights then
+      return false
+    end
+    local environment = managers.viewport and managers.viewport:default_environment()
+    return environment and environment:find("night") and true or false
+  end
+  
   function BotWeapons:masks_data()
     if not self._masks_data then
       self._masks_data = {}

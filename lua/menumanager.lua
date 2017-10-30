@@ -49,6 +49,16 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     menu_id = menu_id_main,
     priority = 99
   })
+  
+  MenuHelper:AddToggle({
+    id = "use_flashlights",
+    title = "toggle_use_flashlights_name",
+    desc = "toggle_use_flashlights_desc",
+    callback = "BotWeapons_toggle",
+    value = BotWeapons._data.use_flashlights,
+    menu_id = menu_id_main,
+    priority = 98
+  })
 
   MenuHelper:AddSlider({
     id = "mask_customized_chance",
@@ -61,7 +71,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     step = 0.01,
     show_value = true,
     menu_id = menu_id_main,
-    priority = 98
+    priority = 97
   })
   
   MenuHelper:AddSlider({

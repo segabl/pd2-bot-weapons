@@ -85,7 +85,24 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     step = 0.01,
     show_value = true,
     menu_id = menu_id_main,
-    priority = 97
+    priority = 96
+  })
+  
+  MenuHelper:AddDivider({
+    id = "divider",
+    size = 16,
+    menu_id = menu_id_main,
+    priority = 95
+  })
+  
+  MenuHelper:AddToggle({
+    id = "sync_settings",
+    title = "toggle_sync_settings_name",
+    desc = "toggle_sync_settings_desc",
+    callback = "BotWeapons_toggle",
+    value = BotWeapons._data.sync_settings,
+    menu_id = menu_id_main,
+    priority = 94
   })
   
 end)

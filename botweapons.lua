@@ -7,9 +7,10 @@ if not _G.BotWeapons then
     debug = false,
     weapon_balance = true,
     player_carry = true,
+    use_flashlights = true,
     mask_customized_chance = 0.5,
     weapon_customized_chance = 0.5,
-    use_flashlights = true
+    sync_settings = true
   }
 
   function BotWeapons:log(message, condition)
@@ -50,7 +51,7 @@ if not _G.BotWeapons then
     local current_level = managers.job and managers.job:current_level_id()
     if current_level ~= "glace" then
       unit:damage():run_sequence_simple(tweak_data.blackmarket.armors[armor].sequence)
-      if Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
+      if self._data.sync_settings and Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
         managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, tweak_data.blackmarket.armors[armor].sequence)
       end
     end
@@ -69,7 +70,7 @@ if not _G.BotWeapons then
         end
       end
     end
-    if Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
+    if self._data.sync_settings and Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
       local name = unit:base()._tweak_table
       DelayedCalls:Add("bot_weapons_sync_equipment_" .. name, 1, function ()
         LuaNetworking:SendToPeers("bot_weapons_equipment", name .. "," .. tostring(equipment))
@@ -87,7 +88,7 @@ if not _G.BotWeapons then
       if unit:base().on_material_applied then
         unit:base():on_material_applied()
       end
-      if Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
+      if self._data.sync_settings and Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
         managers.network:session():send_to_peers_synched("sync_special_character_material", unit, material_name)
       end
     end

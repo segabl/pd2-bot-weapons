@@ -20,7 +20,8 @@ end
 local clbk_assembly_complete_original = NewRaycastWeaponBase.clbk_assembly_complete
 function NewRaycastWeaponBase:clbk_assembly_complete(...)
   local result = clbk_assembly_complete_original(self, ...)
-  if self._is_team_ai and BotWeapons:should_use_flashlights() then
+  local is_team_ai = self._is_team_ai or alive(self.parent_weapon) and self.parent_weapon:base()._is_team_ai
+  if is_team_ai and BotWeapons:should_use_flashlights() then
     -- enable flashlights
     self:set_gadget_on_by_type("flashlight")
   end

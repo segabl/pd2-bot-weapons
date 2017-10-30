@@ -98,8 +98,26 @@ if not _G.BotWeapons then
     if not self._data.use_flashlights then
       return false
     end
-    local environment = managers.viewport and managers.viewport:default_environment()
-    return environment and environment:find("night") and true or false
+    local should_use_env = self._should_use_flashlights_env
+    if should_use_env == nil then
+      local env_triggers = {
+        "night", "glace", "foggy", "_n2", "framing_frame_stage_2", "framing_frame_stage_3", "dah_outdoor",
+        "nail", "kosugi", "help", "fork_01", "spa_outside", "stern_01", "hlm1"
+      }
+      should_use_env = false
+      local environment = managers.environment and managers.environment:default_environment()
+      if environment then
+        environment = environment:gsub(".+/(.+)", "%1")
+        for _, v in ipairs(env_triggers) do
+          if environment:find(v) then
+            should_use_env = true
+            break
+          end
+        end
+      end
+      self._should_use_flashlights_env = should_use_env
+    end
+    return should_use_env
   end
   
   function BotWeapons:masks_data()

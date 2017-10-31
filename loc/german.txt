@@ -33,6 +33,8 @@
   "toggle_player_carry_desc" : "Die Team KI trägt Taschen wie Spieler, anstatt dass die Taschen über ihrem Rücken schweben",
   "toggle_use_flashlights_name" : "Benutze Taschenlampen wenn angebracht",
   "toggle_use_flashlights_desc" : "Die Team KI benutzt die Taschenlampen (wenn auf ihren Waffen vorhanden) auf dunkleren Überfällen",
+  "toggle_use_lasers_name" : "Benutze Laser wenn angebracht",
+  "toggle_use_lasers_desc" : "Die Team KI benutzt die Laser (wenn auf ihren Waffen vorhanden) wenn keine Taschenlampe verwendet wird",
   "toggle_sync_settings_name" : "Mit Clients synchronisieren",
   "toggle_sync_settings_desc" : "Sendet nicht-Vanilla Bot Optionen an Clients, damit sie die Team KI gleich wie du sehen",
   "slider_mask_customized_chance_name" : "Masken Individualisierungs-Wahrscheinlichkeit",

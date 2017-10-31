@@ -8,6 +8,7 @@ if not _G.BotWeapons then
     weapon_balance = true,
     player_carry = true,
     use_flashlights = true,
+    use_lasers = false,
     mask_customized_chance = 0.5,
     weapon_customized_chance = 0.5,
     sync_settings = true
@@ -93,31 +94,87 @@ if not _G.BotWeapons then
       end
     end
   end
+  
+  function BotWeapons:check_set_gadget_state(unit, weapon_unit)
+    if not alive(unit) or not alive(weapon_unit) then
+      return
+    end
+    local weapon_base = weapon_unit:base()
+    weapon_base:gadget_off()
+    local part = self:should_use_flashlight(unit:position()) and weapon_base:set_gadget_on_by_type("flashlight")
+    local part_type = "flashlight"
+    if not part and self:should_use_laser() then
+      part = weapon_base:set_gadget_on_by_type("laser")
+      part_type = "laser"
+    end
+    local sync = self._data.sync_settings and not Global.game_settings.single_player and Network:is_server()
+    if part then
+      local loadout = managers.criminals:get_loadout_for(unit:base()._tweak_table) or {}
+      local colors = managers.blackmarket:get_part_custom_colors(loadout.primary_category or "primaries", loadout.primary_slot or 0, part)
+      local col = colors[part_type]
+      weapon_base:set_gadget_color(col)
+      if sync then
+        managers.network:session():send_to_peers_synched("set_weapon_gadget_color", unit, col.r * 255, col.g * 255, col.b * 255)
+      end
+    end
+    if sync then
+      managers.network:session():send_to_peers_synched("set_weapon_gadget_state", unit, weapon_base._gadget_on or 0)
+    end
+  end
 
-  function BotWeapons:should_use_flashlights()
-    if not self._data.use_flashlights then
+  function BotWeapons:sync_to_peer(peer, unit)
+    if not peer or not alive(unit) then
+      return
+    end
+    local name = unit:base()._tweak_table
+    local loadout = managers.criminals:get_loadout_for(name)
+    -- send special material
+    if loadout.special_material then
+      peer:send_queued_sync("sync_special_character_material", unit, loadout.special_material)
+    end
+    -- send armor
+    local current_level = managers.job and managers.job:current_level_id()
+    if current_level ~= "glace" and loadout.armor then
+      peer:send_queued_sync("sync_run_sequence_char", unit, tweak_data.blackmarket.armors[loadout.armor].sequence)
+    end
+    -- send gadget state
+    local weapon = unit:inventory():equipped_unit()
+    if weapon then
+      local weapon_base = weapon:base()
+      local gadget = weapon_base.get_active_gadget and weapon_base:get_active_gadget()
+      if gadget and gadget.color then
+        local col = gadget:color()
+        peer:send_queued_sync("set_weapon_gadget_color", unit, col.r * 255, col.g * 255, col.b * 255)
+      end
+      peer:send_queued_sync("set_weapon_gadget_state", unit, weapon_base._gadget_on or 0)
+    end
+    -- send equipement
+    LuaNetworking:SendToPeer(peer:id(), "bot_weapons_equipment", name .. "," .. tostring(loadout.deployable))
+  end
+  
+  local env_triggers = {
+    "night", "glace", "foggy", "_n2", "framing_frame", "dah_outdoor", "dark", "mad_lab",
+    "nail", "kosugi", "help", "fork_01", "spa_outside", "stern_01", "hlm1"
+  }
+  function BotWeapons:should_use_flashlight(position)
+    if not self._data.use_flashlights or not position then
       return false
     end
-    local should_use_env = self._should_use_flashlights_env
-    if should_use_env == nil then
-      local env_triggers = {
-        "night", "glace", "foggy", "_n2", "framing_frame", "dah_outdoor",
-        "nail", "kosugi", "help", "fork_01", "spa_outside", "stern_01", "hlm1"
-      }
-      should_use_env = false
-      local environment = managers.viewport and managers.viewport:default_environment()
-      if environment then
-        environment = environment:gsub(".+/(.+)", "%1")
-        for _, v in ipairs(env_triggers) do
-          if environment:find(v) then
-            should_use_env = true
-            break
-          end
-        end
-      end
-      self._should_use_flashlights_env = should_use_env
+    local environment = managers.environment_area and managers.environment_area:environment_at_position(position)
+    if not environment then
+      return false
     end
-    return should_use_env
+    environment = environment:gsub(".+/(.+)", "%1")
+    for _, v in ipairs(env_triggers) do
+      if environment:find(v) then
+        return true
+      end
+    end
+    return false
+  end
+  
+  function BotWeapons:should_use_laser()
+    return self._data.use_lasers
   end
   
   function BotWeapons:masks_data()

@@ -33,6 +33,8 @@
   "toggle_player_carry_desc" : "Team AI will carry bags like human players instead of having them float above their backs",
   "toggle_use_flashlights_name" : "Use flashlights if appropriate",
   "toggle_use_flashlights_desc" : "Team AI will use flashlights (if available on their weapons) on darker heists",
+  "toggle_use_lasers_name" : "Use lasers if appropriate",
+  "toggle_use_lasers_desc" : "Team AI will use lasers (if available on their weapons) when not using flashlights",
   "toggle_sync_settings_name" : "Synchronize with clients",
   "toggle_sync_settings_desc" : "Sends non-vanilla bot options to clients so they can see the Team AI the same as you",
   "slider_mask_customized_chance_name" : "Mask customization chance",

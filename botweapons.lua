@@ -58,7 +58,7 @@ if not _G.BotWeapons then
     end
   end
   
-  function BotWeapons:set_equipment(unit, equipment)
+  function BotWeapons:set_equipment(unit, equipment, sync_delay)
     if not alive(unit) then
       return
     end
@@ -73,7 +73,7 @@ if not _G.BotWeapons then
     end
     if self._data.sync_settings and Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
       local name = unit:base()._tweak_table
-      DelayedCalls:Add("bot_weapons_sync_equipment_" .. name, 1, function ()
+      DelayedCalls:Add("bot_weapons_sync_equipment_" .. name, sync_delay or 0, function ()
         LuaNetworking:SendToPeers("bot_weapons_equipment", name .. "," .. tostring(equipment))
       end)
     end
@@ -95,30 +95,45 @@ if not _G.BotWeapons then
     end
   end
   
-  function BotWeapons:check_set_gadget_state(unit, weapon_unit)
-    if not alive(unit) or not alive(weapon_unit) then
+  function BotWeapons:set_gadget_colors(unit, weapon_base)
+    if not alive(unit) then
       return
     end
-    local weapon_base = weapon_unit:base()
-    weapon_base:gadget_off()
-    local part = self:should_use_flashlight(unit:position()) and weapon_base:set_gadget_on_by_type("flashlight")
-    local part_type = "flashlight"
-    if not part and self:should_use_laser() then
-      part = weapon_base:set_gadget_on_by_type("laser")
-      part_type = "laser"
-    end
-    local sync = self._data.sync_settings and not Global.game_settings.single_player and Network:is_server()
-    if part then
-      local loadout = managers.criminals:get_loadout_for(unit:base()._tweak_table) or {}
-      local colors = managers.blackmarket:get_part_custom_colors(loadout.primary_category or "primaries", loadout.primary_slot or 0, part)
-      local col = colors[part_type]
-      weapon_base:set_gadget_color(col)
-      if sync then
-        managers.network:session():send_to_peers_synched("set_weapon_gadget_color", unit, col.r * 255, col.g * 255, col.b * 255)
+    local loadout = managers.criminals:get_loadout_for(unit:base()._tweak_table)
+    local category = loadout.primary_category or "primaries"
+    local slot = loadout.primary_slot or 0
+    local parts = weapon_base._parts
+    local colors, data, alpha, sub_type
+    for part_id, part_data in pairs(parts) do
+      local colors = managers.blackmarket:get_part_custom_colors(category, slot or 0, part_id, true)
+      if colors then
+        data = tweak_data.weapon.factory.parts[part_id]
+        alpha = part_data.unit:base().GADGET_TYPE == "laser" and tweak_data.custom_colors.defaults.laser_alpha or 1
+        part_data.unit:base():set_color(colors[data.sub_type]:with_alpha(alpha))
+        for _, add_part_id in ipairs(data.adds or {}) do
+          if parts[add_part_id] and parts[add_part_id].unit:base() then
+            sub_type = tweak_data.weapon.factory.parts[add_part_id].sub_type
+            parts[add_part_id].unit:base():set_color(colors[sub_type])
+          end
+        end
       end
     end
-    if sync then
-      managers.network:session():send_to_peers_synched("set_weapon_gadget_state", unit, weapon_base._gadget_on or 0)
+  end
+  
+  function BotWeapons:check_set_gadget_state(unit, weapon_base, sync_delay)
+    if not weapon_base or not alive(unit)then
+      return
+    end
+    weapon_base:gadget_off()
+    local gadget = self:should_use_flashlight(unit:position()) and weapon_base:set_gadget_on_by_type("flashlight") or self:should_use_laser() and weapon_base:set_gadget_on_by_type("laser")
+    if self._data.sync_settings and not Global.game_settings.single_player and Network:is_server() then
+      DelayedCalls:Add("bot_weapons_sync_gadget_" .. unit:base()._tweak_table, sync_delay or 0, function ()
+        if gadget then
+          local col = gadget:base():color()
+          managers.network:session():send_to_peers_synched("set_weapon_gadget_color", unit, col.r * 255, col.g * 255, col.b * 255)
+        end
+        managers.network:session():send_to_peers_synched("set_weapon_gadget_state", unit, weapon_base._gadget_on or 0)
+      end)
     end
   end
 

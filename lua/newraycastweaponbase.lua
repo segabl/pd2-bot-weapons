@@ -25,7 +25,7 @@ function NewRaycastWeaponBase:set_gadget_on_by_type(gadget_type, gadgets)
       if gadget and gadget.unit:base().GADGET_TYPE == gadget_type then
         self._gadget_on = i
         gadget.unit:base():set_on()
-        return id
+        return gadget.unit, id
       end
     end
   end
@@ -36,7 +36,8 @@ function NewRaycastWeaponBase:clbk_assembly_complete(...)
   local result = clbk_assembly_complete_original(self, ...)
   if Network:is_server() and (self._is_team_ai or alive(self.parent_weapon) and self.parent_weapon:base()._is_team_ai) then
     -- Enable flashlight / laser
-    BotWeapons:check_set_gadget_state(self._setup and self._setup.user_unit, self._unit)
+    BotWeapons:set_gadget_colors(self._setup and self._setup.user_unit, self)
+    BotWeapons:check_set_gadget_state(self._setup and self._setup.user_unit, self, 2)
   end
   return result
 end

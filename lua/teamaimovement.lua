@@ -36,7 +36,7 @@ function TeamAIMovement:check_visual_equipment(...)
     -- set armor & deployables for team ai
     local loadout =  managers.criminals:get_loadout_for(self._ext_base._tweak_table)
     BotWeapons:set_armor(self._unit, loadout.armor, loadout.armor_skin)
-    BotWeapons:set_equipment(self._unit, loadout.deployable)
+    BotWeapons:set_equipment(self._unit, loadout.deployable, 2)
     BotWeapons:set_special_material(self._unit, loadout.special_material)
   end
   return check_visual_equipment_original(self, ...)

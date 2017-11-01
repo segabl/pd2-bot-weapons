@@ -9,3 +9,4 @@ This started out as a mod that would let you select different weapons for the te
 * Fixes the Team AI weapon balance by taking into account magazine and burst size and gives single fire weapon their correct ROF
 * All the selected team AI gear will perfectly sync to other clients (deployables only to clients also using this mod)
 * Enables the random shirt feature for Sangres as a team AI
+* Lets team AI use flashlights and lasers

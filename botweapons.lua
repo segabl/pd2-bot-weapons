@@ -103,17 +103,23 @@ if not _G.BotWeapons then
     local category = loadout.primary_category or "primaries"
     local slot = loadout.primary_slot or 0
     local parts = weapon_base._parts
-    local colors, data, alpha, sub_type
+    local colors, data, alpha, sub_type, part_base
     for part_id, part_data in pairs(parts) do
-      local colors = managers.blackmarket:get_part_custom_colors(category, slot or 0, part_id, true)
-      if colors then
+      part_base = part_data.unit and part_data.unit:base()
+      if part_base and part_base.set_color then
+        colors = managers.blackmarket:get_part_custom_colors(category, slot or 0, part_id)
+        if (loadout.primary_random) then
+          colors.laser = Color(hsv_to_rgb(math.random(360), 1, 0.4 + math.random() * 0.4))
+        end
         data = tweak_data.weapon.factory.parts[part_id]
         alpha = part_data.unit:base().GADGET_TYPE == "laser" and tweak_data.custom_colors.defaults.laser_alpha or 1
-        part_data.unit:base():set_color(colors[data.sub_type]:with_alpha(alpha))
+        part_base:set_color(colors[data.sub_type]:with_alpha(alpha))
         for _, add_part_id in ipairs(data.adds or {}) do
-          if parts[add_part_id] and parts[add_part_id].unit:base() then
+          part_data = parts[add_part_id]
+          part_base = part_data and part_data.unit and part_data.unit:base()
+          if part_base and part_base.set_color then
             sub_type = tweak_data.weapon.factory.parts[add_part_id].sub_type
-            parts[add_part_id].unit:base():set_color(colors[sub_type])
+            part_base:set_color(colors[sub_type])
           end
         end
       end

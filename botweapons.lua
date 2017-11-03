@@ -113,13 +113,17 @@ if not _G.BotWeapons then
         end
         data = tweak_data.weapon.factory.parts[part_id]
         alpha = part_data.unit:base().GADGET_TYPE == "laser" and tweak_data.custom_colors.defaults.laser_alpha or 1
-        part_base:set_color(colors[data.sub_type]:with_alpha(alpha))
+        if colors[data.sub_type] then
+          part_base:set_color(colors[data.sub_type]:with_alpha(alpha))
+        end
         for _, add_part_id in ipairs(data.adds or {}) do
           part_data = parts[add_part_id]
           part_base = part_data and part_data.unit and part_data.unit:base()
           if part_base and part_base.set_color then
             sub_type = tweak_data.weapon.factory.parts[add_part_id].sub_type
-            part_base:set_color(colors[sub_type])
+            if colors[sub_type] then
+              part_base:set_color(colors[sub_type])
+            end
           end
         end
       end

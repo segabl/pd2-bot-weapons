@@ -126,15 +126,18 @@ if not _G.BotWeapons then
     end
   end
   
-  function BotWeapons:check_set_gadget_state(unit, weapon_base, sync_delay)
-    if not weapon_base or not alive(unit)then
+  function BotWeapons:check_set_gadget_state(unit, weapon_unit, sync_delay)
+    if not weapon_base or not alive(unit) then
       return
     end
     weapon_base:gadget_off()
     local gadget = self:should_use_flashlight(unit:position()) and weapon_base:set_gadget_on_by_type("flashlight") or self:should_use_laser() and weapon_base:set_gadget_on_by_type("laser")
     if self._data.sync_settings and not Global.game_settings.single_player and Network:is_server() then
       DelayedCalls:Add("bot_weapons_sync_gadget_" .. unit:base()._tweak_table, sync_delay or 0, function ()
-        if gadget then
+        if not weapon_base or not alive(unit) then
+          return
+        end
+        if alive(gadget) and gadget:base() and gadget:base().color then
           local col = gadget:base():color()
           managers.network:session():send_to_peers_synched("set_weapon_gadget_color", unit, col.r * 255, col.g * 255, col.b * 255)
         end
@@ -175,7 +178,7 @@ if not _G.BotWeapons then
   
   local env_triggers = {
     "night", "glace", "foggy", "_n2", "framing_frame", "dah_outdoor", "dark", "mad_lab",
-    "nail", "kosugi", "help", "fork_01", "spa_outside", "stern_01", "hlm1"
+    "nail", "kosugi", "help", "fork_01", "spa_outside", "stern_01", "hlm1", "hvh"
   }
   function BotWeapons:should_use_flashlight(position)
     if not self._data.use_flashlights or not position then

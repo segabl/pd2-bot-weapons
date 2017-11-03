@@ -112,7 +112,7 @@ if not _G.BotWeapons then
           colors.laser = Color(hsv_to_rgb(math.random(360), 1, 0.4 + math.random() * 0.4))
         end
         data = tweak_data.weapon.factory.parts[part_id]
-        alpha = part_data.unit:base().GADGET_TYPE == "laser" and tweak_data.custom_colors.defaults.laser_alpha or 1
+        alpha = part_base.GADGET_TYPE == "laser" and tweak_data.custom_colors.defaults.laser_alpha or 1
         if colors[data.sub_type] then
           part_base:set_color(colors[data.sub_type]:with_alpha(alpha))
         end
@@ -130,7 +130,7 @@ if not _G.BotWeapons then
     end
   end
   
-  function BotWeapons:check_set_gadget_state(unit, weapon_unit, sync_delay)
+  function BotWeapons:check_set_gadget_state(unit, weapon_base, sync_delay)
     if not weapon_base or not alive(unit) then
       return
     end

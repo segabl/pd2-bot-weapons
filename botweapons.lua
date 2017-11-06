@@ -119,8 +119,8 @@ if not _G.BotWeapons then
       part_base = part_data.unit and part_data.unit:base()
       if part_base and part_base.set_color then
         colors = managers.blackmarket:get_part_custom_colors(category, slot or 0, part_id)
-        if (loadout.primary_random) then
-          colors.laser = Color(hsv_to_rgb(math.random(360), 1, 0.4 + math.random() * 0.4))
+        if (loadout.gadget_laser_color) then
+          colors.laser = loadout.gadget_laser_color
         end
         data = tweak_data.weapon.factory.parts[part_id]
         alpha = part_base.GADGET_TYPE == "laser" and tweak_data.custom_colors.defaults.laser_alpha or 1
@@ -345,6 +345,7 @@ if not _G.BotWeapons then
           loadout.primary = weapon.factory_id
           loadout.primary_category = weapon.category
           loadout.primary_blueprint = weapon.blueprint
+          loadout.gadget_laser_color = Color(hsv_to_rgb(math.random(360), 1, 0.4 + math.random() * 0.4))
         end
       elseif loadout.primary_slot then
         local crafted = managers.blackmarket:get_crafted_category_slot(loadout.primary_category or "primaries", loadout.primary_slot)

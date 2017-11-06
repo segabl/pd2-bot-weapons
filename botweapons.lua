@@ -13,6 +13,15 @@ if not _G.BotWeapons then
     weapon_customized_chance = 0.5,
     sync_settings = true
   }
+  BotWeapons.allowed_weapon_categories = {
+    "assault_rifle",
+    "shotgun",
+    "snp",
+    "lmg",
+    "smg",
+    "akimbo",
+    "pistol"
+  }
 
   function BotWeapons:log(message, condition)
     if condition or condition == nil then
@@ -30,8 +39,6 @@ if not _G.BotWeapons then
     end
     self:log("Version " .. self._version)
     
-    self.allowed_weapon_categories = { "assault_rifle", "shotgun", "snp", "lmg", "smg", "akimbo", "pistol" }
-    
     -- load mask sets
     file = io.open(BotWeapons._path .. "masks.json", "r")
     if file then
@@ -44,13 +51,17 @@ if not _G.BotWeapons then
     self:load()
   end
   
+  function BotWeapons:should_use_armor()
+    local current_level_data = managers.job and managers.job:current_level_data() or {}
+    return not current_level_data.player_sequence and true or false
+  end
+  
   function BotWeapons:set_armor(unit, armor)
     if not alive(unit) then
       return
     end
     armor = armor or "level_1"
-    local current_level = managers.job and managers.job:current_level_id()
-    if current_level ~= "glace" then
+    if self:should_use_armor() then
       unit:damage():run_sequence_simple(tweak_data.blackmarket.armors[armor].sequence)
       if self._data.sync_settings and Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
         managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, tweak_data.blackmarket.armors[armor].sequence)
@@ -161,8 +172,7 @@ if not _G.BotWeapons then
       peer:send_queued_sync("sync_special_character_material", unit, loadout.special_material)
     end
     -- send armor
-    local current_level = managers.job and managers.job:current_level_id()
-    if current_level ~= "glace" and loadout.armor then
+    if self:should_use_armor() and loadout.armor then
       peer:send_queued_sync("sync_run_sequence_char", unit, tweak_data.blackmarket.armors[loadout.armor].sequence)
     end
     -- send gadget state

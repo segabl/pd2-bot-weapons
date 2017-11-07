@@ -139,10 +139,13 @@ if not _G.BotWeapons then
         end
       end
     end
+    if alive(weapon_base._second_gun) then
+      self:set_gadget_colors(unit, weapon_base._second_gun:base())
+    end
   end
   
   function BotWeapons:check_set_gadget_state(unit, weapon_base, sync_delay)
-    if not weapon_base or not alive(unit) then
+    if not weapon_base or not alive(unit) or unit:movement():cool() then
       return
     end
     weapon_base:gadget_off()
@@ -158,6 +161,9 @@ if not _G.BotWeapons then
         end
         managers.network:session():send_to_peers_synched("set_weapon_gadget_state", unit, weapon_base._gadget_on or 0)
       end)
+    end
+    if alive(weapon_base._second_gun) then
+      self:check_set_gadget_state(unit, weapon_base._second_gun:base(), sync_delay)
     end
   end
 

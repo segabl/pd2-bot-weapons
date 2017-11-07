@@ -42,6 +42,16 @@ function TeamAIMovement:check_visual_equipment(...)
   return check_visual_equipment_original(self, ...)
 end
 
+local _switch_to_not_cool_clbk_func_original = TeamAIMovement._switch_to_not_cool_clbk_func
+function TeamAIMovement:_switch_to_not_cool_clbk_func(...)
+  _switch_to_not_cool_clbk_func_original(self, ...)
+  if Network:is_server() then
+    -- activate gadgets on going loud
+    local weapon = self._ext_inventory:equipped_unit()
+    BotWeapons:check_set_gadget_state(self._unit, weapon and weapon:base())
+  end
+end
+
 local set_carrying_bag_original = TeamAIMovement.set_carrying_bag
 function TeamAIMovement:set_carrying_bag(unit, ...)
   local enabled = BotWeapons._data.player_carry

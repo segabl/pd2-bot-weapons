@@ -140,11 +140,11 @@ if not _G.BotWeapons then
         end
       end
     end
-    weapon_base._setup_team_ai_colors = true
+    weapon_base._setup_team_ai_colors = weapon_base._assembly_complete
   end
   
   function BotWeapons:check_set_gadget_state(unit, weapon_base, sync_delay)
-    if not weapon_base or not weapon_base._assembly_complete or not alive(unit) or unit:movement():cool() then
+    if not weapon_base or not alive(unit) or unit:movement():cool() then
       return
     end
     local gadget = self:should_use_flashlight(unit:position()) and weapon_base:get_gadget_by_type("flashlight") or self:should_use_laser() and weapon_base:get_gadget_by_type("laser")
@@ -152,6 +152,9 @@ if not _G.BotWeapons then
       return
     end
     self:check_setup_gadget_colors(unit, weapon_base)
+    if alive(weapon_base._second_gun) then
+      self:check_setup_gadget_colors(unit, weapon_base._second_gun:base())
+    end
     weapon_base:set_gadget_on(gadget)
     if self._data.sync_settings and not Global.game_settings.single_player and Network:is_server() then
       DelayedCalls:Add("bot_weapons_sync_gadget_" .. unit:base()._tweak_table, sync_delay or 0, function ()
@@ -165,9 +168,6 @@ if not _G.BotWeapons then
         end
         managers.network:session():send_to_peers_synched("set_weapon_gadget_state", unit, weapon_base._gadget_on or 0)
       end)
-    end
-    if alive(weapon_base._second_gun) then
-      self:check_set_gadget_state(unit, weapon_base._second_gun:base(), sync_delay)
     end
   end
 

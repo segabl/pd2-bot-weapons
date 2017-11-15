@@ -161,9 +161,9 @@ if not _G.BotWeapons then
         if not weapon_base or not alive(unit) then
           return
         end
-        local gadget = weapon_base:get_active_gadget()
-        if alive(gadget) and gadget:base() and gadget:base().color then
-          local col = gadget:base():color()
+        local gadget_base = weapon_base:get_active_gadget()
+        if gadget_base and gadget_base.color then
+          local col = gadget_base:color()
           managers.network:session():send_to_peers_synched("set_weapon_gadget_color", unit, col.r * 255, col.g * 255, col.b * 255)
         end
         managers.network:session():send_to_peers_synched("set_weapon_gadget_state", unit, weapon_base._gadget_on or 0)

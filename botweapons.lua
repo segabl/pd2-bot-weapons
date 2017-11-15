@@ -106,52 +106,55 @@ if not _G.BotWeapons then
     end
   end
   
-  function BotWeapons:set_gadget_colors(unit, weapon_base)
-    if not alive(unit) then
+  function BotWeapons:check_setup_gadget_colors(unit, weapon_base)
+    if weapon_base._setup_team_ai_colors then
       return
     end
     local loadout = managers.criminals:get_loadout_for(unit:base()._tweak_table)
     local category = loadout.primary_category or "primaries"
     local slot = loadout.primary_slot or 0
     local parts = weapon_base._parts
-    local colors, data, alpha, sub_type, part_base
+    local colors, data, sub_type, part_base
     for part_id, part_data in pairs(parts) do
       part_base = part_data.unit and part_data.unit:base()
       if part_base and part_base.set_color then
-        colors = managers.blackmarket:get_part_custom_colors(category, slot, part_id)
-        if (loadout.gadget_laser_color) then
-          colors.laser = loadout.gadget_laser_color
-        end
-        data = tweak_data.weapon.factory.parts[part_id]
-        alpha = part_base.GADGET_TYPE == "laser" and tweak_data.custom_colors.defaults.laser_alpha or 1
-        if colors[data.sub_type] then
-          part_base:set_color(colors[data.sub_type]:with_alpha(alpha))
-        end
-        for _, add_part_id in ipairs(data.adds or {}) do
-          part_data = parts[add_part_id]
-          part_base = part_data and part_data.unit and part_data.unit:base()
-          if part_base and part_base.set_color then
-            sub_type = tweak_data.weapon.factory.parts[add_part_id].sub_type
-            if colors[sub_type] then
-              part_base:set_color(colors[sub_type])
+        colors = managers.blackmarket:get_part_custom_colors(category, slot, part_id, true) or loadout.primary_random and {
+          laser = loadout.gadget_laser_color or tweak_data.custom_colors.defaults.laser,
+          flashlight = tweak_data.custom_colors.defaults.flashlight
+        }
+        if colors then
+          data = tweak_data.weapon.factory.parts[part_id]
+          if colors[data.sub_type] then
+            part_base:set_color(colors[data.sub_type]:with_alpha(part_base.GADGET_TYPE == "laser" and tweak_data.custom_colors.defaults.laser_alpha or 1))
+          end
+          for _, add_part_id in ipairs(data.adds or {}) do
+            part_data = parts[add_part_id]
+            part_base = part_data and part_data.unit and part_data.unit:base()
+            if part_base and part_base.set_color then
+              sub_type = tweak_data.weapon.factory.parts[add_part_id].sub_type
+              if colors[sub_type] then
+                part_base:set_color(colors[sub_type])
+              end
             end
           end
         end
       end
     end
+    weapon_base._setup_team_ai_colors = true
     if alive(weapon_base._second_gun) then
       self:set_gadget_colors(unit, weapon_base._second_gun:base())
     end
   end
   
   function BotWeapons:check_set_gadget_state(unit, weapon_base, sync_delay)
-    if not weapon_base or not alive(unit) or unit:movement():cool() then
+    if not weapon_base or not weapon_base._assembly_complete or not alive(unit) or unit:movement():cool() then
       return
     end
     local gadget = self:should_use_flashlight(unit:position()) and weapon_base:get_gadget_by_type("flashlight") or self:should_use_laser() and weapon_base:get_gadget_by_type("laser")
     if gadget == weapon_base._gadget_on then
       return
     end
+    self:check_setup_gadget_colors(unit, weapon_base)
     weapon_base:set_gadget_on(gadget)
     if self._data.sync_settings and not Global.game_settings.single_player and Network:is_server() then
       DelayedCalls:Add("bot_weapons_sync_gadget_" .. unit:base()._tweak_table, sync_delay or 0, function ()
@@ -200,8 +203,8 @@ if not _G.BotWeapons then
   end
   
   local env_triggers = {
-    "night", "glace", "foggy", "_n2", "framing_frame", "dah_outdoor", "dark", "mad_lab",
-    "nail", "kosugi", "help", "fork_01", "spa_outside", "stern_01", "hlm1", "hvh"
+    "night", "glace", "foggy", "_n2", "framing_frame", "dah_outdoor", "dark", "mad_lab", "underground",
+    "nail", "kosugi", "help", "fork_01", "spa_outside", "stern_01", "hlm1", "hvh", "berry_connection"
   }
   function BotWeapons:should_use_flashlight(position)
     if not self._data.use_flashlights or not position then

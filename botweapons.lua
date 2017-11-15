@@ -141,9 +141,6 @@ if not _G.BotWeapons then
       end
     end
     weapon_base._setup_team_ai_colors = true
-    if alive(weapon_base._second_gun) then
-      self:set_gadget_colors(unit, weapon_base._second_gun:base())
-    end
   end
   
   function BotWeapons:check_set_gadget_state(unit, weapon_base, sync_delay)

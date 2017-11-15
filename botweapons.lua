@@ -118,7 +118,7 @@ if not _G.BotWeapons then
     for part_id, part_data in pairs(parts) do
       part_base = part_data.unit and part_data.unit:base()
       if part_base and part_base.set_color then
-        colors = managers.blackmarket:get_part_custom_colors(category, slot or 0, part_id)
+        colors = managers.blackmarket:get_part_custom_colors(category, slot, part_id)
         if (loadout.gadget_laser_color) then
           colors.laser = loadout.gadget_laser_color
         end
@@ -148,8 +148,11 @@ if not _G.BotWeapons then
     if not weapon_base or not alive(unit) or unit:movement():cool() then
       return
     end
-    weapon_base:gadget_off()
-    local gadget = self:should_use_flashlight(unit:position()) and weapon_base:set_gadget_on_by_type("flashlight") or self:should_use_laser() and weapon_base:set_gadget_on_by_type("laser")
+    local gadget = self:should_use_flashlight(unit:position()) and weapon_base:get_gadget_by_type("flashlight") or self:should_use_laser() and weapon_base:get_gadget_by_type("laser")
+    if gadget == weapon_base._gadget_on then
+      return
+    end
+    weapon_base:set_gadget_on(gadget)
     if self._data.sync_settings and not Global.game_settings.single_player and Network:is_server() then
       DelayedCalls:Add("bot_weapons_sync_gadget_" .. unit:base()._tweak_table, sync_delay or 0, function ()
         if not weapon_base or not alive(unit) then

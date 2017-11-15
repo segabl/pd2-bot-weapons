@@ -1,6 +1,6 @@
 dofile(ModPath .. "botweapons.lua")
 
-function NewRaycastWeaponBase:set_gadget_on_by_type(gadget_type, gadgets)
+function NewRaycastWeaponBase:get_gadget_by_type(gadget_type, gadgets)
   if not self._assembly_complete or not self._enabled then
     return
   end
@@ -23,9 +23,7 @@ function NewRaycastWeaponBase:set_gadget_on_by_type(gadget_type, gadgets)
     for i, id in ipairs(gadgets) do
       gadget = self._parts[id]
       if gadget and gadget.unit:base().GADGET_TYPE == gadget_type then
-        self._gadget_on = i
-        gadget.unit:base():set_on()
-        return gadget.unit, id
+        return i, id
       end
     end
   end

@@ -471,14 +471,3 @@ if not _G.BotWeapons then
   BotWeapons:init()
 
 end
-
-if Keepers and not BotWeapons._keepers_modified then
-
-  local ResetLabel_original = Keepers.ResetLabel
-  function Keepers:ResetLabel(unit, is_converted, icon, ...)
-    return ResetLabel_original(self, unit, is_converted, BotWeapons._data.player_carry and icon == "pd2_loot" and "wp_arrow" or icon, ...)
-  end
-
-  BotWeapons._keepers_modified = true
-
-end

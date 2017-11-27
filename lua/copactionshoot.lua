@@ -35,7 +35,7 @@ if BotWeapons._data.weapon_balance then
           local dmg = m4_tweak.DAMAGE
           local mag = m4_tweak.CLIP_AMMO_MAX
           local burst_size = m4_tweak.fire_mode == "auto" and average_burst_size(m4_u_tweak) or 1
-          local shot_delay = m4_tweak.auto.fire_rate or 0
+          local shot_delay = m4_tweak.auto and m4_tweak.auto.fire_rate or 0.5
           local burst_delay = mean((m4_automatic or not m4_tweak.burst_delay) and m4_u_tweak.FALLOFF[1].recoil or m4_tweak.burst_delay)
           local reload_time = HuskPlayerMovement:get_reload_animation_time(m4_tweak.hold)
           local reload = reload_time / m4_u_tweak.RELOAD_SPEED
@@ -52,7 +52,7 @@ if BotWeapons._data.weapon_balance then
         -- calculate weapon damage based on m4 dps
         local mag = w_tweak.CLIP_AMMO_MAX
         local burst_size = w_tweak.fire_mode == "auto" and average_burst_size(w_u_tweak) or 1
-        local shot_delay = w_tweak.auto.fire_rate or 0
+        local shot_delay = w_tweak.auto and w_tweak.auto.fire_rate or 0.5
         local burst_delay = mean(w_tweak.falloff[1].recoil)
         local reload_time = HuskPlayerMovement:get_reload_animation_time(w_tweak.hold)
         local reload = reload_time / w_u_tweak.RELOAD_SPEED

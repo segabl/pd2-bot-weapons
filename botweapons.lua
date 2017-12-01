@@ -52,8 +52,7 @@ if not _G.BotWeapons then
   end
   
   function BotWeapons:should_use_armor()
-    local current_level_data = managers.job and managers.job:current_level_data() or {}
-    return not current_level_data.player_sequence and true or false
+    return managers.job and managers.job:current_level_id() ~= "glace"
   end
   
   function BotWeapons:set_armor(unit, armor)

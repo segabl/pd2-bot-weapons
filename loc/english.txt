@@ -41,6 +41,8 @@
   "slider_mask_customized_chance_desc" : "Chance that a bot will have a customized mask when using random option",
   "slider_weapon_customized_chance_name" : "Weapon customization chance",
   "slider_weapon_customized_chance_desc" : "Chance that a bot will have a customized weapon when using random option",
+  "slider_weapon_cosmetics_chance_name" : "Weapon cosmetics chance",
+  "slider_weapon_cosmetics_chance_desc" : "Chance that a bot will have a weapon skin when using random option",
   "item_weapon" : "Weapon",
   "item_none" : "None",
   "item_random" : "Random",

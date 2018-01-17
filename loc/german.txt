@@ -41,6 +41,8 @@
   "slider_mask_customized_chance_desc" : "Wahrscheinlichkeit, dass ein Bot eine individualisierte Maske bei Auswahl der Zufall Option verwendet",
   "slider_weapon_customized_chance_name" : "Waffen Individualisierungs-Wahrscheinlichkeit",
   "slider_weapon_customized_chance_desc" : "Wahrscheinlichkeit, dass ein Bot eine individualisierte Waffe bei Auswahl der Zufall Option verwendet",
+  "slider_weapon_cosmetics_chance_name" : "Waffen Kosmetik-Wahrscheinlichkeit",
+  "slider_weapon_cosmetics_chance_desc" : "Wahrscheinlichkeit, dass ein Bot einen Waffen-Skin bei Auswahl der Zufall Option verwendet",
   "item_weapon" : "Waffe",
   "item_none" : "Nichts",
   "item_random" : "Zufall",

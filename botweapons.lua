@@ -11,6 +11,7 @@ if not _G.BotWeapons then
     use_lasers = false,
     mask_customized_chance = 0.5,
     weapon_customized_chance = 0.5,
+    weapon_cosmetics_chance = 0.5,
     sync_settings = true
   }
   BotWeapons.allowed_weapon_categories = {
@@ -289,6 +290,15 @@ if not _G.BotWeapons then
         end
       end
     end
+    if math.random() < self._data.weapon_cosmetics_chance then
+      local cosmetics = table.random_key(managers.blackmarket:get_cosmetics_by_weapon_id(weapon.weapon_id))
+      if cosmetics then
+        weapon.cosmetics = {
+          id = cosmetics,
+          quality = table.random_key(tweak_data.economy.qualities)
+        }
+      end
+    end
     return weapon
   end
   
@@ -348,12 +358,14 @@ if not _G.BotWeapons then
           loadout.primary = char_loadout.primary
           loadout.primary_random = char_loadout.primary_random
           loadout.primary_blueprint = char_loadout.primary_blueprint
+          loadout.primary_cosmetics = char_loadout.primary_cosmetics
         end
         if loadout.primary_random then
           local weapon = self:get_random_weapon(loadout.primary_random)
           loadout.primary = weapon.factory_id
           loadout.primary_category = weapon.category
           loadout.primary_blueprint = weapon.blueprint
+          loadout.primary_cosmetics = weapon.cosmetics
           loadout.gadget_laser_color = Color(hsv_to_rgb(math.random(360), 1, 0.4 + math.random() * 0.4))
         end
       elseif loadout.primary_slot then
@@ -429,6 +441,7 @@ if not _G.BotWeapons then
       mask_random = loadout.mask_random,
       primary = not loadout.primary_random and loadout.primary or nil,
       primary_blueprint = not loadout.primary_random and loadout.primary_blueprint or nil,
+      primary_cosmetics = not loadout.primary_random and loadout.primary_cosmetics or nil,
       primary_random = loadout.primary_random
     }
   end

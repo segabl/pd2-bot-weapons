@@ -281,15 +281,6 @@ if not _G.BotWeapons then
     if not weapon then
       return {}
     end
-    weapon.blueprint = deep_clone(tweak_data.weapon.factory[weapon.factory_id].default_blueprint)
-    for part_type, parts_data in pairs(managers.blackmarket:get_dropable_mods_by_weapon_id(weapon.weapon_id)) do
-      if math.random() < self._data.weapon_customized_chance then
-        local part_data = table.random(parts_data)
-        if part_data then
-          managers.weapon_factory:change_part_blueprint_only(weapon.factory_id, part_data[1], weapon.blueprint)
-        end
-      end
-    end
     if math.random() < self._data.weapon_cosmetics_chance then
       local cosmetics = table.random_key(managers.blackmarket:get_cosmetics_by_weapon_id(weapon.weapon_id))
       if cosmetics then
@@ -297,6 +288,15 @@ if not _G.BotWeapons then
           id = cosmetics,
           quality = table.random_key(tweak_data.economy.qualities)
         }
+      end
+    end
+    weapon.blueprint = deep_clone(weapon.cosmetics and tweak_data.blackmarket.weapon_skins[weapon.cosmetics.id].default_blueprint or tweak_data.weapon.factory[weapon.factory_id].default_blueprint)
+    for part_type, parts_data in pairs(managers.blackmarket:get_dropable_mods_by_weapon_id(weapon.weapon_id)) do
+      if math.random() < self._data.weapon_customized_chance then
+        local part_data = table.random(parts_data)
+        if part_data then
+          managers.weapon_factory:change_part_blueprint_only(weapon.factory_id, part_data[1], weapon.blueprint)
+        end
       end
     end
     return weapon

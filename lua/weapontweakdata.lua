@@ -34,6 +34,14 @@ function WeaponTweakData:init(...)
     weapon.usage = usage
   end
   
+  local function max_kick(kick)
+    local k = 0
+    for _, v in ipairs(kick) do
+      k = math.max(k, math.abs(v))
+    end
+    return k
+  end
+  
   for k, v in pairs(self) do
     if type(v) == "table" and k:match("_crew$") then
       -- get player version of gun to copy fire rate and mode from
@@ -41,9 +49,12 @@ function WeaponTweakData:init(...)
       if player_weapon then
         local fire_mode = player_weapon.FIRE_MODE or "single"
         local fire_rate = player_weapon.fire_mode_data and player_weapon.fire_mode_data.fire_rate or player_weapon[fire_mode] and player_weapon[fire_mode].fire_rate or 0.5
+        if player_weapon.categories[1] == "akimbo" then
+          fire_rate = fire_rate * 0.5
+        end
         v.auto = { fire_rate = fire_rate }
         v.fire_mode = fire_mode
-        v.burst_delay = { fire_rate, math.max(math.min(fire_rate * 1.5, fire_rate + 0.25), fire_rate + 0.1) }
+        v.burst_delay = { fire_rate, fire_rate + max_kick(player_weapon.kick.standing) * 0.1 }
         if fire_mode == "auto" then
           if v.is_shotgun or v.usage == "is_shotgun_pump" then
             set_usage(k, v, "is_shotgun_mag")

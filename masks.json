@@ -34,7 +34,12 @@
       { "id": "fab_mega_alien" },
       { "id": "cop_mega_gage_blade" },
       { "id": "fab_mega_mark" },
-      { "id": "mdm" }
+      { "id": "mdm" },
+      { "id": "ami_01" },
+      { "id": "ami_02" },
+      { "id": "ami_03" },
+      { "id": "ami_04" },
+      { "id": "ami_05" }
     ]
   },
   "shades": {

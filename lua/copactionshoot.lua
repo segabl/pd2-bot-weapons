@@ -61,6 +61,9 @@ if BotWeapons._data.weapon_balance then
       self._falloff = w_tweak.falloff
       self._automatic_weap = w_automatic
       self._weapon_base._damage = w_tweak.DAMAGE
+      if alive(self._weapon_base._second_gun) then
+        self._weapon_base._second_gun:base()._damage = w_tweak.DAMAGE
+      end
     end
     return success
   end

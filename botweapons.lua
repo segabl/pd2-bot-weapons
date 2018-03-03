@@ -14,7 +14,7 @@ if not _G.BotWeapons then
     weapon_cosmetics_chance = 0.5,
     sync_settings = true
   }
-  BotWeapons.allowed_weapon_categories = {
+  BotWeapons.weapon_categories = {
     "assault_rifle",
     "shotgun",
     "snp",
@@ -259,7 +259,7 @@ if not _G.BotWeapons then
 
   -- selects a random weapon and constructs a random blueprint for it
   function BotWeapons:get_random_weapon(category)
-    local cat = type(category) ~= "string" and table.random(self.allowed_weapon_categories) or category
+    local cat = type(category) ~= "string" and table.random(self.weapon_categories) or category
     if not self._weapons or not self._weapons[cat] then
       self._weapons = self._weapons or {}
       self._weapons[cat] = {}

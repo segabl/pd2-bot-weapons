@@ -449,7 +449,7 @@ function CrewManagementGui:show_weapon_selection(henchman_index)
             is_cancel_button = true
           }
         }
-        for i, v in ipairs(BotWeapons.allowed_weapon_categories) do
+        for i, v in ipairs(BotWeapons.weapon_categories) do
           table.insert(menu_options, #menu_options - 2, {
             text = managers.localization:text("menu_" .. v),
             callback = function () 

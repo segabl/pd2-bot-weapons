@@ -1,7 +1,10 @@
 dofile(ModPath .. "botweapons.lua")
 
+local menu_allows = {
+  minigun = true
+}
 function BlackMarketManager:is_weapon_category_allowed_for_crew(weapon_category)
-  return table.contains(BotWeapons.allowed_weapon_categories, weapon_category)
+  return table.contains(BotWeapons.weapon_categories, weapon_category) or menu_allows[weapon_category]
 end
 
 function BlackMarketManager:verfify_crew_loadout()

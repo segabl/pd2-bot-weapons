@@ -385,6 +385,9 @@ if not _G.BotWeapons then
           loadout.armor = table.random(self:armors())
         end
       end
+      if not tweak_data.blackmarket.armors[loadout.armor] then
+        loadout.armor = "level_1"
+      end
       
       -- choose equipment models
       if not loadout.deployable or loadout.deployable_random then

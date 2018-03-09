@@ -7,6 +7,7 @@ function WeaponTweakData:init(...)
   BotWeapons:log("Setting up weapons")
   
   local function get_player_weapon(id)
+    id = id:gsub("_crew$", ""):gsub("_secondary$", ""):gsub("_primary$", "")
     local weapon_table = {
       g17 = "glock_17",
       c45 = "glock_17",
@@ -45,7 +46,7 @@ function WeaponTweakData:init(...)
   for k, v in pairs(self) do
     if type(v) == "table" and k:match("_crew$") then
       -- get player version of gun to copy fire rate and mode from
-      local player_weapon = get_player_weapon(k:gsub("_crew$", ""):gsub("_secondary$", ""):gsub("_primary$", ""))
+      local player_weapon = get_player_weapon(k)
       if player_weapon then
         local fire_mode = player_weapon.FIRE_MODE or "single"
         local fire_rate = player_weapon.fire_mode_data and player_weapon.fire_mode_data.fire_rate or player_weapon[fire_mode] and player_weapon[fire_mode].fire_rate or 0.5

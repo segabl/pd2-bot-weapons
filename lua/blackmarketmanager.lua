@@ -30,6 +30,15 @@ function BlackMarketManager:henchman_loadout_string_from_loadout(loadout, ...)
   return henchman_loadout_string_from_loadout_original(self, loadout, ...)
 end
 
+local henchman_loadout_original = BlackMarketManager.henchman_loadout
+function BlackMarketManager:henchman_loadout(...)
+  local loadout = henchman_loadout_original(self, ...)
+  if loadout then
+    loadout.armor = loadout.armor and tweak_data.blackmarket.armors[loadout.armor] and loadout.armor
+  end
+  return loadout
+end
+
 function BlackMarketManager:get_deployable_icon(deployable)
   local guis_catalog = "guis/"
   local bundle_folder = tweak_data.blackmarket.deployables[deployable] and tweak_data.blackmarket.deployables[deployable].texture_bundle_folder

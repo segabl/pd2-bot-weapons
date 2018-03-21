@@ -368,8 +368,7 @@ function CrewManagementGui:open_weapon_category_menu(category, henchman_index)
   new_node_data.hide_detection_panel = true
   new_node_data.custom_callback = {
     w_equip = callback(self, self, "select_weapon", henchman_index),
-    w_unequip = callback(self, self, "select_weapon", henchman_index),
-    ew_buy = callback(self, self, "buy_new_weapon")
+    w_unequip = callback(self, self, "select_weapon", henchman_index)
   }
   new_node_data.topic_id = "bm_menu_" .. category
   new_node_data.topic_params = {
@@ -383,19 +382,16 @@ function CrewManagementGui:populate_primaries(henchman_index, data, gui)
   local loadout = managers.blackmarket:henchman_loadout(henchman_index)
   for k, v in ipairs(data) do
     local tweak = tweak_data.weapon[v.name]
-    v.equipped = loadout.primary_slot == v.slot and loadout.primary_category == v.category
+    v.equipped = not v.locked_slot and not v.empty_slot and loadout.primary_slot == v.slot and loadout.primary_category == v.category
+    v.comparision_data = nil
     if tweak and (not managers.blackmarket:is_weapon_category_allowed_for_crew(tweak.categories[1]) or not BotWeapons:get_npc_version(v.name)) then
       v.buttons = {}
       v.unlocked = false
       v.lock_texture = "guis/textures/pd2/lock_incompatible"
       v.lock_text = managers.localization:text("menu_data_crew_not_allowed")
-    elseif v.equipped then
-      v.buttons = {"w_unequip"}
-    elseif not v.empty_slot then
-      v.buttons = {"w_equip"}
+    else
+      v.buttons = not v.empty_slot and {v.equipped and "w_unequip" or "w_equip", "w_mod", "w_preview", "w_sell"} or {v.locked_slot and "ew_unlock" or "ew_buy"}
     end
-    v.comparision_data = nil
-    v.mini_icons = nil
   end
 end
 CrewManagementGui.populate_secondaries = CrewManagementGui.populate_primaries

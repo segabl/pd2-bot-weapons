@@ -28,9 +28,11 @@ if BotWeapons._data.weapon_balance then
     
     -- sniper preset
     gang_presets.is_sniper.FALLOFF = {
-      { dmg_mul = rifle_dmg_mul * 0.4, r = 4000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } }
+      { dmg_mul = rifle_dmg_mul * 0.5, r = 4000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } }
     }
-    gang_presets.is_sniper.spread = rifle_spread * 0.5
+    gang_presets.is_sniper.spread = rifle_spread * 0.75
+    gang_presets.is_pistol = gang_presets.is_sniper
+    gang_presets.is_revolver = gang_presets.is_sniper
     
     -- LMG preset
     gang_presets.is_lmg.FALLOFF = {
@@ -58,13 +60,6 @@ if BotWeapons._data.weapon_balance then
       { dmg_mul = rifle_dmg_mul * 0.0, r = 4000, acc = { 0.6, 0.8 }, recoil = { 0.55, 1 }, mode = { 0, 0, 1, 1 } },
     }
     gang_presets.is_shotgun_mag.spread = rifle_spread
-    
-    -- pistol preset
-    gang_presets.is_pistol.FALLOFF = {
-      { dmg_mul = rifle_dmg_mul * 0.5, r = 4000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } }
-    }
-    gang_presets.is_pistol.spread = rifle_spread * 0.75
-    gang_presets.is_revolver = gang_presets.is_pistol
     
     -- akimbo pistol preset
     gang_presets.akimbo_pistol = deep_clone(gang_presets.is_rifle)

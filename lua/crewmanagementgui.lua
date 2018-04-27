@@ -95,6 +95,8 @@ local function unselect_anim_text(object, font_size, instant)
 end
 
 function CrewManagementGui:init(ws, fullscreen_ws, node)
+  CriminalsManager.MAX_NR_TEAM_AI = LobbySettings and LobbySettings.original_MAX_NR_TEAM_AI or CriminalsManager.MAX_NR_TEAM_AI
+
   self._node = node
   self._item_w = 128
   self._item_h = 88
@@ -324,6 +326,8 @@ function CrewManagementGui:init(ws, fullscreen_ws, node)
   back._select_col = tweak_data.screen_colors.button_stage_2
   back._normal_col = tweak_data.screen_colors.button_stage_3
   back._selected_changed = CrewManagementGuiTextButton._selected_changed
+  
+  CriminalsManager.MAX_NR_TEAM_AI = Global.game_settings.max_bots or CriminalsManager.MAX_NR_TEAM_AI
 end
 
 local create_pages_original = CrewManagementGui.create_pages

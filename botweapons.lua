@@ -60,8 +60,7 @@ if not _G.BotWeapons then
     if not alive(unit) then
       return
     end
-    armor = armor or "level_1"
-    if self:should_use_armor() then
+    if armor and armor ~= "level_1" and self:should_use_armor() then
       unit:damage():run_sequence_simple(tweak_data.blackmarket.armors[armor].sequence)
       if self._data.sync_settings and Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
         managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, tweak_data.blackmarket.armors[armor].sequence)
@@ -182,7 +181,7 @@ if not _G.BotWeapons then
       peer:send_queued_sync("sync_special_character_material", unit, loadout.special_material)
     end
     -- send armor
-    if self:should_use_armor() and loadout.armor then
+    if loadout.armor and loadout.armor ~= "level_1" and self:should_use_armor() then
       peer:send_queued_sync("sync_run_sequence_char", unit, tweak_data.blackmarket.armors[loadout.armor].sequence)
     end
     -- send gadget state

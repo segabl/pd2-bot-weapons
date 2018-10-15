@@ -21,6 +21,9 @@
       },
       "wild": {
         "id": "mrm"
+      },
+      "myh": {
+        "id": "mmh"
       }
     },
     "pool": [
@@ -39,7 +42,18 @@
       { "id": "ami_02" },
       { "id": "ami_03" },
       { "id": "ami_04" },
-      { "id": "ami_05" }
+      { "id": "ami_05" },
+      { "id": "ami_06" },
+      { "id": "skm_05" },
+      { "id": "skm_06" },
+      { "id": "skm_07" },
+      { "id": "skm_08" },
+      { "id": "smo_07" },
+      { "id": "smo_08" },
+      { "id": "smo_09" },
+      { "id": "smo_10" },
+      { "id": "smo_11" },
+      { "id": "smo_12" }
     ]
   },
   "shades": {
@@ -50,7 +64,8 @@
       { "id": "sfm_03" },
       { "id": "rvd_01" },
       { "id": "rvd_02" },
-      { "id": "rvd_03" }
+      { "id": "rvd_03" },
+      { "id": "jw_shades" }
     ]
   },
   "beanies": {

@@ -1,4 +1,5 @@
 # Bot Weapons and Equipment
+![Logo](mod.png)  
 This started out as a mod that would let you select different weapons for the team AI to use but has evolved into much more over time. With an official implementation by Overkill, it is now based around the Crew Management and improves on that with a variety of features:
 * Lets you select secondary and akimbo weapons for the team AI
 * Lets you choose mask sets for the team AI with character specific masks or a mask of a random pool

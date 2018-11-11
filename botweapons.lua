@@ -374,6 +374,19 @@ if not _G.BotWeapons then
           loadout.primary_blueprint = crafted.blueprint
         end
       end
+      -- check for invalid weapon or weapon parts
+      if loadout.primary and not tweak_data.weapon.factory[loadout.primary] then
+        self:log("WARNING: Weapon " .. loadout.primary .. " does not exist, removed it from " .. char_name .. "!")
+        loadout.primary = nil
+        loadout.primary_blueprint = nil
+      end
+      for _, part in pairs(loadout.primary_blueprint or {}) do
+        if not tweak_data.weapon.factory.parts[part] then
+          self:log("WARNING: Weapon part " .. part .. " does not exist, removed weapon blueprint from " .. char_name .. "!")
+          loadout.primary_blueprint = nil
+          break
+        end
+      end
       
       -- choose armor models
       if not loadout.armor or loadout.armor_random then
@@ -385,6 +398,7 @@ if not _G.BotWeapons then
           loadout.armor = table.random(self:armors())
         end
       end
+      -- check for invalid armor
       if not tweak_data.blackmarket.armors[loadout.armor] then
         loadout.armor = "level_1"
       end

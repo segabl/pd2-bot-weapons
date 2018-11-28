@@ -1,5 +1,3 @@
-dofile(ModPath .. "botweapons.lua")
-
 local menu_allows = {
   minigun = true
 }

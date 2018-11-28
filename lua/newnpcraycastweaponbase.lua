@@ -1,6 +1,4 @@
-dofile(ModPath .. "botweapons.lua")
-
-function NewRaycastWeaponBase:get_gadget_by_type(gadget_type, gadgets)
+function NewNPCRaycastWeaponBase:get_gadget_by_type(gadget_type, gadgets)
   if not self._assembly_complete or not self._enabled then
     return
   end
@@ -29,8 +27,8 @@ function NewRaycastWeaponBase:get_gadget_by_type(gadget_type, gadgets)
   end
 end
 
-local clbk_assembly_complete_original = NewRaycastWeaponBase.clbk_assembly_complete
-function NewRaycastWeaponBase:clbk_assembly_complete(...)
+local clbk_assembly_complete_original = NewNPCRaycastWeaponBase.clbk_assembly_complete
+function NewNPCRaycastWeaponBase:clbk_assembly_complete(...)
   local result = clbk_assembly_complete_original(self, ...)
   if Network:is_server() and self._is_team_ai then
     -- check if activation is needed

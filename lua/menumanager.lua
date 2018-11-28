@@ -1,5 +1,3 @@
-dofile(ModPath .. "botweapons.lua")
-
 Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInit_BotWeapons", function(loc)
   local custom_language
   for _, mod in pairs(BLT and BLT.Mods:Mods() or {}) do

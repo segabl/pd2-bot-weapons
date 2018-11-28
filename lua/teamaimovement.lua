@@ -1,4 +1,6 @@
-dofile(ModPath .. "botweapons.lua")
+if BotWeapons._data.weapon_balance then
+  CopMovement._action_variants.team_ai.shoot = TeamAIActionShoot or CopMovement._action_variants.team_ai.shoot
+end
 
 function TeamAIMovement:add_weapons()
   if Network:is_server() then

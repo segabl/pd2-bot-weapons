@@ -1,5 +1,3 @@
-dofile(ModPath .. "botweapons.lua")
-
 -- lots of stuff to copy from the original file since OVK made it local
 local massive_font = tweak_data.menu.pd2_massive_font
 local large_font = tweak_data.menu.pd2_large_font

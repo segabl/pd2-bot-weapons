@@ -1,4 +1,4 @@
-if not _G.BotWeapons then
+if not BotWeapons then
 
   _G.BotWeapons = {}
   BotWeapons._path = ModPath
@@ -498,5 +498,14 @@ if not _G.BotWeapons then
 
   -- initialize
   BotWeapons:init()
+
+end
+
+if RequiredScript then
+
+  local fname = BotWeapons._path .. RequiredScript:gsub(".+/(.+)", "lua/%1.lua")
+  if io.file_is_readable(fname) then
+    dofile(fname)
+  end
 
 end

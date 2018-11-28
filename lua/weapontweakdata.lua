@@ -1,5 +1,3 @@
-dofile(ModPath .. "botweapons.lua")
-
 local init_original = WeaponTweakData.init
 function WeaponTweakData:init(...)
   init_original(self, ...)
@@ -23,8 +21,7 @@ function WeaponTweakData:init(...)
       ben = "benelli",
       beretta92 = "b92fs"
     }
-    id = weapon_table[id] or id
-    return self[id]
+    return self[weapon_table[id] or id]
   end
   
   local function set_usage(key, weapon, usage)
@@ -36,8 +33,8 @@ function WeaponTweakData:init(...)
   end
   
   local function max_kick(kick)
-    local k = 0
-    for _, v in ipairs(kick) do
+    local k = 0.5
+    for _, v in ipairs(kick or {}) do
       k = math.max(k, math.abs(v))
     end
     return k
@@ -50,12 +47,10 @@ function WeaponTweakData:init(...)
       if player_weapon then
         local fire_mode = player_weapon.FIRE_MODE or "single"
         local fire_rate = player_weapon.fire_mode_data and player_weapon.fire_mode_data.fire_rate or player_weapon[fire_mode] and player_weapon[fire_mode].fire_rate or 0.5
-        if player_weapon.categories[1] == "akimbo" then
-          fire_rate = fire_rate * 0.5
-        end
         v.auto = { fire_rate = fire_rate }
         v.fire_mode = fire_mode
         v.burst_delay = { fire_rate, fire_rate + max_kick(player_weapon.kick.standing) * 0.1 }
+        v.reload_time = player_weapon.timers.reload_not_empty
         if fire_mode == "auto" then
           if v.is_shotgun or v.usage == "is_shotgun_pump" then
             set_usage(k, v, "is_shotgun_mag")

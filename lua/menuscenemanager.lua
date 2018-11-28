@@ -1,5 +1,3 @@
-dofile(ModPath .. "botweapons.lua")
-
 function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
 
   self._picked_character_position = self._picked_character_position or {}

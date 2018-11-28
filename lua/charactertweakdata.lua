@@ -1,5 +1,3 @@
-dofile(ModPath .. "botweapons.lua")
-
 if BotWeapons._data.weapon_balance then
 
   local _presets_original = CharacterTweakData._presets

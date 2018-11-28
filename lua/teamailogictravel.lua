@@ -1,5 +1,3 @@
-dofile(ModPath .. "botweapons.lua")
-
 local exit_original = TeamAILogicTravel.exit
 function TeamAILogicTravel.exit(data, new_logic_name, ...)
   if Network:is_server() and new_logic_name ~= "travel" then

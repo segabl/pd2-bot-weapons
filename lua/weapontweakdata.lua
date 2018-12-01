@@ -28,7 +28,7 @@ function WeaponTweakData:init(...)
     if not weapon.anim_usage then
       weapon.anim_usage = weapon.usage
     end
-    BotWeapons:log(key .. " usage: " .. weapon.usage .. " -> " .. usage, BotWeapons._data.debug and weapon.usage ~= usage)
+    BotWeapons:log(key .. " usage: " .. tostring(weapon.usage) .. " -> " .. usage, BotWeapons._data.debug and weapon.usage ~= usage)
     weapon.usage = usage
   end
   

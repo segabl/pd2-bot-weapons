@@ -50,6 +50,13 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     priority = 100
   })
   
+  MenuHelper:AddDivider({
+    id = "divider0",
+    size = 16,
+    menu_id = menu_id_main,
+    priority = 99
+  })
+  
   MenuHelper:AddToggle({
     id = "player_carry",
     title = "toggle_player_carry_name",
@@ -57,7 +64,14 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     callback = "BotWeapons_toggle",
     value = BotWeapons._data.player_carry,
     menu_id = menu_id_main,
-    priority = 99
+    priority = 98
+  })
+  
+  MenuHelper:AddDivider({
+    id = "divider1",
+    size = 16,
+    menu_id = menu_id_main,
+    priority = 97
   })
   
   MenuHelper:AddToggle({
@@ -67,7 +81,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     callback = "BotWeapons_toggle",
     value = BotWeapons._data.use_flashlights,
     menu_id = menu_id_main,
-    priority = 98
+    priority = 96
   })
   
   MenuHelper:AddToggle({
@@ -77,7 +91,14 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     callback = "BotWeapons_toggle",
     value = BotWeapons._data.use_lasers,
     menu_id = menu_id_main,
-    priority = 97
+    priority = 95
+  })
+  
+  MenuHelper:AddDivider({
+    id = "divider2",
+    size = 16,
+    menu_id = menu_id_main,
+    priority = 94
   })
 
   MenuHelper:AddSlider({
@@ -91,7 +112,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     step = 0.01,
     show_value = true,
     menu_id = menu_id_main,
-    priority = 96
+    priority = 93
   })
   
   MenuHelper:AddSlider({
@@ -105,7 +126,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     step = 0.01,
     show_value = true,
     menu_id = menu_id_main,
-    priority = 95
+    priority = 92
   })
   
   MenuHelper:AddSlider({
@@ -119,14 +140,28 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     step = 0.01,
     show_value = true,
     menu_id = menu_id_main,
-    priority = 94
+    priority = 91
+  })
+  
+  MenuHelper:AddSlider({
+    id = "armor_cosmetics_chance",
+    title = "slider_armor_cosmetics_chance_name",
+    desc = "slider_armor_cosmetics_chance_desc",
+    callback = "BotWeapons_select",
+    value = BotWeapons._data.armor_cosmetics_chance,
+    min = 0,
+    max = 1,
+    step = 0.01,
+    show_value = true,
+    menu_id = menu_id_main,
+    priority = 90
   })
   
   MenuHelper:AddDivider({
-    id = "divider",
+    id = "divider3",
     size = 16,
     menu_id = menu_id_main,
-    priority = 93
+    priority = 89
   })
   
   MenuHelper:AddToggle({
@@ -136,7 +171,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     callback = "BotWeapons_toggle",
     value = BotWeapons._data.sync_settings,
     menu_id = menu_id_main,
-    priority = 93
+    priority = 88
   })
   
 end)

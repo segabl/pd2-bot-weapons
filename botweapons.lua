@@ -12,6 +12,7 @@ if not BotWeapons then
     mask_customized_chance = 0.5,
     weapon_customized_chance = 0.5,
     weapon_cosmetics_chance = 0.5,
+    armor_cosmetics_chance = 0.5,
     sync_settings = true
   }
   BotWeapons.weapon_categories = {
@@ -57,12 +58,20 @@ if not BotWeapons then
     return not (tweak_data.levels[level_id] and tweak_data.levels[level_id].player_sequence)
   end
   
-  function BotWeapons:set_armor(unit, armor)
+  function BotWeapons:set_armor(unit, armor, armor_skin)
     if not alive(unit) then
       return
     end
     if armor and armor ~= "level_1" and self:should_use_armor() then
       unit:damage():run_sequence_simple(tweak_data.blackmarket.armors[armor].sequence)
+      if armor_skin then
+        local armor_skin_ext = unit:base()._armor_skin_ext or ArmorSkinExt:new(unit)
+        armor_skin_ext:set_character(unit:base()._tweak_table)
+        armor_skin_ext:set_armor_id(armor)
+        armor_skin_ext:set_cosmetics_data(armor_skin)
+        armor_skin_ext:_apply_cosmetics()
+        unit:base()._armor_skin_ext = armor_skin_ext
+      end
       if self._data.sync_settings and Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
         managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, tweak_data.blackmarket.armors[armor].sequence)
       end
@@ -196,7 +205,7 @@ if not BotWeapons then
       end
       peer:send_queued_sync("set_weapon_gadget_state", unit, weapon_base._gadget_on or 0)
     end
-    -- send equipement
+    -- send equipment
     LuaNetworking:SendToPeer(peer:id(), "bot_weapons_equipment", name .. "," .. tostring(loadout.deployable))
   end
   
@@ -401,6 +410,11 @@ if not BotWeapons then
       -- check for invalid armor
       if not tweak_data.blackmarket.armors[loadout.armor] then
         loadout.armor = "level_1"
+      end
+      
+      -- choose armor skin
+      if math.random() < self._data.armor_cosmetics_chance then
+        loadout.armor_skin = table.random_key(tweak_data.economy.armor_skins)
       end
       
       -- choose equipment models

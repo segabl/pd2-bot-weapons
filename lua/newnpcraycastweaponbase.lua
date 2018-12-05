@@ -32,7 +32,7 @@ function NewNPCRaycastWeaponBase:clbk_assembly_complete(...)
   local result = clbk_assembly_complete_original(self, ...)
   if Network:is_server() and self._is_team_ai then
     -- check if activation is needed
-    BotWeapons:check_set_gadget_state(self._setup and self._setup.user_unit, self, 2)
+    BotWeapons:check_set_gadget_state(self._setup and self._setup.user_unit, self)
   end
   return result
 end

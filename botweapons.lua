@@ -59,26 +59,27 @@ if not BotWeapons then
   end
   
   function BotWeapons:set_armor(unit, armor, armor_skin)
-    if not alive(unit) then
+    if not alive(unit) or not self:should_use_armor() then
       return
     end
-    if armor and armor ~= "level_1" and self:should_use_armor() then
+    if armor and tweak_data.blackmarket.armors[armor] then
       unit:damage():run_sequence_simple(tweak_data.blackmarket.armors[armor].sequence)
-      if armor_skin then
-        local armor_skin_ext = unit:base()._armor_skin_ext or ArmorSkinExt:new(unit)
-        armor_skin_ext:set_character(unit:base()._tweak_table)
-        armor_skin_ext:set_armor_id(armor)
-        armor_skin_ext:set_cosmetics_data(armor_skin)
-        armor_skin_ext:_apply_cosmetics()
-        unit:base()._armor_skin_ext = armor_skin_ext
+      unit:base()._armor_id = armor
+      if unit:base().set_armor_id then
+        unit:base():set_armor_id(armor)
       end
-      if self._data.sync_settings and Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
-        managers.network:session():send_to_peers_synched("sync_run_sequence_char", unit, tweak_data.blackmarket.armors[armor].sequence)
-      end
+    end
+    if armor_skin then
+      local armor_skin_ext = unit:base()._armor_skin_ext or ArmorSkinExt:new(unit)
+      armor_skin_ext:set_character(unit:base()._tweak_table)
+      armor_skin_ext:set_armor_id(unit:base()._armor_id or "level_1")
+      armor_skin_ext:set_cosmetics_data(armor_skin)
+      armor_skin_ext:_apply_cosmetics()
+      unit:base()._armor_skin_ext = armor_skin_ext
     end
   end
   
-  function BotWeapons:set_equipment(unit, equipment, sync_delay)
+  function BotWeapons:set_equipment(unit, equipment)
     if not alive(unit) then
       return
     end
@@ -91,12 +92,6 @@ if not BotWeapons then
         end
       end
     end
-    if self._data.sync_settings and Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
-      local name = unit:base()._tweak_table
-      DelayedCalls:Add("bot_weapons_sync_equipment_" .. name, sync_delay or 0, function ()
-        LuaNetworking:SendToPeers("bot_weapons_equipment", name .. "," .. tostring(equipment))
-      end)
-    end
   end
   
   function BotWeapons:set_special_material(unit, material_name)
@@ -108,9 +103,6 @@ if not BotWeapons then
       unit:set_material_config(mtr_ids, true)
       if unit:base().on_material_applied then
         unit:base():on_material_applied()
-      end
-      if self._data.sync_settings and Utils:IsInGameState() and not Global.game_settings.single_player and Network:is_server() then
-        managers.network:session():send_to_peers_synched("sync_special_character_material", unit, material_name)
       end
     end
   end
@@ -152,7 +144,11 @@ if not BotWeapons then
     weapon_base._setup_team_ai_colors = weapon_base._assembly_complete
   end
   
-  function BotWeapons:check_set_gadget_state(unit, weapon_base, sync_delay)
+  function BotWeapons:should_sync_settings()
+    return self._data.sync_settings and not Global.game_settings.single_player and Network:is_server()
+  end
+  
+  function BotWeapons:check_set_gadget_state(unit, weapon_base)
     if not weapon_base or not alive(unit) or unit:movement():cool() then
       return
     end
@@ -165,48 +161,52 @@ if not BotWeapons then
       self:check_setup_gadget_colors(unit, weapon_base._second_gun:base())
     end
     weapon_base:set_gadget_on(gadget)
-    if self._data.sync_settings and not Global.game_settings.single_player and Network:is_server() then
-      DelayedCalls:Add("bot_weapons_sync_gadget_" .. unit:base()._tweak_table, sync_delay or 0, function ()
-        if not weapon_base or not alive(unit) then
-          return
-        end
-        local gadget_base = weapon_base:get_active_gadget()
-        if gadget_base and gadget_base.color then
-          local col = gadget_base:color()
-          managers.network:session():send_to_peers_synched("set_weapon_gadget_color", unit, col.r * 255, col.g * 255, col.b * 255)
-        end
-        managers.network:session():send_to_peers_synched("set_weapon_gadget_state", unit, weapon_base._gadget_on or 0)
-      end)
+    if self:should_sync_settings() then
+      local gadget_base = weapon_base:get_active_gadget()
+      if gadget_base and gadget_base.color then
+        local col = gadget_base:color()
+        managers.network:session():send_to_peers_synched("set_weapon_gadget_color", unit, col.r * 255, col.g * 255, col.b * 255)
+      end
+      managers.network:session():send_to_peers_synched("set_weapon_gadget_state", unit, weapon_base._gadget_on or 0)
     end
   end
 
-  function BotWeapons:sync_to_peer(peer, unit)
-    if not peer or not alive(unit) then
+  function BotWeapons:sync_to_all_peers(unit, loadout, sync_delay)
+    if not self:should_sync_settings() then
+      return
+    end
+    DelayedCalls:Add("bot_weapons_sync_" .. unit:base()._tweak_table, sync_delay or 0, function ()
+      if not alive(unit) then
+        return
+      end
+      for _, peer in pairs(managers.network:session():peers()) do
+        self:sync_to_peer(peer, unit, loadout)
+      end
+    end)
+  end
+  
+  function BotWeapons:sync_to_peer(peer, unit, loadout)
+    if not self:should_sync_settings() then
       return
     end
     local name = unit:base()._tweak_table
-    local loadout = managers.criminals:get_loadout_for(name)
+    loadout = loadout or managers.criminals:get_loadout_for(name)
     -- send special material
     if loadout.special_material then
       peer:send_queued_sync("sync_special_character_material", unit, loadout.special_material)
     end
     -- send armor
-    if loadout.armor and loadout.armor ~= "level_1" and self:should_use_armor() then
+    if self:should_use_armor() and loadout.armor then
       peer:send_queued_sync("sync_run_sequence_char", unit, tweak_data.blackmarket.armors[loadout.armor].sequence)
     end
-    -- send gadget state
-    local weapon = unit:inventory():equipped_unit()
-    if weapon then
-      local weapon_base = weapon:base()
-      local gadget = weapon_base.get_active_gadget and weapon_base:get_active_gadget()
-      if gadget and gadget.color then
-        local col = gadget:color()
-        peer:send_queued_sync("set_weapon_gadget_color", unit, col.r * 255, col.g * 255, col.b * 255)
-      end
-      peer:send_queued_sync("set_weapon_gadget_state", unit, weapon_base._gadget_on or 0)
-    end
-    -- send equipment
-    LuaNetworking:SendToPeer(peer:id(), "bot_weapons_equipment", name .. "," .. tostring(loadout.deployable))
+    -- send other data
+    local sync_data = {
+      name = name,
+      equip = loadout.deployable,
+      armor = loadout.armor,
+      skin = loadout.armor_skin
+    }
+    LuaNetworking:SendToPeer(peer:id(), "bot_weapons_sync", json.encode(sync_data))
   end
   
   local env_triggers = {
@@ -243,20 +243,6 @@ if not BotWeapons then
       self._masks_data.materials = table.map_keys(tweak_data.blackmarket.materials)
     end
     return self._masks_data
-  end
-  
-  function BotWeapons:armors()
-    if not self._armors then
-      self._armors = table.map_keys(tweak_data.blackmarket.armors)
-    end
-    return self._armors
-  end
-  
-  function BotWeapons:deployables()
-    if not self._deployables then
-      self._deployables = table.map_keys(tweak_data.blackmarket.deployables)
-    end
-    return self._deployables
   end
 
   -- returns npc version of weapon if it exists
@@ -404,7 +390,7 @@ if not BotWeapons then
           loadout.armor_random = char_loadout.armor_random
         end
         if loadout.armor_random then
-          loadout.armor = table.random(self:armors())
+          loadout.armor = table.random_key(tweak_data.blackmarket.armors)
         end
       end
       -- check for invalid armor
@@ -424,7 +410,7 @@ if not BotWeapons then
           loadout.deployable_random = char_loadout.deployable_random
         end
         if loadout.deployable_random then
-          loadout.deployable = table.random(self:deployables())
+          loadout.deployable = table.random_key(tweak_data.blackmarket.deployables)
         end
       end
       
@@ -479,12 +465,12 @@ if not BotWeapons then
 
   Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function(sender, id, data)
     local peer = LuaNetworking:GetPeers()[sender]
-    local params = string.split(data or "", ",", true)
-    if id == "bot_weapons_equipment" and managers.criminals then
-      if #params == 2 then
-        local name = params[1]
-        local equipment = params[2]
-        BotWeapons:set_equipment(managers.criminals:character_unit_by_name(name), equipment)
+    if id == "bot_weapons_sync" and managers.criminals then
+      data = json.decode(data)
+      local unit = managers.criminals:character_unit_by_name(data and data.name)
+      if unit then
+        BotWeapons:set_equipment(unit, data.equip)
+        BotWeapons:set_armor(unit, data.armor, data.skin)
       end
     end
   end)

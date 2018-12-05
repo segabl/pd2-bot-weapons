@@ -43,6 +43,8 @@
   "slider_weapon_customized_chance_desc" : "Wahrscheinlichkeit, dass ein Bot eine individualisierte Waffe bei Auswahl der Zufall Option verwendet",
   "slider_weapon_cosmetics_chance_name" : "Waffen Kosmetik-Wahrscheinlichkeit",
   "slider_weapon_cosmetics_chance_desc" : "Wahrscheinlichkeit, dass ein Bot einen Waffen-Skin bei Auswahl der Zufall Option verwendet",
+  "slider_weapon_cosmetics_chance_name" : "Panzerung Kosmetik-Wahrscheinlichkeit",
+  "slider_weapon_cosmetics_chance_desc" : "Wahrscheinlichkeit, dass ein Bot einen Panzerungs-Skin beim Tragen von Panzerung verwendet",
   "item_weapon" : "Waffe",
   "item_none" : "Nichts",
   "item_random" : "Zufall",

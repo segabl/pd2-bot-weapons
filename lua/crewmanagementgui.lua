@@ -613,32 +613,32 @@ function CrewManagementGui:open_deployables_category_menu(henchman_index)
 end
 
 function CrewManagementGui:populate_deployables(henchman_index, data, gui)
-  gui:populate_deployables(data)
-  self._num_deployable_options = self._num_deployable_options or #data
-
   local loadout = managers.blackmarket:henchman_loadout(henchman_index)
+  if not self._deployables_data then
+    gui:populate_deployables(data)
 
-  table.insert(data, 1, {
-    category = data.category,
-    button_text = managers.localization:to_upper_text("item_random"),
-    name = "ammo_bag",
-    name_localized = managers.localization:text("item_random_deployable"),
-    equipped = loadout.deployable_random,
-    random = true
-  })
-  table.insert(data, 1, {
-    category = data.category,
-    button_text = managers.localization:to_upper_text("menu_crew_defualt"),
-    name = "ammo_bag",
-    name_localized = managers.localization:text("item_default_deployable"),
-    equipped = not loadout.deployable and not loadout.deployable_random,
-    default = true
-  })
-  pad_data(data, data.override_slots[2])
-  
+    table.insert(data, 1, {
+      category = data.category,
+      button_text = managers.localization:to_upper_text("item_random"),
+      name = "ammo_bag",
+      name_localized = managers.localization:text("item_random_deployable"),
+      random = true
+    })
+    table.insert(data, 1, {
+      category = data.category,
+      button_text = managers.localization:to_upper_text("menu_crew_defualt"),
+      name = "ammo_bag",
+      name_localized = managers.localization:text("item_default_deployable"),
+      default = true
+    })
+    pad_data(data, data.override_slots[2])
+
+    self._deployables_data = true
+  end
+
   for i, v in ipairs(data) do
     v.slot = i
-    v.equipped = i < 3 and v.equipped or i > 2 and loadout.deployable == v.name
+    v.equipped = i == 1 and not loadout.deployable and not loadout.deployable_random or i == 2 and loadout.deployable_random or i > 2 and loadout.deployable == v.name
     v.equipped_text = v.equipped and managers.localization:text("bm_menu_chosen") or ""
     v.unlocked = true
     v.lock_texture = nil
@@ -646,9 +646,6 @@ function CrewManagementGui:populate_deployables(henchman_index, data, gui)
     v.comparision_data = nil
     if not v.empty_slot and not v.equipped then
       v.buttons = {"lo_d_equip"}
-    end
-    if i > self._num_deployable_options then
-      data[i] = nil
     end
   end
 end
@@ -691,34 +688,34 @@ function CrewManagementGui:open_armor_category_menu(henchman_index)
 end
 
 function CrewManagementGui:populate_armors(henchman_index, data, gui)
-  gui:populate_armors(data)
-  self._num_armor_options = self._num_armor_options or #data
-
   local loadout = managers.blackmarket:henchman_loadout(henchman_index)
+  if not self._armors_data then
+    gui:populate_armors(data)
 
-  table.insert(data, 1, {
-    category = data.category,
-    button_text = managers.localization:to_upper_text("item_random"),
-    bitmap_texture = "guis/textures/empty",
-    name = "level_1",
-    name_localized = managers.localization:text("item_random_armor"),
-    equipped = loadout.armor_random,
-    random = true
-  })
-  table.insert(data, 1, {
-    category = data.category,
-    button_text = managers.localization:to_upper_text("menu_crew_defualt"),
-    bitmap_texture = "guis/textures/empty",
-    name = "level_1",
-    name_localized = managers.localization:text("item_default_armor"),
-    equipped = not loadout.armor and not loadout.armor_random,
-    default = true
-  })
-  pad_data(data, data.override_slots[2])
+    table.insert(data, 1, {
+      category = data.category,
+      button_text = managers.localization:to_upper_text("item_random"),
+      bitmap_texture = "guis/textures/empty",
+      name = "level_1",
+      name_localized = managers.localization:text("item_random_armor"),
+      random = true
+    })
+    table.insert(data, 1, {
+      category = data.category,
+      button_text = managers.localization:to_upper_text("menu_crew_defualt"),
+      bitmap_texture = "guis/textures/empty",
+      name = "level_1",
+      name_localized = managers.localization:text("item_default_armor"),
+      default = true
+    })
+    pad_data(data, data.override_slots[2])
+
+    self._armors_data = true
+  end
 
   for i, v in ipairs(data) do
     v.slot = i
-    v.equipped = i < 3 and v.equipped or i > 2 and loadout.armor == v.name
+    v.equipped = i == 1 and not loadout.armor and not loadout.armor_random or i == 2 and loadout.armor_random or i > 2 and loadout.armor == v.name
     v.equipped_text = v.equipped and managers.localization:text("bm_menu_chosen") or ""
     v.unlocked = true
     v.lock_texture = nil
@@ -727,9 +724,6 @@ function CrewManagementGui:populate_armors(henchman_index, data, gui)
     v.buttons = {"a_mod"}
     if not v.empty_slot and not v.equipped then
       table.insert(v.buttons, 1, "a_equip")
-    end
-    if i > self._num_armor_options then
-      data[i] = nil
     end
   end
 end
@@ -760,45 +754,44 @@ function CrewManagementGui:open_armor_skins_menu(henchman_index)
 end
 
 function CrewManagementGui:populate_armor_skins(henchman_index, data, gui)
-  gui:populate_armor_skins(data)
-  self._num_armor_skin_options = self._num_armor_skin_options or #data
-
   local loadout = managers.blackmarket:henchman_loadout(henchman_index)
+  if not self._armor_skins_data then
+    gui:populate_armor_skins(data)
 
-  table.insert(data, 1, {
-    category = data.category,
-    button_text = managers.localization:to_upper_text("item_random"),
-    name = "none",
-    name_localized = managers.localization:text("item_random_armor_skin"),
-    equipped = loadout.armor_skin_random,
-    unlocked = true,
-    cosmetic_unlocked = true,
-    random = true
-  })
-  table.insert(data, 1, {
-    category = data.category,
-    button_text = managers.localization:to_upper_text("menu_crew_defualt"),
-    name = "none",
-    name_localized = managers.localization:text("item_default_armor_skin"),
-    equipped = not loadout.armor_skin and not loadout.armor_skin_random,
-    unlocked = true,
-    cosmetic_unlocked = true,
-    default = true
-  })
-  pad_data(data, data.override_slots[2])
+    table.insert(data, 1, {
+      category = data.category,
+      button_text = managers.localization:to_upper_text("item_random"),
+      name = "none",
+      name_localized = managers.localization:text("item_random_armor_skin"),
+      equipped = loadout.armor_skin_random,
+      unlocked = true,
+      cosmetic_unlocked = true,
+      random = true
+    })
+    table.insert(data, 1, {
+      category = data.category,
+      button_text = managers.localization:to_upper_text("menu_crew_defualt"),
+      name = "none",
+      name_localized = managers.localization:text("item_default_armor_skin"),
+      equipped = not loadout.armor_skin and not loadout.armor_skin_random,
+      unlocked = true,
+      cosmetic_unlocked = true,
+      default = true
+    })
+    pad_data(data, data.override_slots[2])
+
+    self._armor_skins_data = true
+  end
 
   for i, v in ipairs(data) do
     v.slot = i
-    v.equipped = i < 3 and v.equipped or i > 2 and loadout.armor_skin == v.name
+    v.equipped = i == 1 and not loadout.armor_skin and not loadout.armor_skin_random or i == 2 and loadout.armor_skin_random or i > 2 and loadout.armor_skin == v.name
     v.equipped_text = v.equipped and managers.localization:text("bm_menu_chosen") or ""
     v.comparision_data = nil
     if not v.equipped and v.cosmetic_unlocked then
       v.buttons = {"as_equip"}
     else
       v.buttons = {}
-    end
-    if i > self._num_armor_skin_options then
-      data[i] = nil
     end
   end
 end

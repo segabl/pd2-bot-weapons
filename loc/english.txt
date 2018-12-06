@@ -44,7 +44,7 @@
   "slider_weapon_cosmetics_chance_name" : "Weapon cosmetics chance",
   "slider_weapon_cosmetics_chance_desc" : "Chance that a bot will have a weapon skin when using random option",
   "slider_armor_cosmetics_chance_name" : "Armor cosmetics chance",
-  "slider_armor_cosmetics_chance_desc" : "Chance that a bot will have an armor skin when wearing armor",
+  "slider_armor_cosmetics_chance_desc" : "Chance that a bot will have an armor skin when using random option",
   "item_weapon" : "Weapon",
   "item_none" : "None",
   "item_random" : "Random",

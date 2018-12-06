@@ -143,25 +143,11 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     priority = 91
   })
   
-  MenuHelper:AddSlider({
-    id = "armor_cosmetics_chance",
-    title = "slider_armor_cosmetics_chance_name",
-    desc = "slider_armor_cosmetics_chance_desc",
-    callback = "BotWeapons_select",
-    value = BotWeapons._data.armor_cosmetics_chance,
-    min = 0,
-    max = 1,
-    step = 0.01,
-    show_value = true,
-    menu_id = menu_id_main,
-    priority = 90
-  })
-  
   MenuHelper:AddDivider({
     id = "divider3",
     size = 16,
     menu_id = menu_id_main,
-    priority = 89
+    priority = 90
   })
   
   MenuHelper:AddToggle({
@@ -171,7 +157,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     callback = "BotWeapons_toggle",
     value = BotWeapons._data.sync_settings,
     menu_id = menu_id_main,
-    priority = 88
+    priority = 89
   })
   
 end)

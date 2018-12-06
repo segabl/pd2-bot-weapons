@@ -12,7 +12,6 @@ if not BotWeapons then
     mask_customized_chance = 0.5,
     weapon_customized_chance = 0.5,
     weapon_cosmetics_chance = 0.5,
-    armor_cosmetics_chance = 0.5,
     sync_settings = true
   }
   BotWeapons.weapon_categories = {
@@ -397,10 +396,20 @@ if not BotWeapons then
       if not tweak_data.blackmarket.armors[loadout.armor] then
         loadout.armor = "level_1"
       end
-      
+
       -- choose armor skin
-      if math.random() < self._data.armor_cosmetics_chance then
-        loadout.armor_skin = table.random_key(tweak_data.economy.armor_skins)
+      if not loadout.armor_skin or loadout.armor_skin_random then
+        if not loadout.armor_skin_random then
+          loadout.armor_skin = char_loadout.armor_skin
+          loadout.armor_skin_random = char_loadout.armor_skin_random
+        end
+        if loadout.armor_skin_random then
+          loadout.armor_skin = table.random_key(tweak_data.economy.armor_skins)
+        end
+      end
+      -- check for invalid armor skin
+      if not tweak_data.economy.armor_skins[loadout.armor_skin] then
+        loadout.armor_skin = "none"
       end
       
       -- choose equipment models
@@ -449,16 +458,18 @@ if not BotWeapons then
       return
     end
     self._data[char_name] = {
-      armor = not loadout.armor_random and loadout.armor or nil,
+      armor = not loadout.armor_random and loadout.armor,
       armor_random = loadout.armor_random,
-      deployable = not loadout.deployable_random and loadout.deployable or nil,
+      armor_skin = not loadout.armor_skin_random and loadout.armor_skin,
+      armor_skin_random = loadout.armor_skin_random,
+      deployable = not loadout.deployable_random and loadout.deployable,
       deployable_random = loadout.deployable_random,
-      mask = not loadout.mask_random and loadout.mask or nil,
-      mask_blueprint = not loadout.mask_random and loadout.mask_blueprint or nil,
+      mask = not loadout.mask_random and loadout.mask,
+      mask_blueprint = not loadout.mask_random and loadout.mask_blueprint,
       mask_random = loadout.mask_random,
-      primary = not loadout.primary_random and loadout.primary or nil,
-      primary_blueprint = not loadout.primary_random and loadout.primary_blueprint or nil,
-      primary_cosmetics = not loadout.primary_random and loadout.primary_cosmetics or nil,
+      primary = not loadout.primary_random and loadout.primary,
+      primary_blueprint = not loadout.primary_random and loadout.primary_blueprint,
+      primary_cosmetics = not loadout.primary_random and loadout.primary_cosmetics,
       primary_random = loadout.primary_random
     }
   end

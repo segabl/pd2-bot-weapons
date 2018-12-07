@@ -32,7 +32,10 @@ local henchman_loadout_original = BlackMarketManager.henchman_loadout
 function BlackMarketManager:henchman_loadout(...)
   local loadout = henchman_loadout_original(self, ...)
   if loadout then
+    loadout.mask = tweak_data.blackmarket.masks[loadout.mask] and loadout.mask
+    loadout.primary = tweak_data.weapon.factory[loadout.primary] and loadout.primary
     loadout.armor = tweak_data.blackmarket.armors[loadout.armor] and loadout.armor
+    loadout.armor_skin = tweak_data.economy.armor_skins[loadout.armor_skin] and loadout.armor_skin
     loadout.deployable = tweak_data.upgrades.definitions[loadout.deployable] and loadout.deployable
   end
   return loadout

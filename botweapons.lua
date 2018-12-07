@@ -290,8 +290,16 @@ if not BotWeapons then
     return weapon
   end
 
+  function BotWeapons:get_random_armor(category)
+    return table.random_key(tweak_data.blackmarket.armors)
+  end
+
   function BotWeapons:get_random_armor_skin(category)
     return table.random_key(tweak_data.economy.armor_skins)
+  end
+
+  function BotWeapons:get_random_deployable(category)
+    return table.random_key(tweak_data.blackmarket.deployables)
   end
   
   function BotWeapons:get_char_loadout(char_name)
@@ -342,6 +350,12 @@ if not BotWeapons then
           loadout.mask_blueprint = crafted.blueprint
         end
       end
+      -- check for invalid mask
+      if not tweak_data.blackmarket.masks[loadout.mask] then
+        self:log("WARNING: Mask " .. tostring(loadout.mask) .. " does not exist, removed it from " .. char_name .. "!", loadout.mask)
+        loadout.mask = "character_locked"
+        loadout.mask_blueprint = nil
+      end
       
       -- choose weapon
       if not loadout.primary or loadout.primary_random then
@@ -387,11 +401,12 @@ if not BotWeapons then
           loadout.armor_random = char_loadout.armor_random
         end
         if loadout.armor_random then
-          loadout.armor = table.random_key(tweak_data.blackmarket.armors)
+          loadout.armor = self:get_random_armor(loadout.armor_random)
         end
       end
       -- check for invalid armor
       if not tweak_data.blackmarket.armors[loadout.armor] then
+        self:log("WARNING: Armor " .. tostring(loadout.armor) .. " does not exist, removed it from " .. char_name .. "!", loadout.armor)
         loadout.armor = "level_1"
       end
 
@@ -407,6 +422,7 @@ if not BotWeapons then
       end
       -- check for invalid armor skin
       if not tweak_data.economy.armor_skins[loadout.armor_skin] then
+        self:log("WARNING: Armor Skin " .. tostring(loadout.armor_skin) .. " does not exist, removed it from " .. char_name .. "!", loadout.armor_skin)
         loadout.armor_skin = "none"
       end
       
@@ -417,8 +433,13 @@ if not BotWeapons then
           loadout.deployable_random = char_loadout.deployable_random
         end
         if loadout.deployable_random then
-          loadout.deployable = table.random_key(tweak_data.blackmarket.deployables)
+          loadout.deployable = self:get_random_deployable(loadout.deployable_random)
         end
+      end
+      -- check for invalid deployable
+      if loadout.deployable and not tweak_data.upgrades.definitions[loadout.deployable] then
+        self:log("WARNING: Deployable " .. tostring(loadout.deployable) .. " does not exist, removed it from " .. char_name .. "!")
+        loadout.deployable = nil
       end
       
       -- choose special material (Sangres)

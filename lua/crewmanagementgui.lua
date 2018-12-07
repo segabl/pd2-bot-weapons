@@ -654,7 +654,7 @@ function CrewManagementGui:select_deployable(henchman_index, data, gui)
   local loadout = managers.blackmarket:henchman_loadout(henchman_index)
   if not data or data.default or data.random then
     loadout.deployable = nil
-    loadout.deployable_random = data and data.random and true
+    loadout.deployable_random = data and data.random
   else
     loadout.deployable = data.name
     loadout.deployable_random = nil
@@ -732,7 +732,7 @@ function CrewManagementGui:select_armor(henchman_index, data, gui)
   local loadout = managers.blackmarket:henchman_loadout(henchman_index)
   if not data or data.default or data.random then
     loadout.armor = nil
-    loadout.armor_random = data and data.random and true
+    loadout.armor_random = data and data.random
   else
     loadout.armor = data.name
     loadout.armor_random = nil

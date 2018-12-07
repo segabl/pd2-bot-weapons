@@ -65,6 +65,9 @@ if not BotWeapons then
       armor_skin_ext:set_armor_id(unit:base()._armor_id or "level_1")
       armor_skin_ext:set_cosmetics_data(armor_skin)
       armor_skin_ext:_apply_cosmetics()
+      if unit:base().on_material_applied then
+        unit:base():on_material_applied()
+      end
       unit:base()._armor_skin_ext = armor_skin_ext
     end
   end

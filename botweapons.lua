@@ -295,6 +295,10 @@ if not BotWeapons then
     end
     return weapon
   end
+
+  function BotWeapons:get_random_armor_skin(category)
+    return table.random_key(tweak_data.economy.armor_skins)
+  end
   
   function BotWeapons:get_char_loadout(char_name)
     return char_name and type(self._data[char_name]) == "table" and self._data[char_name] or {}
@@ -404,7 +408,7 @@ if not BotWeapons then
           loadout.armor_skin_random = char_loadout.armor_skin_random
         end
         if loadout.armor_skin_random then
-          loadout.armor_skin = table.random_key(tweak_data.economy.armor_skins)
+          loadout.armor_skin = self:get_random_armor_skin(loadout.armor_skin_random)
         end
       end
       -- check for invalid armor skin

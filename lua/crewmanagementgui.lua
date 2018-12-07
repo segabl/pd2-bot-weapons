@@ -763,7 +763,6 @@ function CrewManagementGui:populate_armor_skins(henchman_index, data, gui)
       button_text = managers.localization:to_upper_text("item_random"),
       name = "none",
       name_localized = managers.localization:text("item_random_armor_skin"),
-      equipped = loadout.armor_skin_random,
       unlocked = true,
       cosmetic_unlocked = true,
       random = true
@@ -773,7 +772,6 @@ function CrewManagementGui:populate_armor_skins(henchman_index, data, gui)
       button_text = managers.localization:to_upper_text("menu_crew_defualt"),
       name = "none",
       name_localized = managers.localization:text("item_default_armor_skin"),
-      equipped = not loadout.armor_skin and not loadout.armor_skin_random,
       unlocked = true,
       cosmetic_unlocked = true,
       default = true
@@ -785,7 +783,7 @@ function CrewManagementGui:populate_armor_skins(henchman_index, data, gui)
 
   for i, v in ipairs(data) do
     v.slot = i
-    v.equipped = i == 1 and not loadout.armor_skin and not loadout.armor_skin_random or i == 2 and loadout.armor_skin_random or i > 2 and loadout.armor_skin == v.name
+    v.equipped = i == 1 and not loadout.armor_skin and not loadout.armor_skin_random or i == 2 and loadout.armor_skin_random == true or i > 2 and loadout.armor_skin == v.name
     v.equipped_text = v.equipped and managers.localization:text("bm_menu_chosen") or ""
     v.comparision_data = nil
     if not v.equipped and v.cosmetic_unlocked then
@@ -800,7 +798,7 @@ function CrewManagementGui:select_armor_skin(henchman_index, data, gui)
   local loadout = managers.blackmarket:henchman_loadout(henchman_index)
   if not data or data.default or data.random then
     loadout.armor_skin = nil
-    loadout.armor_skin_random = data and data.random and true
+    loadout.armor_skin_random = data and data.random
   else
     loadout.armor_skin = data.name
     loadout.armor_skin_random = nil

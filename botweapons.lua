@@ -31,15 +31,6 @@ if not BotWeapons then
   end
   
   function BotWeapons:init()
-    self._version = "1.0"
-    local file = io.open(BotWeapons._path .. "mod.txt", "r")
-    if file then
-      local data = json.decode(file:read("*all"))
-      file:close()
-      self._version = data and data.version or self._version
-    end
-    self:log("Version " .. self._version)
-    
     -- load mask sets
     file = io.open(BotWeapons._path .. "masks.json", "r")
     if file then
@@ -478,18 +469,6 @@ if not BotWeapons then
     }
   end
 
-  Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function(sender, id, data)
-    local peer = LuaNetworking:GetPeers()[sender]
-    if id == "bot_weapons_sync" and managers.criminals then
-      data = json.decode(data)
-      local unit = managers.criminals:character_unit_by_name(data and data.name)
-      if unit then
-        BotWeapons:set_equipment(unit, data.equip)
-        BotWeapons:set_armor(unit, data.armor, data.skin)
-      end
-    end
-  end)
-
   function BotWeapons:save()
     local file = io.open(self._data_path, "w+")
     if file then
@@ -513,6 +492,17 @@ if not BotWeapons then
 
   -- initialize
   BotWeapons:init()
+
+  Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function(sender, id, data)
+    if id == "bot_weapons_sync" then
+      data = json.decode(data)
+      local unit = managers.criminals and managers.criminals:character_unit_by_name(data and data.name)
+      if unit then
+        BotWeapons:set_equipment(unit, data.equip)
+        BotWeapons:set_armor(unit, data.armor, data.skin)
+      end
+    end
+  end)
 
 end
 

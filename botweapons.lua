@@ -32,7 +32,7 @@ if not BotWeapons then
   
   function BotWeapons:init()
     -- load mask sets
-    file = io.open(BotWeapons._path .. "masks.json", "r")
+    local file = io.open(BotWeapons._path .. "masks.json", "r")
     if file then
       self.masks = json.decode(file:read("*all"))
       file:close()

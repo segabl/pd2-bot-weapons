@@ -238,6 +238,26 @@ if not BotWeapons then
     return self._masks_data
   end
 
+  -- selects and returns a random mask from a set or all masks and a blueprint
+  function BotWeapons:get_random_mask(category, char_name)
+    if type(category) == "string" and self.masks[category] and (self.masks[category].character and self.masks[category].character[char_name] or self.masks[category].pool) then
+      local selection = self.masks[category].character and self.masks[category].character[char_name] or table.random(self.masks[category].pool)
+      return selection.id, selection.blueprint
+    else
+      local masks_data = self:masks_data()
+      local mask = table.random(masks_data.masks)
+      local blueprint
+      if math.random() < self._data.mask_customized_chance then
+        blueprint = {
+          color = { id = table.random(masks_data.colors) },
+          pattern = { id = table.random(masks_data.patterns) },
+          material = { id = table.random(masks_data.materials) }
+        }
+      end
+      return mask, blueprint
+    end
+  end
+
   -- returns npc version of weapon if it exists
   function BotWeapons:get_npc_version(weapon_id)
     local factory_id = weapon_id and managers.weapon_factory:get_factory_id_by_weapon_id(weapon_id)
@@ -267,7 +287,7 @@ if not BotWeapons then
     end
     local weapon = table.random(self._weapons[cat])
     if not weapon then
-      return {}
+      return
     end
     if math.random() < self._data.weapon_cosmetics_chance then
       local cosmetics = table.random_key(managers.blackmarket:get_cosmetics_by_weapon_id(weapon.weapon_id))
@@ -287,7 +307,7 @@ if not BotWeapons then
         end
       end
     end
-    return weapon
+    return weapon.factory_id, weapon.category, weapon.blueprint, weapon.cosmetics
   end
 
   function BotWeapons:get_random_armor(category)
@@ -329,20 +349,8 @@ if not BotWeapons then
           loadout.mask_random = char_loadout.mask_random
           loadout.mask_blueprint = char_loadout.mask_blueprint
         end
-        if type(loadout.mask_random) == "string" and self.masks[loadout.mask_random] and (self.masks[loadout.mask_random].character and self.masks[loadout.mask_random].character[char_name] or self.masks[loadout.mask_random].pool) then
-          local selection = self.masks[loadout.mask_random].character and self.masks[loadout.mask_random].character[char_name] or table.random(self.masks[loadout.mask_random].pool)
-          loadout.mask = selection.id
-          loadout.mask_blueprint = selection.blueprint
-        elseif loadout.mask_random then
-          local masks_data = self:masks_data()
-          loadout.mask = table.random(masks_data.masks)
-          if math.random() < self._data.mask_customized_chance then
-            loadout.mask_blueprint = {
-              color = { id = table.random(masks_data.colors) },
-              pattern = { id = table.random(masks_data.patterns) },
-              material = { id = table.random(masks_data.materials) }
-            }
-          end
+        if loadout.mask_random then
+          loadout.mask, loadout.mask_blueprint = self:get_random_mask(loadout.mask_random, char_name)
         end
       elseif loadout.mask_slot then
         local crafted = managers.blackmarket:get_crafted_category_slot("masks", loadout.mask_slot)
@@ -367,11 +375,7 @@ if not BotWeapons then
           loadout.primary_cosmetics = char_loadout.primary_cosmetics
         end
         if loadout.primary_random then
-          local weapon = self:get_random_weapon(loadout.primary_random)
-          loadout.primary = weapon.factory_id
-          loadout.primary_category = weapon.category
-          loadout.primary_blueprint = weapon.blueprint
-          loadout.primary_cosmetics = weapon.cosmetics
+          loadout.primary, loadout.primary_category, loadout.primary_blueprint, loadout.primary_cosmetics = self:get_random_weapon(loadout.primary_random)
           loadout.gadget_laser_color = Color(hsv_to_rgb(math.random(360), 1, 0.4 + math.random() * 0.4))
         end
       elseif loadout.primary_slot then

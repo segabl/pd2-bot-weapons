@@ -44,7 +44,7 @@ if not BotWeapons then
   end
   
   function BotWeapons:should_use_armor()
-    local level_id = managers.job and managers.job:current_level_id()
+    local level_id = Utils:IsInGameState() and managers.job and managers.job:current_level_id()
     return not (tweak_data.levels[level_id] and tweak_data.levels[level_id].player_sequence)
   end
   
@@ -59,7 +59,7 @@ if not BotWeapons then
         unit:base():set_armor_id(armor)
       end
     end
-    if armor_skin then
+    if armor_skin and armor_skin ~= "none" and tweak_data.economy.armor_skins[armor_skin] then
       local armor_skin_ext = unit:base()._armor_skin_ext or ArmorSkinExt:new(unit)
       armor_skin_ext:set_character(unit:base()._tweak_table)
       armor_skin_ext:set_armor_id(unit:base()._armor_id or "level_1")

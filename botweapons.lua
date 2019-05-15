@@ -267,12 +267,13 @@ if not BotWeapons then
 
   -- selects a random weapon and constructs a random blueprint for it
   function BotWeapons:get_random_weapon(category)
+    local check_cat = tweak_data.weapon.judge.categories[1] == "revolver" and 2 or 1 -- more weapon categories compat
     local cat = type(category) ~= "string" and table.random(self.weapon_categories) or category
     if not self._weapons or not self._weapons[cat] then
       self._weapons = self._weapons or {}
       self._weapons[cat] = {}
       for weapon_id, data in pairs(tweak_data.weapon) do
-        if data.autohit and data.categories[1] == cat then
+        if data.autohit and (data.categories[check_cat] or data.categories[1]) == cat then
           local factory_id = self:get_npc_version(weapon_id)
           if factory_id then
             local data = {
@@ -399,7 +400,8 @@ if not BotWeapons then
       end
       -- check for akimbo weapon
       local w_id = loadout.primary and managers.weapon_factory:get_weapon_id_by_factory_id(loadout.primary:gsub("_npc$", ""))
-      local is_akimbo = w_id and tweak_data.weapon[w_id] and tweak_data.weapon[w_id].categories and tweak_data.weapon[w_id].categories[1] == "akimbo"
+      local check_cat = tweak_data.weapon.judge.categories[1] == "revolver" and 2 or 1  -- more weapon categories compat
+      local is_akimbo = w_id and tweak_data.weapon[w_id] and tweak_data.weapon[w_id].categories and tweak_data.weapon[w_id].categories[check_cat] == "akimbo"
       if is_akimbo and Utils:IsInGameState() and not Global.game_settings.single_player then
         self:log("WARNING: Weapon " .. loadout.primary .. " removed from " .. char_name .. " due to offline restriction!")
         loadout.primary = nil

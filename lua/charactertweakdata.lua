@@ -12,7 +12,7 @@ if BotWeapons._data.weapon_balance then
     end
     
     local rifle_dmg_mul = gang_presets.is_rifle.FALLOFF[1].dmg_mul
-    local rifle_spread = math.min(gang_presets.is_rifle.spread, 20)
+    local rifle_spread = gang_presets.is_rifle.spread
     
     -- rifle preset
     gang_presets.is_rifle.FALLOFF = {
@@ -39,7 +39,7 @@ if BotWeapons._data.weapon_balance then
       { dmg_mul = rifle_dmg_mul * 0.4, r = 2500, acc = { 0.4, 0.7 }, recoil = { 0.6, 0.9 }, mode = { 0, 0, 0, 1 } },
       { dmg_mul = rifle_dmg_mul * 0.02, r = 4000, acc = { 0.1, 0.4 }, recoil = { 1, 2 }, mode = { 0, 0, 0, 1 } },
     }
-    gang_presets.is_lmg.spread = rifle_spread
+    gang_presets.is_lmg.spread = rifle_spread * 1.2
     
     -- single shotgun preset
     gang_presets.is_shotgun_pump.FALLOFF = {

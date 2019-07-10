@@ -398,15 +398,6 @@ if not BotWeapons then
           break
         end
       end
-      -- check for akimbo weapon
-      local w_id = loadout.primary and managers.weapon_factory:get_weapon_id_by_factory_id(loadout.primary:gsub("_npc$", ""))
-      local check_cat = tweak_data.weapon.judge.categories[1] == "revolver" and 2 or 1  -- more weapon categories compat
-      local is_akimbo = w_id and tweak_data.weapon[w_id] and tweak_data.weapon[w_id].categories and tweak_data.weapon[w_id].categories[check_cat] == "akimbo"
-      if is_akimbo and Utils:IsInGameState() and not Global.game_settings.single_player then
-        self:log("WARNING: Weapon " .. loadout.primary .. " removed from " .. char_name .. " due to offline restriction!")
-        loadout.primary = nil
-        loadout.primary_blueprint = nil
-      end
       
       -- choose armor models
       if not loadout.armor or loadout.armor_random then

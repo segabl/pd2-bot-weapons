@@ -1,5 +1,5 @@
-if BotWeapons._data.weapon_balance then
-  CopMovement._action_variants.team_ai.shoot = TeamAIActionShoot or CopMovement._action_variants.team_ai.shoot
+if BotWeapons._data.weapon_balance and TeamAIActionShoot then
+  CopMovement._action_variants.team_ai.shoot = TeamAIActionShoot
 end
 
 function TeamAIMovement:add_weapons()

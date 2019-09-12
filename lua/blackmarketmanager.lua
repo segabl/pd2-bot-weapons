@@ -11,7 +11,7 @@ function BlackMarketManager:is_weapon_allowed_for_crew(weapon_id)
   end
   local data = tweak_data.weapon[weapon_id]
   local check_cat = tweak_data.weapon.judge.categories[1] == "revolver" and 2 or 1
-  return data and self:is_weapon_category_allowed_for_crew(data.categories[check_cat] or data.categories[1]) or false
+  return data and self:is_weapon_category_allowed_for_crew(data.categories[check_cat]) or false
 end
 
 function BlackMarketManager:verfify_crew_loadout()

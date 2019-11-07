@@ -11,6 +11,7 @@
     { "hook_id" : "lib/managers/blackmarketmanager", "script_path" : "botweapons.lua" },
     { "hook_id" : "lib/managers/criminalsmanager", "script_path" : "botweapons.lua" },
     { "hook_id" : "lib/managers/menumanager", "script_path" : "botweapons.lua" },
+    { "hook_id" : "lib/managers/group_ai_states/groupaistatebase", "script_path" : "botweapons.lua" },
     { "hook_id" : "lib/managers/menu/crewmanagementgui", "script_path" : "botweapons.lua" },
     { "hook_id" : "lib/managers/menu/menuscenemanager", "script_path" : "botweapons.lua" },
     { "hook_id" : "lib/tweak_data/charactertweakdata", "script_path" : "botweapons.lua" },

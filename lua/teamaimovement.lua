@@ -32,20 +32,6 @@ function TeamAIMovement:play_redirect(redirect_name, ...)
   return play_redirect_original(self, redirect_name, ...)
 end
 
-local check_visual_equipment_original = TeamAIMovement.check_visual_equipment
-function TeamAIMovement:check_visual_equipment(...)
-  if Network:is_server() then
-    -- set armor & deployables for team ai
-    local loadout =  managers.criminals:get_loadout_for(self._ext_base._tweak_table)
-    BotWeapons:set_special_material(self._unit, loadout.special_material)
-    BotWeapons:set_armor(self._unit, loadout.armor, loadout.armor_skin)
-    BotWeapons:set_equipment(self._unit, loadout.deployable)
-
-    BotWeapons:sync_to_all_peers(self._unit, loadout, 2)
-  end
-  return check_visual_equipment_original(self, ...)
-end
-
 local _switch_to_not_cool_clbk_func_original = TeamAIMovement._switch_to_not_cool_clbk_func
 function TeamAIMovement:_switch_to_not_cool_clbk_func(...)
   _switch_to_not_cool_clbk_func_original(self, ...)

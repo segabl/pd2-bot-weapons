@@ -52,7 +52,7 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
 
   -- mask
   local mask = loadout.mask
-  local mask_blueprint = loadout.mask_blueprint
+  local mask_blueprint = loadout.mask_blueprint or managers.blackmarket:get_mask_default_blueprint(mask)
   local crafted_mask = managers.blackmarket:get_crafted_category_slot("masks", loadout.mask_slot)
   if crafted_mask then
     mask = crafted_mask.mask_id

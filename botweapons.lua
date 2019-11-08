@@ -59,7 +59,7 @@ if not BotWeapons then
         unit:base():set_armor_id(armor)
       end
     end
-    if armor_skin and armor_skin ~= "none" and tweak_data.economy.armor_skins[armor_skin] then
+    if armor ~= "level_1" and armor_skin and armor_skin ~= "none" and tweak_data.economy.armor_skins[armor_skin] then
       local armor_skin_ext = unit:base()._armor_skin_ext or ArmorSkinExt:new(unit)
       armor_skin_ext:set_character(unit:base()._tweak_table)
       armor_skin_ext:set_armor_id(unit:base()._armor_id or "level_1")
@@ -83,19 +83,6 @@ if not BotWeapons then
         if mesh_obj then
           mesh_obj:set_visibility(v.visual_object == visual_object)
         end
-      end
-    end
-  end
-  
-  function BotWeapons:set_special_material(unit, material_name)
-    if not alive(unit) or not material_name then
-      return
-    end
-    local mtr_ids = Idstring(material_name)
-    if DB:has(Idstring("material_config"), mtr_ids) then
-      unit:set_material_config(mtr_ids, true)
-      if unit:base().on_material_applied then
-        unit:base():on_material_applied()
       end
     end
   end
@@ -184,10 +171,6 @@ if not BotWeapons then
     end
     local name = unit:base()._tweak_table
     loadout = loadout or managers.criminals:get_loadout_for(name)
-    -- send special material
-    if loadout.special_material then
-      peer:send_queued_sync("sync_special_character_material", unit, loadout.special_material)
-    end
     -- send armor
     if self:should_use_armor() and loadout.armor then
       peer:send_queued_sync("sync_run_sequence_char", unit, tweak_data.blackmarket.armors[loadout.armor].sequence)
@@ -445,26 +428,6 @@ if not BotWeapons then
       if loadout.deployable and not tweak_data.upgrades.definitions[loadout.deployable] then
         self:log("WARNING: Deployable " .. tostring(loadout.deployable) .. " does not exist, removed it from " .. char_name .. "!")
         loadout.deployable = nil
-      end
-      
-      -- choose special material (Sangres)
-      local char_tweak = tweak_data.blackmarket.characters.locked[char_name] or tweak_data.blackmarket.characters[char_name]
-      if char_tweak and char_tweak.special_materials then
-        local special_material = nil
-        local special_materials = char_tweak.special_materials
-        for material, chance in pairs(special_materials) do
-          if type(chance) == "number" then
-            local rand = math.rand(chance)
-            if rand <= 1 then
-              special_material = material
-              break
-            end
-          end
-        end
-        special_material = special_material or table.random(special_materials)
-        loadout.special_material = special_material
-      else
-        loadout.special_material = nil
       end
       
     end

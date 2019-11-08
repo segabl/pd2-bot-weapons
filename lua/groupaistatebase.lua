@@ -4,7 +4,6 @@ function GroupAIStateBase:set_unit_teamAI(unit, character_name, team_id, visual_
 
   if Network:is_server() then
     -- set armor & deployables for team ai
-    BotWeapons:set_special_material(unit, loadout.special_material)
     BotWeapons:set_armor(unit, loadout.armor, loadout.armor_skin)
     BotWeapons:set_equipment(unit, loadout.deployable)
 

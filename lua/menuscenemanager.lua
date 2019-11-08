@@ -48,7 +48,6 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
   end
 
   unit:base():set_character_name(character)
-  BotWeapons:set_special_material(unit, loadout.special_material)
 
   -- mask
   local mask = loadout.mask

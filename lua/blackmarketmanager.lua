@@ -45,6 +45,8 @@ function BlackMarketManager:henchman_loadout(...)
     loadout.primary = tweak_data.weapon.factory[loadout.primary] and loadout.primary
     loadout.armor = tweak_data.blackmarket.armors[loadout.armor] and loadout.armor
     loadout.armor_skin = tweak_data.economy.armor_skins[loadout.armor_skin] and loadout.armor_skin
+    loadout.player_style = tweak_data.blackmarket.player_styles[loadout.player_style] and loadout.player_style
+    loadout.suit_variation = loadout.player_style and tweak_data.blackmarket.player_styles[loadout.player_style].material_variations and tweak_data.blackmarket.player_styles[loadout.player_style].material_variations[loadout.suit_variation] and loadout.suit_variation
     loadout.deployable = tweak_data.upgrades.definitions[loadout.deployable] and loadout.deployable
   end
   return loadout
@@ -66,4 +68,13 @@ function BlackMarketManager:get_armor_icon(armor)
     guis_catalog = guis_catalog .. "dlcs/" .. tostring(bundle_folder) .. "/"
   end
   return guis_catalog .. "textures/pd2/blackmarket/icons/armors/" .. tostring(armor)
+end
+
+function BlackMarketManager:get_player_style_icon(player_style)
+  local guis_catalog = "guis/"
+  local bundle_folder = tweak_data.blackmarket.player_styles[player_style] and tweak_data.blackmarket.player_styles[player_style].texture_bundle_folder
+  if bundle_folder then
+    guis_catalog = guis_catalog .. "dlcs/" .. tostring(bundle_folder) .. "/"
+  end
+  return guis_catalog .. "textures/pd2/blackmarket/icons/player_styles/" .. tostring(player_style)
 end

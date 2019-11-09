@@ -47,7 +47,7 @@ if not BotWeapons then
     local level_id = Utils:IsInGameState() and managers.job and managers.job:current_level_id()
     return not (tweak_data.levels[level_id] and tweak_data.levels[level_id].player_sequence)
   end
-  
+
   function BotWeapons:set_armor(unit, armor, armor_skin)
     if not alive(unit) or not self:should_use_armor() then
       return
@@ -169,7 +169,7 @@ if not BotWeapons then
     if not self:should_sync_settings() then
       return
     end
-    local name = unit:base()._tweak_table
+    local name = managers.criminals:character_name_by_unit(unit)
     loadout = loadout or managers.criminals:get_loadout_for(name)
     -- send armor
     if self:should_use_armor() and loadout.armor then
@@ -180,7 +180,9 @@ if not BotWeapons then
       name = name,
       equip = loadout.deployable,
       armor = loadout.armor,
-      skin = loadout.armor_skin
+      skin = loadout.armor_skin,
+      outfit = loadout.player_style,
+      variant = loadout.suit_variation
     }
     LuaNetworking:SendToPeer(peer:id(), "bot_weapons_sync", json.encode(sync_data))
   end
@@ -298,6 +300,17 @@ if not BotWeapons then
     return table.random_key(tweak_data.blackmarket.armors)
   end
 
+  function BotWeapons:get_random_player_style(category)
+    return table.random_key(tweak_data.blackmarket.player_styles)
+  end
+
+  function BotWeapons:get_random_suit_variation(category, player_style)
+    if not tweak_data.blackmarket:have_suit_variations(player_style) then
+      return "default"
+    end
+    return table.random_key(tweak_data.blackmarket.player_styles[player_style].material_variations)
+  end
+
   function BotWeapons:get_random_armor_skin(category)
     return table.random_key(tweak_data.economy.armor_skins)
   end
@@ -382,6 +395,33 @@ if not BotWeapons then
         end
       end
       
+      -- choose outfit
+      if not loadout.player_style or loadout.player_style_random then
+        if not loadout.player_style_random then
+          loadout.player_style = char_loadout.player_style
+          loadout.player_style_random = char_loadout.player_style_random
+          loadout.suit_variation = char_loadout.suit_variation
+          loadout.suit_variation_random = char_loadout.suit_variation_random
+        end
+        if loadout.player_style_random then
+          loadout.player_style = self:get_random_player_style(loadout.player_style_random)
+          loadout.suit_variation_random = true
+        end
+      end
+      -- check for invalid outfit
+      if not tweak_data.blackmarket.player_styles[loadout.player_style] then
+        self:log("WARNING: Player style " .. tostring(loadout.player_style) .. " does not exist, removed it from " .. char_name .. "!")
+        loadout.player_style = "none"
+      end
+      if loadout.suit_variation_random then
+        loadout.suit_variation = self:get_random_suit_variation(loadout.suit_variation_random, loadout.player_style)
+      elseif not tweak_data.blackmarket:have_suit_variations(loadout.player_style) then
+        loadout.suit_variation = "default"
+      elseif not tweak_data.blackmarket.player_styles[loadout.player_style].material_variations[loadout.suit_variation] then
+        self:log("WARNING: Suit variant " .. tostring(loadout.suit_variation) .. " does not exist, removed it from " .. char_name .. "!")
+        loadout.suit_variation = "default"
+      end
+
       -- choose armor models
       if not loadout.armor or loadout.armor_random then
         if not loadout.armor_random then
@@ -445,19 +485,23 @@ if not BotWeapons then
       return
     end
     self._data[char_name] = {
-      armor = not loadout.armor_random and loadout.armor,
-      armor_random = loadout.armor_random,
-      armor_skin = not loadout.armor_skin_random and loadout.armor_skin,
-      armor_skin_random = loadout.armor_skin_random,
-      deployable = not loadout.deployable_random and loadout.deployable,
-      deployable_random = loadout.deployable_random,
-      mask = not loadout.mask_random and loadout.mask,
-      mask_blueprint = not loadout.mask_random and loadout.mask_blueprint,
-      mask_random = loadout.mask_random,
-      primary = not loadout.primary_random and loadout.primary,
-      primary_blueprint = not loadout.primary_random and loadout.primary_blueprint,
-      primary_cosmetics = not loadout.primary_random and loadout.primary_cosmetics,
-      primary_random = loadout.primary_random
+      armor = not loadout.armor_random and loadout.armor or nil,
+      armor_random = loadout.armor_random or nil,
+      armor_skin = not loadout.armor_skin_random and loadout.armor_skin or nil,
+      armor_skin_random = loadout.armor_skin_random or nil,
+      player_style = not loadout.player_style_random and loadout.player_style or nil,
+      player_style_random = loadout.player_style_random or nil,
+      suit_variation = not loadout.suit_variation_random and loadout.suit_variation or nil,
+      suit_variation_random = loadout.suit_variation_random or nil,
+      deployable = not loadout.deployable_random and loadout.deployable or nil,
+      deployable_random = loadout.deployable_random or nil,
+      mask = not loadout.mask_random and loadout.mask or nil,
+      mask_blueprint = not loadout.mask_random and loadout.mask_blueprint or nil,
+      mask_random = loadout.mask_random or nil,
+      primary = not loadout.primary_random and loadout.primary or nil,
+      primary_blueprint = not loadout.primary_random and loadout.primary_blueprint or nil,
+      primary_cosmetics = not loadout.primary_random and loadout.primary_cosmetics or nil,
+      primary_random = loadout.primary_random or nil
     }
   end
 
@@ -488,10 +532,14 @@ if not BotWeapons then
   Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function(sender, id, data)
     if id == "bot_weapons_sync" then
       data = json.decode(data)
-      local unit = managers.criminals and managers.criminals:character_unit_by_name(data and data.name)
-      if unit then
-        BotWeapons:set_equipment(unit, data.equip)
-        BotWeapons:set_armor(unit, data.armor, data.skin)
+      local loadout = managers.criminals:get_loadout_for(data and data.name)
+      if loadout then
+        loadout.deployable = data.equip
+        loadout.armor = data.armor
+        loadout.armor_skin = data.skin
+        loadout.player_style = data.outfit
+        loaodut.suit_variation = data.variant
+        managers.criminals:update_character_visual_state(data.name)
       end
     end
   end)

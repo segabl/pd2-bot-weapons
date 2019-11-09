@@ -49,6 +49,8 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
 
   unit:base():set_character_name(character)
 
+  self:set_character_player_style(loadout.player_style, loadout.suit_variation, unit)
+
   -- mask
   local mask = loadout.mask
   local mask_blueprint = loadout.mask_blueprint or managers.blackmarket:get_mask_default_blueprint(mask)

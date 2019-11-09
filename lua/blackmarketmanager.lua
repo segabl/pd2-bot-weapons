@@ -71,10 +71,15 @@ function BlackMarketManager:get_armor_icon(armor)
 end
 
 function BlackMarketManager:get_player_style_icon(player_style)
+  local path = "textures/pd2/blackmarket/icons/player_styles/"
   local guis_catalog = "guis/"
   local bundle_folder = tweak_data.blackmarket.player_styles[player_style] and tweak_data.blackmarket.player_styles[player_style].texture_bundle_folder
   if bundle_folder then
     guis_catalog = guis_catalog .. "dlcs/" .. tostring(bundle_folder) .. "/"
   end
-  return guis_catalog .. "textures/pd2/blackmarket/icons/player_styles/" .. tostring(player_style)
+  if player_style:match("^las_") then -- LAS support
+    player_style = player_style:sub(5, -1)
+    path = "armor_skins/"
+  end
+  return guis_catalog .. path .. tostring(player_style)
 end

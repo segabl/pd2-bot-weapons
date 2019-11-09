@@ -783,6 +783,7 @@ function CrewManagementGui:populate_player_styles(henchman_index, data, gui)
       bitmap_texture = "guis/textures/empty",
       name = "none",
       name_localized = managers.localization:text("item_random_outfit"),
+      unlocked = true,
       random = true
     })
     table.insert(data, 1, {
@@ -791,6 +792,7 @@ function CrewManagementGui:populate_player_styles(henchman_index, data, gui)
       bitmap_texture = "guis/textures/empty",
       name = "none",
       name_localized = managers.localization:text("item_default_outfit"),
+      unlocked = true,
       default = true
     })
     pad_data(data, data.override_slots[2])

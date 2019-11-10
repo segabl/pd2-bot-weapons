@@ -538,7 +538,7 @@ if not BotWeapons then
         loadout.armor = data.armor
         loadout.armor_skin = data.skin
         loadout.player_style = data.outfit
-        loaodut.suit_variation = data.variant
+        loadout.suit_variation = data.variant
         managers.criminals:update_character_visual_state(data.name)
       end
     end

@@ -42,14 +42,9 @@ if not BotWeapons then
     -- load settings
     self:load()
   end
-  
-  function BotWeapons:should_use_armor()
-    local level_id = Utils:IsInGameState() and managers.job and managers.job:current_level_id()
-    return not (tweak_data.levels[level_id] and tweak_data.levels[level_id].player_sequence)
-  end
 
   function BotWeapons:set_armor(unit, armor, armor_skin)
-    if not alive(unit) or not self:should_use_armor() then
+    if not alive(unit) then
       return
     end
     if armor and tweak_data.blackmarket.armors[armor] then
@@ -172,7 +167,7 @@ if not BotWeapons then
     local name = managers.criminals:character_name_by_unit(unit)
     loadout = loadout or managers.criminals:get_loadout_for(name)
     -- send armor
-    if self:should_use_armor() and loadout.armor then
+    if loadout.armor then
       peer:send_queued_sync("sync_run_sequence_char", unit, tweak_data.blackmarket.armors[loadout.armor].sequence)
     end
     -- send other data

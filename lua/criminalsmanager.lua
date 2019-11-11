@@ -14,13 +14,15 @@ function CriminalsManager:update_character_visual_state(character_name, visual_s
   if character and character.taken and character.data.ai and alive(character.unit) then
     local loadout = self:get_loadout_for(character_name)
 
+    visual_state = visual_state or {}
+    visual_state.armor_id = loadout.armor
+    visual_state.armor_skin = loadout.armor_skin
     BotWeapons:set_armor(character.unit, loadout.armor, loadout.armor_skin)
     BotWeapons:set_equipment(character.unit, loadout.deployable)
 
     local player_style_u_name = tweak_data.blackmarket:get_player_style_value(loadout.player_style, character_name, "third_unit")
     if player_style_u_name then
       managers.dyn_resource:load(Idstring("unit"), Idstring(player_style_u_name), DynamicResourceManager.DYN_RESOURCES_PACKAGE)
-      visual_state = visual_state or {}
       visual_state.player_style = loadout.player_style
       visual_state.suit_variation = loadout.suit_variation
       local spawn_manager = character.unit:spawn_manager()

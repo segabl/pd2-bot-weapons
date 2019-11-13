@@ -385,7 +385,7 @@ function CrewManagementGui:populate_primaries(henchman_index, data, gui)
   for k, v in ipairs(data) do
     v.equipped = not v.locked_slot and not v.empty_slot and loadout.primary_slot == v.slot and loadout.primary_category == v.category
     v.comparision_data = nil
-    if not managers.blackmarket:is_weapon_allowed_for_crew(v.name) or not BotWeapons:get_npc_version(v.name) then
+    if not v.empty_slot and not managers.blackmarket:is_weapon_allowed_for_crew(v.name) then
       v.buttons = {}
       v.unlocked = false
       v.lock_texture = "guis/textures/pd2/lock_incompatible"

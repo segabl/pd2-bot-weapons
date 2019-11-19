@@ -15,9 +15,11 @@ function CriminalsManager:update_character_visual_state(character_name, visual_s
     local loadout = self:get_loadout_for(character_name)
 
     visual_state = visual_state or {}
-    visual_state.armor_id = loadout.armor
-    visual_state.armor_skin = loadout.armor_skin
-    BotWeapons:set_armor(character.unit, loadout.armor, loadout.armor_skin)
+    if BotWeapons:should_use_armor() then
+      visual_state.armor_id = loadout.armor
+      visual_state.armor_skin = loadout.armor_skin
+      BotWeapons:set_armor(character.unit, loadout.armor, loadout.armor_skin)
+    end
     BotWeapons:set_equipment(character.unit, loadout.deployable)
 
     local player_style_u_name = tweak_data.blackmarket:get_player_style_value(loadout.player_style, character_name, "third_unit")

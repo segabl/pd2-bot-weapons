@@ -43,12 +43,13 @@ if not BotWeapons then
     self:load()
   end
 
+  function BotWeapons:should_use_armor()
+    local level_id = Utils:IsInGameState() and managers.job and managers.job:current_level_id()
+    return not (tweak_data.levels[level_id] and tweak_data.levels[level_id].player_style)
+  end
+
   function BotWeapons:set_armor(unit, armor, armor_skin)
     if not alive(unit) then
-      return
-    end
-    local level_id = Utils:IsInGameState() and managers.job and managers.job:current_level_id()
-    if tweak_data.levels[level_id] and tweak_data.levels[level_id].player_style then
       return
     end
     if armor and tweak_data.blackmarket.armors[armor] then

@@ -47,6 +47,10 @@ if not BotWeapons then
     if not alive(unit) then
       return
     end
+    local level_id = Utils:IsInGameState() and managers.job and managers.job:current_level_id()
+    if tweak_data.levels[level_id] and tweak_data.levels[level_id].player_style then
+      return
+    end
     if armor and tweak_data.blackmarket.armors[armor] then
       unit:damage():run_sequence_simple(tweak_data.blackmarket.armors[armor].sequence)
       unit:base()._armor_id = armor
@@ -404,10 +408,12 @@ if not BotWeapons then
         end
       end
       -- check for invalid outfit
+      loadout.player_style = loadout.player_style or "none"
       if not tweak_data.blackmarket.player_styles[loadout.player_style] then
         self:log("WARNING: Player style " .. tostring(loadout.player_style) .. " does not exist, removed it from " .. char_name .. "!")
         loadout.player_style = "none"
       end
+      loadout.suit_variation = loadout.suit_variation or "default"
       if loadout.suit_variation_random then
         loadout.suit_variation = self:get_random_suit_variation(loadout.suit_variation_random, loadout.player_style)
       elseif not tweak_data.blackmarket:have_suit_variations(loadout.player_style) then

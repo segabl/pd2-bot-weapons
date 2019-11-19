@@ -1,19 +1,17 @@
 if BotWeapons._data.weapon_balance then
 
   local _presets_original = CharacterTweakData._presets
-  function CharacterTweakData:_presets(...)
-    local presets = _presets_original(self, ...)
-    BotWeapons:log("Fixing gang presets")
+  function CharacterTweakData:_presets(tweak_data, ...)
+    local presets = _presets_original(self, tweak_data, ...)
     
     local gang_presets = presets.weapon.gang_member
-    for _, v in pairs(gang_presets) do
-      v.aim_delay = gang_presets.is_rifle.aim_delay
-      v.focus_delay = gang_presets.is_rifle.focus_delay
-    end
-    
-    local rifle_dmg_mul = gang_presets.is_rifle.FALLOFF[1].dmg_mul
+
+    local difficulty_index = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
+    local rifle_dmg_mul = difficulty_index * 0.65
     local rifle_spread = gang_presets.is_rifle.spread
-    
+
+    BotWeapons:log("Fixing gang presets, reference dmg_mul is " .. rifle_dmg_mul)
+
     -- rifle preset
     gang_presets.is_rifle.FALLOFF = {
       { dmg_mul = rifle_dmg_mul * 0.8, r = 500, acc = { 1, 1 }, recoil = { 0.25, 0.35 }, mode = { 0, 0, 0, 1 } },

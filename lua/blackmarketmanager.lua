@@ -6,6 +6,9 @@ function BlackMarketManager:is_weapon_category_allowed_for_crew(weapon_category)
 end
 
 function BlackMarketManager:is_weapon_allowed_for_crew(weapon_id)
+  if not weapon_id then
+    return true
+  end
   if not BotWeapons:get_npc_version(weapon_id) then
     return false
   end

@@ -10,6 +10,9 @@ end
 
 local function average_burst_size(w_u_tweak)
   local mean_autofire = w_u_tweak.autofire_rounds and mean(w_u_tweak.autofire_rounds) or 1
+  if CASS then
+    return mean_autofire
+  end
   local average_burst_size = 0
   for _, v in ipairs(w_u_tweak.FALLOFF) do
     average_burst_size = average_burst_size + (v.mode[1] * 1 + (v.mode[2] - v.mode[1]) * 2 + (v.mode[3] - v.mode[2]) * 3 + (v.mode[4] - v.mode[3]) * mean_autofire)
@@ -22,7 +25,7 @@ local m4_u_tweak = tweak_data.character.presets.weapon.gang_member[m4_tweak.usag
 local m4_automatic = m4_tweak.fire_mode == "auto" and m4_u_tweak.autofire_rounds and true or false
 -- calculate m4 dps as target dps for other weapons
 local mag = m4_tweak.CLIP_AMMO_MAX
-local burst_size = m4_tweak.fire_mode == "auto" and average_burst_size(m4_u_tweak) or 1
+local burst_size = m4_automatic and average_burst_size(m4_u_tweak) or 1
 local shot_delay = m4_tweak.auto and m4_tweak.auto.fire_rate or 0.5
 local burst_delay = mean((m4_automatic or not m4_tweak.burst_delay) and m4_u_tweak.FALLOFF[1].recoil or m4_tweak.burst_delay)
 local reload_time = m4_tweak.reload_time or 2
@@ -45,7 +48,7 @@ function TeamAIActionShoot:init(...)
       end
       -- calculate weapon damage based on m4 dps
       local mag = w_tweak.CLIP_AMMO_MAX
-      local burst_size = w_tweak.fire_mode == "auto" and average_burst_size(w_u_tweak) or 1
+      local burst_size = w_automatic and average_burst_size(w_u_tweak) or 1
       local shot_delay = w_tweak.auto and w_tweak.auto.fire_rate or 0.5
       local burst_delay = mean(self._weapon_base._falloff_data[1].recoil)
       local reload_time = w_tweak.reload_time or 2

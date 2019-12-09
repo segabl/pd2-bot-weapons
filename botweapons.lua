@@ -189,25 +189,19 @@ if not BotWeapons then
     LuaNetworking:SendToPeer(peer:id(), "bot_weapons_sync", json.encode(sync_data))
   end
   
-  local env_triggers = {
-    "night", "glace", "foggy", "_n2", "framing_frame", "dah_outdoor", "dark", "mad_lab", "underground",
-    "nail", "kosugi", "help", "fork_01", "spa_outside", "stern_01", "hlm1", "hvh", "berry_connection"
-  }
+  local ambient_color_key = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/ambient_color"):key()
+  local ambient_color_scale_key = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/ambient_color_scale"):key()
   function BotWeapons:should_use_flashlight(position)
-    if not self._data.use_flashlights or not position then
+    if not self._data.use_flashlights then
       return false
     end
-    local environment = managers.environment_area and managers.environment_area:environment_at_position(position)
+    local environment = position and managers.environment_area and managers.environment_area:environment_at_position(position)
     if not environment then
       return false
     end
-    environment = environment:gsub(".+/(.+)", "%1")
-    for _, v in ipairs(env_triggers) do
-      if environment:find(v) then
-        return true
-      end
-    end
-    return false
+    local data = managers.viewport._env_manager:_get_data(environment)
+    local ambient_col = data[ambient_color_key]
+    return (ambient_col.x + ambient_col.y + ambient_col.z) * data[ambient_color_scale_key] < 0.25
   end
   
   function BotWeapons:should_use_laser()

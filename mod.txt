@@ -6,7 +6,12 @@
   "color" : "0.043 0.808 0.6",
   "image" : "mod.png",
   "version" : "10.5",
-  "updates" : [ { "identifier" : "bot_weapons" } ],
+  "updates" : [
+    {
+      "identifier" : "pd2-bot-weapons",
+      "host": { "meta": "http://updates.hoppip.at/pd2-bot-weapons" }
+    }
+  ],
   "hooks" : [
     { "hook_id" : "lib/managers/blackmarketmanager", "script_path" : "botweapons.lua" },
     { "hook_id" : "lib/managers/criminalsmanager", "script_path" : "botweapons.lua" },

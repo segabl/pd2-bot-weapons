@@ -134,7 +134,7 @@ if not BotWeapons then
     if not weapon_base or not alive(unit) or unit:movement():cool() then
       return
     end
-    local gadget = self:should_use_flashlight(unit:position()) and weapon_base:get_gadget_by_type("flashlight") or self:should_use_laser() and weapon_base:get_gadget_by_type("laser")
+    local gadget = self:should_use_flashlight(unit:position()) and weapon_base:get_gadget_by_type("flashlight") or self:should_use_laser() and weapon_base:get_gadget_by_type("laser") or 0
     if gadget == weapon_base._gadget_on then
       return
     end

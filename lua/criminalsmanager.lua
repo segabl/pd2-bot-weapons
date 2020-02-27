@@ -22,17 +22,6 @@ function CriminalsManager:update_character_visual_state(character_name, visual_s
     end
     BotWeapons:set_equipment(character.unit, loadout.deployable)
 
-    local player_style_u_name = tweak_data.blackmarket:get_player_style_value(loadout.player_style, character_name, "third_unit")
-    if player_style_u_name then
-      managers.dyn_resource:load(Idstring("unit"), Idstring(player_style_u_name), DynamicResourceManager.DYN_RESOURCES_PACKAGE)
-      visual_state.player_style = loadout.player_style
-      visual_state.suit_variation = loadout.suit_variation
-      local spawn_manager = character.unit:spawn_manager()
-      if spawn_manager then
-        spawn_manager.save = function () end -- ugly hack, unmodded clients will see floating heads, need to find a better way to do this
-      end
-    end
-
     if Network:is_server() then
       BotWeapons:sync_to_all_peers(character.unit, loadout, 2)
     end

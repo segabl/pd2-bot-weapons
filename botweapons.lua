@@ -23,7 +23,7 @@ if not BotWeapons then
     "akimbo",
     "pistol"
   }
-  
+
   local unit_ids = Idstring("unit")
 
   function BotWeapons:log(message, condition)
@@ -31,7 +31,7 @@ if not BotWeapons then
       log("[BotWeapons] " .. message)
     end
   end
-  
+
   function BotWeapons:init()
     -- load mask sets
     local file = io.open(BotWeapons._path .. "masks.json", "r")
@@ -40,7 +40,7 @@ if not BotWeapons then
       file:close()
     end
     self.masks = self.masks or {}
-    
+
     -- load settings
     self:load()
   end
@@ -73,7 +73,7 @@ if not BotWeapons then
       unit:base()._armor_skin_ext = armor_skin_ext
     end
   end
-  
+
   function BotWeapons:set_equipment(unit, equipment)
     if not alive(unit) then
       return
@@ -88,7 +88,7 @@ if not BotWeapons then
       end
     end
   end
-  
+
   function BotWeapons:check_setup_gadget_colors(unit, weapon_base)
     if weapon_base._setup_team_ai_colors then
       return
@@ -125,11 +125,11 @@ if not BotWeapons then
     end
     weapon_base._setup_team_ai_colors = weapon_base._assembly_complete
   end
-  
+
   function BotWeapons:should_sync_settings()
     return self._data.sync_settings and not Global.game_settings.single_player and Network:is_server()
   end
-  
+
   function BotWeapons:check_set_gadget_state(unit, weapon_base)
     if not weapon_base or not alive(unit) or unit:movement():cool() then
       return
@@ -166,7 +166,7 @@ if not BotWeapons then
       end
     end)
   end
-  
+
   function BotWeapons:sync_to_peer(peer, unit, loadout)
     if not self:should_sync_settings() then
       return
@@ -182,13 +182,11 @@ if not BotWeapons then
       name = name,
       equip = loadout.deployable,
       armor = loadout.armor,
-      skin = loadout.armor_skin,
-      outfit = loadout.player_style,
-      variant = loadout.suit_variation
+      skin = loadout.armor_skin
     }
     LuaNetworking:SendToPeer(peer:id(), "bot_weapons_sync", json.encode(sync_data))
   end
-  
+
   local ambient_color_key = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/ambient_color"):key()
   local ambient_color_scale_key = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/ambient_color_scale"):key()
   function BotWeapons:should_use_flashlight(position)
@@ -203,11 +201,11 @@ if not BotWeapons then
     local ambient_col = data[ambient_color_key]
     return (ambient_col.x + ambient_col.y + ambient_col.z) * data[ambient_color_scale_key] < 0.25
   end
-  
+
   function BotWeapons:should_use_laser()
     return self._data.use_lasers
   end
-  
+
   function BotWeapons:masks_data()
     if not self._masks_data then
       self._masks_data = {}
@@ -273,10 +271,12 @@ if not BotWeapons then
     end
     if math.random() < self._data.weapon_cosmetics_chance then
       local cosmetics = table.random_key(managers.blackmarket:get_cosmetics_by_weapon_id(weapon.weapon_id))
+      local cosmetics_data = tweak_data.blackmarket.weapon_skins[cosmetics]
       if cosmetics then
         weapon.cosmetics = {
           id = cosmetics,
-          quality = table.random_key(tweak_data.economy.qualities)
+          quality = table.random_key(tweak_data.economy.qualities),
+          color_index = cosmetics_data.is_a_color_skin and math.random(#cosmetics_data)
         }
       end
     end
@@ -285,7 +285,7 @@ if not BotWeapons then
       if math.random() < self._data.weapon_customized_chance then
         local part_data = table.random(parts_data)
         if part_data then
-          factory_data = tweak_data.weapon.factory.parts[part_data[1]]
+          local factory_data = tweak_data.weapon.factory.parts[part_data[1]]
           if factory_data and (not factory_data.custom or factory_data.third_unit and DB:has(unit_ids, factory_data.third_unit:id())) then
             managers.weapon_factory:change_part_blueprint_only(weapon.factory_id, part_data[1], weapon.blueprint)
           end
@@ -317,11 +317,11 @@ if not BotWeapons then
   function BotWeapons:get_random_deployable(category)
     return table.random_key(tweak_data.blackmarket.deployables)
   end
-  
+
   function BotWeapons:get_char_loadout(char_name)
     return char_name and type(self._data[char_name]) == "table" and self._data[char_name] or {}
   end
-  
+
   function BotWeapons:get_loadout(char_name, original_loadout, refresh)
     if not char_name then
       return original_loadout
@@ -334,9 +334,9 @@ if not BotWeapons then
     end
     local loadout = deep_clone(original_loadout)
     if not Utils:IsInGameState() or Network:is_server() then
-    
+
       local char_loadout = self:get_char_loadout(char_name)
-    
+
       -- choose mask
       if loadout.mask == "character_locked" or loadout.mask_random then
         loadout.mask_slot = nil
@@ -360,7 +360,7 @@ if not BotWeapons then
         loadout.mask = "character_locked"
         loadout.mask_blueprint = nil
       end
-      
+
       -- choose weapon
       if not loadout.primary or loadout.primary_random then
         loadout.primary_slot = nil
@@ -393,7 +393,7 @@ if not BotWeapons then
           break
         end
       end
-      
+
       -- choose outfit
       if not loadout.player_style or loadout.player_style_random then
         if not loadout.player_style_random then
@@ -454,7 +454,7 @@ if not BotWeapons then
         self:log("WARNING: Armor Skin " .. tostring(loadout.armor_skin) .. " does not exist, removed it from " .. char_name .. "!", loadout.armor_skin)
         loadout.armor_skin = "none"
       end
-      
+
       -- choose equipment models
       if not loadout.deployable or loadout.deployable_random then
         if not loadout.deployable_random then
@@ -470,7 +470,7 @@ if not BotWeapons then
         self:log("WARNING: Deployable " .. tostring(loadout.deployable) .. " does not exist, removed it from " .. char_name .. "!")
         loadout.deployable = nil
       end
-      
+
     end
     self._loadouts = self._loadouts or {}
     self._loadouts[char_name] = loadout
@@ -538,8 +538,6 @@ if not BotWeapons then
         loadout.deployable = data.equip
         loadout.armor = data.armor
         loadout.armor_skin = data.skin
-        loadout.player_style = data.outfit
-        loadout.suit_variation = data.variant
         managers.criminals:update_character_visual_state(data.name)
       end
     end

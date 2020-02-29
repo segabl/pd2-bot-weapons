@@ -35,9 +35,9 @@ end
 
 local henchman_loadout_string_from_loadout_original = BlackMarketManager.henchman_loadout_string_from_loadout
 function BlackMarketManager:henchman_loadout_string_from_loadout(loadout, ...)
-  local loadout = deep_clone(loadout)
-  loadout.primary = nil
-  return henchman_loadout_string_from_loadout_original(self, loadout, ...)
+  local sanitized_loadout = deep_clone(loadout)
+  sanitized_loadout.primary = nil
+  return henchman_loadout_string_from_loadout_original(self, sanitized_loadout, ...)
 end
 
 local henchman_loadout_original = BlackMarketManager.henchman_loadout
@@ -53,6 +53,16 @@ function BlackMarketManager:henchman_loadout(...)
     loadout.deployable = tweak_data.upgrades.definitions[loadout.deployable] and loadout.deployable
   end
   return loadout
+end
+
+function BlackMarketManager:set_preferred_henchmen(index, character_name)
+  self._global._preferred_henchmen = self._global._preferred_henchmen or {}
+  for i, name in pairs(self._global._preferred_henchmen) do
+    if name == character_name and i ~= index then
+      self._global._preferred_henchmen[i] = nil
+    end
+  end
+  self._global._preferred_henchmen[index] = character_name
 end
 
 function BlackMarketManager:get_deployable_icon(deployable)

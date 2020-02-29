@@ -1,11 +1,11 @@
 {
   "name" : "Bot Weapons and Equipment",
   "description" : "Improved Crew Management, customize the visual appearance of the Team AI to make them more human-like",
-  "author" : "Shiny Hoppip",
+  "author" : "Hoppip",
   "blt_version" : 2,
   "color" : "0.043 0.808 0.6",
   "image" : "mod.png",
-  "version" : "10.5",
+  "version" : "10.6",
   "updates" : [
     {
       "identifier" : "pd2-bot-weapons",

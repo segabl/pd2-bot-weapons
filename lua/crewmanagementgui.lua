@@ -23,38 +23,6 @@ local fit_texture = function(bitmap, target_w, target_h)
   local dh = texture_height / sh
   bitmap:set_size(math.round(dw * target_w), math.round(dh * target_h))
 end
-local select_anim = function(object, size, instant)
-  local current_width = object:w()
-  local current_height = object:h()
-  local end_width = size[1]
-  local end_height = size[2]
-  local cx, cy = object:center()
-  if instant then
-    object:set_size(end_width, end_height)
-    object:set_center(cx, cy)
-  else
-    over(0.2, function(p)
-      object:set_size(math.lerp(current_width, end_width, p), math.lerp(current_height, end_height, p))
-      object:set_center(cx, cy)
-    end)
-  end
-end
-local unselect_anim = function(object, size, instant)
-  local current_width = object:w()
-  local current_height = object:h()
-  local end_width = size[1] * 0.8
-  local end_height = size[2] * 0.8
-  local cx, cy = object:center()
-  if instant then
-    object:set_size(end_width, end_height)
-    object:set_center(cx, cy)
-  else
-    over(0.2, function(p)
-      object:set_size(math.lerp(current_width, end_width, p), math.lerp(current_height, end_height, p))
-      object:set_center(cx, cy)
-    end)
-  end
-end
 
 function CrewManagementGui:init(ws, fullscreen_ws, node)
   CriminalsManager.MAX_NR_TEAM_AI = LobbySettings and LobbySettings.original_MAX_NR_TEAM_AI or CriminalsManager.MAX_NR_TEAM_AI
@@ -71,10 +39,9 @@ function CrewManagementGui:init(ws, fullscreen_ws, node)
   node:parameters().data = node:parameters().data or {}
   self._panel = ws:panel():panel()
   CrewManagementGui.panel_crash_protection = self._panel
-  self._item_w = 128
-  self._item_h = 100
-  self._image_max_h = 64
-  self._item_h = 84
+  self._item_w = 136
+  self._item_h = 78
+  self._image_max_h = 54
   self._buttons = {}
   self._buttons_no_nav = {}
 
@@ -92,8 +59,7 @@ function CrewManagementGui:init(ws, fullscreen_ws, node)
   })
   make_fine_text(loadout_text)
 
-  local info_panel = nil
-
+  local info_panel
   if managers.menu:is_pc_controller() then
     info_panel = self._panel:panel({
       w = 30,
@@ -136,7 +102,7 @@ function CrewManagementGui:init(ws, fullscreen_ws, node)
     self._2_panel,
     self._3_panel
   }
-  self._3_panel:set_right(self._panel:right() - 10)
+  self._3_panel:set_right(self._panel:right())
   self._2_panel:set_right(self._3_panel:left() - 10)
   self._1_panel:set_right(self._2_panel:left() - 10)
   for i, panel in pairs(self._btn_panels) do
@@ -156,6 +122,10 @@ function CrewManagementGui:init(ws, fullscreen_ws, node)
     info_panel:set_left(loadout_text:right())
   end
 
+  self:create_character_button(self._1_panel, 1)
+  self:create_character_button(self._2_panel, 2)
+  self:create_character_button(self._3_panel, 3)
+  self:new_row()
   self:create_mask_button(self._1_panel, 1)
   self:create_mask_button(self._2_panel, 2)
   self:create_mask_button(self._3_panel, 3)
@@ -180,22 +150,15 @@ function CrewManagementGui:init(ws, fullscreen_ws, node)
   self:create_skill_button(self._2_panel, 2)
   self:create_skill_button(self._3_panel, 3)
   self:new_row()
-  local char_text = self._panel:text({
-    text = managers.localization:text("menu_crew_character_order"),
-    font = medium_font,
-    font_size = medium_font_size
-  })
-  make_fine_text(char_text)
-  -- character specific settings here
+
   local character_text = self._panel:text({
     text = managers.localization:to_upper_text("menu_crew_character_settings"),
     font = medium_font,
-    font_size = medium_font_size,
-    y = 20
+    font_size = medium_font_size
   })
   make_fine_text(character_text)
-  character_text:set_right(self._3_panel:right())
-  character_text:set_y(self._3_panel:bottom() + small_font_size)
+  character_text:set_right(loadout_text:x() - small_font_size)
+  character_text:set_y(loadout_text:y())
   local character_settings = CrewManagementGuiButton:new(self, function()
     self:show_character_specific_settings()
   end, true)
@@ -203,81 +166,10 @@ function CrewManagementGui:init(ws, fullscreen_ws, node)
   character_settings._select_col = tweak_data.screen_colors.button_stage_2
   character_settings._normal_col = tweak_data.screen_colors.button_stage_3
   character_settings._selected_changed = CrewManagementGuiTextButton._selected_changed
-  -- end of char specific stuff
-  local cc_panel = self._panel:panel({
-    w = 300
-  })
-  cc_panel:set_right(self._1_panel:left() - 32)
-  cc_panel:set_top(self._1_panel:top())
-  char_text:set_center_y(loadout_text:center_y())
-  char_text:set_left(cc_panel:left())
-  local char_panel = cc_panel:panel({
-    h = 88,
-    w = 0
-  })
-  local char_images = {}
-  for i = 1, CriminalsManager.MAX_NR_TEAM_AI do
-    local character = managers.blackmarket:preferred_henchmen(i)
-    local texture = character and managers.blackmarket:get_character_icon(character) or "guis/textures/pd2/dice_icon"
-    local _, img = self:_add_bitmap_panel_row(char_panel, {texture = texture}, 70, 64)
-    table.insert(char_images, img)
-  end
-  char_panel:set_center_x(cc_panel:w() / 2)
-  cc_panel:set_h(char_panel:h())
-  local char_btn = CrewManagementGuiButton:new(self, callback(self, self, "open_character_menu", 1))
-  char_btn._panel = cc_panel
-  char_btn._select_panel = BoxGuiObject:new(cc_panel, {
-    sides = {
-      2,
-      2,
-      2,
-      2
-    }
-  })
-  local char_panel_size = {
-    char_images[1]:size()
-  }
-  function char_btn:_selected_changed(state, instant)
-    CrewManagementGuiButton._selected_changed(self, state, instant)
-    for _, img in pairs(char_images) do
-      img:animate(state and select_anim or unselect_anim, char_panel_size, instant)
-    end
-  end
-  char_btn:_selected_changed(false, true)
-  do
-    local v = cc_panel
-    BoxGuiObject:new(v, {
-      sides = {
-        1,
-        1,
-        1,
-        1
-      }
-    })
-    v:bitmap({
-      texture = "guis/textures/test_blur_df",
-      render_template = "VertexColorTexturedBlur3D",
-      w = v:w(),
-      h = v:h(),
-      halign = "scale",
-      valign = "scale",
-      layer = -1,
-      alpha = 1
-    })
-    v:rect({
-      color = Color.black,
-      alpha = 0.4,
-      layer = -1
-    })
-  end
+
   for _, v in pairs(self._btn_panels) do
     BoxGuiObject:new(v, {
-      sides = {
-        1,
-        1,
-        2,
-        1
-      }
+      sides = { 1, 1, 2, 1 }
     })
     v:bitmap({
       texture = "guis/textures/test_blur_df",
@@ -389,24 +281,118 @@ function CrewManagementGui:create_pages(new_node_data, params, identifier, selec
   return correct_category and selected_tab or 1
 end
 
+--[[ CHARACTER ]]
+function CrewManagementGui:create_character_button(panel, index)
+  local character = managers.blackmarket:preferred_henchmen(index)
+  local texture = character and managers.blackmarket:get_character_icon(character) or "guis/textures/pd2/dice_icon"
+  local text = character and managers.localization:text("menu_" .. character) or managers.localization:text("item_random")
+  local cat_text = managers.localization:to_upper_text("menu_preferred_character")
+  return CrewManagementGuiLoadoutItem:new(self, panel, texture and {texture = texture, layer = 1}, text, cat_text, callback(self, self, "open_character_menu", index), callback(self, self, "previous_character", index), callback(self, self, "next_character", index))
+end
+
+function CrewManagementGui:open_character_menu(henchman_index)
+  local category = "characters"
+  local new_node_data = {
+    category = category
+  }
+  local selected_tab = self:create_pages(new_node_data, henchman_index, "custom", nil, 3, 6, 1)
+  new_node_data.can_move_over_tabs = true
+  new_node_data.selected_tab = selected_tab
+  new_node_data.scroll_tab_anywhere = false
+  new_node_data.hide_detection_panel = true
+  new_node_data.custom_callback = {
+    custom_select = callback(self, self, "select_character", henchman_index),
+    custom_unselect = callback(self, self, "select_character", henchman_index)
+  }
+
+  function new_node_data.custom_update_text_info(data, updated_texts, gui)
+    updated_texts[1].text = data.name_localized
+    updated_texts[4].text = managers.localization:text(data.name .. "_desc")
+    if not data.unlocked then
+      updated_texts[3].text = managers.localization:text(data.dlc_locked)
+    end
+  end
+
+  new_node_data.topic_id = "bm_menu_crew_characters"
+  new_node_data.topic_params = {
+    weapon_category = managers.localization:text("bm_menu_" .. category) .. " " .. tostring(henchman_index)
+  }
+
+  managers.menu:open_node("blackmarket_node", { new_node_data })
+end
+
+function CrewManagementGui:populate_characters(henchman_index, data, gui)
+  gui:populate_characters(data)
+
+  for _, v in ipairs(data) do
+    v.equipped = managers.blackmarket:preferred_henchmen(henchman_index) == v.name
+    v.buttons = v.unlocked and { v.equipped and "custom_unselect" or "custom_select" } or {}
+  end
+end
+
+function CrewManagementGui:select_character(index, data, gui)
+  if data.equipped then
+    managers.blackmarket:set_preferred_henchmen(index, nil)
+  else
+    managers.blackmarket:set_preferred_henchmen(index, data.name)
+  end
+  return gui and gui:reload()
+end
+
+function CrewManagementGui:previous_character(henchman_index)
+  local character = managers.blackmarket:preferred_henchmen(henchman_index)
+  local characters = CriminalsManager.character_names()
+  local char_index = character and table.get_vector_index(characters, character)
+
+  while char_index and char_index > 1 do
+    char_index = char_index - 1
+    character = characters[char_index]
+    local char_name = CriminalsManager.convert_old_to_new_character_workname(character)
+    local character_table = tweak_data.blackmarket.characters[char_name] or tweak_data.blackmarket.characters.locked[char_name]
+    if not character_table or not character_table.dlc or managers.dlc:is_dlc_unlocked(character_table.dlc) then
+      managers.blackmarket:set_preferred_henchmen(henchman_index, character)
+      return self:reload()
+    end
+  end
+end
+
+function CrewManagementGui:next_character(henchman_index)
+  local character = managers.blackmarket:preferred_henchmen(henchman_index)
+  local characters = CriminalsManager.character_names()
+  local char_index = character and table.get_vector_index(characters, character)
+
+  while char_index and char_index < #characters do
+    char_index = char_index + 1
+    character = characters[char_index]
+    local char_name = CriminalsManager.convert_old_to_new_character_workname(character)
+    local character_table = tweak_data.blackmarket.characters[char_name] or tweak_data.blackmarket.characters.locked[char_name]
+    if not character_table or not character_table.dlc or managers.dlc:is_dlc_unlocked(character_table.dlc) then
+      managers.blackmarket:set_preferred_henchmen(henchman_index, character)
+      return self:reload()
+    end
+  end
+end
+
 --[[ WEAPONS ]]
 function CrewManagementGui:create_weapon_button(panel, index)
   local loadout = managers.blackmarket:henchman_loadout(index)
   local char_loadout = BotWeapons:get_char_loadout(managers.menu_scene._picked_character_position[index])
   local data = managers.blackmarket:get_crafted_category_slot(loadout.primary_category or "primaries", loadout.primary_slot) or {}
   local texture, rarity = managers.blackmarket:get_weapon_icon_path(data.weapon_id, data.cosmetics)
-  local text = loadout.primary_slot and managers.blackmarket:get_weapon_name_by_category_slot(loadout.primary_category or "primaries", loadout.primary_slot) or ""
+  local text = loadout.primary_slot and managers.blackmarket:get_weapon_name_by_category_slot(loadout.primary_category or "primaries", loadout.primary_slot) or loadout.primary_random and managers.localization:text("item_random") or ""
   local cat_text = managers.localization:to_upper_text("item_weapon")
   local weapon_text = loadout.primary_random and managers.localization:to_upper_text("item_random") or (char_loadout.primary or char_loadout.primary_random) and managers.localization:to_upper_text("menu_crew_character") or managers.localization:to_upper_text("menu_crew_defualt")
   if type(loadout.primary_random) == "string" then
     weapon_text = managers.localization:to_upper_text("menu_" .. loadout.primary_random)
+  elseif loadout.primary_random then
+    texture = "guis/textures/pd2/dice_icon"
   end
   local item = CrewManagementGuiLoadoutItem:new(self, panel, texture and {texture = texture, layer = 1} or weapon_text, text, cat_text, callback(self, self, "show_weapon_selection", index), callback(self, self, "previous_weapon_category", index), callback(self, self, "next_weapon_category", index))
   if rarity then
     local rare_item = item._panel:bitmap({
-      texture = rarity,
       blend_mode = "add",
-      layer = 0
+      layer = 0,
+      texture = rarity
     })
     fit_texture(rare_item, item._panel:size())
     rare_item:set_world_center(item._panel:world_center())
@@ -537,11 +523,13 @@ function CrewManagementGui:create_mask_button(panel, index)
   local loadout = managers.blackmarket:henchman_loadout(index)
   local char_loadout = BotWeapons:get_char_loadout(managers.menu_scene._picked_character_position[index])
   local texture = loadout.mask ~= "character_locked" and managers.blackmarket:get_mask_icon(loadout.mask)
-  local text = loadout.mask ~= "character_locked" and managers.blackmarket:get_mask_name_by_category_slot("masks", loadout.mask_slot) or ""
+  local text = loadout.mask ~= "character_locked" and managers.blackmarket:get_mask_name_by_category_slot("masks", loadout.mask_slot) or loadout.mask_random and managers.localization:text("item_random") or ""
   local cat_text = managers.localization:to_upper_text("bm_menu_masks")
   local mask_text = loadout.mask_random and managers.localization:to_upper_text("item_random") or (char_loadout.mask or char_loadout.mask_random) and managers.localization:to_upper_text("menu_crew_character") or managers.localization:to_upper_text("menu_crew_defualt")
   if type(loadout.mask_random) == "string" then
     mask_text = managers.localization:to_upper_text("item_" .. loadout.mask_random)
+  elseif loadout.mask_random then
+    texture = "guis/textures/pd2/dice_icon"
   end
   return CrewManagementGuiLoadoutItem:new(self, panel, texture and {texture = texture, layer = 1} or mask_text, text, cat_text, callback(self, self, "show_mask_selection", index), callback(self, self, "previous_mask", index), callback(self, self, "next_mask", index))
 end
@@ -641,8 +629,8 @@ end
 function CrewManagementGui:create_deployable_button(panel, index)
   local loadout = managers.blackmarket:henchman_loadout(index)
   local char_loadout = BotWeapons:get_char_loadout(managers.menu_scene._picked_character_position[index])
-  local texture = loadout.deployable and managers.blackmarket:get_deployable_icon(loadout.deployable)
-  local text = loadout.deployable and managers.localization:to_upper_text(tweak_data.upgrades.definitions[loadout.deployable].name_id) or ""
+  local texture = loadout.deployable and managers.blackmarket:get_deployable_icon(loadout.deployable) or loadout.deployable_random and "guis/textures/pd2/dice_icon"
+  local text = loadout.deployable and managers.localization:to_upper_text(tweak_data.upgrades.definitions[loadout.deployable].name_id) or loadout.deployable_random and managers.localization:text("item_random") or ""
   local cat_text = managers.localization:to_upper_text("bm_menu_deployables")
   local deployable_text = loadout.deployable_random and managers.localization:to_upper_text("item_random") or (char_loadout.deployable or char_loadout.deployable_random) and managers.localization:to_upper_text("menu_crew_character") or managers.localization:to_upper_text("menu_crew_defualt")
   return CrewManagementGuiLoadoutItem:new(self, panel, texture and {texture = texture, layer = 1} or deployable_text, text, cat_text, callback(self, self, "open_deployables_category_menu", index), callback(self, self, "previous_deployable", index), callback(self, self, "next_deployable", index))
@@ -652,7 +640,7 @@ function CrewManagementGui:open_deployables_category_menu(henchman_index)
   local new_node_data = {
     category = "deployables"
   }
-  self:create_pages(new_node_data, henchman_index, "deployable", nil, 3, 3, 1)
+  self:create_pages(new_node_data, henchman_index, "custom", nil, 3, 3, 1)
   new_node_data.hide_detection_panel = true
   new_node_data.custom_callback = {
     lo_d_equip = callback(self, self, "select_deployable", henchman_index),
@@ -662,6 +650,13 @@ function CrewManagementGui:open_deployables_category_menu(henchman_index)
   new_node_data.topic_params = {
     weapon_category = managers.localization:text("bm_menu_deployables")
   }
+  function new_node_data.custom_update_text_info(data, updated_texts, gui)
+    updated_texts[1].text = data.name_localized
+    updated_texts[4].text = (data.random or data.default) and "" or managers.localization:text(tweak_data.blackmarket.deployables[data.name].desc_id, {
+      BTN_INTERACT = managers.localization:btn_macro("interact", true),
+      BTN_USE_ITEM = managers.localization:btn_macro("use_item", true)
+    })
+  end
   managers.menu:open_node("blackmarket_node", {new_node_data})
 end
 
@@ -744,10 +739,10 @@ function CrewManagementGui:create_armor_button(panel, index)
   local loadout = managers.blackmarket:henchman_loadout(index)
   local char_loadout = BotWeapons:get_char_loadout(managers.menu_scene._picked_character_position[index])
   local player_style = loadout.player_style and loadout.player_style ~= "none" and loadout.player_style
-  local texture = player_style and managers.blackmarket:get_player_style_icon(player_style) or loadout.armor and managers.blackmarket:get_armor_icon(loadout.armor)
-  local text = player_style and managers.localization:text(tweak_data.blackmarket.player_styles[player_style].name_id) or loadout.armor and managers.localization:text(tweak_data.blackmarket.armors[loadout.armor].name_id) or ""
+  local texture = player_style and managers.blackmarket:get_player_style_icon(player_style) or loadout.armor and managers.blackmarket:get_armor_icon(loadout.armor) or (loadout.player_style_random or loadout.armor_random) and "guis/textures/pd2/dice_icon"
+  local text = player_style and managers.localization:text(tweak_data.blackmarket.player_styles[player_style].name_id) or loadout.armor and managers.localization:text(tweak_data.blackmarket.armors[loadout.armor].name_id) or (loadout.player_style_random or loadout.armor_random) and managers.localization:text("item_random") or ""
   local cat_text = managers.localization:to_upper_text("bm_menu_player_styles")
-  local armor_text = loadout.player_style_random and (managers.localization:to_upper_text("item_random") .. " " .. managers.localization:to_upper_text("bm_menu_player_styles")) or loadout.armor_random and (managers.localization:to_upper_text("item_random") .. " " .. managers.localization:to_upper_text("bm_menu_armors")) or (char_loadout.armor or char_loadout.armor_random or char_loadout.player_style or char_loadout.player_style_random) and managers.localization:to_upper_text("menu_crew_character") or managers.localization:to_upper_text("menu_crew_defualt")
+  local armor_text = (char_loadout.armor or char_loadout.armor_random or char_loadout.player_style or char_loadout.player_style_random) and managers.localization:to_upper_text("menu_crew_character") or managers.localization:to_upper_text("menu_crew_defualt")
   return CrewManagementGuiLoadoutItem:new(self, panel, texture and {texture = texture, layer = 1} or armor_text, text, cat_text, callback(self, self, "open_armor_category_menu", index), callback(self, self, "previous_armor", index), callback(self, self, "next_armor", index))
 end
 
@@ -766,12 +761,22 @@ function CrewManagementGui:open_armor_category_menu(henchman_index)
     on_create_func = callback(self, self, "populate_player_styles", henchman_index),
     category = "player_styles",
     override_slots = override_slots,
-    identifier = BlackMarketGui.identifiers.player_style
+    identifier = BlackMarketGui.identifiers.custom
   })
+  function new_node_data.custom_update_text_info(data, updated_texts, gui)
+    local player_style = data.name
+    local player_style_tweak = tweak_data.blackmarket.player_styles[player_style]
+    if not data.unlocked then
+      updated_texts[2].text = "##" .. managers.localization:to_upper_text("bm_menu_item_locked") .. "##"
+      updated_texts[2].resource_color = tweak_data.screen_colors.important_1
+      updated_texts[3].text = data.dlc_locked and managers.localization:to_upper_text(data.dlc_locked) or managers.localization:to_upper_text("bm_menu_dlc_locked")
+    end
+    updated_texts[1].text = data.name_localized
+    updated_texts[4].text = (data.random or data.default) and "" or managers.localization:text(player_style_tweak.desc_id)
+  end
 
   new_node_data.topic_id = "bm_menu_outfits"
   new_node_data.skip_blur = true
-  new_node_data.use_bgs = true
   new_node_data.hide_detection_panel = true
   new_node_data.custom_callback = {
     a_equip = callback(self, self, "select_armor", henchman_index),
@@ -780,7 +785,6 @@ function CrewManagementGui:open_armor_category_menu(henchman_index)
     trd_customize = callback(self, self, "customize_player_style", henchman_index)
   }
 
-  managers.environment_controller:set_dof_distance(10, false)
   managers.menu_scene:remove_item()
   managers.menu:open_node("blackmarket_node", { new_node_data })
 end
@@ -793,13 +797,25 @@ function CrewManagementGui:customize_player_style(henchman_index, data)
       on_create_func = callback(self, self, "populate_suit_variations", henchman_index),
       category = "suit_variations",
       override_slots = { 3, 3 },
-      identifier = BlackMarketGui.identifiers.suit_variation,
+      identifier = BlackMarketGui.identifiers.custom,
       prev_node_data = data
     })
+    function new_node_data.custom_update_text_info(data, updated_texts, gui)
+      local player_style = gui._data.prev_node_data.name
+      local player_style_tweak = tweak_data.blackmarket.player_styles[player_style]
+      local suit_variation = data.name
+      local suit_variation_tweak = player_style_tweak.material_variations[suit_variation]
+      updated_texts[1].text = data.name_localized
+      if not data.unlocked then
+        updated_texts[2].text = "##" .. managers.localization:to_upper_text("bm_menu_item_locked") .. "##"
+        updated_texts[2].resource_color = tweak_data.screen_colors.important_1
+        updated_texts[3].text = data.dlc_locked and managers.localization:to_upper_text(data.dlc_locked) or managers.localization:to_upper_text("bm_menu_dlc_locked")
+      end
+      updated_texts[4].text = (data.random or data.default) and "" or managers.localization:text(suit_variation_tweak and suit_variation_tweak.desc_id or "menu_default")
+    end
 
     new_node_data.topic_id = "bm_menu_suit_variations"
     new_node_data.skip_blur = true
-    new_node_data.use_bgs = true
     new_node_data.hide_detection_panel = true
     new_node_data.prev_node_data = data
     new_node_data.custom_callback = {
@@ -1007,7 +1023,6 @@ function CrewManagementGui:open_armor_skins_menu(henchman_index)
 
   new_node_data.topic_id = "bm_menu_armor_skins"
   new_node_data.skip_blur = true
-  new_node_data.use_bgs = true
   new_node_data.hide_detection_panel = true
   new_node_data.custom_callback = {
     as_equip = callback(self, self, "select_armor_skin", henchman_index)

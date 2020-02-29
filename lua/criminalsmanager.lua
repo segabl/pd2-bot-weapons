@@ -28,3 +28,24 @@ function CriminalsManager:update_character_visual_state(character_name, visual_s
   end
   return update_character_visual_state_original(self, character_name, visual_state, ...)
 end
+
+function CriminalsManager:get_free_character_name()
+  local name = managers.blackmarket:preferred_henchmen(self:nr_AI_criminals() + 1)
+  if name then
+    local data = table.find_value(self._characters, function (val) return val.name == name end)
+    if data and not data.taken then
+      return name
+    end
+  end
+
+  local available = {}
+  for _, data in pairs(self._characters) do
+    if not data.taken and not self:is_character_as_AI_level_blocked(data.name) then
+      table.insert(available, data.name)
+    end
+  end
+
+  if #available > 0 then
+    return available[math.random(#available)]
+  end
+end

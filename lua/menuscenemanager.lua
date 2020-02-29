@@ -2,7 +2,7 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
 
   self._picked_character_position = self._picked_character_position or {}
   character = character or managers.blackmarket:preferred_henchmen(index)
-  
+
   if not character then
     local preferred = managers.blackmarket:preferred_henchmen()
     local characters = CriminalsManager.character_names()
@@ -25,10 +25,10 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
     end
     character = available[math.random(#available)] or "russian"
   end
-  
+
   -- get char loadout
   loadout = BotWeapons:get_loadout(character, loadout or managers.blackmarket:henchman_loadout(index), true)
-  
+
   -- character
   self._picked_character_position[index] = character
   local character_id = managers.blackmarket:get_character_id_by_character_name(character)
@@ -64,37 +64,71 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
   if mask_data then
     self:update_mask_offset(mask_data)
   end
-  
+
   -- weapon
-  local weapon_id
+  local primary, primary_blueprint, primary_cosmetics, weapon_id
   local crafted_primary = managers.blackmarket:get_crafted_category_slot(loadout.primary_category or "primaries", loadout.primary_slot)
   if crafted_primary then
-    local primary = crafted_primary.factory_id
-    local primary_id = crafted_primary.weapon_id
-    local primary_blueprint = crafted_primary.blueprint
-    local primary_cosmetics = crafted_primary.cosmetics
+    primary = crafted_primary.factory_id
+    primary_blueprint = crafted_primary.blueprint
+    primary_cosmetics = crafted_primary.cosmetics
     self:set_character_equipped_weapon(unit, primary, primary_blueprint, "primary", primary_cosmetics)
-    weapon_id = primary_id
+    weapon_id = crafted_primary.weapon_id
   else
-    local primary = loadout.primary or tweak_data.character[character].weapon.weapons_of_choice.primary
+    primary = loadout.primary or tweak_data.character[character].weapon.weapons_of_choice.primary
     primary = string.gsub(primary, "_npc", "")
-    local blueprint = loadout.primary and loadout.primary_blueprint or managers.weapon_factory:get_default_blueprint_by_factory_id(primary)
-    local cosmetics = loadout.primary and loadout.primary_cosmetics
-    self:set_character_equipped_weapon(unit, primary, blueprint, "primary", cosmetics)
+    primary_blueprint = loadout.primary and loadout.primary_blueprint or managers.weapon_factory:get_default_blueprint_by_factory_id(primary)
+    primary_cosmetics = loadout.primary and loadout.primary_cosmetics
+    self:set_character_equipped_weapon(unit, primary, primary_blueprint, "primary", primary_cosmetics)
     weapon_id = managers.weapon_factory:get_weapon_id_by_factory_id(primary)
   end
-  
+  if tweak_data.weapon[weapon_id].categories[1] == "akimbo" then
+    self:set_character_equipped_weapon(unit, primary, primary_blueprint, "secondary", primary_cosmetics)
+  end
+
   -- armor
   BotWeapons:set_armor(unit, loadout.armor)
   self:set_character_armor_skin(loadout.armor_skin, unit)
-  
+
   -- equipment
   BotWeapons:set_equipment(unit, loadout.deployable)
-  
+
   -- pose
   self:_select_henchmen_pose(unit, weapon_id, index)
   local pos, rot = self:get_henchmen_positioning(index)
   unit:set_position(pos)
   unit:set_rotation(rot)
   self:set_henchmen_visible(true, index)
+end
+
+function MenuSceneManager:_init_lobby_poses()
+  self._lobby_poses = {
+    generic = {
+      "lobby_generic_idle1",
+      "lobby_generic_idle2"
+    },
+    pistol = {
+      "lobby_generic_idle2",
+    },
+    smg = {
+      "lobby_generic_idle2",
+    },
+    akimbo = {
+      "husk_akimbo2",
+      "husk_bullpup"
+    },
+    lmg = {
+      "lobby_generic_idle1",
+      "husk_lmg"
+    },
+    snp = {
+      "lobby_generic_idle1"
+    },
+    m95 = {
+      "husk_m95"
+    },
+    minigun = {
+      "lobby_minigun_idle1"
+    }
+  }
 end

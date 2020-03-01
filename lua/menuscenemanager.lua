@@ -115,7 +115,8 @@ function MenuSceneManager:_init_lobby_poses()
     },
     akimbo = {
       "husk_akimbo2",
-      "husk_bullpup"
+      "husk_rifle1",
+      "husk_rifle2"
     },
     lmg = {
       "lobby_generic_idle1",
@@ -124,11 +125,14 @@ function MenuSceneManager:_init_lobby_poses()
     snp = {
       "lobby_generic_idle1"
     },
+    minigun = {
+      "lobby_minigun_idle1"
+    },
     m95 = {
       "husk_m95"
     },
-    minigun = {
-      "lobby_minigun_idle1"
+    judge = {
+      "lobby_generic_idle2"
     }
   }
 end

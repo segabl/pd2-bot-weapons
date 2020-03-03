@@ -101,38 +101,60 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
   self:set_henchmen_visible(true, index)
 end
 
-function MenuSceneManager:_init_lobby_poses()
-  self._lobby_poses = {
-    generic = {
-      "lobby_generic_idle1",
-      "lobby_generic_idle2"
-    },
-    pistol = {
-      "lobby_generic_idle2",
-    },
-    smg = {
-      "lobby_generic_idle2",
-    },
-    akimbo = {
-      "husk_akimbo2",
-      "husk_rifle1",
-      "husk_rifle2"
-    },
-    lmg = {
-      "lobby_generic_idle1",
-      "husk_lmg"
-    },
-    snp = {
-      "lobby_generic_idle1"
-    },
-    minigun = {
-      "lobby_minigun_idle1"
-    },
-    m95 = {
-      "husk_m95"
-    },
-    judge = {
-      "lobby_generic_idle2"
-    }
+local poses = {
+  generic = {
+    "lobby_generic_idle1",
+    "lobby_generic_idle2"
+  },
+  pistol = {
+    "lobby_generic_idle2",
+  },
+  smg = {
+    "lobby_generic_idle2",
+  },
+  akimbo = {
+    "husk_akimbo2",
+    "husk_rifle1",
+    "husk_rifle2"
+  },
+  lmg = {
+    "lobby_generic_idle1",
+    "husk_lmg"
+  },
+  snp = {
+    "lobby_generic_idle1"
+  },
+  minigun = {
+    "lobby_minigun_idle1"
+  },
+  m95 = {
+    "husk_m95"
+  },
+  judge = {
+    "lobby_generic_idle2"
   }
+}
+function MenuSceneManager:_select_henchmen_pose(unit, weapon_id, index)
+  local delays = {
+    0,
+    0.8,
+    0.2,
+    0.5
+  }
+  local animation_delay = delays[index] or index * 0.2
+  local state = unit:play_redirect(Idstring("idle_menu"))
+
+  if not weapon_id then
+    unit:anim_state_machine():set_parameter(state, "cvc_var1", 1)
+    unit:anim_state_machine():set_animation_time_all_segments(animation_delay)
+    return
+  end
+
+  local check_cat = tweak_data.weapon.judge.categories[1] == "revolver" and 2 or 1 -- more weapon categories compat
+  local category = tweak_data.weapon[weapon_id].categories[check_cat]
+  local lobby_poses = poses[weapon_id] or poses[category] or poses.generic
+  local pose = lobby_poses[math.random(#lobby_poses)]
+
+  unit:anim_state_machine():set_parameter(state, pose, 1)
+  unit:anim_state_machine():set_animation_time_all_segments(animation_delay)
 end

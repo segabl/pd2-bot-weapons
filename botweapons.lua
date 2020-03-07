@@ -1,9 +1,9 @@
 if not BotWeapons then
 
   _G.BotWeapons = {}
-  BotWeapons._path = ModPath
-  BotWeapons._data_path = SavePath .. "bot_weapons_data.txt"
-  BotWeapons._data = {
+  BotWeapons.mod_path = ModPath
+  BotWeapons.settings_path = SavePath .. "bot_weapons_data.txt"
+  BotWeapons.settings = {
     debug = false,
     weapon_balance = true,
     player_carry = true,
@@ -34,7 +34,7 @@ if not BotWeapons then
 
   function BotWeapons:init()
     -- load mask sets
-    local file = io.open(BotWeapons._path .. "masks.json", "r")
+    local file = io.open(BotWeapons.mod_path .. "masks.json", "r")
     if file then
       self.masks = json.decode(file:read("*all"))
       file:close()
@@ -127,7 +127,7 @@ if not BotWeapons then
   end
 
   function BotWeapons:should_sync_settings()
-    return self._data.sync_settings and not Global.game_settings.single_player and Network:is_server()
+    return self.settings.sync_settings and not Global.game_settings.single_player and Network:is_server()
   end
 
   function BotWeapons:check_set_gadget_state(unit, weapon_base)
@@ -154,9 +154,6 @@ if not BotWeapons then
   end
 
   function BotWeapons:sync_to_all_peers(unit, loadout, sync_delay)
-    if not self:should_sync_settings() then
-      return
-    end
     DelayedCalls:Add("bot_weapons_sync_" .. unit:base()._tweak_table, sync_delay or 0, function ()
       if not alive(unit) then
         return
@@ -168,9 +165,6 @@ if not BotWeapons then
   end
 
   function BotWeapons:sync_to_peer(peer, unit, loadout)
-    if not self:should_sync_settings() then
-      return
-    end
     local name = managers.criminals:character_name_by_unit(unit)
     loadout = loadout or managers.criminals:get_loadout_for(name)
     -- send armor
@@ -190,7 +184,7 @@ if not BotWeapons then
   local ambient_color_key = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/ambient_color"):key()
   local ambient_color_scale_key = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/ambient_color_scale"):key()
   function BotWeapons:should_use_flashlight(position)
-    if not self._data.use_flashlights then
+    if not self.settings.use_flashlights then
       return false
     end
     local environment = position and managers.environment_area and managers.environment_area:environment_at_position(position)
@@ -203,7 +197,7 @@ if not BotWeapons then
   end
 
   function BotWeapons:should_use_laser()
-    return self._data.use_lasers
+    return self.settings.use_lasers
   end
 
   function BotWeapons:masks_data()
@@ -225,14 +219,11 @@ if not BotWeapons then
     else
       local masks_data = self:masks_data()
       local mask = table.random(masks_data.masks)
-      local blueprint
-      if math.random() < self._data.mask_customized_chance then
-        blueprint = {
-          color = { id = table.random(masks_data.colors) },
-          pattern = { id = table.random(masks_data.patterns) },
-          material = { id = table.random(masks_data.materials) }
-        }
-      end
+      local blueprint = math.random() < self.settings.mask_customized_chance and {
+        color = { id = table.random(masks_data.colors) },
+        pattern = { id = table.random(masks_data.patterns) },
+        material = { id = table.random(masks_data.materials) }
+      }
       return mask, blueprint
     end
   end
@@ -241,7 +232,7 @@ if not BotWeapons then
   function BotWeapons:get_npc_version(weapon_id)
     local factory_id = weapon_id and managers.weapon_factory:get_factory_id_by_weapon_id(weapon_id)
     local tweak = factory_id and tweak_data.weapon.factory[factory_id .. "_npc"]
-    return tweak and (not tweak.custom or DB:has(Idstring("unit"), tweak.unit:id())) and factory_id .. "_npc"
+    return tweak and (not tweak.custom or tweak.unit and DB:has(unit_ids, tweak.unit:id())) and factory_id .. "_npc"
   end
 
   -- selects a random weapon and constructs a random blueprint for it
@@ -255,12 +246,11 @@ if not BotWeapons then
         if data.autohit and (data.categories[check_cat] or data.categories[1]) == cat then
           local factory_id = self:get_npc_version(weapon_id)
           if factory_id then
-            local data = {
+            table.insert(self._weapons[cat], {
               category = data.use_data.selection_index == 2 and "primaries" or "secondaries",
               factory_id = factory_id,
               weapon_id = weapon_id,
-            }
-            table.insert(self._weapons[cat], data)
+            })
           end
         end
       end
@@ -269,7 +259,7 @@ if not BotWeapons then
     if not weapon then
       return
     end
-    if math.random() < self._data.weapon_cosmetics_chance then
+    if math.random() < self.settings.weapon_cosmetics_chance then
       local cosmetics = table.random_key(managers.blackmarket:get_cosmetics_by_weapon_id(weapon.weapon_id))
       local cosmetics_data = tweak_data.blackmarket.weapon_skins[cosmetics]
       if cosmetics then
@@ -282,7 +272,7 @@ if not BotWeapons then
     end
     weapon.blueprint = deep_clone(weapon.cosmetics and tweak_data.blackmarket.weapon_skins[weapon.cosmetics.id].default_blueprint or tweak_data.weapon.factory[weapon.factory_id].default_blueprint)
     for part_type, parts_data in pairs(managers.blackmarket:get_dropable_mods_by_weapon_id(weapon.weapon_id)) do
-      if math.random() < self._data.weapon_customized_chance then
+      if math.random() < self.settings.weapon_customized_chance then
         local part_data = table.random(parts_data)
         if part_data then
           local factory_data = tweak_data.weapon.factory.parts[part_data[1]]
@@ -319,7 +309,7 @@ if not BotWeapons then
   end
 
   function BotWeapons:get_char_loadout(char_name)
-    return char_name and type(self._data[char_name]) == "table" and self._data[char_name] or {}
+    return char_name and type(self.settings[char_name]) == "table" and self.settings[char_name] or {}
   end
 
   function BotWeapons:get_loadout(char_name, original_loadout, refresh)
@@ -482,10 +472,10 @@ if not BotWeapons then
       return
     end
     if not loadout then
-      self._data[char_name] = nil
+      self.settings[char_name] = nil
       return
     end
-    self._data[char_name] = {
+    self.settings[char_name] = {
       armor = not loadout.armor_random and loadout.armor or nil,
       armor_random = loadout.armor_random or nil,
       armor_skin = not loadout.armor_skin_random and loadout.armor_skin or nil,
@@ -507,21 +497,21 @@ if not BotWeapons then
   end
 
   function BotWeapons:save()
-    local file = io.open(self._data_path, "w+")
+    local file = io.open(self.settings_path, "w+")
     if file then
-      file:write(json.encode(self._data))
+      file:write(json.encode(self.settings))
       file:close()
     end
   end
 
   function BotWeapons:load()
-    local file = io.open(self._data_path, "r")
+    local file = io.open(self.settings_path, "r")
     if file then
       local data = json.decode(file:read("*all"))
       file:close()
       if data then
         for k, v in pairs(data) do
-          self._data[k] = v
+          self.settings[k] = v
         end
       end
     end
@@ -547,7 +537,7 @@ end
 
 if RequiredScript then
 
-  local fname = BotWeapons._path .. RequiredScript:gsub(".+/(.+)", "lua/%1.lua")
+  local fname = BotWeapons.mod_path .. RequiredScript:gsub(".+/(.+)", "lua/%1.lua")
   if io.file_is_readable(fname) then
     dofile(fname)
   end

@@ -1,9 +1,7 @@
-local init_original = WeaponTweakData.init
-function WeaponTweakData:init(...)
-  init_original(self, ...)
-  
+Hooks:PostHook(WeaponTweakData, "init", "init_bot_weapons", function (self)
+
   BotWeapons:log("Setting up weapons")
-  
+
   local function get_player_weapon(id)
     id = id:gsub("_crew$", ""):gsub("_secondary$", ""):gsub("_primary$", "")
     local weapon_table = {
@@ -23,15 +21,15 @@ function WeaponTweakData:init(...)
     }
     return self[weapon_table[id] or id]
   end
-  
+
   local function set_usage(key, weapon, usage)
     if not weapon.anim_usage then
       weapon.anim_usage = weapon.usage
     end
-    BotWeapons:log(key .. " usage: " .. tostring(weapon.usage) .. " -> " .. usage, BotWeapons._data.debug and weapon.usage ~= usage)
+    BotWeapons:log(key .. " usage: " .. tostring(weapon.usage) .. " -> " .. usage, BotWeapons.settings.debug and weapon.usage ~= usage)
     weapon.usage = usage
   end
-  
+
   local function max_kick(kick)
     local k = 0.5
     for _, v in ipairs(kick or {}) do
@@ -39,7 +37,7 @@ function WeaponTweakData:init(...)
     end
     return k
   end
-  
+
   for k, v in pairs(self) do
     if type(v) == "table" and k:match("_crew$") then
       -- get player version of gun to copy fire rate and mode from
@@ -73,4 +71,5 @@ function WeaponTweakData:init(...)
       end
     end
   end
-end
+
+end)

@@ -13,11 +13,11 @@ local function average_burst_size(w_u_tweak)
   if CASS then
     return mean_autofire
   end
-  local average_burst_size = 0
+  local burst_size = 0
   for _, v in ipairs(w_u_tweak.FALLOFF) do
-    average_burst_size = average_burst_size + (v.mode[1] * 1 + (v.mode[2] - v.mode[1]) * 2 + (v.mode[3] - v.mode[2]) * 3 + (v.mode[4] - v.mode[3]) * mean_autofire)
+    burst_size = burst_size + (v.mode[1] * 1 + (v.mode[2] - v.mode[1]) * 2 + (v.mode[3] - v.mode[2]) * 3 + (v.mode[4] - v.mode[3]) * mean_autofire)
   end
-  return average_burst_size / #w_u_tweak.FALLOFF
+  return burst_size / #w_u_tweak.FALLOFF
 end
 
 local m4_tweak = tweak_data.weapon.m4_crew
@@ -33,36 +33,38 @@ local reload_time = m4_tweak.reload_time or 2
 TeamAIActionShoot.TARGET_DAMAGE = (m4_tweak.DAMAGE * mag) / ((mag / burst_size) * (burst_size - 1) * shot_delay + (mag / burst_size - 1) * burst_delay + reload_time)
 
 function TeamAIActionShoot:init(...)
-  if TeamAIActionShoot.super.init(self, ...) then
-    local w_tweak = self._weap_tweak
-    local w_u_tweak = self._w_usage_tweak
-    local w_automatic = w_tweak.fire_mode == "auto" and w_u_tweak.autofire_rounds and true or false
-    if not self._weapon_base._falloff_data then
-      if not w_automatic and w_tweak.burst_delay then
-        self._weapon_base._falloff_data = deep_clone(w_u_tweak.FALLOFF)
-        for _, v in ipairs(self._weapon_base._falloff_data) do
-          v.recoil = w_tweak.burst_delay
-        end
-      else
-        self._weapon_base._falloff_data = w_u_tweak.FALLOFF
-      end
-      -- calculate weapon damage based on m4 dps
-      local mag = w_tweak.CLIP_AMMO_MAX
-      local burst_size = w_automatic and average_burst_size(w_u_tweak) or 1
-      local shot_delay = w_tweak.auto and w_tweak.auto.fire_rate or 0.5
-      local burst_delay = mean(self._weapon_base._falloff_data[1].recoil)
-      local reload_time = w_tweak.reload_time or 2
-      self._weapon_base._damage = (self.TARGET_DAMAGE * ((mag / burst_size) * (burst_size - 1) * shot_delay + (mag / burst_size - 1) * burst_delay + reload_time)) / mag
-      if alive(self._weapon_base._second_gun) then
-        self._weapon_base._second_gun:base()._damage = self._weapon_base._damage
-        self._weapon_base._second_gun:base().SKIP_AMMO = false
-      end
-    end
-    self._falloff = self._weapon_base._falloff_data
-    self._automatic_weap = w_automatic
-    self._reload_speed = HuskPlayerMovement:get_reload_animation_time(w_tweak.hold) / (w_tweak.reload_time or 2)
-    return true
+  if not TeamAIActionShoot.super.init(self, ...) then
+    return false
   end
+
+  local w_tweak = self._weap_tweak
+  local w_u_tweak = self._w_usage_tweak
+  local w_automatic = w_tweak.fire_mode == "auto" and w_u_tweak.autofire_rounds and true or false
+  if not self._weapon_base._falloff_data then
+    if not w_automatic and w_tweak.burst_delay then
+      self._weapon_base._falloff_data = deep_clone(w_u_tweak.FALLOFF)
+      for _, v in ipairs(self._weapon_base._falloff_data) do
+        v.recoil = w_tweak.burst_delay
+      end
+    else
+      self._weapon_base._falloff_data = w_u_tweak.FALLOFF
+    end
+    -- calculate weapon damage based on m4 dps
+    mag = w_tweak.CLIP_AMMO_MAX
+    burst_size = w_automatic and average_burst_size(w_u_tweak) or 1
+    shot_delay = w_tweak.auto and w_tweak.auto.fire_rate or 0.5
+    burst_delay = mean(self._weapon_base._falloff_data[1].recoil)
+    reload_time = w_tweak.reload_time or 2
+    self._weapon_base._damage = (self.TARGET_DAMAGE * ((mag / burst_size) * (burst_size - 1) * shot_delay + (mag / burst_size - 1) * burst_delay + reload_time)) / mag
+    if alive(self._weapon_base._second_gun) then
+      self._weapon_base._second_gun:base()._damage = self._weapon_base._damage
+      self._weapon_base._second_gun:base().SKIP_AMMO = false
+    end
+  end
+  self._falloff = self._weapon_base._falloff_data
+  self._automatic_weap = w_automatic
+  self._reload_speed = HuskPlayerMovement:get_reload_animation_time(w_tweak.hold) / (w_tweak.reload_time or 2)
+  return true
 end
 
 if not CASS then

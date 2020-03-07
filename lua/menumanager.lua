@@ -4,22 +4,22 @@ Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInit_BotWeapons
     if mod:GetName() == "PAYDAY 2 THAI LANGUAGE Mod" and mod:IsEnabled() then
         custom_language = "thai"
         break
-    end  
+    end
   end
   if custom_language then
-    loc:load_localization_file(BotWeapons._path .. "loc/" .. custom_language ..".txt")
+    loc:load_localization_file(BotWeapons.mod_path .. "loc/" .. custom_language ..".txt")
   elseif PD2KR then
-    loc:load_localization_file(BotWeapons._path .. "loc/korean.txt")
+    loc:load_localization_file(BotWeapons.mod_path .. "loc/korean.txt")
   else
-    for _, filename in pairs(file.GetFiles(BotWeapons._path .. "loc/") or {}) do
+    for _, filename in pairs(file.GetFiles(BotWeapons.mod_path .. "loc/") or {}) do
       local str = filename:match('^(.*).txt$')
       if str and Idstring(str) and Idstring(str):key() == SystemInfo:language():key() then
-        loc:load_localization_file(BotWeapons._path .. "loc/" .. filename)
+        loc:load_localization_file(BotWeapons.mod_path .. "loc/" .. filename)
         break
       end
     end
   end
-  loc:load_localization_file(BotWeapons._path .. "loc/english.txt", false)
+  loc:load_localization_file(BotWeapons.mod_path .. "loc/english.txt", false)
 end)
 
 local menu_id_main = "BotWeapons_menu_main"
@@ -31,12 +31,12 @@ end)
 Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotWeapons", function(menu_manager, nodes)
 
   MenuCallbackHandler.BotWeapons_select = function(self, item)
-    BotWeapons._data[item:name()] = item:value()
+    BotWeapons.settings[item:name()] = item:value()
     BotWeapons:save()
   end
-  
+
   MenuCallbackHandler.BotWeapons_toggle = function(self, item)
-    BotWeapons._data[item:name()] = (item:value() == "on");
+    BotWeapons.settings[item:name()] = (item:value() == "on");
     BotWeapons:save()
   end
 
@@ -45,55 +45,55 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     title = "toggle_weapon_balance_name",
     desc = "toggle_weapon_balance_desc",
     callback = "BotWeapons_toggle",
-    value = BotWeapons._data.weapon_balance,
+    value = BotWeapons.settings.weapon_balance,
     menu_id = menu_id_main,
     priority = 100
   })
-  
+
   MenuHelper:AddDivider({
     id = "divider0",
     size = 16,
     menu_id = menu_id_main,
     priority = 99
   })
-  
+
   MenuHelper:AddToggle({
     id = "player_carry",
     title = "toggle_player_carry_name",
     desc = "toggle_player_carry_desc",
     callback = "BotWeapons_toggle",
-    value = BotWeapons._data.player_carry,
+    value = BotWeapons.settings.player_carry,
     menu_id = menu_id_main,
     priority = 98
   })
-  
+
   MenuHelper:AddDivider({
     id = "divider1",
     size = 16,
     menu_id = menu_id_main,
     priority = 97
   })
-  
+
   MenuHelper:AddToggle({
     id = "use_flashlights",
     title = "toggle_use_flashlights_name",
     desc = "toggle_use_flashlights_desc",
     callback = "BotWeapons_toggle",
-    value = BotWeapons._data.use_flashlights,
+    value = BotWeapons.settings.use_flashlights,
     menu_id = menu_id_main,
     priority = 96
   })
-  
+
   MenuHelper:AddToggle({
     id = "use_lasers",
     title = "toggle_use_lasers_name",
     desc = "toggle_use_lasers_desc",
     callback = "BotWeapons_toggle",
-    value = BotWeapons._data.use_lasers,
+    value = BotWeapons.settings.use_lasers,
     menu_id = menu_id_main,
     priority = 95
   })
-  
+
   MenuHelper:AddDivider({
     id = "divider2",
     size = 16,
@@ -106,7 +106,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     title = "slider_mask_customized_chance_name",
     desc = "slider_mask_customized_chance_desc",
     callback = "BotWeapons_select",
-    value = BotWeapons._data.mask_customized_chance,
+    value = BotWeapons.settings.mask_customized_chance,
     min = 0,
     max = 1,
     step = 0.01,
@@ -114,13 +114,13 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     menu_id = menu_id_main,
     priority = 93
   })
-  
+
   MenuHelper:AddSlider({
     id = "weapon_customized_chance",
     title = "slider_weapon_customized_chance_name",
     desc = "slider_weapon_customized_chance_desc",
     callback = "BotWeapons_select",
-    value = BotWeapons._data.weapon_customized_chance,
+    value = BotWeapons.settings.weapon_customized_chance,
     min = 0,
     max = 1,
     step = 0.01,
@@ -128,13 +128,13 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     menu_id = menu_id_main,
     priority = 92
   })
-  
+
   MenuHelper:AddSlider({
     id = "weapon_cosmetics_chance",
     title = "slider_weapon_cosmetics_chance_name",
     desc = "slider_weapon_cosmetics_chance_desc",
     callback = "BotWeapons_select",
-    value = BotWeapons._data.weapon_cosmetics_chance,
+    value = BotWeapons.settings.weapon_cosmetics_chance,
     min = 0,
     max = 1,
     step = 0.01,
@@ -142,24 +142,24 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     menu_id = menu_id_main,
     priority = 91
   })
-  
+
   MenuHelper:AddDivider({
     id = "divider3",
     size = 16,
     menu_id = menu_id_main,
     priority = 90
   })
-  
+
   MenuHelper:AddToggle({
     id = "sync_settings",
     title = "toggle_sync_settings_name",
     desc = "toggle_sync_settings_desc",
     callback = "BotWeapons_toggle",
-    value = BotWeapons._data.sync_settings,
+    value = BotWeapons.settings.sync_settings,
     menu_id = menu_id_main,
     priority = 89
   })
-  
+
 end)
 
 -- Build the menus and add it to the Mod Options menu

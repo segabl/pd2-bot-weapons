@@ -22,7 +22,7 @@ function CriminalsManager:update_character_visual_state(character_name, visual_s
     end
     BotWeapons:set_equipment(character.unit, loadout.deployable)
 
-    if Network:is_server() then
+    if Network:is_server() and BotWeapons:should_sync_settings() then
       BotWeapons:sync_to_all_peers(character.unit, loadout, 2)
     end
   end

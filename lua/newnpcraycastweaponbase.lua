@@ -5,7 +5,6 @@ function NewNPCRaycastWeaponBase:get_gadget_by_type(gadget_type, gadgets)
   gadgets = gadgets or managers.weapon_factory:get_parts_from_weapon_by_type_or_perk("gadget", self._factory_id, self._blueprint)
   if gadgets then
     local xd, yd = nil
-    local part_factory = tweak_data.weapon.factory.parts
     table.sort(gadgets, function (x, y)
       xd = self._parts[x]
       yd = self._parts[y]
@@ -27,12 +26,11 @@ function NewNPCRaycastWeaponBase:get_gadget_by_type(gadget_type, gadgets)
   end
 end
 
-local clbk_assembly_complete_original = NewNPCRaycastWeaponBase.clbk_assembly_complete
-function NewNPCRaycastWeaponBase:clbk_assembly_complete(...)
-  local result = clbk_assembly_complete_original(self, ...)
+Hooks:PostHook(NewNPCRaycastWeaponBase, "clbk_assembly_complete", function (self)
+
+  -- check if gadget activation is needed
   if Network:is_server() and self._is_team_ai then
-    -- check if activation is needed
     BotWeapons:check_set_gadget_state(self._setup and self._setup.user_unit, self)
   end
-  return result
-end
+
+end)

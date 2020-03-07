@@ -151,7 +151,7 @@ function MenuSceneManager:_select_henchmen_pose(unit, weapon_id, index)
   end
 
   local check_cat = tweak_data.weapon.judge.categories[1] == "revolver" and 2 or 1 -- more weapon categories compat
-  local category = tweak_data.weapon[weapon_id].categories[check_cat]
+  local category = tweak_data.weapon[weapon_id].categories[check_cat] or tweak_data.weapon[weapon_id].categories[1]
   local lobby_poses = poses[weapon_id] or poses[category] or poses.generic
   local pose = lobby_poses[math.random(#lobby_poses)]
 

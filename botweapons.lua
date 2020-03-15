@@ -223,7 +223,7 @@ if not BotWeapons then
         color = { id = table.random(masks_data.colors) },
         pattern = { id = table.random(masks_data.patterns) },
         material = { id = table.random(masks_data.materials) }
-      }
+      } or nil
       return mask, blueprint
     end
   end

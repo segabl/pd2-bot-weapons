@@ -10,7 +10,7 @@ end
 
 local function average_burst_size(w_u_tweak)
   local mean_autofire = w_u_tweak.autofire_rounds and mean(w_u_tweak.autofire_rounds) or 1
-  if CASS then
+  if StreamHeist then
     return mean_autofire
   end
   local burst_size = 0
@@ -67,7 +67,7 @@ function TeamAIActionShoot:init(...)
   return true
 end
 
-if not CASS then
+if not StreamHeist then
 
   -- interpolate damage for team ai
   local lerp = math.lerp

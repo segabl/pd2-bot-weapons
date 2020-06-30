@@ -50,6 +50,7 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
   unit:base():set_character_name(character)
 
   self:set_character_player_style(loadout.player_style, loadout.suit_variation, unit)
+  self:set_character_gloves(loadout.glove_id, unit)
 
   -- mask
   local mask = loadout.mask

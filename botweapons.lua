@@ -300,6 +300,10 @@ if not BotWeapons then
     return table.random_key(tweak_data.blackmarket.player_styles[player_style].material_variations)
   end
 
+  function BotWeapons:get_random_gloves(category)
+    return table.random_key(tweak_data.blackmarket.gloves)
+  end
+
   function BotWeapons:get_random_armor_skin(category)
     return table.random_key(tweak_data.economy.armor_skins)
   end
@@ -398,10 +402,10 @@ if not BotWeapons then
         end
       end
       -- check for invalid outfit
-      loadout.player_style = loadout.player_style or "none"
+      loadout.player_style = loadout.player_style or managers.blackmarket:get_default_player_style()
       if not tweak_data.blackmarket.player_styles[loadout.player_style] then
         self:log("WARNING: Player style " .. tostring(loadout.player_style) .. " does not exist, removed it from " .. char_name .. "!")
-        loadout.player_style = "none"
+        loadout.player_style = managers.blackmarket:get_default_player_style()
       end
       loadout.suit_variation = loadout.suit_variation or "default"
       if loadout.suit_variation_random then
@@ -411,6 +415,23 @@ if not BotWeapons then
       elseif not tweak_data.blackmarket.player_styles[loadout.player_style].material_variations[loadout.suit_variation] then
         self:log("WARNING: Suit variant " .. tostring(loadout.suit_variation) .. " does not exist, removed it from " .. char_name .. "!")
         loadout.suit_variation = "default"
+      end
+
+      -- choose gloves
+      if not loadout.glove_id or loadout.glove_id_random then
+        if not loadout.glove_id_random then
+          loadout.glove_id = char_loadout.glove_id
+          loadout.glove_id_random = char_loadout.glove_id_random
+        end
+        if loadout.glove_id_random then
+          loadout.glove_id = self:get_random_gloves(loadout.glove_id_random)
+        end
+      end
+      -- check for invalid gloves
+      loadout.glove_id = loadout.glove_id or managers.blackmarket:get_default_glove_id()
+      if not tweak_data.blackmarket.gloves[loadout.glove_id] then
+        self:log("WARNING: Gloves " .. tostring(loadout.glove_id) .. " does not exist, removed it from " .. char_name .. "!")
+        loadout.glove_id = managers.blackmarket:get_default_glove_id()
       end
 
       -- choose armor models
@@ -484,6 +505,8 @@ if not BotWeapons then
       player_style_random = loadout.player_style_random or nil,
       suit_variation = not loadout.suit_variation_random and loadout.suit_variation or nil,
       suit_variation_random = loadout.suit_variation_random or nil,
+      glove_id = not loadout.glove_id_random and loadout.glove_id or nil,
+      glove_id_random = loadout.glove_id_random or nil,
       deployable = not loadout.deployable_random and loadout.deployable or nil,
       deployable_random = loadout.deployable_random or nil,
       mask = not loadout.mask_random and loadout.mask or nil,

@@ -759,20 +759,27 @@ function CrewManagementGui:open_armor_category_menu(henchman_index)
   table.insert(new_node_data, {
     name = "bm_menu_player_styles",
     on_create_func = callback(self, self, "populate_player_styles", henchman_index),
-    category = "player_styles",
+    category = "suits",
+    override_slots = override_slots,
+    identifier = BlackMarketGui.identifiers.custom
+  })
+  table.insert(new_node_data, {
+    name = "bm_menu_gloves",
+    on_create_func = callback(self, self, "populate_gloves", henchman_index),
+    category = "gloves",
     override_slots = override_slots,
     identifier = BlackMarketGui.identifiers.custom
   })
   function new_node_data.custom_update_text_info(data, updated_texts, gui)
-    local player_style = data.name
-    local player_style_tweak = tweak_data.blackmarket.player_styles[player_style]
+    local bm_tweak = tweak_data.blackmarket
+    local tweak = bm_tweak[data.category == "gloves" and "gloves" or "player_styles"][data.name]
     if not data.unlocked then
       updated_texts[2].text = "##" .. managers.localization:to_upper_text("bm_menu_item_locked") .. "##"
       updated_texts[2].resource_color = tweak_data.screen_colors.important_1
       updated_texts[3].text = data.dlc_locked and managers.localization:to_upper_text(data.dlc_locked) or managers.localization:to_upper_text("bm_menu_dlc_locked")
     end
     updated_texts[1].text = data.name_localized
-    updated_texts[4].text = (data.random or data.default) and "" or managers.localization:text(player_style_tweak.desc_id)
+    updated_texts[4].text = (data.random or data.default) and "" or managers.localization:text(tweak.desc_id)
   end
 
   new_node_data.topic_id = "bm_menu_outfits"
@@ -782,7 +789,8 @@ function CrewManagementGui:open_armor_category_menu(henchman_index)
     a_equip = callback(self, self, "select_armor", henchman_index),
     a_mod = callback(self, self, "open_armor_skins_menu", henchman_index),
     trd_equip = callback(self, self, "select_player_style", henchman_index),
-    trd_customize = callback(self, self, "customize_player_style", henchman_index)
+    trd_customize = callback(self, self, "customize_player_style", henchman_index),
+    hnd_equip = callback(self, self, "select_glove", henchman_index)
   }
 
   managers.menu_scene:remove_item()
@@ -875,7 +883,7 @@ function CrewManagementGui:populate_player_styles(henchman_index, data, gui)
       category = data.category,
       button_text = managers.localization:to_upper_text("item_random"),
       bitmap_texture = "guis/textures/empty",
-      name = "none",
+      name = managers.blackmarket:get_default_player_style(),
       name_localized = managers.localization:text("item_random_outfit"),
       unlocked = true,
       random = true
@@ -884,7 +892,7 @@ function CrewManagementGui:populate_player_styles(henchman_index, data, gui)
       category = data.category,
       button_text = managers.localization:to_upper_text("menu_crew_character"),
       bitmap_texture = "guis/textures/empty",
-      name = "none",
+      name = managers.blackmarket:get_default_player_style(),
       name_localized = managers.localization:text("item_default_outfit"),
       unlocked = true,
       default = true
@@ -938,6 +946,43 @@ function CrewManagementGui:populate_suit_variations(henchman_index, data, gui)
     if not v.empty_slot and not v.equipped then
       table.insert(v.buttons, 1, "trd_mod_equip")
     end
+  end
+end
+
+function CrewManagementGui:populate_gloves(henchman_index, data, gui)
+  local loadout = managers.blackmarket:henchman_loadout(henchman_index)
+  if not self._gloves_data then
+    gui:populate_gloves(data)
+
+    table.insert(data, 1, {
+      category = data.category,
+      button_text = managers.localization:to_upper_text("item_random"),
+      bitmap_texture = "guis/textures/empty",
+      name = managers.blackmarket:get_default_glove_id(),
+      name_localized = managers.localization:text("item_random_gloves"),
+      unlocked = true,
+      random = true
+    })
+    table.insert(data, 1, {
+      category = data.category,
+      button_text = managers.localization:to_upper_text("menu_crew_character"),
+      bitmap_texture = "guis/textures/empty",
+      name = managers.blackmarket:get_default_glove_id(),
+      name_localized = managers.localization:text("item_default_gloves"),
+      unlocked = true,
+      default = true
+    })
+    pad_data(data, data.override_slots[2])
+
+    self._gloves_data = true
+  end
+
+  for i, v in ipairs(data) do
+    v.slot = i
+    v.equipped = i == 1 and not loadout.glove_id and not loadout.glove_id_random or i == 2 and loadout.glove_id_random or i > 2 and loadout.glove_id == v.name
+    v.equipped_text = v.equipped and managers.localization:text("bm_menu_chosen") or ""
+    v.comparision_data = nil
+    v.buttons = { v.unlocked and not v.empty_slot and not v.equipped and "hnd_equip" }
   end
 end
 
@@ -1006,6 +1051,18 @@ function CrewManagementGui:select_suit_variation(henchman_index, data, gui)
   else
     loadout.suit_variation = data.name
     loadout.suit_variation_random = nil
+  end
+  return gui and gui:reload()
+end
+
+function CrewManagementGui:select_glove(henchman_index, data, gui)
+  local loadout = managers.blackmarket:henchman_loadout(henchman_index)
+  if not data or data.default or data.random then
+    loadout.glove_id = nil
+    loadout.glove_id_random = data and data.random
+  else
+    loadout.glove_id = data.name
+    loadout.glove_id_random = nil
   end
   return gui and gui:reload()
 end

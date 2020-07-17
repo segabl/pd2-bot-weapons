@@ -25,12 +25,3 @@ function NewNPCRaycastWeaponBase:get_gadget_by_type(gadget_type, gadgets)
     end
   end
 end
-
-Hooks:PostHook(NewNPCRaycastWeaponBase, "clbk_assembly_complete", function (self)
-
-  -- check if gadget activation is needed
-  if Network:is_server() and self._is_team_ai then
-    BotWeapons:check_set_gadget_state(self._setup and self._setup.user_unit, self)
-  end
-
-end)

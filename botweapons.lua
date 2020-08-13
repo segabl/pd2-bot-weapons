@@ -204,7 +204,7 @@ if not BotWeapons then
     if not self._masks_data then
       self._masks_data = {}
       self._masks_data.masks = table.map_keys(table.filter(tweak_data.blackmarket.masks, function (v, k) return not v.inaccessible end))
-      self._masks_data.colors = table.map_keys(tweak_data.blackmarket.colors)
+      self._masks_data.colors = table.map_keys(tweak_data.blackmarket.mask_colors)
       self._masks_data.patterns = table.map_keys(tweak_data.blackmarket.textures)
       self._masks_data.materials = table.map_keys(tweak_data.blackmarket.materials)
     end
@@ -220,7 +220,8 @@ if not BotWeapons then
       local masks_data = self:masks_data()
       local mask = table.random(masks_data.masks)
       local blueprint = math.random() < self.settings.mask_customized_chance and {
-        color = { id = table.random(masks_data.colors) },
+        color_a = { id = table.random(masks_data.colors) },
+        color_b = { id = table.random(masks_data.colors) },
         pattern = { id = table.random(masks_data.patterns) },
         material = { id = table.random(masks_data.materials) }
       } or nil

@@ -355,6 +355,17 @@ if not BotWeapons then
         loadout.mask = "character_locked"
         loadout.mask_blueprint = nil
       end
+      -- convert old color data to new system
+      if loadout.mask_blueprint and loadout.mask_blueprint.color then
+        local color = tweak_data.blackmarket.colors[loadout.mask_blueprint.color.id]
+        if color then
+          loadout.mask_blueprint.color_a = { id = color.color_ids[1] }
+          loadout.mask_blueprint.color_b = { id = color.color_ids[2] }
+        else
+          self:log("WARNING: Mask blueprint is invalid, removed it from " .. char_name .. "!", loadout.mask)
+          loadout.mask_blueprint = nil
+        end
+      end
 
       -- choose weapon
       if not loadout.primary or loadout.primary_random then

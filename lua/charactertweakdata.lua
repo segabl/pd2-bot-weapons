@@ -9,7 +9,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   local gang_presets = presets.weapon.gang_member
 
   local difficulty_index = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
-  local rifle_dmg_mul = difficulty_index * 0.75
+  local rifle_dmg_mul = StreamHeist and gang_presets.is_rifle.FALLOFF[1].dmg_mul or difficulty_index * 0.75
   local rifle_spread = 15
 
   BotWeapons:log("Fixing gang presets, reference dmg_mul is " .. rifle_dmg_mul)

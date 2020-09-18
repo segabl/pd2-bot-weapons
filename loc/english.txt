@@ -56,5 +56,8 @@
   "item_shades" : "Shades",
   "item_beanies" : "Beanies",
   "item_hotline" : "Hotline Miami",
-  "item_baby" : "Better Bots"
+  "item_baby" : "Better Bots",
+  "item_presidents" : "Presidents",
+  "item_military" : "Military",
+  "item_clean" : "Clean"
 }

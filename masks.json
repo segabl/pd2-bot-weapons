@@ -102,5 +102,92 @@
       { "id": "baby_happy" },
       { "id": "brazil_baby" }
     ]
+  },
+  "presidents": {
+    "pool": [
+      { "id": "franklin" },
+      { "id": "lincoln" },
+      { "id": "grant" },
+      { "id": "washington" },
+      { "id": "clinton" },
+      { "id": "bush" },
+      { "id": "obama" },
+      { "id": "nixon" },
+      { "id": "win_donald" }
+    ]
+  },
+  "military": {
+    "pool": [
+      { "id": "wmp_02" },
+      { "id": "wmp_03" },
+      { "id": "wmp_04" },
+      { "id": "vlad_armor" },
+      { "id": "nyck_cap" },
+      { "id": "nyck_ace" },
+      { "id": "nyck_beret" },
+      { "id": "jfr_01" },
+      { "id": "jfr_02" }
+    ]
+  },
+  "clean": {
+    "character": {
+      "russian": {
+        "id": "dallas_clean"
+      },
+      "german": {
+        "id": "wolf_clean"
+      },
+      "spanish": {
+        "id": "chains_clean"
+      },
+      "american": {
+        "id": "hoxton_clean"
+      },
+      "old_hoxton": {
+        "id": "old_hoxton_begins"
+      },
+      "female_1": {
+        "id": "grizel_clean"
+      },
+      "dragan": {
+        "id": "dragan_begins"
+      },
+      "jacket": {
+        "id": "richard_begins"
+      },
+      "bonnie": {
+        "id": "bonnie_begins"
+      },
+      "sokol": {
+        "id": "sokol_begins"
+      },
+      "dragon": {
+        "id": "jiro_begins"
+      },
+      "bodhi": {
+        "id": "bodhi_begins"
+      },
+      "sydney": {
+        "id": "sydney_begins"
+      },
+      "wild": {
+        "id": "rust_begins"
+      },
+      "chico": {
+        "id": "chc_terry_begins"
+      },
+      "max": {
+        "id": "max_begins"
+      },
+      "myh": {
+        "id": "myh_begins"
+      },
+      "ecp_female": {
+        "id": "ecp_female_begins"
+      },
+      "ecp_male": {
+        "id": "ecp_male_begins"
+      },
+    }
   }
 }

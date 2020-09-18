@@ -56,5 +56,8 @@
   "item_shades" : "Occhiali da sole",
   "item_beanies" : "Berretti",
   "item_hotline" : "Hotline Miami",
-  "item_baby" : "Better Bots"
+  "item_baby" : "Better Bots",
+  "item_presidents" : "Presidenti",
+  "item_military" : "Militare",
+  "item_clean" : "Pulito"
 }

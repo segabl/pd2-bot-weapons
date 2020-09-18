@@ -44,11 +44,20 @@
   "item_default_armor" : "Default Armor",
   "item_random_armor_skin" : "Random Armor Skin",
   "item_default_armor_skin" : "Default Armor Skin",
+  "item_random_outfit" : "Random Outfit",
+  "item_default_outfit" : "Character Default Outfit",
+  "item_random_variation" : "Random Style",
+  "item_default_variation" : "Character Default Style",
+  "item_random_gloves" : "Random Gloves",
+  "item_default_gloves" : "Character Default Gloves",
   "item_random_deployable" : "Random Equipment",
   "item_default_deployable" : "Default Equipment",
   "item_mega" : "Mega Masks",
   "item_shades" : "Shades",
   "item_beanies" : "Beanies",
   "item_hotline" : "Hotline Miami",
-  "item_baby" : "Better Bots"
+  "item_baby" : "Better Bots",
+  "item_presidents" : "Presidentes",
+  "item_military" : "Militar",
+  "item_clean" : "Limpio"
 }

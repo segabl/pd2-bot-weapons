@@ -56,5 +56,8 @@
   "item_shades" : "안경",
   "item_beanies" : "비니",
   "item_hotline" : "핫라인 마이애미",
-  "item_baby" : "아기"
+  "item_baby" : "아기",
+  "item_presidents" : "대통령",
+  "item_military" : "밀리터리",
+  "item_clean" : "깔끔한"
 }

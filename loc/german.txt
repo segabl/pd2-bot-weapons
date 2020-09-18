@@ -56,5 +56,8 @@
   "item_shades" : "Sonnenbrillen",
   "item_beanies" : "Hauben",
   "item_hotline" : "Hotline Miami",
-  "item_baby" : "Better Bots"
+  "item_baby" : "Better Bots",
+  "item_presidents" : "Präsidenten",
+  "item_military" : "Militär",
+  "item_clean" : "Sauber"
 }

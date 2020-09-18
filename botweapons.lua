@@ -213,9 +213,13 @@ if not BotWeapons then
 
   -- selects and returns a random mask from a set or all masks and a blueprint
   function BotWeapons:get_random_mask(category, char_name)
-    if type(category) == "string" and self.masks[category] and (self.masks[category].character and self.masks[category].character[char_name] or self.masks[category].pool) then
-      local selection = self.masks[category].character and self.masks[category].character[char_name] or table.random(self.masks[category].pool)
-      return selection.id, selection.blueprint
+    if type(category) == "string" and self.masks[category] then
+      if self.masks[category].character and self.masks[category].character[char_name] or self.masks[category].pool then
+        local selection = self.masks[category].character and self.masks[category].character[char_name] or table.random(self.masks[category].pool)
+        return selection.id, selection.blueprint
+      else
+        return "character_locked", nil
+      end
     else
       local masks_data = self:masks_data()
       local mask = table.random(masks_data.masks)

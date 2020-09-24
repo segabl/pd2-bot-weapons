@@ -45,9 +45,12 @@ if not BotWeapons then
     self:load()
   end
 
-  function BotWeapons:should_use_armor()
-    local level_id = Utils:IsInGameState() and managers.job and managers.job:current_level_id()
-    return not (tweak_data.levels[level_id] and tweak_data.levels[level_id].player_style)
+  function BotWeapons:should_use_armor(loadout)
+    if not loadout or not loadout.player_style or loadout.player_style == managers.blackmarket:get_default_player_style() then
+      local level_id = Utils:IsInGameState() and managers.job and managers.job:current_level_id()
+      return not (tweak_data.levels[level_id] and tweak_data.levels[level_id].player_style)
+    end
+    return false
   end
 
   function BotWeapons:set_armor(unit, armor, armor_skin)

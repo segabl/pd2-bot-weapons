@@ -88,8 +88,10 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
   end
 
   -- armor
-  BotWeapons:set_armor(unit, loadout.armor)
-  self:set_character_armor_skin(loadout.armor_skin, unit)
+  if BotWeapons:should_use_armor(loadout) then
+    BotWeapons:set_armor(unit, loadout.armor)
+    self:set_character_armor_skin(loadout.armor_skin, unit)
+  end
 
   -- equipment
   BotWeapons:set_equipment(unit, loadout.deployable)

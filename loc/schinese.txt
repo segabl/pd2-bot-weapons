@@ -1,5 +1,5 @@
 {
-  "BotWeapons_menu_main_name" : "AI队友的武器和装备",
+  "BotWeapons_menu_main_name" : "更多的AI队友武器装备",
   "BotWeapons_menu_main_desc" : "为AI队友定制武器装备及面具",
   "menu_crew_character_settings" : "角色预设",
   "menu_crew_character" : "角色预设",
@@ -25,7 +25,7 @@
   "toggle_weapon_balance_desc" : "修复AI武器属性使所有武器的强度平衡化，并修正了武器的开火速率\n非常建议启用，因为这能同时修复使用副武器的一些问题",
   "toggle_player_carry_name" : "像玩家一样拿包",
   "toggle_player_carry_desc" : "AI队友拿包的状态会像玩家一样，而不是让包飘在AI背上。",
-  "toggle_use_flashlights_name" : "AI在合适时使用手电筒",
+  "toggle_use_flashlights_name" : "AI队友在合适时使用手电筒",
   "toggle_use_flashlights_desc" : "AI队友会在较暗的劫案中使用手电筒(如果它们的武器上装了手电筒模块)",
   "toggle_use_lasers_name" : "AI队友使用激光镭射",
   "toggle_use_lasers_desc" : "AI队友会在不使用手电筒时使用激光镭射(如果它们的武器上装了激光镭射模块)",

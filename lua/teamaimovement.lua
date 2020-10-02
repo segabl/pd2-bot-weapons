@@ -28,10 +28,8 @@ local play_redirect_original = TeamAIMovement.play_redirect
 function TeamAIMovement:play_redirect(redirect_name, ...)
   -- Fix buggy autofire animations when shooting with akimbo guns
   local weapon = self._ext_inventory:equipped_unit()
-  if weapon and redirect_name == "recoil_auto" then
-    if weapon:base():weapon_tweak_data().hold == "akimbo_pistol" then
-      redirect_name = "recoil_single"
-    end
+  if weapon and redirect_name == "recoil_auto" and weapon:base():weapon_tweak_data().hold == "akimbo_pistol" then
+      return
   end
   return play_redirect_original(self, redirect_name, ...)
 end

@@ -23,7 +23,7 @@ Hooks:PostHook(WeaponTweakData, "init", "init_bot_weapons", function (self)
   end
 
   local function set_usage(key, weapon, usage)
-    if not weapon.anim_usage then
+    if not weapon.anim_usage and weapon.usage ~= usage then
       weapon.anim_usage = weapon.usage
     end
     BotWeapons:log(key .. " usage: " .. tostring(weapon.usage) .. " -> " .. usage, BotWeapons.settings.debug and weapon.usage ~= usage)
@@ -59,10 +59,13 @@ Hooks:PostHook(WeaponTweakData, "init", "init_bot_weapons", function (self)
           elseif v.CLIP_AMMO_MAX >= 100 then
             set_usage(k, v, "is_lmg")
           end
+          if v.usage == "is_lmg" and not v.anim_usage then
+            v.anim_usage = "is_rifle"
+          end
         else
           if v.is_shotgun or v.usage == "is_shotgun_mag" then
             set_usage(k, v, "is_shotgun_pump")
-          elseif v.usage == "is_rifle" or v.usage == "is_bullpup" or v.usage == "is_smg" then
+          elseif v.usage == "is_rifle" or v.usage == "is_bullpup" or v.usage == "is_smg" or v.usage == "is_lmg" then
             set_usage(k, v, "is_sniper")
           end
         end

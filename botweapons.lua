@@ -54,20 +54,18 @@ if not BotWeapons then
   end
 
   function BotWeapons:set_armor(unit, armor, armor_skin)
-    if not alive(unit) then
+    if not alive(unit) or not tweak_data.blackmarket.armors[armor] then
       return
     end
-    if armor and tweak_data.blackmarket.armors[armor] then
-      unit:damage():run_sequence_simple(tweak_data.blackmarket.armors[armor].sequence)
-      unit:base()._armor_id = armor
-      if unit:base().set_armor_id then
-        unit:base():set_armor_id(armor)
-      end
+    unit:damage():run_sequence_simple(tweak_data.blackmarket.armors[armor].sequence)
+    unit:base()._armor_id = armor
+    if unit:base().set_armor_id then
+      unit:base():set_armor_id(armor)
     end
-    if armor ~= "level_1" and armor_skin and armor_skin ~= "none" and tweak_data.economy.armor_skins[armor_skin] then
+    if armor ~= "level_1" and tweak_data.economy.armor_skins[armor_skin] then
       local armor_skin_ext = unit:base()._armor_skin_ext or ArmorSkinExt:new(unit)
       armor_skin_ext:set_character(unit:base()._tweak_table)
-      armor_skin_ext:set_armor_id(unit:base()._armor_id or "level_1")
+      armor_skin_ext:set_armor_id(unit:base()._armor_id)
       armor_skin_ext:set_cosmetics_data(armor_skin)
       armor_skin_ext:_apply_cosmetics()
       if unit:base().on_material_applied then
@@ -78,17 +76,16 @@ if not BotWeapons then
   end
 
   function BotWeapons:set_equipment(unit, equipment)
-    if not alive(unit) then
+    if not alive(unit) or not tweak_data.equipments[equipment] then
       return
     end
-    local visual_object = equipment and tweak_data.equipments[equipment] and tweak_data.equipments[equipment].visual_object
-    for k, v in pairs(tweak_data.equipments) do
-      if v.visual_object then
-        local mesh_obj = unit:get_object(Idstring(v.visual_object))
-        if mesh_obj then
-          mesh_obj:set_visibility(v.visual_object == visual_object)
-        end
-      end
+    if unit:base()._equipment_id then
+      unit:get_object(Idstring(tweak_data.equipments[unit:base()._equipment_id].visual_object)):set_visibility(false)
+    end
+    local visual_object = tweak_data.equipments[equipment].visual_object
+    if visual_object then
+      unit:get_object(Idstring(visual_object)):set_visibility(true)
+      unit:base()._equipment_id = equipment
     end
   end
 
@@ -156,32 +153,22 @@ if not BotWeapons then
     end
   end
 
-  function BotWeapons:sync_to_all_peers(unit, loadout, sync_delay)
+  function BotWeapons:get_sync_data(unit)
+    return {
+      name = managers.criminals:character_name_by_unit(unit),
+      equip = unit:base()._equipment_id or nil,
+      armor = unit:base()._armor_id or nil,
+      skin = unit:base()._armor_skin_ext and unit:base()._armor_skin_ext:get_cosmetics_id() or nil
+    }
+  end
+
+  function BotWeapons:sync_to_all_peers(unit, sync_delay)
     DelayedCalls:Add("bot_weapons_sync_" .. unit:base()._tweak_table, sync_delay or 0, function ()
       if not alive(unit) then
         return
       end
-      for _, peer in pairs(managers.network:session():peers()) do
-        self:sync_to_peer(peer, unit, loadout)
-      end
+      LuaNetworking:SendToPeers("bot_weapons_sync", json.encode(self:get_sync_data(unit)))
     end)
-  end
-
-  function BotWeapons:sync_to_peer(peer, unit, loadout)
-    local name = managers.criminals:character_name_by_unit(unit)
-    loadout = loadout or managers.criminals:get_loadout_for(name)
-    -- send armor
-    if loadout.armor then
-      peer:send_queued_sync("sync_run_sequence_char", unit, tweak_data.blackmarket.armors[loadout.armor].sequence)
-    end
-    -- send other data
-    local sync_data = {
-      name = name,
-      equip = loadout.deployable,
-      armor = loadout.armor,
-      skin = loadout.armor_skin
-    }
-    LuaNetworking:SendToPeer(peer:id(), "bot_weapons_sync", json.encode(sync_data))
   end
 
   local ambient_color_key = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/ambient_color"):key()
@@ -565,12 +552,10 @@ if not BotWeapons then
   Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function(sender, id, data)
     if id == "bot_weapons_sync" then
       data = json.decode(data)
-      local loadout = managers.criminals:get_loadout_for(data and data.name)
-      if loadout then
-        loadout.deployable = data.equip
-        loadout.armor = data.armor
-        loadout.armor_skin = data.skin
-        managers.criminals:update_character_visual_state(data.name)
+      local unit = data and managers.criminals:character_unit_by_name(data.name)
+      if alive(unit) then
+        BotWeapons:set_armor(unit, data.armor, data.skin)
+        BotWeapons:set_equipment(unit, data.equip)
       end
     end
   end)

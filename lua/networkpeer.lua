@@ -2,7 +2,7 @@ Hooks:PostHook(NetworkPeer, "spawn_unit", "spawn_unit_bot_weapons", function (se
 
   if is_drop_in and BotWeapons:should_sync_settings() then
     for _, data in pairs(managers.groupai:state():all_AI_criminals()) do
-      BotWeapons:sync_to_peer(self, data.unit)
+      LuaNetworking:SendToPeer(self:id(), "bot_weapons_sync", json.encode(BotWeapons:get_sync_data(data.unit)))
     end
   end
 

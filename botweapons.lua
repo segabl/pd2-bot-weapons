@@ -96,7 +96,7 @@ if not BotWeapons then
     local loadout = managers.criminals:get_loadout_for(unit:base()._tweak_table)
     local category = loadout.primary_category or "primaries"
     local slot = loadout.primary_slot or 0
-    local parts = weapon_base._parts
+    local parts = weapon_base._parts or {}
     local colors, data, sub_type, part_base
     for part_id, part_data in pairs(parts) do
       part_base = part_data.unit and part_data.unit:base()

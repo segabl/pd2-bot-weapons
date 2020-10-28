@@ -1,13 +1,3 @@
-Hooks:PostHook(TeamAIInventory, "init", "init_bot_weapons", function (self)
-
-  -- Add missing align place for left hand to prevent crash with akimbo weapons
-  self._align_places.left_hand = self._align_places.left_hand or {
-    on_body = false,
-    obj3d_name = Idstring("a_weapon_left_front")
-  }
-
-end)
-
 Hooks:PostHook(TeamAIInventory, "save", "save_bot_weapons", function (self, data)
 
   -- change the sync index to m4 in case the weapon is akimbo to prevent client crashes

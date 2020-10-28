@@ -6,7 +6,7 @@
   "blt_version" : 2,
   "color" : "0.043 0.808 0.6",
   "image" : "mod.png",
-  "version" : "10.7",
+  "version" : "10.8",
   "priority" : 10,
   "updates" : [
     {
@@ -23,6 +23,7 @@
     { "hook_id" : "lib/tweak_data/charactertweakdata", "script_path" : "botweapons.lua" },
     { "hook_id" : "lib/tweak_data/weapontweakdata", "script_path" : "botweapons.lua" },
     { "hook_id" : "lib/units/enemies/cop/actions/upper_body/copactionshoot", "script_path" : "botweapons.lua" },
+    { "hook_id" : "lib/units/enemies/cop/copinventory", "script_path" : "botweapons.lua" },
     { "hook_id" : "lib/units/player_team/logics/teamailogictravel", "script_path" : "botweapons.lua" },
     { "hook_id" : "lib/units/player_team/huskteamaiinventory", "script_path" : "botweapons.lua" },
     { "hook_id" : "lib/units/player_team/teamaiinventory", "script_path" : "botweapons.lua" },

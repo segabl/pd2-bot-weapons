@@ -11,7 +11,7 @@
   "updates" : [
     {
       "identifier" : "pd2-bot-weapons",
-      "host": { "meta": "http://updates.hoppip.at/pd2-bot-weapons" }
+      "host": { "meta": "https://updates.hoppip.at/pd2-bot-weapons" }
     }
   ],
   "hooks" : [

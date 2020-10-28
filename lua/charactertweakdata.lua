@@ -68,5 +68,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   }
   gang_presets.akimbo_pistol.spread = rifle_spread * 0.9
 
+  tweak_data.weapon:setup_crew_weapons(gang_presets)
+
   return presets
 end

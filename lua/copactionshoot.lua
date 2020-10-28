@@ -32,11 +32,7 @@ local reload_time = m4_tweak.reload_time or 2
 
 TeamAIActionShoot.TARGET_DAMAGE = (m4_tweak.DAMAGE * mag) / ((mag / burst_size) * (burst_size - 1) * shot_delay + (mag / burst_size - 1) * burst_delay + reload_time)
 
-function TeamAIActionShoot:init(...)
-  if not TeamAIActionShoot.super.init(self, ...) then
-    return false
-  end
-
+function TeamAIActionShoot:_setup_weapon()
   local w_tweak = self._weap_tweak
   local w_u_tweak = self._w_usage_tweak
   local w_automatic = w_tweak.fire_mode == "auto" and w_u_tweak.autofire_rounds and true or false
@@ -64,7 +60,21 @@ function TeamAIActionShoot:init(...)
   self._falloff = self._weapon_base._falloff_data
   self._automatic_weap = w_automatic
   self._reload_speed = HuskPlayerMovement:get_reload_animation_time(w_tweak.hold) / (w_tweak.reload_time or 2)
+end
+
+function TeamAIActionShoot:init(...)
+  if not TeamAIActionShoot.super.init(self, ...) then
+    return false
+  end
+
+  self:_setup_weapon()
   return true
+end
+
+function TeamAIActionShoot:on_inventory_event(...)
+  TeamAIActionShoot.super.on_inventory_event(self, ...)
+  
+  self:_setup_weapon()
 end
 
 if not StreamHeist then

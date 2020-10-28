@@ -34,26 +34,30 @@ local function set_usage(key, weapon, usage)
   weapon.usage = usage
 end
 
+local weapon_table = {
+  g17 = "glock_17",
+  c45 = "glock_17",
+  x_c45 = "x_g17",
+  glock_18 = "glock_18c",
+  m4 = "new_m4",
+  mp5 = "new_mp5",
+  ak47 = "ak74",
+  ak47_ass = "ak74",
+  raging_bull = "new_raging_bull",
+  mossberg = "huntsman",
+  m14 = "new_m14",
+  ben = "benelli",
+  beretta92 = "b92fs"
+}
 function WeaponTweakData:_player_weapon_from_crew_weapon(crew_id)
   crew_id = crew_id:gsub("_crew$", ""):gsub("_secondary$", ""):gsub("_primary$", "")
-  local weapon_table = {
-    g17 = "glock_17",
-    c45 = "glock_17",
-    x_c45 = "x_g17",
-    glock_18 = "glock_18c",
-    m4 = "new_m4",
-    mp5 = "new_mp5",
-    ak47 = "ak74",
-    ak47_ass = "ak74",
-    raging_bull = "new_raging_bull",
-    mossberg = "huntsman",
-    m14 = "new_m14",
-    ben = "benelli",
-    beretta92 = "b92fs"
-  }
   return self[weapon_table[crew_id] or crew_id]
 end
 
+local anim_usage_redirects = {
+  is_lmg = "is_rifle",
+  is_shotgun_mag = "is_rifle"
+}
 function WeaponTweakData:setup_crew_weapons(crew_preset)
 
   BotWeapons:log("Setting up crew weapons")
@@ -80,15 +84,17 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
       elseif crew_weapon.CLIP_AMMO_MAX >= 100 then
         set_usage(crew_weapon_name, crew_weapon, "is_lmg")
       end
-      if crew_weapon.usage == "is_lmg" and not crew_weapon.anim_usage then
-        crew_weapon.anim_usage = "is_rifle"
-      end
     else
       if crew_weapon.is_shotgun or crew_weapon.usage == "is_shotgun_mag" then
         set_usage(crew_weapon_name, crew_weapon, "is_shotgun_pump")
       elseif crew_weapon.usage == "is_rifle" or crew_weapon.usage == "is_bullpup" or crew_weapon.usage == "is_smg" or crew_weapon.usage == "is_lmg" or crew_weapon.usage == "bow" then
         set_usage(crew_weapon_name, crew_weapon, "is_sniper")
       end
+    end
+    local new_anim_usage = anim_usage_redirects[crew_weapon.anim_usage or crew_weapon.usage]
+    if new_anim_usage then
+      crew_weapon.anim_usage = new_anim_usage
+      BotWeapons:log("Fixed animation usage for " .. crew_weapon_name, BotWeapons.settings.debug)
     end
     return true
   end

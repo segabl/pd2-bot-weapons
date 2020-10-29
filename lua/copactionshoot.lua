@@ -4,8 +4,8 @@ function TeamAIActionShoot:_setup_weapon()
   if not self._weap_tweak or not self._w_usage_tweak then
     return
   end
-  self._automatic_weap = self._weap_tweak.fire_mode == "auto" and self._w_usage_tweak.autofire_rounds and true
-  self._reload_speed = HuskPlayerMovement:get_reload_animation_time(self._weap_tweak.hold) / (self._weap_tweak.reload_time or 2)
+  self._automatic_weap = self._weap_tweak.auto and self._w_usage_tweak.autofire_rounds and true
+  self._reload_speed = HuskPlayerMovement:get_reload_animation_time(self._weap_tweak.hold) / (self._weap_tweak.reload_time or 5)
 end
 
 function TeamAIActionShoot:init(...)

@@ -13,24 +13,17 @@ local function average_burst_size(w_u_tweak)
   end
   local burst_size = 0
   for _, v in ipairs(w_u_tweak.FALLOFF) do
-    burst_size = burst_size + (v.mode[1] * 1 + (v.mode[2] - v.mode[1]) * 2 + (v.mode[3] - v.mode[2]) * 3 + (v.mode[4] - v.mode[3]) * mean_autofire)
+    local total = v.mode[1] + v.mode[2] + v.mode[3] + v.mode[4]
+    burst_size = burst_size + (v.mode[1] / total) * 1 + (v.mode[2] / total) * 2 + (v.mode[3] / total) * 3 + (v.mode[4] / total) * mean_autofire
   end
   return burst_size / #w_u_tweak.FALLOFF
 end
 
-local function max_kick(kick)
-  local k = 0.5
-  for _, v in ipairs(kick or {}) do
-    k = math.max(k, math.abs(v))
-  end
-  return k
-end
-
-local function set_usage(key, weapon, usage)
+local function set_usage(crew_weapon_name, weapon, usage)
   if not weapon.anim_usage and weapon.usage ~= usage then
     weapon.anim_usage = weapon.usage
   end
-  BotWeapons:log(key .. " usage: " .. tostring(weapon.usage) .. " -> " .. usage, BotWeapons.settings.debug and weapon.usage ~= usage)
+  BotWeapons:log("Changed " .. crew_weapon_name .. " usage from " .. tostring(weapon.usage) .. " to " .. usage, BotWeapons.settings.debug and weapon.usage ~= usage)
   weapon.usage = usage
 end
 
@@ -54,32 +47,29 @@ function WeaponTweakData:_player_weapon_from_crew_weapon(crew_id)
   return self[weapon_table[crew_id] or crew_id]
 end
 
-local anim_usage_redirects = {
-  is_lmg = "is_rifle",
-  is_shotgun_mag = "is_rifle"
-}
 function WeaponTweakData:setup_crew_weapons(crew_preset)
 
-  BotWeapons:log("Setting up crew weapons")
+  BotWeapons:log("Setting up crew weapon data")
 
   -- copy some data from the player version of a weapon to crew version and setup usage
+  local anim_usage_redirects = {
+    is_lmg = "is_rifle",
+    is_shotgun_mag = "is_rifle"
+  }
   local function setup_crew_weapon_data(crew_weapon_name, crew_weapon, player_weapon)
     if not player_weapon then
-      BotWeapons:log("Warning: Could not find player weapon version of " .. crew_weapon_name .. "!")
+      BotWeapons:log("Error: Could not find player weapon version of " .. crew_weapon_name .. "!")
       return
     end
     local fire_mode = player_weapon.FIRE_MODE or "single"
+    local is_automatic = fire_mode == "auto"
     local fire_rate = player_weapon.fire_mode_data and player_weapon.fire_mode_data.fire_rate or player_weapon[fire_mode] and player_weapon[fire_mode].fire_rate or 1
-    crew_weapon.auto = { fire_rate = fire_rate }
-    crew_weapon.fire_mode = fire_mode
-    crew_weapon.burst_delay = { fire_rate, fire_rate + max_kick(player_weapon.kick.standing) * 0.1 }
-    crew_weapon.reload_time = player_weapon.timers.reload_not_empty
-    if fire_mode == "auto" then
+    crew_weapon[fire_mode] = { fire_rate = fire_rate }
+    crew_weapon.reload_time = player_weapon.timers.reload_empty or 5
+    if is_automatic then
       if crew_weapon.is_shotgun or crew_weapon.usage == "is_shotgun_pump" then
         set_usage(crew_weapon_name, crew_weapon, "is_shotgun_mag")
-      elseif crew_weapon.usage == "akimbo_pistol" then
-        set_usage(crew_weapon_name, crew_weapon, "is_lmg")
-      elseif crew_weapon.usage == "is_pistol" then
+      elseif crew_weapon.usage == "is_pistol" or crew_weapon.usage == "akimbo_pistol" then
         set_usage(crew_weapon_name, crew_weapon, "is_smg")
       elseif crew_weapon.CLIP_AMMO_MAX >= 100 then
         set_usage(crew_weapon_name, crew_weapon, "is_lmg")
@@ -91,51 +81,61 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
         set_usage(crew_weapon_name, crew_weapon, "is_sniper")
       end
     end
+    -- fix anim_usage
     local new_anim_usage = anim_usage_redirects[crew_weapon.anim_usage or crew_weapon.usage]
     if new_anim_usage then
       crew_weapon.anim_usage = new_anim_usage
       BotWeapons:log("Fixed animation usage for " .. crew_weapon_name, BotWeapons.settings.debug)
     end
+    if not crew_preset[crew_weapon.usage] then
+      BotWeapons:log("Error: No usage preset for " .. crew_weapon_name .. " (" .. crew_weapon.usage .. ")!")
+      return
+    end
+    -- clone weapon usage preset to allow unique settings for each weapon
+    local preset = deep_clone(crew_preset[crew_weapon.usage])
+    local recoil = player_weapon.stats and self.stats.recoil[player_weapon.stats.recoil] or self.stats.recoil[1]
+    local burst_delay = is_automatic and { 0.25 + recoil * 0.2, 0.25 + recoil * 0.4 } or { fire_rate, fire_rate + recoil * 0.1 }
+    for _, v in ipairs(preset.FALLOFF) do
+      v.recoil = burst_delay
+    end
+    local mult = crew_weapon.hold == "akimbo_pistol" and 0.5 or 1
+    preset.autofire_rounds = is_automatic and { math.max(1, math.floor(crew_weapon.CLIP_AMMO_MAX * 0.15 * mult)), math.ceil(crew_weapon.CLIP_AMMO_MAX * 0.35 * mult) }
+    preset.RELOAD_SPEED = 1
+    -- set new usage preset
+    crew_weapon.anim_usage = not crew_weapon.anim_usage and crew_weapon.usage or crew_weapon.anim_usage
+    crew_weapon.usage = crew_weapon_name
+    crew_preset[crew_weapon_name] = preset
     return true
   end
 
   -- setup reference weapon
-  setup_crew_weapon_data("m4_crew", self.m4_crew, self.new_m4)
+  if not setup_crew_weapon_data("m4_crew", self.m4_crew, self.new_m4) then
+    BotWeapons:log("Error: Reference weapon m4_crew could not be set up, weapon balance option will not work properly!")
+    return
+  end
 
-  -- calculate m4 dps as target dps for other weapons
+  -- target dps for other weapons based on m4
   local w_u_tweak = crew_preset[self.m4_crew.usage]
-  local w_automatic = self.m4_crew.fire_mode == "auto" and w_u_tweak.autofire_rounds and true
+  local is_automatic =  w_u_tweak.autofire_rounds and true
   local mag = self.m4_crew.CLIP_AMMO_MAX
-  local burst_size = w_automatic and average_burst_size(w_u_tweak) or 1
-  local shot_delay = self.m4_crew.auto and self.m4_crew.auto.fire_rate or 1
-  local burst_delay = mean((w_automatic or not self.m4_crew.burst_delay) and w_u_tweak.FALLOFF[1].recoil or self.m4_crew.burst_delay)
-  local reload_time = self.m4_crew.reload_time or 2
+  local burst_size = is_automatic and average_burst_size(w_u_tweak) or 1
+  local shot_delay = is_automatic and self.m4_crew.auto.fire_rate or 0
+  local burst_delay = mean(w_u_tweak.FALLOFF[1].recoil)
+  local reload_time = self.m4_crew.reload_time
   local target_damage = (self.m4_crew.DAMAGE * mag) / ((mag / burst_size) * (burst_size - 1) * shot_delay + (mag / burst_size - 1) * burst_delay + reload_time)
 
-  for weapon_id, weapon_data in pairs(self) do
-    if type(weapon_data) == "table" and weapon_id:match("_crew$") then
-      if setup_crew_weapon_data(weapon_id, weapon_data, self:_player_weapon_from_crew_weapon(weapon_id)) then
-        w_u_tweak = crew_preset[weapon_data.usage]
-        if w_u_tweak then
-          w_automatic = weapon_data.fire_mode == "auto" and w_u_tweak.autofire_rounds and true
-          -- copy weapon preset for single fire weapons (to allow unique fire rates)
-          if not w_automatic then
-            crew_preset[weapon_id] = deep_clone(w_u_tweak)
-            for _, v in ipairs(crew_preset[weapon_id].FALLOFF) do
-              v.recoil = weapon_data.burst_delay
-            end
-            set_usage(weapon_id, weapon_data, weapon_id)
-          end
-          -- calculate weapon damage based on reference dps
-          mag = weapon_data.CLIP_AMMO_MAX
-          burst_size = w_automatic and average_burst_size(w_u_tweak) or 1
-          shot_delay = weapon_data.auto and weapon_data.auto.fire_rate or 1
-          burst_delay = mean(w_u_tweak.FALLOFF[1].recoil)
-          reload_time = weapon_data.reload_time or 2
-          weapon_data.DAMAGE = (target_damage * ((mag / burst_size) * (burst_size - 1) * shot_delay + (mag / burst_size - 1) * burst_delay + reload_time)) / mag
-        else
-          BotWeapons:log("Warning: No usage preset for " .. weapon_id .. " (" .. weapon_data.usage .. ")!")
-        end
+  for crew_weapon_name, crew_weapon in pairs(self) do
+    if type(crew_weapon) == "table" and crew_weapon_name:match("_crew$") then
+      if setup_crew_weapon_data(crew_weapon_name, crew_weapon, self:_player_weapon_from_crew_weapon(crew_weapon_name)) then
+        -- calculate weapon damage based on reference dps
+        w_u_tweak = crew_preset[crew_weapon.usage]
+        is_automatic = w_u_tweak.autofire_rounds and true
+        mag = crew_weapon.CLIP_AMMO_MAX
+        burst_size = is_automatic and average_burst_size(w_u_tweak) or 1
+        shot_delay = is_automatic and crew_weapon.auto.fire_rate or 0
+        burst_delay = mean(w_u_tweak.FALLOFF[1].recoil)
+        reload_time = crew_weapon.reload_time
+        crew_weapon.DAMAGE = (target_damage * ((mag / burst_size) * (burst_size - 1) * shot_delay + (mag / burst_size - 1) * burst_delay + reload_time)) / mag
       end
     end
   end

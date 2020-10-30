@@ -65,6 +65,7 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
     local is_automatic = fire_mode == "auto"
     local fire_rate = player_weapon.fire_mode_data and player_weapon.fire_mode_data.fire_rate or player_weapon[fire_mode] and player_weapon[fire_mode].fire_rate or 1
     crew_weapon[fire_mode] = { fire_rate = fire_rate }
+    crew_weapon.CLIP_AMMO_MAX = player_weapon.CLIP_AMMO_MAX
     crew_weapon.reload_time = player_weapon.timers.reload_empty or 5
     if is_automatic then
       if crew_weapon.is_shotgun or crew_weapon.usage == "is_shotgun_pump" then
@@ -82,12 +83,8 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
       end
     end
     -- fix anim_usage
-    local new_anim_usage = anim_usage_redirects[crew_weapon.anim_usage or crew_weapon.usage]
-    if new_anim_usage then
-      crew_weapon.anim_usage = new_anim_usage
-      BotWeapons:log("Fixed animation usage for " .. crew_weapon_name, BotWeapons.settings.debug)
-    end
-    if not crew_preset[crew_weapon.usage] then
+    crew_weapon.anim_usage = anim_usage_redirects[crew_weapon.anim_usage or crew_weapon.usage] or crew_weapon.anim_usage
+    if crew_weapon.usage ~= crew_weapon_name and not crew_preset[crew_weapon.usage] then
       BotWeapons:log("Error: No usage preset for " .. crew_weapon_name .. " (" .. crew_weapon.usage .. ")!")
       return
     end

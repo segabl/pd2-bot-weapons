@@ -190,17 +190,6 @@ if not BotWeapons then
     return self.settings.use_lasers
   end
 
-  function BotWeapons:masks_data()
-    if not self._masks_data then
-      self._masks_data = {}
-      self._masks_data.masks = table.map_keys(table.filter(tweak_data.blackmarket.masks, function (v, k) return not v.inaccessible end))
-      self._masks_data.colors = table.map_keys(tweak_data.blackmarket.mask_colors)
-      self._masks_data.patterns = table.map_keys(tweak_data.blackmarket.textures)
-      self._masks_data.materials = table.map_keys(tweak_data.blackmarket.materials)
-    end
-    return self._masks_data
-  end
-
   -- selects and returns a random mask from a set or all masks and a blueprint
   function BotWeapons:get_random_mask(category, char_name)
     if type(category) == "string" and self.masks[category] then
@@ -211,13 +200,19 @@ if not BotWeapons then
         return "character_locked", nil
       end
     else
-      local masks_data = self:masks_data()
-      local mask = table.random(masks_data.masks)
+      if not self._masks_data then
+        self._masks_data = {}
+        self._masks_data.masks = table.map_keys(table.filter(tweak_data.blackmarket.masks, function (v, k) return not v.inaccessible end))
+        self._masks_data.colors = table.map_keys(tweak_data.blackmarket.mask_colors)
+        self._masks_data.patterns = table.map_keys(tweak_data.blackmarket.textures)
+        self._masks_data.materials = table.map_keys(tweak_data.blackmarket.materials)
+      end
+      local mask = table.random(self._masks_data.masks)
       local blueprint = math.random() < self.settings.mask_customized_chance and {
-        color_a = { id = table.random(masks_data.colors) },
-        color_b = { id = table.random(masks_data.colors) },
-        pattern = { id = table.random(masks_data.patterns) },
-        material = { id = table.random(masks_data.materials) }
+        color_a = { id = table.random(self._masks_data.colors) },
+        color_b = { id = table.random(self._masks_data.colors) },
+        pattern = { id = table.random(self._masks_data.patterns) },
+        material = { id = table.random(self._masks_data.materials) }
       } or nil
       return mask, blueprint
     end

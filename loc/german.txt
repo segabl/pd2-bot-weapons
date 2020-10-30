@@ -22,7 +22,7 @@
   "menu_action_inventory_secondaries_name" : "Wähle Waffe aus Sekundärwaffen",
   "menu_action_random_weapon_name" : "Benutze zufällige Waffe aus Kategorie",
   "toggle_weapon_balance_name" : "Repariere Team KI Waffen Balance",
-  "toggle_weapon_balance_desc" : "Passt die Waffen der Team KI so an, damit sie gleich nützlich sind und gibt ihnen die korrekte Feuerrate\nStark empfohlen, da es auch Probleme mit Sekundärwaffen behebt",
+  "toggle_weapon_balance_desc" : "Macht alle Waffen nützlich und gibt ihnen die korrekte Feuerrate und Nachladegeschwindigkeit\nStark empfohlen, besonders wenn du den Bots Sekundärwaffen geben willst",
   "toggle_player_carry_name" : "Trage Taschen wie Spieler",
   "toggle_player_carry_desc" : "Die Team KI trägt Taschen wie Spieler, anstatt dass die Taschen über ihrem Rücken schweben",
   "toggle_use_flashlights_name" : "Benutze Taschenlampen wenn angebracht",

@@ -22,7 +22,7 @@
   "menu_action_inventory_secondaries_name" : "Choisir l'arme des secondaires",
   "menu_action_random_weapon_name" : "Utiliser une arme aléatoire d'une catégorie",
   "toggle_weapon_balance_name" : "Fix Team AI weapon balance",
-  "toggle_weapon_balance_desc" : "Fix team AI weapons to make them all equally useful and give all weapons their correct rate of fire\nHighly recommended as it also fixes problems with secondaries",
+  "toggle_weapon_balance_desc" : "Make all weapons useful and give them their correct rate of fire and reload times\nHighly recommended especially if you want to give bots secondary weapons",
   "toggle_player_carry_name" : "Porter des sacs comme des joueurs",
   "toggle_player_carry_desc" : "Les IA transporteront des sacs comme des joueurs humains au lieu d'avoir des sacs flottant au-dessus de leur dos",
   "toggle_use_flashlights_name" : "Use flashlights if appropriate",

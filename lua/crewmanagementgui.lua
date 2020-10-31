@@ -403,7 +403,7 @@ end
 function CrewManagementGui:open_weapon_category_menu(category, henchman_index)
   local loadout = managers.blackmarket:henchman_loadout(henchman_index)
   local new_node_data = {category = category}
-  local selected_tab = self:create_pages(new_node_data, henchman_index, "weapon", loadout.primary_slot, tweak_data.gui.WEAPON_ROWS_PER_PAGE, tweak_data.gui.WEAPON_COLUMNS_PER_PAGE, tweak_data.gui.MAX_WEAPON_PAGES, loadout.primary_category or "primaries")
+  local selected_tab = self:create_pages(new_node_data, henchman_index, "weapon", loadout.primary_slot, tweak_data.gui.WEAPON_ROWS_PER_PAGE, tweak_data.gui.WEAPON_COLUMNS_PER_PAGE, tweak_data.gui.MAX_WEAPON_PAGES)
   new_node_data.can_move_over_tabs = true
   new_node_data.selected_tab = selected_tab
   new_node_data.scroll_tab_anywhere = true

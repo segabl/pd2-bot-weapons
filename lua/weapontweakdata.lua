@@ -117,7 +117,7 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
   local shot_delay = is_automatic and self.m4_crew.auto.fire_rate or 0
   local burst_delay = mean_burst_delay(w_u_tweak.FALLOFF)
   local reload_time = self.m4_crew.reload_time
-  local accuracy = (is_automatic or StreamHeist) and (9 + w_u_tweak.FALLOFF[1].acc[1]) / 10 or 1 - w_u_tweak.spread / 50
+  local accuracy = (is_automatic or StreamHeist) and (9 + w_u_tweak.FALLOFF[1].acc[1]) / 10 or 1 - w_u_tweak.spread / 100
   local target_damage = (self.m4_crew.DAMAGE * mag * accuracy) / ((mag / burst_size) * (burst_size - 1) * shot_delay + (mag / burst_size - 1) * burst_delay + reload_time)
   for crew_weapon_name, crew_weapon in pairs(self) do
     if type(crew_weapon) == "table" and crew_weapon_name:match("_crew$") then
@@ -130,7 +130,7 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
         shot_delay = is_automatic and crew_weapon.auto.fire_rate or 0
         burst_delay = mean_burst_delay(w_u_tweak.FALLOFF)
         reload_time = crew_weapon.reload_time
-        accuracy = (is_automatic or StreamHeist) and (9 + w_u_tweak.FALLOFF[1].acc[1]) / 10 or 1 - w_u_tweak.spread / 50
+        accuracy = (is_automatic or StreamHeist) and (9 + w_u_tweak.FALLOFF[1].acc[1]) / 10 or 1 - w_u_tweak.spread / 100
         crew_weapon.DAMAGE = (target_damage * ((mag / burst_size) * (burst_size - 1) * shot_delay + (mag / burst_size - 1) * burst_delay + reload_time)) / (mag * accuracy)
       end
     end

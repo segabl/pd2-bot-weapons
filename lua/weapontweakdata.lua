@@ -58,8 +58,9 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
       crew_weapon[fire_mode] = { fire_rate = fire_rate }
       crew_weapon.CLIP_AMMO_MAX = player_weapon.CLIP_AMMO_MAX
       crew_weapon.reload_time = player_weapon.timers.reload_empty or 5
+      crew_weapon.is_shotgun = table.contains(player_weapon.categories, "shotgun")
       if is_automatic then
-        if crew_weapon.is_shotgun or crew_weapon.rays or crew_weapon.usage == "is_shotgun_pump" then
+        if crew_weapon.is_shotgun then
           set_usage(crew_weapon_name, crew_weapon, "is_shotgun_mag")
         elseif crew_weapon.usage == "is_pistol" or crew_weapon.usage == "akimbo_pistol" then
           set_usage(crew_weapon_name, crew_weapon, "is_smg")
@@ -67,11 +68,13 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
           set_usage(crew_weapon_name, crew_weapon, "is_lmg")
         end
       else
-        if crew_weapon.is_shotgun or crew_weapon.rays or crew_weapon.usage == "is_shotgun_mag" then
+        if crew_weapon.is_shotgun then
           set_usage(crew_weapon_name, crew_weapon, "is_shotgun_pump")
+        elseif table.contains(player_weapon.categories, "revolver") then
+          set_usage(crew_weapon_name, crew_weapon, "is_revolver")
         elseif crew_weapon.usage == "akimbo_pistol" then
-          set_usage(crew_weapon_name, crew_weapon, crew_weapon.CLIP_AMMO_MAX >= 24 and "is_pistol" or "is_revolver")
-        elseif crew_weapon.usage == "is_rifle" or crew_weapon.usage == "is_bullpup" or crew_weapon.usage == "is_smg" or crew_weapon.usage == "is_lmg" or crew_weapon.usage == "bow" then
+          set_usage(crew_weapon_name, crew_weapon, "is_pistol")
+        elseif crew_weapon.usage ~= "is_pistol" then
           set_usage(crew_weapon_name, crew_weapon, "is_sniper")
         end
       end

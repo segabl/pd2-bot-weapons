@@ -31,14 +31,14 @@ function BlackMarketGui:mws_falloff_bot(wbase, index, txts, dis)
   if weapon_usage_tweak.autofire_rounds or StreamHeist then
     txts['b' .. index]:set_text((' | %i%%'):format(100 * falloff.acc[2]))
   else
-    txts['b' .. index]:set_text((' | %i%%'):format(100 * (1 - weapon_usage_tweak.spread / 50)))
+    txts['b' .. index]:set_text((' | %i%%'):format(100 * (1 - weapon_usage_tweak.spread / 100)))
   end
 end
 
 function BlackMarketGui:mws_reload_bot(wbase, index, txts)
   local weap_tweak = wbase:weapon_tweak_data()
   local weapon_usage_tweak = tweak_data.character.russian.weapon[weap_tweak.usage]
-  if BotWeapons.settings.weapon_balance then
+  if BotWeapons.settings.weapon_balance and weap_tweak.reload_time then
     txts['a' .. index]:set_text(('%.2fs'):format(weap_tweak.reload_time))
   else
     txts['a' .. index]:set_text(('%.2f'):format(weapon_usage_tweak.RELOAD_SPEED))

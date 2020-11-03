@@ -63,10 +63,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   }
   gang_presets.is_shotgun_mag.spread = 15
 
-  if not self._crew_setup_done then
-    tweak_data.weapon:setup_crew_weapons(gang_presets)
-    self._crew_setup_done = true
-  end
+  tweak_data.weapon:setup_crew_weapons(gang_presets)
 
   return presets
 end

@@ -54,38 +54,42 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
     local fire_mode = player_weapon.FIRE_MODE or "single"
     local is_automatic = fire_mode == "auto"
     local fire_rate = player_weapon.fire_mode_data and player_weapon.fire_mode_data.fire_rate or player_weapon[fire_mode] and player_weapon[fire_mode].fire_rate or 1
-    crew_weapon[fire_mode] = { fire_rate = fire_rate }
-    crew_weapon.CLIP_AMMO_MAX = player_weapon.CLIP_AMMO_MAX
-    crew_weapon.reload_time = player_weapon.timers.reload_empty or 5
-    if is_automatic then
-      if crew_weapon.is_shotgun or crew_weapon.rays or crew_weapon.usage == "is_shotgun_pump" then
-        set_usage(crew_weapon_name, crew_weapon, "is_shotgun_mag")
-      elseif crew_weapon.usage == "is_pistol" or crew_weapon.usage == "akimbo_pistol" then
-        set_usage(crew_weapon_name, crew_weapon, "is_smg")
-      elseif crew_weapon.CLIP_AMMO_MAX >= 100 then
-        set_usage(crew_weapon_name, crew_weapon, "is_lmg")
+    if not crew_weapon.old_usage then
+      crew_weapon[fire_mode] = { fire_rate = fire_rate }
+      crew_weapon.CLIP_AMMO_MAX = player_weapon.CLIP_AMMO_MAX
+      crew_weapon.reload_time = player_weapon.timers.reload_empty or 5
+      if is_automatic then
+        if crew_weapon.is_shotgun or crew_weapon.rays or crew_weapon.usage == "is_shotgun_pump" then
+          set_usage(crew_weapon_name, crew_weapon, "is_shotgun_mag")
+        elseif crew_weapon.usage == "is_pistol" or crew_weapon.usage == "akimbo_pistol" then
+          set_usage(crew_weapon_name, crew_weapon, "is_smg")
+        elseif crew_weapon.CLIP_AMMO_MAX >= 100 then
+          set_usage(crew_weapon_name, crew_weapon, "is_lmg")
+        end
+      else
+        if crew_weapon.is_shotgun or crew_weapon.rays or crew_weapon.usage == "is_shotgun_mag" then
+          set_usage(crew_weapon_name, crew_weapon, "is_shotgun_pump")
+        elseif crew_weapon.usage == "akimbo_pistol" then
+          set_usage(crew_weapon_name, crew_weapon, crew_weapon.CLIP_AMMO_MAX >= 24 and "is_pistol" or "is_revolver")
+        elseif crew_weapon.usage == "is_rifle" or crew_weapon.usage == "is_bullpup" or crew_weapon.usage == "is_smg" or crew_weapon.usage == "is_lmg" or crew_weapon.usage == "bow" then
+          set_usage(crew_weapon_name, crew_weapon, "is_sniper")
+        end
       end
-    else
-      if crew_weapon.is_shotgun or crew_weapon.rays or crew_weapon.usage == "is_shotgun_mag" then
-        set_usage(crew_weapon_name, crew_weapon, "is_shotgun_pump")
-      elseif crew_weapon.usage == "akimbo_pistol" then
-        set_usage(crew_weapon_name, crew_weapon, crew_weapon.CLIP_AMMO_MAX >= 24 and "is_pistol" or "is_revolver")
-      elseif crew_weapon.usage == "is_rifle" or crew_weapon.usage == "is_bullpup" or crew_weapon.usage == "is_smg" or crew_weapon.usage == "is_lmg" or crew_weapon.usage == "bow" then
-        set_usage(crew_weapon_name, crew_weapon, "is_sniper")
-      end
+      -- fix anim_usage
+      crew_weapon.anim_usage = anim_usage_redirects[crew_weapon.anim_usage or crew_weapon.usage] or crew_weapon.anim_usage
+      -- save original usage
+      crew_weapon.old_usage = crew_weapon.usage
     end
-    -- fix anim_usage
-    crew_weapon.anim_usage = anim_usage_redirects[crew_weapon.anim_usage or crew_weapon.usage] or crew_weapon.anim_usage
-    if not crew_preset[crew_weapon.usage] then
-      BotWeapons:log("Error: No usage preset for " .. crew_weapon_name .. " (" .. crew_weapon.usage .. ")!")
+    if not crew_preset[crew_weapon.old_usage] then
+      BotWeapons:log("Error: No usage preset for " .. crew_weapon_name .. " (" .. crew_weapon.old_usage .. ")!")
       return
     end
     -- clone weapon usage preset to allow unique settings for each weapon
-    local preset = deep_clone(crew_preset[crew_weapon.usage])
+    local preset = deep_clone(crew_preset[crew_weapon.old_usage])
     local recoil = (player_weapon.stats and self.stats.recoil[player_weapon.stats.recoil] or self.stats.recoil[1]) / self.stats.recoil[1]
     local accuracy = (player_weapon.stats and player_weapon.stats.spread or 1) / #self.stats.spread
     local max_r = preset.FALLOFF[#preset.FALLOFF].r
-    local mod = crew_weapon.hold == "akimbo_pistol" and 0.5 or crew_weapon.usage == "is_shotgun_mag" and 2 or 1
+    local mod = crew_weapon.hold == "akimbo_pistol" and 0.5 or crew_weapon.old_usage == "is_shotgun_mag" and 2 or 1
     preset.autofire_rounds = is_automatic and { math_ceil(crew_weapon.CLIP_AMMO_MAX * 0.15 * mod), math_ceil(crew_weapon.CLIP_AMMO_MAX * 0.35 * mod) } or nil
     for _, v in ipairs(preset.FALLOFF) do
       mod = 1 - (v.r / max_r) * 0.65
@@ -97,7 +101,7 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
     end
     preset.RELOAD_SPEED = 1
     -- set new usage preset
-    crew_weapon.anim_usage = not crew_weapon.anim_usage and crew_weapon.usage or crew_weapon.anim_usage
+    crew_weapon.anim_usage = not crew_weapon.anim_usage and crew_weapon.old_usage or crew_weapon.anim_usage
     crew_weapon.usage = crew_weapon_name
     crew_preset[crew_weapon_name] = preset
     return true

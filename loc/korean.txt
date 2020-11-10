@@ -1,7 +1,6 @@
 {
   "BotWeapons_menu_main_name" : "봇 무기와 장비",
   "BotWeapons_menu_main_desc" : "팀 AI 들의 방탄복, 장비 그리고 무기를 설정합니다.",
-  "menu_crew_character_settings" : "캐릭터 설정",
   "menu_crew_character" : "캐릭터",
   "menu_character_settings_name" : "캐릭터 세부 설정",
   "menu_character_settings_desc" : "여기서 각각의 로드아웃을 설정하고 지울 수 있습니다. 모든 작업은 활성된 로드아웃 슬롯을 사용하고 현재 표시된 캐릭터에 적용합니다",
@@ -37,6 +36,8 @@
   "slider_weapon_customized_chance_desc" : "무작위 옵션을 사용할 때 봇이 커스터마이즈된 무기를 가질 가능성이 있습니다",
   "slider_weapon_cosmetics_chance_name" : "무기 꾸미기 찬스",
   "slider_weapon_cosmetics_chance_desc" : "무작위 옵션을 사용할 때 봇이 무기 스킨를 가질 가능성이 있습니다",
+  "slider_outfit_random_chance_name" : "Outfit over Armor chance",
+  "slider_outfit_random_chance_desc" : "Chance that a bot will use an outfit instead of armor when using random option",
   "item_weapon" : "무기",
   "item_none" : "없음",
   "item_random" : "무작위",

@@ -143,11 +143,25 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     priority = 91
   })
 
+  MenuHelper:AddSlider({
+    id = "outfit_random_chance",
+    title = "slider_outfit_random_chance_name",
+    desc = "slider_outfit_random_chance_desc",
+    callback = "BotWeapons_select",
+    value = BotWeapons.settings.outfit_random_chance,
+    min = 0,
+    max = 1,
+    step = 0.01,
+    show_value = true,
+    menu_id = menu_id_main,
+    priority = 90
+  })
+
   MenuHelper:AddDivider({
     id = "divider3",
     size = 16,
     menu_id = menu_id_main,
-    priority = 90
+    priority = 80
   })
 
   MenuHelper:AddToggle({
@@ -157,7 +171,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
     callback = "BotWeapons_toggle",
     value = BotWeapons.settings.sync_settings,
     menu_id = menu_id_main,
-    priority = 89
+    priority = 79
   })
 
 end)

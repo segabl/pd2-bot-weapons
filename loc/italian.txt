@@ -1,7 +1,6 @@
 {
   "BotWeapons_menu_main_name" : "Bot Weapons and Equipment",
   "BotWeapons_menu_main_desc" : "Imposta armatura, equipaggiamento ed armi per la squadra IA",
-  "menu_crew_character_settings" : "Impostazioni personaggio",
   "menu_crew_character" : "Personaggio",
   "menu_character_settings_name" : "Impostazioni specifiche personaggio",
   "menu_character_settings_desc" : "Puoi impostare ed eliminare un equipaggiamento specifico per un personaggio da qui. Ogni azione utilizzerà gli slot attivi degli equipaggiamenti e li applicherà ai personaggi correnti.",
@@ -37,6 +36,8 @@
   "slider_weapon_customized_chance_desc" : "C'è una possibilità che i bot usino armi personalizzato mentre l'opzione Casuale è in uso",
   "slider_weapon_cosmetics_chance_name" : "Probabilità di cosmetici sulle armi",
   "slider_weapon_cosmetics_chance_desc" : "C'è una possibilità che i bot abbiano una skin sull'arma mentre l'opzione Casuale è in uso",
+  "slider_outfit_random_chance_name" : "Outfit over Armor chance",
+  "slider_outfit_random_chance_desc" : "Chance that a bot will use an outfit instead of armor when using random option",
   "item_weapon" : "Arma",
   "item_none" : "Nessuno",
   "item_random" : "Casuale",

@@ -1,7 +1,6 @@
 {
   "BotWeapons_menu_main_name" : "อาวุธยุทโธปกรณ์และอุปกรณ์ของบอท",
   "BotWeapons_menu_main_desc" : "Bot Weapons and Equipment: ตั้งเกราะ, อุปกรณ์และอาวุธสำหรับทีม AI ของผู้เล่น\n(เป็นเพียงของตกแต่ง ไม่ก่อให้เกิดการเปลี่ยนแปลงต่อเกมแต่อย่างใด)",
-  "menu_crew_character_settings" : "การตั้งค่าตัวละคร",
   "menu_crew_character" : "ตัวละคร",
   "menu_character_settings_name" : "กำหนดตัวละครเฉพาะ",
   "menu_character_settings_desc" : "คุณสามารถตั้งค่าและลบค่าตัวละครที่คุณตั้งไว้ในชุดอุปกรณ์ที่นี่ เมื่อดำเนินการใช้สล็อต\nจะมีการเปิดใช้งานแทนที่ตัวละครปัจจุบันที่ถูกกำหนดไว้ก่อนหน้านี้",
@@ -37,6 +36,8 @@
   "slider_weapon_customized_chance_desc" : "โอกาสที่บอทจะอาวุธที่ปรับแต่งแล้วขณะเลือกใช้ตัวเลือก 'สุ่มเลือกอาวุธ'",
   "slider_weapon_cosmetics_chance_name" : "โอกาสที่บอทจะใช้อาวุธที่มีสกิน",
   "slider_weapon_cosmetics_chance_desc" : "โอกาสที่บอทจะมีอาวุธที่มีสกินติดมาด้วยเมื่อเลือกใช้ตัวเลือก 'สุ่มเลือกอาวุธ'",
+  "slider_outfit_random_chance_name" : "Outfit over Armor chance",
+  "slider_outfit_random_chance_desc" : "Chance that a bot will use an outfit in instead of armor when using random option",
   "item_weapon" : "อาวุธ",
   "item_none" : "ไม่มี",
   "item_random" : "สุ่ม",

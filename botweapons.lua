@@ -12,6 +12,7 @@ if not BotWeapons then
     mask_customized_chance = 0.5,
     weapon_customized_chance = 0.5,
     weapon_cosmetics_chance = 0.5,
+    outfit_random_chance = 1,
     sync_settings = true
   }
   BotWeapons.weapon_categories = {
@@ -280,7 +281,10 @@ if not BotWeapons then
   end
 
   function BotWeapons:get_random_player_style(category)
-    return table.random_key(tweak_data.blackmarket.player_styles)
+    if not self._player_styles then
+      self._player_styles = table.map_keys(table.filter(tweak_data.blackmarket.player_styles, function (v, k) return not k ~= "none" end))
+    end
+    return table.random(self._player_styles)
   end
 
   function BotWeapons:get_random_suit_variation(category, player_style)
@@ -398,8 +402,14 @@ if not BotWeapons then
           loadout.suit_variation_random = char_loadout.suit_variation_random
         end
         if loadout.player_style_random then
-          loadout.player_style = self:get_random_player_style(loadout.player_style_random)
-          loadout.suit_variation_random = true
+          if math.random() < self.settings.outfit_random_chance then
+            loadout.player_style = self:get_random_player_style(loadout.player_style_random)
+            loadout.suit_variation_random = true
+          else
+            loadout.player_style = loadout.player_style or managers.blackmarket:get_default_player_style()
+            loadout.suit_variation = "default"
+            loadout.suit_variation_random = false
+          end
         end
       end
       -- check for invalid outfit

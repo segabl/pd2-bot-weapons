@@ -152,7 +152,7 @@ function CrewManagementGui:init(ws, fullscreen_ws, node)
   self:new_row()
 
   local character_text = self._panel:text({
-    text = managers.localization:to_upper_text("menu_crew_character_settings"),
+    text = managers.localization:to_upper_text("menu_character_settings_name"),
     font = medium_font,
     font_size = medium_font_size
   })

@@ -36,7 +36,7 @@
   "slider_weapon_customized_chance_desc" : "使用随机武器设置时，随机到自定义武器的概率",
   "slider_weapon_cosmetics_chance_name" : "随机武器出现皮肤武器的概率",
   "slider_weapon_cosmetics_chance_desc" : "使用随机武器设置时，随机到有皮肤的武器的概率",
-  slider_outfit_random_chance_name" : "随机护甲出现自定义服饰的概率",
+  "slider_outfit_random_chance_name" : "随机护甲出现自定义服饰的概率",
   "slider_outfit_random_chance_desc" : "使用随机护甲设置时，随机到自定义服饰的概率",
   "item_weapon" : "武器",
   "item_none" : "无",

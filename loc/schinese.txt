@@ -22,7 +22,7 @@
   "menu_action_random_weapon_name" : "选择随机武器的种类",
   "toggle_weapon_balance_name" : "修复AI武器平衡性",
   "toggle_weapon_balance_desc" : "修复AI武器属性所有武器都将能得到良好且稳定的输出并各具特色，同时修正了武器的开火速率和换弹时间\nAI武器数据现在会随难度而变动，如果你还想让AI队友正常使用副武器，那你最好启用此选项",
-  "toggle_player_carry_name" : "像玩家一样拿包",
+  "toggle_player_carry_name" : "像玩家一样背包",
   "toggle_player_carry_desc" : "AI队友拿包的状态会像玩家一样，而不是让包飘在AI背上。",
   "toggle_use_flashlights_name" : "AI队友在合适时使用手电筒",
   "toggle_use_flashlights_desc" : "AI队友会在较暗的劫案中使用手电筒(如果它们的武器上装了手电筒模块)",

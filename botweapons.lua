@@ -267,12 +267,19 @@ if not BotWeapons then
       end
     end
     weapon.blueprint = deep_clone(weapon.cosmetics and tweak_data.blackmarket.weapon_skins[weapon.cosmetics.id].default_blueprint or tweak_data.weapon.factory[weapon.factory_id].default_blueprint)
+    local forbidden = managers.weapon_factory:_get_forbidden_parts(weapon.factory_id, weapon.blueprint)
     for _, parts_data in pairs(managers.blackmarket:get_dropable_mods_by_weapon_id(weapon.weapon_id)) do
-      local part_data = math.random() < self.settings.weapon_customized_chance and table.random(parts_data)
-      if part_data then
-        local factory_data = tweak_data.weapon.factory.parts[part_data[1]]
-        if factory_data and (not factory_data.custom or factory_data.third_unit and DB:has(unit_ids, factory_data.third_unit:id())) then
-          managers.weapon_factory:change_part_blueprint_only(weapon.factory_id, part_data[1], weapon.blueprint)
+      if math.random() < self.settings.weapon_customized_chance then
+        local part_data = table.random(parts_data)
+        if part_data and not forbidden[part_data[1]] then
+          local factory_data = tweak_data.weapon.factory.parts[part_data[1]]
+          if factory_data and (not factory_data.custom or factory_data.third_unit and DB:has(unit_ids, factory_data.third_unit:id())) then
+            local f = managers.weapon_factory:_get_forbidden_parts(weapon.factory_id, weapon.blueprint)
+            if not f[part_data[1]] then
+              managers.weapon_factory:change_part_blueprint_only(weapon.factory_id, part_data[1], weapon.blueprint)
+              forbidden = managers.weapon_factory:_get_forbidden_parts(weapon.factory_id, weapon.blueprint)
+            end
+          end
         end
       end
     end

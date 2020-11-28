@@ -13,7 +13,7 @@ function BlackMarketManager:is_weapon_allowed_for_crew(weapon_id)
     return false
   end
   local data = tweak_data.weapon[weapon_id]
-  local check_cat = tweak_data.weapon.judge.categories[1] == "revolver" and 2 or 1
+  local check_cat = BotWeapons:is_mwc_installed() and 2 or 1
   return data and self:is_weapon_category_allowed_for_crew(data.categories[check_cat] or data.categories[1])
 end
 

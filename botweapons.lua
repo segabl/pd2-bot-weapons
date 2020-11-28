@@ -46,6 +46,11 @@ if not BotWeapons then
     self:load()
   end
 
+  function BotWeapons:is_mwc_installed()
+    -- check if "more weapon categories" is used
+    return tweak_data.weapon.judge.categories[1] == "revolver"
+  end
+
   function BotWeapons:should_use_armor(loadout)
     if not loadout or not loadout.player_style or loadout.player_style == managers.blackmarket:get_default_player_style() then
       local level_id = Utils:IsInGameState() and managers.job and managers.job:current_level_id()
@@ -228,7 +233,7 @@ if not BotWeapons then
 
   -- selects a random weapon and constructs a random blueprint for it
   function BotWeapons:get_random_weapon(category)
-    local check_cat = tweak_data.weapon.judge.categories[1] == "revolver" and 2 or 1 -- more weapon categories compat
+    local check_cat = self:is_mwc_installed() and 2 or 1
     local cat = type(category) ~= "string" and table.random(self.weapon_categories) or category
     if not self._weapons or not self._weapons[cat] then
       self._weapons = self._weapons or {}
@@ -262,14 +267,12 @@ if not BotWeapons then
       end
     end
     weapon.blueprint = deep_clone(weapon.cosmetics and tweak_data.blackmarket.weapon_skins[weapon.cosmetics.id].default_blueprint or tweak_data.weapon.factory[weapon.factory_id].default_blueprint)
-    for part_type, parts_data in pairs(managers.blackmarket:get_dropable_mods_by_weapon_id(weapon.weapon_id)) do
-      if math.random() < self.settings.weapon_customized_chance then
-        local part_data = table.random(parts_data)
-        if part_data then
-          local factory_data = tweak_data.weapon.factory.parts[part_data[1]]
-          if factory_data and (not factory_data.custom or factory_data.third_unit and DB:has(unit_ids, factory_data.third_unit:id())) then
-            managers.weapon_factory:change_part_blueprint_only(weapon.factory_id, part_data[1], weapon.blueprint)
-          end
+    for _, parts_data in pairs(managers.blackmarket:get_dropable_mods_by_weapon_id(weapon.weapon_id)) do
+      local part_data = math.random() < self.settings.weapon_customized_chance and table.random(parts_data)
+      if part_data then
+        local factory_data = tweak_data.weapon.factory.parts[part_data[1]]
+        if factory_data and (not factory_data.custom or factory_data.third_unit and DB:has(unit_ids, factory_data.third_unit:id())) then
+          managers.weapon_factory:change_part_blueprint_only(weapon.factory_id, part_data[1], weapon.blueprint)
         end
       end
     end

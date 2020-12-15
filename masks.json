@@ -1,193 +1,193 @@
 {
-  "mega": {
-    "character": {
-      "russian": {
-        "id": "dallas_glow"
-      },
-      "german": {
-        "id": "wolf_glow"
-      },
-      "spanish": {
-        "id": "chains_glow"
-      },
-      "old_hoxton": {
-        "id": "hoxton_glow"
-      },
-      "female_1": {
-        "id": "pdc16_clover"
-      },
-      "sydney": {
-        "id": "swm_sydney"
-      },
-      "wild": {
-        "id": "mrm"
-      },
-      "myh": {
-        "id": "mmh"
-      }
-    },
-    "pool": [
-      { "id": "megacthulhu" },
-      { "id": "hunter" },
-      { "id": "cop_skull" },
-      { "id": "cop_plague_doctor" },
-      { "id": "cop_kawaii" },
-      { "id": "fab_mega_grin" },
-      { "id": "fab_mega_doctor" },
-      { "id": "fab_mega_alien" },
-      { "id": "cop_mega_gage_blade" },
-      { "id": "fab_mega_mark" },
-      { "id": "mdm" },
-      { "id": "ami_01" },
-      { "id": "ami_02" },
-      { "id": "ami_03" },
-      { "id": "ami_04" },
-      { "id": "ami_05" },
-      { "id": "ami_06" },
-      { "id": "skm_05" },
-      { "id": "skm_06" },
-      { "id": "skm_07" },
-      { "id": "skm_08" },
-      { "id": "smo_07" },
-      { "id": "smo_08" },
-      { "id": "smo_09" },
-      { "id": "smo_10" },
-      { "id": "smo_11" },
-      { "id": "smo_12" }
-    ]
-  },
-  "shades": {
-    "pool": [
-      { "id": "aviator" },
-      { "id": "stoneface" },
-      { "id": "wayfarer" },
-      { "id": "sfm_03" },
-      { "id": "rvd_01" },
-      { "id": "rvd_02" },
-      { "id": "rvd_03" },
-      { "id": "jw_shades" }
-    ]
-  },
-  "beanies": {
-    "pool": [
-      { "id": "bny_01" },
-      { "id": "bny_02" },
-      { "id": "bny_03" },
-      { "id": "bny_04" }
-    ]
-  },
-  "hotline": {
-    "pool": [
-      { "id": "jake" },
-      { "id": "tonys_revenge" },
-      { "id": "richter" },
-      { "id": "alex" },
-      { "id": "biker" },
-      { "id": "corey" },
-      { "id": "richard_returns" },
-      { "id": "rooster" },
-      { "id": "owl" },
-      { "id": "pig" },
-      { "id": "white_wolf" },
-      { "id": "rabbit" },
-      { "id": "horse" },
-      { "id": "tiger" },
-      { "id": "panther" }
-    ]
-  },
-  "baby": {
-    "pool": [
-      { "id": "baby_angry" },
-      { "id": "baby_cry" },
-      { "id": "baby_happy" },
-      { "id": "brazil_baby" }
-    ]
-  },
-  "presidents": {
-    "pool": [
-      { "id": "franklin" },
-      { "id": "lincoln" },
-      { "id": "grant" },
-      { "id": "washington" },
-      { "id": "clinton" },
-      { "id": "bush" },
-      { "id": "obama" },
-      { "id": "nixon" },
-      { "id": "win_donald" }
-    ]
-  },
-  "military": {
-    "pool": [
-      { "id": "wmp_02" },
-      { "id": "wmp_03" },
-      { "id": "wmp_04" },
-      { "id": "vlad_armor" },
-      { "id": "nyck_cap" },
-      { "id": "nyck_ace" },
-      { "id": "nyck_beret" },
-      { "id": "jfr_01" },
-      { "id": "jfr_02" }
-    ]
-  },
-  "clean": {
-    "character": {
-      "russian": {
-        "id": "dallas_clean"
-      },
-      "german": {
-        "id": "wolf_clean"
-      },
-      "spanish": {
-        "id": "chains_clean"
-      },
-      "american": {
-        "id": "hoxton_clean"
-      },
-      "old_hoxton": {
-        "id": "old_hoxton_begins"
-      },
-      "female_1": {
-        "id": "grizel_clean"
-      },
-      "dragan": {
-        "id": "dragan_begins"
-      },
-      "jacket": {
-        "id": "richard_begins"
-      },
-      "bonnie": {
-        "id": "bonnie_begins"
-      },
-      "sokol": {
-        "id": "sokol_begins"
-      },
-      "dragon": {
-        "id": "jiro_begins"
-      },
-      "bodhi": {
-        "id": "bodhi_begins"
-      },
-      "sydney": {
-        "id": "sydney_begins"
-      },
-      "wild": {
-        "id": "rust_begins"
-      },
-      "chico": {
-        "id": "chc_terry_begins"
-      },
-      "max": {
-        "id": "max_begins"
-      },
-      "myh": {
-        "id": "myh_begins"
-      },
-      "ecp_female": {
-        "id": "ecp_female_begins"
-      },
-      "ecp_male": {
-        "id": "ecp_male_begins"
-      },
-    }
-  }
+	"mega": {
+		"character": {
+			"russian": {
+				"id": "dallas_glow"
+			},
+			"german": {
+				"id": "wolf_glow"
+			},
+			"spanish": {
+				"id": "chains_glow"
+			},
+			"old_hoxton": {
+				"id": "hoxton_glow"
+			},
+			"female_1": {
+				"id": "pdc16_clover"
+			},
+			"sydney": {
+				"id": "swm_sydney"
+			},
+			"wild": {
+				"id": "mrm"
+			},
+			"myh": {
+				"id": "mmh"
+			}
+		},
+		"pool": [
+			{ "id": "megacthulhu" },
+			{ "id": "hunter" },
+			{ "id": "cop_skull" },
+			{ "id": "cop_plague_doctor" },
+			{ "id": "cop_kawaii" },
+			{ "id": "fab_mega_grin" },
+			{ "id": "fab_mega_doctor" },
+			{ "id": "fab_mega_alien" },
+			{ "id": "cop_mega_gage_blade" },
+			{ "id": "fab_mega_mark" },
+			{ "id": "mdm" },
+			{ "id": "ami_01" },
+			{ "id": "ami_02" },
+			{ "id": "ami_03" },
+			{ "id": "ami_04" },
+			{ "id": "ami_05" },
+			{ "id": "ami_06" },
+			{ "id": "skm_05" },
+			{ "id": "skm_06" },
+			{ "id": "skm_07" },
+			{ "id": "skm_08" },
+			{ "id": "smo_07" },
+			{ "id": "smo_08" },
+			{ "id": "smo_09" },
+			{ "id": "smo_10" },
+			{ "id": "smo_11" },
+			{ "id": "smo_12" }
+		]
+	},
+	"shades": {
+		"pool": [
+			{ "id": "aviator" },
+			{ "id": "stoneface" },
+			{ "id": "wayfarer" },
+			{ "id": "sfm_03" },
+			{ "id": "rvd_01" },
+			{ "id": "rvd_02" },
+			{ "id": "rvd_03" },
+			{ "id": "jw_shades" }
+		]
+	},
+	"beanies": {
+		"pool": [
+			{ "id": "bny_01" },
+			{ "id": "bny_02" },
+			{ "id": "bny_03" },
+			{ "id": "bny_04" }
+		]
+	},
+	"hotline": {
+		"pool": [
+			{ "id": "jake" },
+			{ "id": "tonys_revenge" },
+			{ "id": "richter" },
+			{ "id": "alex" },
+			{ "id": "biker" },
+			{ "id": "corey" },
+			{ "id": "richard_returns" },
+			{ "id": "rooster" },
+			{ "id": "owl" },
+			{ "id": "pig" },
+			{ "id": "white_wolf" },
+			{ "id": "rabbit" },
+			{ "id": "horse" },
+			{ "id": "tiger" },
+			{ "id": "panther" }
+		]
+	},
+	"baby": {
+		"pool": [
+			{ "id": "baby_angry" },
+			{ "id": "baby_cry" },
+			{ "id": "baby_happy" },
+			{ "id": "brazil_baby" }
+		]
+	},
+	"presidents": {
+		"pool": [
+			{ "id": "franklin" },
+			{ "id": "lincoln" },
+			{ "id": "grant" },
+			{ "id": "washington" },
+			{ "id": "clinton" },
+			{ "id": "bush" },
+			{ "id": "obama" },
+			{ "id": "nixon" },
+			{ "id": "win_donald" }
+		]
+	},
+	"military": {
+		"pool": [
+			{ "id": "wmp_02" },
+			{ "id": "wmp_03" },
+			{ "id": "wmp_04" },
+			{ "id": "vlad_armor" },
+			{ "id": "nyck_cap" },
+			{ "id": "nyck_ace" },
+			{ "id": "nyck_beret" },
+			{ "id": "jfr_01" },
+			{ "id": "jfr_02" }
+		]
+	},
+	"clean": {
+		"character": {
+			"russian": {
+				"id": "dallas_clean"
+			},
+			"german": {
+				"id": "wolf_clean"
+			},
+			"spanish": {
+				"id": "chains_clean"
+			},
+			"american": {
+				"id": "hoxton_clean"
+			},
+			"old_hoxton": {
+				"id": "old_hoxton_begins"
+			},
+			"female_1": {
+				"id": "grizel_clean"
+			},
+			"dragan": {
+				"id": "dragan_begins"
+			},
+			"jacket": {
+				"id": "richard_begins"
+			},
+			"bonnie": {
+				"id": "bonnie_begins"
+			},
+			"sokol": {
+				"id": "sokol_begins"
+			},
+			"dragon": {
+				"id": "jiro_begins"
+			},
+			"bodhi": {
+				"id": "bodhi_begins"
+			},
+			"sydney": {
+				"id": "sydney_begins"
+			},
+			"wild": {
+				"id": "rust_begins"
+			},
+			"chico": {
+				"id": "chc_terry_begins"
+			},
+			"max": {
+				"id": "max_begins"
+			},
+			"myh": {
+				"id": "myh_begins"
+			},
+			"ecp_female": {
+				"id": "ecp_female_begins"
+			},
+			"ecp_male": {
+				"id": "ecp_male_begins"
+			},
+		}
+	}
 }

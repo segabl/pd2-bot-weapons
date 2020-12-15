@@ -1,36 +1,34 @@
 {
-  "name" : "Bot Weapons and Equipment",
-  "description" : "Improved Crew Management, customize the visual appearance of the Team AI to make them more human-like",
-  "author" : "Hoppip",
-  "contact" : "Hoppip#1630",
-  "blt_version" : 2,
-  "color" : "0.043 0.808 0.6",
-  "image" : "mod.png",
-  "version" : "10.8",
-  "priority" : 10,
-  "updates" : [
-    {
-      "identifier" : "pd2-bot-weapons",
-      "host": { "meta": "https://updates.hoppip.at/pd2-bot-weapons" }
-    }
-  ],
-  "hooks" : [
-    { "hook_id" : "lib/managers/blackmarketmanager", "script_path" : "botweapons.lua" },
-    { "hook_id" : "lib/managers/criminalsmanager", "script_path" : "botweapons.lua" },
-    { "hook_id" : "lib/managers/menumanager", "script_path" : "botweapons.lua" },
-    { "hook_id" : "lib/managers/menu/blackmarketgui", "script_path" : "botweapons.lua" },
-    { "hook_id" : "lib/managers/menu/crewmanagementgui", "script_path" : "botweapons.lua" },
-    { "hook_id" : "lib/managers/menu/menuscenemanager", "script_path" : "botweapons.lua" },
-    { "hook_id" : "lib/tweak_data/charactertweakdata", "script_path" : "botweapons.lua" },
-    { "hook_id" : "lib/tweak_data/weapontweakdata", "script_path" : "botweapons.lua" },
-    { "hook_id" : "lib/units/enemies/cop/actions/upper_body/copactionshoot", "script_path" : "botweapons.lua" },
-    { "hook_id" : "lib/units/enemies/cop/copinventory", "script_path" : "botweapons.lua" },
-    { "hook_id" : "lib/units/player_team/logics/teamailogictravel", "script_path" : "botweapons.lua" },
-    { "hook_id" : "lib/units/player_team/huskteamaiinventory", "script_path" : "botweapons.lua" },
-    { "hook_id" : "lib/units/player_team/teamaiinventory", "script_path" : "botweapons.lua" },
-    { "hook_id" : "lib/units/player_team/teamaimovement", "script_path" : "botweapons.lua" },
-    { "hook_id" : "lib/units/weapons/akimboweaponbase", "script_path" : "botweapons.lua" },
-    { "hook_id" : "lib/units/weapons/newnpcraycastweaponbase", "script_path" : "botweapons.lua" },
-    { "hook_id" : "lib/network/base/networkpeer", "script_path" : "botweapons.lua" }
-  ]
+	"name" : "Bot Weapons and Equipment",
+	"description" : "Improved Crew Management, customize the visual appearance of the Team AI to make them more human-like",
+	"author" : "Hoppip",
+	"contact" : "Hoppip#1630",
+	"blt_version" : 2,
+	"color" : "0.043 0.808 0.6",
+	"image" : "mod.png",
+	"version" : "10.8",
+	"priority" : 10,
+	"updates" : [{
+		"identifier" : "pd2-bot-weapons",
+		"host": { "meta": "https://updates.hoppip.at/pd2-bot-weapons" }
+	}],
+	"hooks" : [
+		{ "hook_id" : "lib/managers/blackmarketmanager", "script_path" : "mod.lua" },
+		{ "hook_id" : "lib/managers/criminalsmanager", "script_path" : "mod.lua" },
+		{ "hook_id" : "lib/managers/menumanager", "script_path" : "mod.lua" },
+		{ "hook_id" : "lib/managers/menu/blackmarketgui", "script_path" : "mod.lua" },
+		{ "hook_id" : "lib/managers/menu/crewmanagementgui", "script_path" : "mod.lua" },
+		{ "hook_id" : "lib/managers/menu/menuscenemanager", "script_path" : "mod.lua" },
+		{ "hook_id" : "lib/tweak_data/charactertweakdata", "script_path" : "mod.lua" },
+		{ "hook_id" : "lib/tweak_data/weapontweakdata", "script_path" : "mod.lua" },
+		{ "hook_id" : "lib/units/enemies/cop/actions/upper_body/copactionshoot", "script_path" : "mod.lua" },
+		{ "hook_id" : "lib/units/enemies/cop/copinventory", "script_path" : "mod.lua" },
+		{ "hook_id" : "lib/units/player_team/logics/teamailogictravel", "script_path" : "mod.lua" },
+		{ "hook_id" : "lib/units/player_team/huskteamaiinventory", "script_path" : "mod.lua" },
+		{ "hook_id" : "lib/units/player_team/teamaiinventory", "script_path" : "mod.lua" },
+		{ "hook_id" : "lib/units/player_team/teamaimovement", "script_path" : "mod.lua" },
+		{ "hook_id" : "lib/units/weapons/akimboweaponbase", "script_path" : "mod.lua" },
+		{ "hook_id" : "lib/units/weapons/newnpcraycastweaponbase", "script_path" : "mod.lua" },
+		{ "hook_id" : "lib/network/base/networkpeer", "script_path" : "mod.lua" }
+	]
 }

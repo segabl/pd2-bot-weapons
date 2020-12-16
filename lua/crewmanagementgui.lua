@@ -692,17 +692,15 @@ function CrewManagementGui:populate_deployables(henchman_index, data, gui)
 		v.lock_texture = nil
 		v.lock_text = nil
 		v.comparision_data = nil
-		if not v.empty_slot and not v.equipped then
-			v.buttons = {"lo_d_equip"}
-		end
+		v.buttons = not v.empty_slot and {v.equipped and "lo_d_unequip" or "lo_d_equip"}
 	end
 end
 
 function CrewManagementGui:select_deployable(henchman_index, data, gui)
 	local loadout = managers.blackmarket:henchman_loadout(henchman_index)
-	if not data or data.default or data.random then
+	if not data or data.default or data.random or data.equipped then
 		loadout.deployable = nil
-		loadout.deployable_random = data and data.random
+		loadout.deployable_random = data and not data.equipped and data.random
 	else
 		loadout.deployable = data.name
 		loadout.deployable_random = nil

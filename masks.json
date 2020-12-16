@@ -24,6 +24,9 @@
 			},
 			"myh": {
 				"id": "mmh"
+			},
+			"max": {
+				"id": "mega_max"
 			}
 		},
 		"pool": [

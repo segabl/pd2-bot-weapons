@@ -56,7 +56,7 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
 		if not crew_weapon.old_usage then
 			crew_weapon[fire_mode] = { fire_rate = fire_rate }
 			crew_weapon.CLIP_AMMO_MAX = player_weapon.CLIP_AMMO_MAX
-			crew_weapon.reload_time = player_weapon.timers.reload_empty or 5
+			crew_weapon.reload_time = (player_weapon.timers.reload_empty or 5) * 0.75
 			crew_weapon.is_shotgun = table.contains(player_weapon.categories, "shotgun")
 			if is_automatic then
 				if crew_weapon.is_shotgun then

@@ -13,7 +13,8 @@ if not BotWeapons then
 		weapon_customized_chance = 0.5,
 		weapon_cosmetics_chance = 0.5,
 		outfit_random_chance = 1,
-		sync_settings = true
+		sync_settings = true,
+		chatter = false
 	}
 	BotWeapons.weapon_categories = {
 		"assault_rifle",
@@ -561,7 +562,7 @@ if not BotWeapons then
 	-- initialize
 	BotWeapons:init()
 
-	Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function(sender, id, data)
+	Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function (sender, id, data)
 		if id == "bot_weapons_sync" then
 			data = json.decode(data)
 			local unit = data and managers.criminals:character_unit_by_name(data.name)
@@ -571,6 +572,81 @@ if not BotWeapons then
 			end
 		end
 	end)
+
+	local d = os.date("*t")
+	if BotWeapons.settings.chatter or d.month == 4 and d.day == 1 then
+		local quotes = blt.vm.dofile(BotWeapons.mod_path .. "lua/teamaiquotes.lua")
+		Hooks:Add("GameSetupUpdate", "GameSetupUpdateBotWeapons", function (t)
+			if not Utils:IsInHeist() or not managers.chat then
+				return
+			end
+			if not BotWeapons._next_quote_check_t then
+				BotWeapons._next_quote_check_t = t + math.random(60, 120)
+				return
+			end
+			if BotWeapons._next_quote_check_t < t then
+				if BotWeapons._current_quote then
+
+					local actor
+					local line = BotWeapons._current_quote[BotWeapons._current_quote_index]:gsub("^$([1-3]):", function (n)
+						actor = n
+						return ""
+					end)
+					local data = BotWeapons._available_ai[tonumber(actor)]
+
+					if data then
+						line = line:gsub("$p", managers.network.account:username())
+						line = line:gsub("$([1-3])", function (n)
+							local ref = BotWeapons._available_ai[tonumber(n)]
+							return ref and ref.name or n
+						end)
+						managers.chat:_receive_message(1, data.name, line, tweak_data.chat_colors[data.color] or tweak_data.system_chat_color)
+					end
+
+					if BotWeapons._current_quote_index < #BotWeapons._current_quote then
+						local same_actor = BotWeapons._current_quote[BotWeapons._current_quote_index + 1]:match("^$([1-3]):") == actor
+						BotWeapons._next_quote_check_t = same_actor and t or t + 0.25 + BotWeapons._current_quote[BotWeapons._current_quote_index]:len() / 40
+						BotWeapons._current_quote_index = BotWeapons._current_quote_index + 1
+						BotWeapons._next_quote_check_t = BotWeapons._next_quote_check_t + 0.5 + BotWeapons._current_quote[BotWeapons._current_quote_index]:len() / 20
+					else
+						BotWeapons._current_quote = nil
+						BotWeapons._next_quote_check_t = t + math.random(120, 240)
+					end
+				else
+					BotWeapons._available_ai = {}
+					for _, v in pairs(managers.groupai:state():all_AI_criminals()) do
+						if alive(v.unit) then
+							table.insert(BotWeapons._available_ai, {
+								name = v.unit:base():nick_name(),
+								color = managers.criminals:character_color_id_by_unit(v.unit)
+							})
+						end
+					end
+					table.shuffle(BotWeapons._available_ai)
+
+					local weight, num = 0, 0
+					for i = 1, math.min(#BotWeapons._available_ai, 3) do
+						weight = weight + #quotes[i]
+					end
+					weight = math.random(weight)
+					while weight > 0 do
+						num = num + 1
+						weight = weight - #quotes[num]
+					end
+					BotWeapons._current_quote = table.remove(quotes[num], math.random(#quotes[num]))
+					BotWeapons._current_quote_index = 1
+
+					BotWeapons._used_quotes = BotWeapons._used_quotes or {}
+					BotWeapons._used_quotes[num] = BotWeapons._used_quotes[num] or {}
+					table.insert(BotWeapons._used_quotes[num], BotWeapons._current_quote)
+					if #quotes[num] == 0 then
+						quotes[num] = BotWeapons._used_quotes[num]
+						BotWeapons._used_quotes[num] = {}
+					end
+				end
+			end
+		end)
+	end
 
 end
 

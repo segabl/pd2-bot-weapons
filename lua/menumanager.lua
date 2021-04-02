@@ -1,25 +1,41 @@
 Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInit_BotWeapons", function(loc)
-	local custom_language
+	local language
 	for _, mod in pairs(BLT and BLT.Mods:Mods() or {}) do
 		if mod:GetName() == "PAYDAY 2 THAI LANGUAGE Mod" and mod:IsEnabled() then
-			custom_language = "thai"
+			language = "thai"
 			break
 		end
 	end
-	if custom_language then
-		loc:load_localization_file(BotWeapons.mod_path .. "loc/" .. custom_language ..".txt")
-	elseif PD2KR then
-		loc:load_localization_file(BotWeapons.mod_path .. "loc/korean.txt")
+	if language then
+		loc:load_localization_file(BotWeapons.mod_path .. "loc/" .. language ..".txt")
 	else
 		for _, filename in pairs(file.GetFiles(BotWeapons.mod_path .. "loc/") or {}) do
 			local str = filename:match('^(.*).txt$')
-			if str and Idstring(str) and Idstring(str):key() == SystemInfo:language():key() then
+			if str and Idstring(str):key() == SystemInfo:language():key() then
+				language = str
 				loc:load_localization_file(BotWeapons.mod_path .. "loc/" .. filename)
 				break
 			end
 		end
 	end
 	loc:load_localization_file(BotWeapons.mod_path .. "loc/english.txt", false)
+
+	if BotWeapons.settings.chatter then
+		local filename = BotWeapons.mod_path .. "data/quotes_english.json"
+		if io.file_is_readable(SavePath .. "bot_weapons_quotes.json") then
+			filename = SavePath .. "bot_weapons_quotes.json"
+		elseif language and io.file_is_readable(BotWeapons.mod_path .. "data/quotes_" .. language .. ".json") then
+			filename = BotWeapons.mod_path .. "data/quotes_" .. language .. ".json"
+		end
+		local file = io.file_is_readable(filename) and io.open(filename, "r")
+		if file then
+			BotWeapons.chatter_quotes = json.decode(file:read("*all"))
+			file:close()
+			Hooks:Add("MenuComponentManagerUpdate", "MenuComponentManagerUpdate", function (self, t)
+				BotWeapons:update_chatter(t)
+			end)
+		end
+	end
 end)
 
 local menu_id_main = "BotWeapons_menu_main"
@@ -172,6 +188,23 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
 		value = BotWeapons.settings.sync_settings,
 		menu_id = menu_id_main,
 		priority = 79
+	})
+
+	MenuHelper:AddDivider({
+		id = "divider4",
+		size = 32,
+		menu_id = menu_id_main,
+		priority = 70
+	})
+
+	MenuHelper:AddToggle({
+		id = "chatter",
+		title = "toggle_chatter_name",
+		desc = "toggle_chatter_desc",
+		callback = "BotWeapons_toggle",
+		value = BotWeapons.settings.chatter,
+		menu_id = menu_id_main,
+		priority = 69
 	})
 
 end)

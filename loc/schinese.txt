@@ -30,6 +30,8 @@
 	"toggle_use_lasers_desc" : "AI队友会在不使用手电筒时使用激光镭射(如果它们的武器上装了激光镭射模块)",
 	"toggle_sync_settings_name" : "使数据与客户端同步",
 	"toggle_sync_settings_desc" : "将修复过的AI及武器装备服饰等数据发送给其它玩家，以便其它玩家能看到你对AI做的修改",
+	"toggle_chatter_name" : "每天都是四月一",
+	"toggle_chatter_desc" : "启用愚人节活动功能——AI会在劫案中聊天。",
 	"slider_mask_customized_chance_name" : "随机面具出现自定义面具的概率",
 	"slider_mask_customized_chance_desc" : "使用随机面具设置时，随机到自定义面具的概率",
 	"slider_weapon_customized_chance_name" : "随机武器出现自定义武器概率",

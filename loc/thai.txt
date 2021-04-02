@@ -30,6 +30,8 @@
 	"toggle_use_lasers_desc" : "ทีม AI จะใช้เลเซอร์ (หากมีในอาวุธของพวกมัน) เมื่อไม่ใช้ไฟฉาย",
 	"toggle_sync_settings_name" : "ประสานข้อมูลให้กับผู้เล่นคนอื่น",
 	"toggle_sync_settings_desc" : "ส่งข้อมูลบอท จากตัวเลือกของ Mod นี้ให้กับผู้เล่นคนอื่นๆ\nเพื่อให้พวกเขาเห็นบอทแบบเดียวกับที่คุณเห็น",
+	"toggle_chatter_name" : "Every day is April 1st",
+	"toggle_chatter_desc" : "Enables Bot chatting permanently",
 	"slider_mask_customized_chance_name" : "โอกาสที่บอทใช้หน้ากากที่ปรับแต่งแล้ว",
 	"slider_mask_customized_chance_desc" : "โอกาสที่บอทจะมีหน้ากากที่ปรับแต่งแล้วขณะเลือกใช้ตัวเลือก 'สุ่มเลือกหน้ากาก'",
 	"slider_weapon_customized_chance_name" : "โอกาสที่บอทจะใช้ปืนที่ปรับแต่งแล้ว",

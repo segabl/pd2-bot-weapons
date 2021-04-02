@@ -30,6 +30,8 @@
 	"toggle_use_lasers_desc" : "La squadra IA userà il laser (se disponibile sulla loro arma) quando non usano la torcia",
 	"toggle_sync_settings_name" : "Sincronizza con i client",
 	"toggle_sync_settings_desc" : "Invia le opzioni non vanilla dei bot ai client cosi che possano vedere la squadra IA come la vedi tu",
+	"toggle_chatter_name" : "Every day is April 1st",
+	"toggle_chatter_desc" : "Enables Bot chatting permanently",
 	"slider_mask_customized_chance_name" : "Probabilità maschera personalizzata",
 	"slider_mask_customized_chance_desc" : "C'è una possibilità che i bot indossino una maschera personalizzata mentre l'opzione Casuale è in uso",
 	"slider_weapon_customized_chance_name" : "Prob. personalizzazione dell'arma",

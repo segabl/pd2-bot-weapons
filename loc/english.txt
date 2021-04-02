@@ -30,6 +30,8 @@
 	"toggle_use_lasers_desc" : "Team AI will use lasers (if available on their weapons) when not using flashlights",
 	"toggle_sync_settings_name" : "Synchronize with clients",
 	"toggle_sync_settings_desc" : "Sends non-vanilla bot options to other players so they can see the Team AI the same as you",
+	"toggle_chatter_name" : "Every day is April 1st",
+	"toggle_chatter_desc" : "Enables Bot chatting permanently",
 	"slider_mask_customized_chance_name" : "Mask customization chance",
 	"slider_mask_customized_chance_desc" : "Chance that a bot will have a customized mask when using random option",
 	"slider_weapon_customized_chance_name" : "Weapon customization chance",

@@ -30,6 +30,8 @@
 	"toggle_use_lasers_desc" : "Die Team KI benutzt die Laser (wenn auf ihren Waffen vorhanden) wenn keine Taschenlampe verwendet wird",
 	"toggle_sync_settings_name" : "Mit Clients synchronisieren",
 	"toggle_sync_settings_desc" : "Sendet nicht-Vanilla Bot Optionen an andere Spieler, damit sie die Team KI gleich wie du sehen",
+	"toggle_chatter_name" : "Jeder Tag ist der 1. April",
+	"toggle_chatter_desc" : "Aktiviert Bot Chat dauerhaft",
 	"slider_mask_customized_chance_name" : "Masken Individualisierungs-Wahrscheinlichkeit",
 	"slider_mask_customized_chance_desc" : "Wahrscheinlichkeit, dass ein Bot eine individualisierte Maske bei Auswahl der Zufall Option verwendet",
 	"slider_weapon_customized_chance_name" : "Waffen Individualisierungs-Wahrscheinlichkeit",

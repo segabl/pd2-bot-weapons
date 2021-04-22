@@ -319,16 +319,14 @@ if not BotWeapons then
 	end
 
 	function BotWeapons:get_loadout(char_name, original_loadout, refresh)
-		if not char_name then
+		if not char_name or not original_loadout then
 			return original_loadout
 		end
-		if not refresh and self._loadouts and self._loadouts[char_name] then
+		if not refresh and self._loadouts and self._loadouts[char_name] and self._loadouts[char_name].henchman_loadout == original_loadout then
 			return self._loadouts[char_name]
 		end
-		if not original_loadout then
-			return
-		end
 		local loadout = deep_clone(original_loadout)
+		loadout.henchman_loadout = original_loadout
 		if not Utils:IsInGameState() or Network:is_server() then
 
 			local char_loadout = self:get_char_loadout(char_name)

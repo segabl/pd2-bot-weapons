@@ -83,11 +83,14 @@ if not BotWeapons then
 	end
 
 	function BotWeapons:set_equipment(unit, equipment)
-		if not alive(unit) or not tweak_data.equipments[equipment] then
+		if not alive(unit) then
 			return
 		end
 		if unit:base()._equipment_id then
 			unit:get_object(Idstring(tweak_data.equipments[unit:base()._equipment_id].visual_object)):set_visibility(false)
+		end
+		if not tweak_data.equipments[equipment] then
+			return
 		end
 		local visual_object = tweak_data.equipments[equipment].visual_object
 		if visual_object then
@@ -463,7 +466,7 @@ if not BotWeapons then
 				end
 			end
 			-- check for invalid armor
-			if not tweak_data.blackmarket.armors[loadout.armor] then
+			if loadout.armor and not tweak_data.blackmarket.armors[loadout.armor] then
 				self:log("WARNING: Armor " .. tostring(loadout.armor) .. " does not exist, removed it from " .. char_name .. "!", loadout.armor)
 				loadout.armor = "level_1"
 			end

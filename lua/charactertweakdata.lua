@@ -18,7 +18,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		{ dmg_mul = rifle_dmg_mul * 0.8, r = 0, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
 		{ dmg_mul = rifle_dmg_mul * 0.2, r = 3000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } }
 	}
-	crew_presets.is_rifle.spread = 15
+	crew_presets.is_rifle.spread = 10
 	crew_presets.is_bullpup = crew_presets.is_rifle
 	crew_presets.rifle = crew_presets.is_rifle
 

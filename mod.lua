@@ -383,6 +383,7 @@ if not BotWeapons then
 				local crafted = managers.blackmarket:get_crafted_category_slot(loadout.primary_category or "primaries", loadout.primary_slot)
 				if crafted then
 					loadout.primary_blueprint = crafted.blueprint
+					loadout.primary_cosmetics = crafted.cosmetics
 				end
 			end
 			-- check for invalid weapon or weapon parts

@@ -59,6 +59,29 @@ function CrewManagementGui:init(ws, fullscreen_ws, node)
 	})
 	make_fine_text(loadout_text)
 
+	local back_button = self._panel:text({
+		name = "back_button",
+		text = managers.localization:text("menu_back"),
+		align = "right",
+		vertical = "bottom",
+		font_size = tweak_data.menu.pd2_large_font_size,
+		font = tweak_data.menu.pd2_large_font,
+		color = tweak_data.screen_colors.button_stage_3,
+		layer = 40,
+		blend_mode = "add"
+	})
+	make_fine_text(back_button)
+	back_button:set_right(self._panel:w())
+	back_button:set_bottom(self._panel:h())
+	back_button:set_visible(managers.menu:is_pc_controller())
+	local back = CrewManagementGuiButton:new(self, function()
+		managers.menu:back(true)
+	end, true)
+	back._panel = back_button
+	back._select_col = tweak_data.screen_colors.button_stage_2
+	back._normal_col = tweak_data.screen_colors.button_stage_3
+	back._selected_changed = CrewManagementGuiTextButton._selected_changed
+
 	local info_panel
 	if managers.menu:is_pc_controller() then
 		info_panel = self._panel:panel({
@@ -121,6 +144,9 @@ function CrewManagementGui:init(ws, fullscreen_ws, node)
 		info_panel:set_center_y(loadout_text:center_y())
 		info_panel:set_left(loadout_text:right())
 	end
+
+	self._item_h = (back_button:top() - 18 - self._1_panel:top()) / 7
+	self._image_max_h = math.min(self._item_h * 0.65, 96)
 
 	self:create_character_button(self._1_panel, 1)
 	self:create_character_button(self._2_panel, 2)
@@ -248,28 +274,6 @@ function CrewManagementGui:init(ws, fullscreen_ws, node)
 	local index_y = node:parameters().data.crew_gui_index_y or 1
 
 	self:select_index(index_x, index_y)
-	local back_button = self._panel:text({
-		name = "back_button",
-		text = managers.localization:text("menu_back"),
-		align = "right",
-		vertical = "bottom",
-		font_size = tweak_data.menu.pd2_large_font_size,
-		font = tweak_data.menu.pd2_large_font,
-		color = tweak_data.screen_colors.button_stage_3,
-		layer = 40,
-		blend_mode = "add"
-	})
-	make_fine_text(back_button)
-	back_button:set_right(self._panel:w())
-	back_button:set_bottom(self._panel:h())
-	back_button:set_visible(managers.menu:is_pc_controller())
-	local back = CrewManagementGuiButton:new(self, function()
-		managers.menu:back(true)
-	end, true)
-	back._panel = back_button
-	back._select_col = tweak_data.screen_colors.button_stage_2
-	back._normal_col = tweak_data.screen_colors.button_stage_3
-	back._selected_changed = CrewManagementGuiTextButton._selected_changed
 
 	CriminalsManager.MAX_NR_TEAM_AI = Global.game_settings.max_bots or CriminalsManager.MAX_NR_TEAM_AI
 end

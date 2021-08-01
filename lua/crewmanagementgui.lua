@@ -767,7 +767,7 @@ function CrewManagementGui:open_armor_category_menu(henchman_index)
 	})
 	table.insert(new_node_data, {
 		name = "bm_menu_gloves",
-		on_create_func = callback(self, self, "populate_gloves", henchman_index),
+		on_create_func = callback(self, self, "populate_gloves_bwe", henchman_index),
 		category = "gloves",
 		override_slots = override_slots,
 		identifier = BlackMarketGui.identifiers.custom
@@ -951,7 +951,7 @@ function CrewManagementGui:populate_suit_variations(henchman_index, data, gui)
 	end
 end
 
-function CrewManagementGui:populate_gloves(henchman_index, data, gui)
+function CrewManagementGui:populate_gloves_bwe(henchman_index, data, gui)
 	local loadout = managers.blackmarket:henchman_loadout(henchman_index)
 	if not self._gloves_data then
 		gui:populate_gloves(data)

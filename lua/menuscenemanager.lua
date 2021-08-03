@@ -49,7 +49,11 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
 	unit:base():set_character_name(character)
 
 	self:set_character_player_style(loadout.player_style, loadout.suit_variation, unit)
-	self:set_character_gloves(loadout.glove_id, unit)
+	if self.set_character_gloves_and_variation then
+		self:set_character_gloves_and_variation(loadout.glove_id, loadout.glove_variation, unit)
+	else
+		self:set_character_gloves(loadout.glove_id, unit)
+	end
 
 	-- mask
 	local mask = loadout.mask
@@ -101,6 +105,8 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
 	unit:set_position(pos)
 	unit:set_rotation(rot)
 	self:set_henchmen_visible(true, index)
+
+	Hooks:RemovePostHook("BeardLibSetHenchmanLoadoutGloveVars")
 end
 
 local poses = {

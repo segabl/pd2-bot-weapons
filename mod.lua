@@ -309,6 +309,13 @@ if not BotWeapons then
 		return table.random_key(tweak_data.blackmarket.gloves)
 	end
 
+	function BotWeapons:get_random_glove_variation(category, glove_id)
+		if not tweak_data.blackmarket:have_glove_variations(glove_id) then
+			return "default"
+		end
+		return table.random_key(tweak_data.blackmarket.gloves[glove_id].variations)
+	end
+
 	function BotWeapons:get_random_armor_skin(category)
 		return table.random_key(tweak_data.economy.armor_skins)
 	end
@@ -443,9 +450,12 @@ if not BotWeapons then
 				if not loadout.glove_id_random then
 					loadout.glove_id = char_loadout.glove_id
 					loadout.glove_id_random = char_loadout.glove_id_random
+					loadout.glove_variation = char_loadout.glove_variation
+					loadout.glove_variation_random = char_loadout.glove_variation_random
 				end
 				if loadout.glove_id_random then
 					loadout.glove_id = self:get_random_gloves(loadout.glove_id_random)
+					loadout.glove_variation_random = true
 				end
 			end
 			-- check for invalid gloves
@@ -453,6 +463,17 @@ if not BotWeapons then
 			if not tweak_data.blackmarket.gloves[loadout.glove_id] then
 				self:log("WARNING: Gloves " .. tostring(loadout.glove_id) .. " does not exist, removed it from " .. char_name .. "!")
 				loadout.glove_id = managers.blackmarket:get_default_glove_id()
+			end
+			if tweak_data.blackmarket.have_glove_variations then
+				loadout.glove_variation = loadout.glove_variation or "default"
+				if loadout.glove_variation_random then
+					loadout.glove_variation = self:get_random_glove_variation(loadout.glove_variation_random, loadout.glove_id)
+				elseif not tweak_data.blackmarket:have_glove_variations(loadout.glove_id) then
+					loadout.glove_variation = "default"
+				elseif not tweak_data.blackmarket.gloves[loadout.glove_id].variations or not tweak_data.blackmarket.gloves[loadout.glove_id].variations[loadout.glove_variation] then
+					self:log("WARNING: Glove variant " .. tostring(loadout.glove_variation) .. " does not exist, removed it from " .. char_name .. "!")
+					loadout.glove_variation = "default"
+				end
 			end
 
 			-- choose armor models
@@ -528,6 +549,8 @@ if not BotWeapons then
 			suit_variation_random = loadout.suit_variation_random or nil,
 			glove_id = not loadout.glove_id_random and loadout.glove_id or nil,
 			glove_id_random = loadout.glove_id_random or nil,
+			glove_variation = not loadout.glove_variation_random and loadout.glove_variation or nil,
+			glove_variation_random = loadout.glove_variation_random or nil,
 			deployable = not loadout.deployable_random and loadout.deployable or nil,
 			deployable_random = loadout.deployable_random or nil,
 			mask = not loadout.mask_random and loadout.mask or nil,

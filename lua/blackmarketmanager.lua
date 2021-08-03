@@ -51,6 +51,7 @@ function BlackMarketManager:henchman_loadout(...)
 		loadout.player_style = tweak_data.blackmarket.player_styles[loadout.player_style] and loadout.player_style
 		loadout.suit_variation = loadout.player_style and tweak_data.blackmarket.player_styles[loadout.player_style].material_variations and tweak_data.blackmarket.player_styles[loadout.player_style].material_variations[loadout.suit_variation] and loadout.suit_variation
 		loadout.glove_id = tweak_data.blackmarket.gloves[loadout.glove_id] and loadout.glove_id
+		loadout.glove_variation = loadout.glove_id and tweak_data.blackmarket.gloves[loadout.glove_id].variations and tweak_data.blackmarket.gloves[loadout.glove_id].variations[loadout.glove_variation] and loadout.glove_variation
 		loadout.deployable = tweak_data.upgrades.definitions[loadout.deployable] and loadout.deployable
 	end
 	return loadout

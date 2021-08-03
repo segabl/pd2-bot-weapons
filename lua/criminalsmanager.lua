@@ -15,6 +15,7 @@ function CriminalsManager:update_character_visual_state(character_name, visual_s
 		local loadout = self:get_loadout_for(character_name)
 
 		visual_state = visual_state or {}
+		visual_state.glove_variation = visual_state.glove_variation or loadout.glove_variation
 		if BotWeapons:should_use_armor(loadout) then
 			visual_state.armor_id = loadout.armor
 			visual_state.armor_skin = loadout.armor_skin

@@ -692,7 +692,7 @@ function CrewManagementGui:populate_deployables(henchman_index, data, gui)
 
 	for i, v in ipairs(data) do
 		v.slot = i
-		v.equipped = i == 1 and not loadout.deployable and not loadout.deployable_random or i == 2 and loadout.deployable_random or i > 2 and loadout.deployable == v.name
+		v.equipped = i == 1 and not loadout.deployable and not loadout.deployable_random or i == 2 and loadout.deployable_random or i > 2 and not loadout.deployable_random and loadout.deployable == v.name
 		v.equipped_text = v.equipped and managers.localization:text("bm_menu_chosen") or ""
 		v.unlocked = true
 		v.lock_texture = nil
@@ -869,7 +869,7 @@ function CrewManagementGui:populate_armors(henchman_index, data, gui)
 
 	for i, v in ipairs(data) do
 		v.slot = i
-		v.equipped = i == 1 and not loadout.armor and not loadout.armor_random or i == 2 and loadout.armor_random or i > 2 and loadout.armor == v.name
+		v.equipped = i == 1 and not loadout.armor and not loadout.armor_random or i == 2 and loadout.armor_random or i > 2 and not loadout.armor_random and loadout.armor == v.name
 		v.equipped_text = v.equipped and managers.localization:text("bm_menu_chosen") or ""
 		v.unlocked = true
 		v.lock_texture = nil
@@ -912,7 +912,7 @@ function CrewManagementGui:populate_player_styles(henchman_index, data, gui)
 
 	for i, v in ipairs(data) do
 		v.slot = i
-		v.equipped = i == 1 and not loadout.player_style and not loadout.player_style_random or i == 2 and loadout.player_style_random or i > 2 and loadout.player_style == v.name
+		v.equipped = i == 1 and not loadout.player_style and not loadout.player_style_random or i == 2 and loadout.player_style_random or i > 2 and not loadout.player_style_random and loadout.player_style == v.name
 		v.equipped_text = v.equipped and managers.localization:text("bm_menu_chosen") or ""
 		v.comparision_data = nil
 		v.buttons = { v.unlocked and (v.equipped and tweak_data.blackmarket:have_suit_variations(v.name) and "trd_customize" or not v.empty_slot and not v.equipped and "trd_equip") }
@@ -944,7 +944,7 @@ function CrewManagementGui:populate_suit_variations(henchman_index, data, gui)
 
 	for i, v in ipairs(data) do
 		v.slot = i
-		v.equipped = i == 1 and not loadout.suit_variation and not loadout.suit_variation_random or i == 2 and loadout.suit_variation_random or i > 2 and loadout.suit_variation == v.name
+		v.equipped = i == 1 and not loadout.suit_variation and not loadout.suit_variation_random or i == 2 and loadout.suit_variation_random or i > 2 and not loadout.suit_variation_random and loadout.suit_variation == v.name
 		v.equipped_text = v.equipped and managers.localization:text("bm_menu_chosen") or ""
 		v.unlocked = true
 		v.lock_texture = nil
@@ -992,7 +992,7 @@ function CrewManagementGui:populate_gloves_bwe(henchman_index, data, gui)
 
 	for i, v in ipairs(data) do
 		v.slot = i
-		v.equipped = i == 1 and not loadout.glove_id and not loadout.glove_id_random or i == 2 and loadout.glove_id_random or i > 2 and loadout.glove_id == v.name
+		v.equipped = i == 1 and not loadout.glove_id and not loadout.glove_id_random or i == 2 and loadout.glove_id_random or i > 2 and not loadout.glove_id_random and loadout.glove_id == v.name
 		v.equipped_text = v.equipped and managers.localization:text("bm_menu_chosen") or ""
 		v.comparision_data = nil
 		v.buttons = { v.unlocked and not v.empty_slot and not v.equipped and "hnd_equip" }
@@ -1037,7 +1037,7 @@ if BEARDLIB_GLOVEVARS_INSTALLED then
 		new_node_data.hide_detection_panel = true
 		new_node_data.prev_node_data = data
 		new_node_data.custom_callback = {
-			hnd_mod_equip = callback(self, self, "select_glove_variation", henchman_index)
+			hnd_mod_equip = callback(self, self, "select_glove_variation_bwe", henchman_index)
 		}
 
 		self._prev_node_data = data
@@ -1047,29 +1047,33 @@ if BEARDLIB_GLOVEVARS_INSTALLED then
 	function CrewManagementGui:populate_glove_variations_bwe(henchman_index, data, gui)
 		local loadout = managers.blackmarket:henchman_loadout(henchman_index)
 
-		gui:populate_glove_variations(data)
+		if not self._glove_variation_data then
+			gui:populate_glove_variations(data)
 
-		-- table.insert(data, 1, {
-		-- 	category = data.category,
-		-- 	button_text = managers.localization:to_upper_text("item_random"),
-		-- 	bitmap_texture = "guis/textures/empty",
-		-- 	name = "default",
-		-- 	name_localized = managers.localization:text("item_random_variation"),
-		-- 	random = true
-		-- })
-		-- table.insert(data, 1, {
-		-- 	category = data.category,
-		-- 	button_text = managers.localization:to_upper_text("menu_crew_character"),
-		-- 	bitmap_texture = "guis/textures/empty",
-		-- 	name = "default",
-		-- 	name_localized = managers.localization:text("item_default_variation"),
-		-- 	default = true
-		-- })
-		-- pad_data(data, data.override_slots[2])
+			table.insert(data, 1, {
+				category = data.category,
+				button_text = managers.localization:to_upper_text("item_random"),
+				bitmap_texture = "guis/textures/empty",
+				name = "default",
+				name_localized = managers.localization:text("item_random_variation"),
+				random = true
+			})
+			table.insert(data, 1, {
+				category = data.category,
+				button_text = managers.localization:to_upper_text("menu_crew_character"),
+				bitmap_texture = "guis/textures/empty",
+				name = "default",
+				name_localized = managers.localization:text("item_default_variation"),
+				default = true
+			})
+			pad_data(data, data.override_slots[2])
+
+			self._glove_variation_data = true
+		end
 
 		for i, v in ipairs(data) do
 			v.slot = i
-			v.equipped = loadout.glove_variation == v.name --i == 1 and not loadout.glove_variation and not loadout.glove_variation_random or i == 2 and loadout.glove_variation_random or i > 2 and loadout.glove_variation == v.name
+			v.equipped = i == 1 and not loadout.glove_variation and not loadout.glove_variation_random or i == 2 and loadout.glove_variation_random or i > 2 and not loadout.glove_variation_random and loadout.glove_variation == v.name
 			v.equipped_text = v.equipped and managers.localization:text("bm_menu_chosen") or ""
 			v.unlocked = true
 			v.lock_texture = nil
@@ -1164,6 +1168,18 @@ function CrewManagementGui:select_glove(henchman_index, data, gui)
 	return gui and gui:reload()
 end
 
+function CrewManagementGui:select_glove_variation_bwe(index, data, gui)
+	local loadout = managers.blackmarket:henchman_loadout(index)
+	if not data or data.default or data.random then
+		loadout.glove_variation = nil
+		loadout.glove_variation_random = data and data.random
+	else
+		loadout.glove_variation = data.name
+		loadout.glove_variation_random = nil
+	end
+	return gui and gui:reload()
+end
+
 function CrewManagementGui:open_armor_skins_menu(henchman_index)
 	local new_node_data = {}
 
@@ -1215,7 +1231,7 @@ function CrewManagementGui:populate_armor_skins(henchman_index, data, gui)
 
 	for i, v in ipairs(data) do
 		v.slot = i
-		v.equipped = i == 1 and not loadout.armor_skin and not loadout.armor_skin_random or i == 2 and loadout.armor_skin_random == true or i > 2 and loadout.armor_skin == v.name
+		v.equipped = i == 1 and not loadout.armor_skin and not loadout.armor_skin_random or i == 2 and loadout.armor_skin_random == true or i > 2 and not loadout.armor_skin_random and loadout.armor_skin == v.name
 		v.equipped_text = v.equipped and managers.localization:text("bm_menu_chosen") or ""
 		v.comparision_data = nil
 		if not v.equipped and v.cosmetic_unlocked then
@@ -1253,6 +1269,10 @@ function CrewManagementGui:show_character_specific_settings()
 					self:select_deployable(i, nil)
 					self:select_mask(i, nil)
 					self:select_weapon(i, nil)
+					self:select_player_style(i, nil)
+					self:select_suit_variation(i, nil)
+					self:select_glove(i, nil)
+					self:select_glove_variation_bwe(i, nil)
 				end
 				BotWeapons:save()
 				self:reload()

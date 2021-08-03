@@ -1,3 +1,5 @@
+local BEARDLIB_GLOVEVARS_INSTALLED = MenuSceneManager.preview_gloves_and_variation and true or false
+
 -- lots of stuff to copy from the original file since OVK made it local
 local large_font = tweak_data.menu.pd2_large_font
 local medium_font = tweak_data.menu.pd2_medium_font
@@ -795,6 +797,10 @@ function CrewManagementGui:open_armor_category_menu(henchman_index)
 		hnd_equip = callback(self, self, "select_glove", henchman_index)
 	}
 
+	if BEARDLIB_GLOVEVARS_INSTALLED then
+		new_node_data.custom_callback.hnd_customize = callback(self, self, "open_glove_customize_menu_bwe", henchman_index)
+	end
+
 	managers.menu_scene:remove_item()
 	managers.menu:open_node("blackmarket_node", { new_node_data })
 end
@@ -909,7 +915,7 @@ function CrewManagementGui:populate_player_styles(henchman_index, data, gui)
 		v.equipped = i == 1 and not loadout.player_style and not loadout.player_style_random or i == 2 and loadout.player_style_random or i > 2 and loadout.player_style == v.name
 		v.equipped_text = v.equipped and managers.localization:text("bm_menu_chosen") or ""
 		v.comparision_data = nil
-		v.buttons = { v.unlocked and (tweak_data.blackmarket:have_suit_variations(v.name) and "trd_customize" or not v.empty_slot and not v.equipped and "trd_equip") }
+		v.buttons = { v.unlocked and (v.equipped and tweak_data.blackmarket:have_suit_variations(v.name) and "trd_customize" or not v.empty_slot and not v.equipped and "trd_equip") }
 	end
 end
 
@@ -953,7 +959,12 @@ end
 
 function CrewManagementGui:populate_gloves_bwe(henchman_index, data, gui)
 	local loadout = managers.blackmarket:henchman_loadout(henchman_index)
-	if not self._gloves_data then
+	-- For the beardlib variant icon stuff to work we have to reload every time even if it might not be super efficient.
+	if BEARDLIB_GLOVEVARS_INSTALLED or not self._gloves_data then
+		if BEARDLIB_GLOVEVARS_INSTALLED then
+			data.henchman_index = henchman_index
+		end
+
 		gui:populate_gloves(data)
 
 		table.insert(data, 1, {
@@ -985,6 +996,90 @@ function CrewManagementGui:populate_gloves_bwe(henchman_index, data, gui)
 		v.equipped_text = v.equipped and managers.localization:text("bm_menu_chosen") or ""
 		v.comparision_data = nil
 		v.buttons = { v.unlocked and not v.empty_slot and not v.equipped and "hnd_equip" }
+
+		if BEARDLIB_GLOVEVARS_INSTALLED and v.equipped then
+			if tweak_data.blackmarket:have_glove_variations(v.name) then
+				table.insert(v.buttons, "hnd_customize")
+			end
+		end
+	end
+end
+
+if BEARDLIB_GLOVEVARS_INSTALLED then
+	function CrewManagementGui:open_glove_customize_menu_bwe(henchman_index, data)
+		local new_node_data = {}
+
+		table.insert(new_node_data, {
+			name = "bm_menu_glove_variations",
+			on_create_func = callback(self, self, "populate_glove_variations_bwe", henchman_index),
+			category = "glove_variations",
+			override_slots = { 3, 3 },
+			identifier = BlackMarketGui.identifiers.custom,
+			prev_node_data = data
+		})
+
+		function new_node_data.custom_update_text_info(data, updated_texts, gui)
+			local glove_id = gui._data.prev_node_data.name
+			local glove_tweak = tweak_data.blackmarket.gloves[glove_id]
+			local glove_variation = data.name
+			local glove_variation_tweak = glove_tweak.variations[glove_variation]
+			updated_texts[1].text = data.name_localized
+			if not data.unlocked then
+				updated_texts[2].text = "##" .. managers.localization:to_upper_text("bm_menu_item_locked") .. "##"
+				updated_texts[2].resource_color = tweak_data.screen_colors.important_1
+				updated_texts[3].text = data.dlc_locked and managers.localization:to_upper_text(data.dlc_locked) or managers.localization:to_upper_text("bm_menu_dlc_locked")
+			end
+			updated_texts[4].text = (data.random or data.default) and "" or managers.localization:text(glove_variation_tweak and glove_variation_tweak.desc_id or "menu_default")
+		end
+
+		new_node_data.topic_id = "bm_menu_glove_variations"
+		new_node_data.skip_blur = true
+		new_node_data.hide_detection_panel = true
+		new_node_data.prev_node_data = data
+		new_node_data.custom_callback = {
+			hnd_mod_equip = callback(self, self, "select_glove_variation", henchman_index)
+		}
+
+		self._prev_node_data = data
+		managers.menu:open_node("blackmarket_node", { new_node_data })
+	end
+
+	function CrewManagementGui:populate_glove_variations_bwe(henchman_index, data, gui)
+		local loadout = managers.blackmarket:henchman_loadout(henchman_index)
+
+		gui:populate_glove_variations(data)
+
+		-- table.insert(data, 1, {
+		-- 	category = data.category,
+		-- 	button_text = managers.localization:to_upper_text("item_random"),
+		-- 	bitmap_texture = "guis/textures/empty",
+		-- 	name = "default",
+		-- 	name_localized = managers.localization:text("item_random_variation"),
+		-- 	random = true
+		-- })
+		-- table.insert(data, 1, {
+		-- 	category = data.category,
+		-- 	button_text = managers.localization:to_upper_text("menu_crew_character"),
+		-- 	bitmap_texture = "guis/textures/empty",
+		-- 	name = "default",
+		-- 	name_localized = managers.localization:text("item_default_variation"),
+		-- 	default = true
+		-- })
+		-- pad_data(data, data.override_slots[2])
+
+		for i, v in ipairs(data) do
+			v.slot = i
+			v.equipped = loadout.glove_variation == v.name --i == 1 and not loadout.glove_variation and not loadout.glove_variation_random or i == 2 and loadout.glove_variation_random or i > 2 and loadout.glove_variation == v.name
+			v.equipped_text = v.equipped and managers.localization:text("bm_menu_chosen") or ""
+			v.unlocked = true
+			v.lock_texture = nil
+			v.lock_text = nil
+			v.comparision_data = nil
+			v.buttons = {}
+			if not v.empty_slot and not v.equipped then
+				table.insert(v.buttons, 1, "hnd_mod_equip")
+			end
+		end
 	end
 end
 

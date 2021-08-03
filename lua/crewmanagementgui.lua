@@ -1011,7 +1011,7 @@ if BEARDLIB_GLOVEVARS_INSTALLED then
 
 		table.insert(new_node_data, {
 			name = "bm_menu_glove_variations",
-			on_create_func = callback(self, self, "populate_glove_variations", henchman_index),
+			on_create_func = callback(self, self, "populate_glove_variations_bwe", henchman_index),
 			category = "glove_variations",
 			override_slots = { 3, 3 },
 			identifier = BlackMarketGui.identifiers.custom,
@@ -1042,6 +1042,44 @@ if BEARDLIB_GLOVEVARS_INSTALLED then
 
 		self._prev_node_data = data
 		managers.menu:open_node("blackmarket_node", { new_node_data })
+	end
+
+	function CrewManagementGui:populate_glove_variations_bwe(henchman_index, data, gui)
+		local loadout = managers.blackmarket:henchman_loadout(henchman_index)
+
+		gui:populate_glove_variations(data)
+
+		-- table.insert(data, 1, {
+		-- 	category = data.category,
+		-- 	button_text = managers.localization:to_upper_text("item_random"),
+		-- 	bitmap_texture = "guis/textures/empty",
+		-- 	name = "default",
+		-- 	name_localized = managers.localization:text("item_random_variation"),
+		-- 	random = true
+		-- })
+		-- table.insert(data, 1, {
+		-- 	category = data.category,
+		-- 	button_text = managers.localization:to_upper_text("menu_crew_character"),
+		-- 	bitmap_texture = "guis/textures/empty",
+		-- 	name = "default",
+		-- 	name_localized = managers.localization:text("item_default_variation"),
+		-- 	default = true
+		-- })
+		-- pad_data(data, data.override_slots[2])
+
+		for i, v in ipairs(data) do
+			v.slot = i
+			v.equipped = loadout.glove_variation == v.name --i == 1 and not loadout.glove_variation and not loadout.glove_variation_random or i == 2 and loadout.glove_variation_random or i > 2 and loadout.glove_variation == v.name
+			v.equipped_text = v.equipped and managers.localization:text("bm_menu_chosen") or ""
+			v.unlocked = true
+			v.lock_texture = nil
+			v.lock_text = nil
+			v.comparision_data = nil
+			v.buttons = {}
+			if not v.empty_slot and not v.equipped then
+				table.insert(v.buttons, 1, "hnd_mod_equip")
+			end
+		end
 	end
 end
 

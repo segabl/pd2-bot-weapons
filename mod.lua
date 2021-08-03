@@ -482,7 +482,7 @@ if not BotWeapons then
 				end
 			end
 			-- check for invalid armor skin
-			if not tweak_data.economy.armor_skins[loadout.armor_skin] then
+			if loadout.armor_skin and not tweak_data.economy.armor_skins[loadout.armor_skin] then
 				self:log("WARNING: Armor Skin " .. tostring(loadout.armor_skin) .. " does not exist, removed it from " .. char_name .. "!", loadout.armor_skin)
 				loadout.armor_skin = "none"
 			end

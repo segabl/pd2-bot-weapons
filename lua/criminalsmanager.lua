@@ -47,7 +47,7 @@ function CriminalsManager:get_free_character_name()
 	end
 
 	if #available > 0 then
-		math.randomseed(os.time() % #available, os.clock())
+		math.randomseed(os.clock() * 1000 * #available)
 		math.random()
 		math.random()
 		math.random()

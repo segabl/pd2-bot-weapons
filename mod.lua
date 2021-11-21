@@ -661,7 +661,7 @@ if not BotWeapons then
 	Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function (sender, id, data)
 		if id == "bot_weapons_sync" then
 			data = json.decode(data)
-			local unit = data and managers.criminals:character_unit_by_name(data.name)
+			local unit = data and managers.criminals and managers.criminals:character_unit_by_name(data.name)
 			if alive(unit) then
 				BotWeapons:set_armor(unit, data.armor, data.skin)
 				BotWeapons:set_equipment(unit, data.equip)

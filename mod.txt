@@ -20,6 +20,7 @@
 		{ "hook_id" : "lib/managers/menu/menuscenemanager", "script_path" : "mod.lua" },
 		{ "hook_id" : "lib/tweak_data/charactertweakdata", "script_path" : "mod.lua" },
 		{ "hook_id" : "lib/tweak_data/weapontweakdata", "script_path" : "mod.lua" },
+		{ "hook_id" : "lib/units/enemies/cop/actions/full_body/copactionact", "script_path" : "mod.lua" },
 		{ "hook_id" : "lib/units/enemies/cop/actions/upper_body/copactionshoot", "script_path" : "mod.lua" },
 		{ "hook_id" : "lib/units/enemies/cop/copinventory", "script_path" : "mod.lua" },
 		{ "hook_id" : "lib/units/player_team/logics/teamailogictravel", "script_path" : "mod.lua" },

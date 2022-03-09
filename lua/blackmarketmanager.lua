@@ -1,5 +1,6 @@
 local menu_allows = {
-	minigun = true
+	minigun = true,
+	flamethrower = true
 }
 function BlackMarketManager:is_weapon_category_allowed_for_crew(weapon_category)
 	return table.contains(BotWeapons.weapon_categories, weapon_category) or menu_allows[weapon_category]

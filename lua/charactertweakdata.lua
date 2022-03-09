@@ -61,6 +61,13 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	}
 	crew_presets.is_shotgun_mag.spread = 15
 
+	-- flamethrower preset
+	crew_presets.is_flamethrower.FALLOFF = {
+		{ dmg_mul = rifle_dmg_mul * 1.0, r = 0, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
+		{ dmg_mul = rifle_dmg_mul * 0.0, r = 2000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
+	}
+	crew_presets.is_flamethrower.spread = 15
+
 	tweak_data.weapon:setup_crew_weapons(crew_presets)
 
 	return presets

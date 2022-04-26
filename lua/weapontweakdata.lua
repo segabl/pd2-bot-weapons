@@ -53,10 +53,11 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
 		local fire_mode = player_weapon.FIRE_MODE or "single"
 		local is_automatic = fire_mode == "auto"
 		local fire_rate = player_weapon.fire_mode_data and player_weapon.fire_mode_data.fire_rate or player_weapon[fire_mode] and player_weapon[fire_mode].fire_rate or 1
+		local reload_speed = (self.stats.reload[player_weapon.stats.reload] or 1) * 1.5
 		if not crew_weapon.old_usage then
 			crew_weapon[fire_mode] = { fire_rate = fire_rate }
 			crew_weapon.CLIP_AMMO_MAX = player_weapon.CLIP_AMMO_MAX
-			crew_weapon.reload_time = (player_weapon.timers.reload_empty or player_weapon.CLIP_AMMO_MAX * (player_weapon.timers.shotgun_reload_shell or 0.5)) * 0.75
+			crew_weapon.reload_time = (player_weapon.timers.reload_empty or player_weapon.CLIP_AMMO_MAX * (player_weapon.timers.shotgun_reload_shell or 0.5)) / reload_speed
 			crew_weapon.is_shotgun = table.contains(player_weapon.categories, "shotgun")
 			if is_automatic then
 				if crew_weapon.is_shotgun then

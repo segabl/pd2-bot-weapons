@@ -1,3 +1,7 @@
+if StreamHeist then
+	return -- Don't need these fixes with Streamlined Heisting
+end
+
 Hooks:PostHook(TeamAIInventory, "save", "save_bot_weapons", function (self, data)
 	-- change the sync index to m4 in case the weapon is akimbo to prevent client crashes
 	local wbase = alive(self:equipped_unit()) and self:equipped_unit():base()

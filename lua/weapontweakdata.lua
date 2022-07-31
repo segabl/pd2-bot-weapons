@@ -79,8 +79,8 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
 				end
 			end
 			-- fix anim_usage
+			crew_weapon.reload = crew_weapon.reload or (crew_weapon.anim_usage or crew_weapon.usage) == "is_shotgun_pump" and "looped" or nil
 			crew_weapon.anim_usage = anim_usage_redirects[crew_weapon.anim_usage or crew_weapon.usage] or crew_weapon.anim_usage or crew_weapon.usage
-			crew_weapon.reload = crew_weapon.reload or crew_weapon.usage == "is_shotgun_pump" and "looped" or nil
 			-- save original usage
 			crew_weapon.old_usage = crew_weapon.usage
 		end

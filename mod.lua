@@ -181,6 +181,8 @@ if not BotWeapons then
 		end)
 	end
 
+	local sun_color_key = Idstring("others/sun_ray_color"):key()
+	local sun_color_scale_key = Idstring("others/sun_ray_color_scale"):key()
 	local ambient_color_key = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/ambient_color"):key()
 	local ambient_color_scale_key = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/ambient_color_scale"):key()
 	function BotWeapons:should_use_flashlight(position)
@@ -192,8 +194,9 @@ if not BotWeapons then
 			return false
 		end
 		local data = managers.viewport._env_manager:_get_data(environment)
-		local ambient_col = data[ambient_color_key]
-		return (ambient_col.x + ambient_col.y + ambient_col.z) * data[ambient_color_scale_key] < 0.25
+		local sun_col = data[sun_color_key] * math.min(data[sun_color_scale_key] * 0.5, 5)
+		local ambient_col = data[ambient_color_key] * data[ambient_color_scale_key]
+		return sun_col.x + sun_col.y + sun_col.z + ambient_col.x + ambient_col.y + ambient_col.z < 1
 	end
 
 	function BotWeapons:should_use_laser()

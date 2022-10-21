@@ -60,7 +60,9 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
 			crew_weapon.reload_time = (player_weapon.timers.reload_empty or player_weapon.CLIP_AMMO_MAX * (player_weapon.timers.shotgun_reload_shell or 0.5)) / reload_speed
 			crew_weapon.is_shotgun = table.contains(player_weapon.categories, "shotgun")
 			if is_automatic then
-				if crew_weapon.is_shotgun then
+				if table.contains(player_weapon.categories, "flamethrower") then
+					set_usage(crew_weapon_name, crew_weapon, "is_flamethrower")
+				elseif crew_weapon.is_shotgun then
 					set_usage(crew_weapon_name, crew_weapon, "is_shotgun_mag")
 				elseif crew_weapon.usage == "is_pistol" or crew_weapon.usage == "akimbo_pistol" then
 					set_usage(crew_weapon_name, crew_weapon, "is_smg")

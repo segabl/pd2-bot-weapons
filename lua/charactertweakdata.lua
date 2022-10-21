@@ -65,7 +65,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	crew_presets.is_flamethrower = deep_clone(crew_presets.is_lmg)
 	crew_presets.is_flamethrower.range = { optimal = 900, far = 1800, close = 450 }
 	crew_presets.is_flamethrower.FALLOFF = {
-		{ dmg_mul = rifle_dmg_mul * 1.0, r = 0, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
+		{ dmg_mul = rifle_dmg_mul * 2, r = 0, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
 		{ dmg_mul = rifle_dmg_mul * 0.0, r = 2000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
 	}
 	crew_presets.is_flamethrower.spread = 15

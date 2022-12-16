@@ -48,6 +48,11 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
 
 	unit:base():set_character_name(character)
 
+	-- armor
+	self:set_character_armor(loadout.armor, unit)
+	self:set_character_armor_skin(loadout.armor_skin, unit)
+
+	-- outfit
 	self:set_character_player_style(loadout.player_style, loadout.suit_variation, unit)
 	if self.set_character_gloves_and_variation then
 		self:set_character_gloves_and_variation(loadout.glove_id, loadout.glove_variation, unit)
@@ -90,14 +95,8 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
 		self:set_character_equipped_weapon(unit, primary, primary_blueprint, "secondary", primary_cosmetics)
 	end
 
-	-- armor
-	if BotWeapons:should_use_armor(loadout) then
-		BotWeapons:set_armor(unit, loadout.armor)
-		self:set_character_armor_skin(loadout.armor_skin, unit)
-	end
-
 	-- equipment
-	BotWeapons:set_equipment(unit, loadout.deployable)
+	unit:base():set_deployable(loadout.deployable)
 
 	-- pose
 	self:_select_henchmen_pose(unit, weapon_id, index)

@@ -11,22 +11,19 @@ end
 local update_character_visual_state_original = CriminalsManager.update_character_visual_state
 function CriminalsManager:update_character_visual_state(character_name, visual_state, ...)
 	local character = self:character_by_name(character_name)
-	if character and character.taken and character.data.ai and alive(character.unit) then
+	if Network:is_server() and character and character.taken and character.data.ai and alive(character.unit) then
 		local loadout = self:get_loadout_for(character_name)
-
 		visual_state = visual_state or {}
 		visual_state.glove_variation = visual_state.glove_variation or loadout.glove_variation
-		if BotWeapons:should_use_armor(loadout) then
-			visual_state.armor_id = loadout.armor
-			visual_state.armor_skin = loadout.armor_skin
-			BotWeapons:set_armor(character.unit, loadout.armor, loadout.armor_skin)
-		end
-		BotWeapons:set_equipment(character.unit, loadout.deployable)
+		visual_state.deployable_id = loadout.deployable
+		visual_state.armor_id = loadout.armor
+		visual_state.armor_skin = loadout.armor_skin
 
-		if Network:is_server() and BotWeapons:should_sync_settings() then
+		if BotWeapons:should_sync_settings() then
 			BotWeapons:sync_to_all_peers(character.unit, 1)
 		end
 	end
+
 	return update_character_visual_state_original(self, character_name, visual_state, ...)
 end
 

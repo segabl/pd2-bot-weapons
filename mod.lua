@@ -52,53 +52,6 @@ if not BotWeapons then
 		return tweak_data.weapon.judge.categories[1] == "revolver"
 	end
 
-	function BotWeapons:should_use_armor(loadout)
-		if not loadout or not loadout.player_style or loadout.player_style == managers.blackmarket:get_default_player_style() then
-			local level_id = Utils:IsInGameState() and managers.job and managers.job:current_level_id()
-			return not (tweak_data.levels[level_id] and tweak_data.levels[level_id].player_style)
-		end
-		return false
-	end
-
-	function BotWeapons:set_armor(unit, armor, armor_skin)
-		if not alive(unit) or not tweak_data.blackmarket.armors[armor] then
-			return
-		end
-		unit:damage():run_sequence_simple(tweak_data.blackmarket.armors[armor].sequence)
-		unit:base()._armor_id = armor
-		if unit:base().set_armor_id then
-			unit:base():set_armor_id(armor)
-		end
-		if armor ~= "level_1" and tweak_data.economy.armor_skins[armor_skin] then
-			local armor_skin_ext = unit:base()._armor_skin_ext or ArmorSkinExt:new(unit)
-			armor_skin_ext:set_character(unit:base()._tweak_table)
-			armor_skin_ext:set_armor_id(unit:base()._armor_id)
-			armor_skin_ext:set_cosmetics_data(armor_skin)
-			armor_skin_ext:_apply_cosmetics()
-			if unit:base().on_material_applied then
-				unit:base():on_material_applied()
-			end
-			unit:base()._armor_skin_ext = armor_skin_ext
-		end
-	end
-
-	function BotWeapons:set_equipment(unit, equipment)
-		if not alive(unit) then
-			return
-		end
-		if unit:base()._equipment_id then
-			unit:get_object(Idstring(tweak_data.equipments[unit:base()._equipment_id].visual_object)):set_visibility(false)
-		end
-		if not tweak_data.equipments[equipment] then
-			return
-		end
-		local visual_object = tweak_data.equipments[equipment].visual_object
-		if visual_object then
-			unit:get_object(Idstring(visual_object)):set_visibility(true)
-			unit:base()._equipment_id = equipment
-		end
-	end
-
 	function BotWeapons:check_setup_gadget_colors(unit, weapon_base)
 		if weapon_base._setup_team_ai_colors then
 			return
@@ -137,7 +90,7 @@ if not BotWeapons then
 	end
 
 	function BotWeapons:should_sync_settings()
-		return self.settings.sync_settings and not Global.game_settings.single_player and Network:is_server()
+		return Network:is_server() and self.settings.sync_settings and not Global.game_settings.single_player
 	end
 
 	function BotWeapons:check_set_gadget_state(unit, weapon_base)
@@ -164,11 +117,12 @@ if not BotWeapons then
 	end
 
 	function BotWeapons:get_sync_data(unit)
+		local character = managers.criminals:character_by_unit(unit)
 		return {
-			name = managers.criminals:character_name_by_unit(unit),
-			equip = unit:base()._equipment_id or nil,
-			armor = unit:base()._armor_id or nil,
-			skin = unit:base()._armor_skin_ext and unit:base()._armor_skin_ext:get_cosmetics_id() or nil
+			name = character.name,
+			equip = character.visual_state and character.visual_state.deployable_id,
+			armor = character.visual_state and character.visual_state.armor_id,
+			skin = character.visual_state and character.visual_state.armor_skin
 		}
 	end
 
@@ -662,23 +616,35 @@ if not BotWeapons then
 	BotWeapons:init()
 
 	Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function (sender, id, data)
-		if id == "bot_weapons_sync" then
-			data = json.decode(data)
-			local unit = data and managers.criminals and managers.criminals:character_unit_by_name(data.name)
-			if alive(unit) then
-				BotWeapons:set_armor(unit, data.armor, data.skin)
-				BotWeapons:set_equipment(unit, data.equip)
-			end
+		if id ~= "bot_weapons_sync" then
+			return
 		end
+
+		data = json.decode(data)
+
+		local character = managers.criminals:character_by_name(data and data.name)
+		local visual_state = character and alive(character.unit) and character.visual_state
+		if not visual_state then
+			return
+		end
+
+		visual_state.armor_id = tweak_data.blackmarket.armors[data.armor] and data.armor or visual_state.armor_id
+		visual_state.armor_skin = tweak_data.economy.armor_skins[data.skin] and data.skin or visual_state.armor_skin
+		visual_state.deployable_id = tweak_data.upgrades.definitions[data.equip] and data.equip or visual_state.deployable_id
+
+		managers.criminals:update_character_visual_state(data.name, visual_state)
 	end)
 
 end
 
-if RequiredScript then
+local required = {}
+if RequiredScript and not required[RequiredScript] then
 
 	local fname = BotWeapons.mod_path .. RequiredScript:gsub(".+/(.+)", "lua/%1.lua")
 	if io.file_is_readable(fname) then
 		dofile(fname)
 	end
+
+	required[RequiredScript] = true
 
 end

@@ -5,12 +5,12 @@ Hooks:PostHook(TeamAIBase, "init", "init_bot_weapons", function (self)
 	end
 
 	getmetatable(self._unit).armor_skin = function (unit)
-		if not unit:base()._armor_skin_ext then
+		if unit:base() and not unit:base()._armor_skin_ext then
 			unit:base()._armor_skin_ext = ArmorSkinExt:new(unit)
 			unit:base()._armor_skin_ext:set_character(unit:base()._tweak_table)
 			unit:set_extension_update_enabled(Idstring("base"), true)
 		end
-		return unit:base()._armor_skin_ext
+		return unit:base() and unit:base()._armor_skin_ext
 	end
 end)
 

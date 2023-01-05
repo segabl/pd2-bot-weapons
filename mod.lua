@@ -45,11 +45,40 @@ if not BotWeapons then
 
 		-- load settings
 		self:load()
+
+		self:patch_armor_skin_ext()
 	end
 
 	function BotWeapons:is_mwc_installed()
 		-- check if "more weapon categories" is used
 		return tweak_data.weapon.judge.categories[1] == "revolver"
+	end
+
+	function BotWeapons:patch_armor_skin_ext()
+		if not Unit then
+			return
+		end
+
+		-- to add armor skin extensions to bots, the easiest solution is to patch the armor_skin function
+		local armor_skin = Unit.armor_skin
+		Unit.armor_skin = function (unit, ...)
+			local base = unit.base and unit:base()
+			local base_meta = base and getmetatable(base)
+			if not base_meta or base_meta ~= TeamAIBase and base_meta ~= HuskTeamAIBase then
+				return armor_skin(unit, ...)
+			end
+
+			if not base._armor_skin_ext then
+				base._armor_skin_ext = ArmorSkinExt:new(unit)
+				base._armor_skin_ext:set_character(base._tweak_table)
+				base.update = function (b, ...)
+					b._armor_skin_ext:update(...)
+				end
+				unit:set_extension_update_enabled(Idstring("base"), true)
+			end
+
+			return base._armor_skin_ext
+		end
 	end
 
 	function BotWeapons:check_setup_gadget_colors(unit, weapon_base)

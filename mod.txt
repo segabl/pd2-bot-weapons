@@ -24,7 +24,6 @@
 		{ "hook_id" : "lib/units/enemies/cop/copinventory", "script_path" : "mod.lua" },
 		{ "hook_id" : "lib/units/player_team/logics/teamailogictravel", "script_path" : "mod.lua" },
 		{ "hook_id" : "lib/units/player_team/huskteamaiinventory", "script_path" : "mod.lua" },
-		{ "hook_id" : "lib/units/player_team/teamaibase", "script_path" : "mod.lua" },
 		{ "hook_id" : "lib/units/player_team/teamaiinventory", "script_path" : "mod.lua" },
 		{ "hook_id" : "lib/units/player_team/teamaimovement", "script_path" : "mod.lua" },
 		{ "hook_id" : "lib/units/weapons/akimboweaponbase", "script_path" : "mod.lua" },

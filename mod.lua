@@ -50,8 +50,7 @@ if not BotWeapons then
 	end
 
 	function BotWeapons:is_mwc_installed()
-		-- check if "more weapon categories" is used
-		return tweak_data.weapon.judge.categories[1] == "revolver"
+		return BeardLib and BeardLib.Utils:ModLoaded("More Weapon Categories")
 	end
 
 	function BotWeapons:patch_armor_skin_ext()

@@ -11,8 +11,6 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	local difficulty_index = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
 	local rifle_dmg_mul = StreamHeist and crew_presets.is_rifle.FALLOFF[1].dmg_mul or difficulty_index * 0.75
 
-	BotWeapons:log("Preparing base crew weapon presets, reference dmg_mul is " .. rifle_dmg_mul)
-
 	-- rifle preset
 	crew_presets.is_rifle.FALLOFF = {
 		{ dmg_mul = rifle_dmg_mul * 0.8, r = 0, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },

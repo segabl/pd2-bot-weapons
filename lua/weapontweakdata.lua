@@ -9,11 +9,10 @@ local function mean_burst_delay(falloff)
 	return delay / #falloff
 end
 
-local function set_usage(crew_weapon_name, weapon, usage)
+local function set_usage(weapon, usage)
 	if not weapon.anim_usage and weapon.usage ~= usage then
 		weapon.anim_usage = weapon.usage
 	end
-	BotWeapons:log("Changed " .. crew_weapon_name .. " usage from " .. tostring(weapon.usage) .. " to " .. usage, BotWeapons.settings.debug and weapon.usage ~= usage)
 	weapon.usage = usage
 end
 
@@ -38,16 +37,13 @@ function WeaponTweakData:_player_weapon_from_crew_weapon(crew_id)
 end
 
 function WeaponTweakData:setup_crew_weapons(crew_preset)
-	BotWeapons:log("Setting up crew weapon data")
-
-	-- copy some data from the player version of a weapon to crew version and setup usage
 	local anim_usage_redirects = {
 		is_lmg = "is_rifle",
 		is_shotgun_mag = "is_rifle"
 	}
 	local function setup_crew_weapon_data(crew_weapon_name, crew_weapon, player_weapon)
 		if not player_weapon then
-			BotWeapons:log("Error: Could not find player weapon version of " .. crew_weapon_name .. "!")
+			BLT:Log(LogLevel.ERROR, "[BWE] Could not find player weapon version of " .. crew_weapon_name .. "!")
 			return
 		end
 		local fire_mode = player_weapon.FIRE_MODE or "single"
@@ -61,23 +57,23 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
 			crew_weapon.is_shotgun = table.contains(player_weapon.categories, "shotgun")
 			if is_automatic then
 				if table.contains(player_weapon.categories, "flamethrower") then
-					set_usage(crew_weapon_name, crew_weapon, "is_flamethrower")
+					set_usage(crew_weapon, "is_flamethrower")
 				elseif crew_weapon.is_shotgun then
-					set_usage(crew_weapon_name, crew_weapon, "is_shotgun_mag")
+					set_usage(crew_weapon, "is_shotgun_mag")
 				elseif crew_weapon.usage == "is_pistol" or crew_weapon.usage == "akimbo_pistol" then
-					set_usage(crew_weapon_name, crew_weapon, "is_smg")
+					set_usage(crew_weapon, "is_smg")
 				elseif crew_weapon.CLIP_AMMO_MAX >= 100 then
-					set_usage(crew_weapon_name, crew_weapon, "is_lmg")
+					set_usage(crew_weapon, "is_lmg")
 				end
 			else
 				if crew_weapon.is_shotgun then
-					set_usage(crew_weapon_name, crew_weapon, "is_shotgun_pump")
+					set_usage(crew_weapon, "is_shotgun_pump")
 				elseif table.contains(player_weapon.categories, "revolver") then
-					set_usage(crew_weapon_name, crew_weapon, "is_revolver")
+					set_usage(crew_weapon, "is_revolver")
 				elseif crew_weapon.usage == "akimbo_pistol" then
-					set_usage(crew_weapon_name, crew_weapon, "is_pistol")
+					set_usage(crew_weapon, "is_pistol")
 				elseif crew_weapon.usage ~= "is_pistol" then
-					set_usage(crew_weapon_name, crew_weapon, "is_sniper")
+					set_usage(crew_weapon, "is_sniper")
 				end
 			end
 			-- fix anim_usage
@@ -87,7 +83,7 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
 			crew_weapon.old_usage = crew_weapon.usage
 		end
 		if not crew_preset[crew_weapon.old_usage] then
-			BotWeapons:log("Error: No usage preset for " .. crew_weapon_name .. " (" .. crew_weapon.old_usage .. ")!")
+			BLT:Log(LogLevel.ERROR, "[BWE] No usage preset for " .. crew_weapon_name .. " (" .. crew_weapon.old_usage .. ")!")
 			return
 		end
 		-- clone weapon usage preset to allow unique settings for each weapon
@@ -114,7 +110,7 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
 
 	-- setup reference weapon
 	if not setup_crew_weapon_data("m4_crew", self.m4_crew, self.new_m4) then
-		BotWeapons:log("Error: Reference weapon m4_crew could not be set up, weapon balance option will not work properly!")
+		BLT:Log(LogLevel.ERROR, "[BWE] Reference weapon m4_crew could not be set up, weapon balance option will not work properly!")
 		return
 	end
 

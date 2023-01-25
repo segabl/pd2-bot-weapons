@@ -28,12 +28,6 @@ if not BotWeapons then
 
 	local unit_ids = Idstring("unit")
 
-	function BotWeapons:log(message, condition)
-		if condition or condition == nil then
-			log("[BotWeapons] " .. message)
-		end
-	end
-
 	function BotWeapons:init()
 		-- load mask sets
 		local file = io.open(BotWeapons.mod_path .. "data/masks.json", "r")

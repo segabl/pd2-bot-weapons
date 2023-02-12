@@ -51,29 +51,33 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
 		local fire_rate = player_weapon.fire_mode_data and player_weapon.fire_mode_data.fire_rate or player_weapon[fire_mode] and player_weapon[fire_mode].fire_rate or 1
 		local reload_speed = (self.stats.reload[player_weapon.stats.reload] or 1) * 1.5
 		if not crew_weapon.old_usage then
+			local cat_map = table.list_to_set(player_weapon.categories)
+
 			crew_weapon[fire_mode] = { fire_rate = fire_rate }
 			crew_weapon.CLIP_AMMO_MAX = player_weapon.CLIP_AMMO_MAX
 			crew_weapon.reload_time = (player_weapon.timers.reload_empty or player_weapon.CLIP_AMMO_MAX * (player_weapon.timers.shotgun_reload_shell or 0.5)) / reload_speed
-			crew_weapon.is_shotgun = table.contains(player_weapon.categories, "shotgun")
+
 			if is_automatic then
-				if table.contains(player_weapon.categories, "flamethrower") then
+				if cat_map.flamethrower then
 					set_usage(crew_weapon, "is_flamethrower")
-				elseif crew_weapon.is_shotgun then
+				elseif cat_map.shotgun then
 					set_usage(crew_weapon, "is_shotgun_mag")
-				elseif crew_weapon.usage == "is_pistol" or crew_weapon.usage == "akimbo_pistol" then
+				elseif cat_map.pistol or cat_map.smg then
 					set_usage(crew_weapon, "is_smg")
-				elseif crew_weapon.CLIP_AMMO_MAX >= 100 then
+				elseif cat_map.lmg or cat_map.minigun or crew_weapon.CLIP_AMMO_MAX >= 100 then
 					set_usage(crew_weapon, "is_lmg")
+				else
+					set_usage(crew_weapon, "is_rifle")
 				end
 			else
-				if crew_weapon.is_shotgun then
+				if cat_map.shotgun then
 					set_usage(crew_weapon, "is_shotgun_pump")
-				elseif table.contains(player_weapon.categories, "revolver") then
+				elseif cat_map.revolver then
 					set_usage(crew_weapon, "is_revolver")
-				elseif crew_weapon.usage == "akimbo_pistol" then
-					set_usage(crew_weapon, "is_pistol")
-				elseif crew_weapon.usage ~= "is_pistol" then
+				elseif cat_map.snp then
 					set_usage(crew_weapon, "is_sniper")
+				else
+					set_usage(crew_weapon, "is_pistol")
 				end
 			end
 			-- fix anim_usage

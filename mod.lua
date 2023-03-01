@@ -339,7 +339,7 @@ if not BotWeapons then
 			end
 			-- check for invalid mask
 			if not tweak_data.blackmarket.masks[loadout.mask] then
-				self:log("WARNING: Mask " .. tostring(loadout.mask) .. " does not exist, removed it from " .. char_name .. "!", loadout.mask)
+				BLT:Log(LogLevel.WARN, "[BWE] Mask " .. tostring(loadout.mask) .. " does not exist, removed it from " .. char_name .. "!", loadout.mask)
 				loadout.mask = "character_locked"
 				loadout.mask_blueprint = nil
 			end
@@ -350,7 +350,7 @@ if not BotWeapons then
 					loadout.mask_blueprint.color_a = { id = color.color_ids[1] }
 					loadout.mask_blueprint.color_b = { id = color.color_ids[2] }
 				else
-					self:log("WARNING: Mask blueprint is invalid, removed it from " .. char_name .. "!", loadout.mask)
+					BLT:Log(LogLevel.WARN, "[BWE] Mask blueprint is invalid, removed it from " .. char_name .. "!", loadout.mask)
 					loadout.mask_blueprint = nil
 				end
 			end
@@ -377,13 +377,13 @@ if not BotWeapons then
 			end
 			-- check for invalid weapon or weapon parts
 			if loadout.primary and not tweak_data.weapon.factory[loadout.primary] then
-				self:log("WARNING: Weapon " .. loadout.primary .. " does not exist, removed it from " .. char_name .. "!")
+				BLT:Log(LogLevel.WARN, "[BWE] Weapon " .. loadout.primary .. " does not exist, removed it from " .. char_name .. "!")
 				loadout.primary = nil
 				loadout.primary_blueprint = nil
 			end
 			for _, part in pairs(loadout.primary_blueprint or {}) do
 				if not tweak_data.weapon.factory.parts[part] then
-					self:log("WARNING: Weapon part " .. part .. " does not exist, removed weapon blueprint from " .. char_name .. "!")
+					BLT:Log(LogLevel.WARN, "[BWE] Weapon part " .. part .. " does not exist, removed weapon blueprint from " .. char_name .. "!")
 					loadout.primary_blueprint = nil
 					break
 				end
@@ -411,7 +411,7 @@ if not BotWeapons then
 			-- check for invalid outfit
 			loadout.player_style = loadout.player_style or managers.blackmarket:get_default_player_style()
 			if not tweak_data.blackmarket.player_styles[loadout.player_style] then
-				self:log("WARNING: Player style " .. tostring(loadout.player_style) .. " does not exist, removed it from " .. char_name .. "!")
+				BLT:Log(LogLevel.WARN, "[BWE] Player style " .. tostring(loadout.player_style) .. " does not exist, removed it from " .. char_name .. "!")
 				loadout.player_style = managers.blackmarket:get_default_player_style()
 			end
 			loadout.suit_variation = loadout.suit_variation or "default"
@@ -420,7 +420,7 @@ if not BotWeapons then
 			elseif not tweak_data.blackmarket:have_suit_variations(loadout.player_style) then
 				loadout.suit_variation = "default"
 			elseif not tweak_data.blackmarket.player_styles[loadout.player_style].material_variations[loadout.suit_variation] then
-				self:log("WARNING: Suit variant " .. tostring(loadout.suit_variation) .. " does not exist, removed it from " .. char_name .. "!")
+				BLT:Log(LogLevel.WARN, "[BWE] Suit variant " .. tostring(loadout.suit_variation) .. " does not exist, removed it from " .. char_name .. "!")
 				loadout.suit_variation = "default"
 			end
 
@@ -440,7 +440,7 @@ if not BotWeapons then
 			-- check for invalid gloves
 			loadout.glove_id = loadout.glove_id or managers.blackmarket:get_default_glove_id()
 			if not tweak_data.blackmarket.gloves[loadout.glove_id] then
-				self:log("WARNING: Gloves " .. tostring(loadout.glove_id) .. " does not exist, removed it from " .. char_name .. "!")
+				BLT:Log(LogLevel.WARN, "[BWE] Gloves " .. tostring(loadout.glove_id) .. " does not exist, removed it from " .. char_name .. "!")
 				loadout.glove_id = managers.blackmarket:get_default_glove_id()
 			end
 			if tweak_data.blackmarket.have_glove_variations then
@@ -450,7 +450,7 @@ if not BotWeapons then
 				elseif not tweak_data.blackmarket:have_glove_variations(loadout.glove_id) then
 					loadout.glove_variation = "default"
 				elseif not tweak_data.blackmarket.gloves[loadout.glove_id].variations or not tweak_data.blackmarket.gloves[loadout.glove_id].variations[loadout.glove_variation] then
-					self:log("WARNING: Glove variant " .. tostring(loadout.glove_variation) .. " does not exist, removed it from " .. char_name .. "!")
+					BLT:Log(LogLevel.WARN, "[BWE] Glove variant " .. tostring(loadout.glove_variation) .. " does not exist, removed it from " .. char_name .. "!")
 					loadout.glove_variation = "default"
 				end
 			end
@@ -467,7 +467,7 @@ if not BotWeapons then
 			end
 			-- check for invalid armor
 			if loadout.armor and not tweak_data.blackmarket.armors[loadout.armor] then
-				self:log("WARNING: Armor " .. tostring(loadout.armor) .. " does not exist, removed it from " .. char_name .. "!", loadout.armor)
+				BLT:Log(LogLevel.WARN, "[BWE] Armor " .. tostring(loadout.armor) .. " does not exist, removed it from " .. char_name .. "!", loadout.armor)
 				loadout.armor = "level_1"
 			end
 
@@ -483,7 +483,7 @@ if not BotWeapons then
 			end
 			-- check for invalid armor skin
 			if loadout.armor_skin and not tweak_data.economy.armor_skins[loadout.armor_skin] then
-				self:log("WARNING: Armor Skin " .. tostring(loadout.armor_skin) .. " does not exist, removed it from " .. char_name .. "!", loadout.armor_skin)
+				BLT:Log(LogLevel.WARN, "[BWE] Armor Skin " .. tostring(loadout.armor_skin) .. " does not exist, removed it from " .. char_name .. "!", loadout.armor_skin)
 				loadout.armor_skin = "none"
 			end
 
@@ -499,7 +499,7 @@ if not BotWeapons then
 			end
 			-- check for invalid deployable
 			if loadout.deployable and not tweak_data.upgrades.definitions[loadout.deployable] then
-				self:log("WARNING: Deployable " .. tostring(loadout.deployable) .. " does not exist, removed it from " .. char_name .. "!")
+				BLT:Log(LogLevel.WARN, "[BWE] Deployable " .. tostring(loadout.deployable) .. " does not exist, removed it from " .. char_name .. "!")
 				loadout.deployable = nil
 			end
 

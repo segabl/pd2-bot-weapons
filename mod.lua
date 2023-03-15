@@ -25,6 +25,7 @@ if not BotWeapons then
 		"akimbo",
 		"pistol"
 	}
+	BotWeapons.required = {}
 
 	local unit_ids = Idstring("unit")
 
@@ -659,14 +660,13 @@ if not BotWeapons then
 
 end
 
-local required = {}
-if RequiredScript and not required[RequiredScript] then
+if RequiredScript and not BotWeapons.required[RequiredScript] then
 
 	local fname = BotWeapons.mod_path .. RequiredScript:gsub(".+/(.+)", "lua/%1.lua")
 	if io.file_is_readable(fname) then
 		dofile(fname)
 	end
 
-	required[RequiredScript] = true
+	BotWeapons.required[RequiredScript] = true
 
 end

@@ -9,12 +9,12 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	local crew_presets = presets.weapon.gang_member
 
 	local difficulty_index = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
-	local rifle_dmg_mul = StreamHeist and crew_presets.is_rifle.FALLOFF[1].dmg_mul or difficulty_index * 0.75
+	local rifle_dmg_mul = difficulty_index * 0.75
 
 	-- rifle preset
 	crew_presets.is_rifle.FALLOFF = {
-		{ dmg_mul = rifle_dmg_mul * 0.8, r = 0, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
-		{ dmg_mul = rifle_dmg_mul * 0.2, r = 3000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } }
+		{ dmg_mul = rifle_dmg_mul * 0.7, r = 0, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
+		{ dmg_mul = rifle_dmg_mul * 0.3, r = 3000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } }
 	}
 	crew_presets.is_rifle.spread = 10
 	crew_presets.is_bullpup = crew_presets.is_rifle
@@ -30,8 +30,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
 	-- pistol preset
 	crew_presets.is_pistol.FALLOFF = {
-		{ dmg_mul = rifle_dmg_mul * 0.7, r = 0, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = rifle_dmg_mul * 0.3, r = 3000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = rifle_dmg_mul * 0.8, r = 0, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = rifle_dmg_mul * 0.2, r = 3000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } }
 	}
 	crew_presets.is_pistol.spread = 10
 	crew_presets.akimbo_pistol = crew_presets.is_pistol

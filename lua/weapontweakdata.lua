@@ -113,21 +113,22 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
 	end
 
 	-- setup reference weapon
-	if not setup_crew_weapon_data("m4_crew", self.m4_crew, self.new_m4) then
-		BLT:Log(LogLevel.ERROR, "[BWE] Reference weapon m4_crew could not be set up, weapon balance option will not work properly!")
+	local reference_name, reference, player_reference = "m4_crew", self.m4_crew, self.new_m4
+	if not setup_crew_weapon_data(reference_name, reference, player_reference) then
+		BLT:Log(LogLevel.ERROR, "[BWE] Reference weapon \"" .. reference_name .. "\" could not be set up, weapon balance option will not work properly!")
 		return
 	end
 
 	-- target dps for other weapons based on m4
-	local w_u_tweak = crew_preset[self.m4_crew.usage]
+	local w_u_tweak = crew_preset[reference.usage]
 	local is_automatic =  w_u_tweak.autofire_rounds and true
-	local mag = self.m4_crew.CLIP_AMMO_MAX
+	local mag = reference.CLIP_AMMO_MAX
 	local burst_size = is_automatic and (w_u_tweak.autofire_rounds[1] + w_u_tweak.autofire_rounds[2]) * 0.5 or 1
-	local shot_delay = is_automatic and self.m4_crew.auto.fire_rate or 0
+	local shot_delay = is_automatic and reference.auto.fire_rate or 0
 	local burst_delay = mean_burst_delay(w_u_tweak.FALLOFF)
-	local reload_time = self.m4_crew.reload_time
+	local reload_time = reference.reload_time
 	local accuracy = (is_automatic or StreamHeist) and (9 + w_u_tweak.FALLOFF[1].acc[1]) / 10 or 1 - w_u_tweak.spread / 100
-	local target_damage = (self.m4_crew.DAMAGE * mag * accuracy) / ((mag / burst_size) * (burst_size - 1) * shot_delay + (mag / burst_size - 1) * burst_delay + reload_time)
+	local target_damage = (reference.DAMAGE * mag * accuracy) / ((mag / burst_size) * (burst_size - 1) * shot_delay + (mag / burst_size - 1) * burst_delay + reload_time)
 	for crew_weapon_name, crew_weapon in pairs(self) do
 		if type(crew_weapon) == "table" and crew_weapon_name:match("_crew$") then
 			if setup_crew_weapon_data(crew_weapon_name, crew_weapon, self:_player_weapon_from_crew_weapon(crew_weapon_name)) then

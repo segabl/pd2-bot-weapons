@@ -40,8 +40,6 @@ if not BotWeapons then
 
 		-- load settings
 		self:load()
-
-		self:patch_armor_skin_ext()
 	end
 
 	function BotWeapons:is_mwc_installed()
@@ -49,24 +47,33 @@ if not BotWeapons then
 	end
 
 	function BotWeapons:patch_armor_skin_ext()
-		if not Unit then
+		if self._armor_skin_ext_patched then
 			return
 		end
+
+		self._armor_skin_ext_patched = true
 
 		-- to add armor skin extensions to bots, the easiest solution is to patch the armor_skin function
 		local armor_skin = Unit.armor_skin
 		Unit.armor_skin = function (unit, ...)
+			local ext = armor_skin(unit, ...)
+			if ext then
+				return ext
+			end
+
 			local base = unit.base and unit:base()
 			local base_meta = base and getmetatable(base)
 			if not base_meta or base_meta ~= TeamAIBase and base_meta ~= HuskTeamAIBase then
-				return armor_skin(unit, ...)
+				return ext
 			end
 
 			if not base._armor_skin_ext then
 				base._armor_skin_ext = ArmorSkinExt:new(unit)
 				base._armor_skin_ext:set_character(base._tweak_table)
 				base.update = function (b, ...)
-					b._armor_skin_ext:update(...)
+					if not b._unit:in_slot(0) then
+						b._armor_skin_ext:update(...)
+					end
 				end
 				unit:set_extension_update_enabled(Idstring("base"), true)
 			end

@@ -464,34 +464,43 @@ if not BotWeapons then
 			end
 
 			-- choose armor models
-			if not loadout.armor or loadout.armor_random then
-				if not loadout.armor_random then
-					loadout.armor = char_loadout.armor
-					loadout.armor_random = char_loadout.armor_random
+			if loadout.player_style == managers.blackmarket:get_default_player_style() then
+				if not loadout.armor or loadout.armor_random then
+					if not loadout.armor_random then
+						loadout.armor = char_loadout.armor
+						loadout.armor_random = char_loadout.armor_random
+					end
+					if loadout.armor_random then
+						loadout.armor = self:get_random_armor(loadout.armor_random)
+					end
 				end
-				if loadout.armor_random then
-					loadout.armor = self:get_random_armor(loadout.armor_random)
+				-- check for invalid armor
+				if loadout.armor and not tweak_data.blackmarket.armors[loadout.armor] then
+					BLT:Log(LogLevel.WARN, "[BWE] Armor " .. tostring(loadout.armor) .. " does not exist, removed it from " .. char_name .. "!", loadout.armor)
+					loadout.armor = "level_1"
 				end
-			end
-			-- check for invalid armor
-			if loadout.armor and not tweak_data.blackmarket.armors[loadout.armor] then
-				BLT:Log(LogLevel.WARN, "[BWE] Armor " .. tostring(loadout.armor) .. " does not exist, removed it from " .. char_name .. "!", loadout.armor)
-				loadout.armor = "level_1"
-			end
 
-			-- choose armor skin
-			if not loadout.armor_skin or loadout.armor_skin_random then
-				if not loadout.armor_skin_random then
-					loadout.armor_skin = char_loadout.armor_skin
-					loadout.armor_skin_random = char_loadout.armor_skin_random
+				-- choose armor skin
+				if loadout.armor ~= "level_1" then
+					if not loadout.armor_skin or loadout.armor_skin_random then
+						if not loadout.armor_skin_random then
+							loadout.armor_skin = char_loadout.armor_skin
+							loadout.armor_skin_random = char_loadout.armor_skin_random
+						end
+						if loadout.armor_skin_random then
+							loadout.armor_skin = self:get_random_armor_skin(loadout.armor_skin_random)
+						end
+					end
+					-- check for invalid armor skin
+					if loadout.armor_skin and not tweak_data.economy.armor_skins[loadout.armor_skin] then
+						BLT:Log(LogLevel.WARN, "[BWE] Armor Skin " .. tostring(loadout.armor_skin) .. " does not exist, removed it from " .. char_name .. "!", loadout.armor_skin)
+						loadout.armor_skin = "none"
+					end
+				else
+					loadout.armor_skin = "none"
 				end
-				if loadout.armor_skin_random then
-					loadout.armor_skin = self:get_random_armor_skin(loadout.armor_skin_random)
-				end
-			end
-			-- check for invalid armor skin
-			if loadout.armor_skin and not tweak_data.economy.armor_skins[loadout.armor_skin] then
-				BLT:Log(LogLevel.WARN, "[BWE] Armor Skin " .. tostring(loadout.armor_skin) .. " does not exist, removed it from " .. char_name .. "!", loadout.armor_skin)
+			else
+				loadout.armor = "level_1"
 				loadout.armor_skin = "none"
 			end
 

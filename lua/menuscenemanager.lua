@@ -48,16 +48,20 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
 
 	unit:base():set_character_name(character)
 
-	-- armor
-	self:set_character_armor(loadout.armor, unit)
-	self:set_character_armor_skin(loadout.armor_skin, unit)
-
 	-- outfit
 	self:set_character_player_style(loadout.player_style, loadout.suit_variation, unit)
 	if self.set_character_gloves_and_variation then
 		self:set_character_gloves_and_variation(loadout.glove_id, loadout.glove_variation, unit)
 	else
 		self:set_character_gloves(loadout.glove_id, unit)
+	end
+
+	-- armor
+	if loadout.player_style == managers.blackmarket:get_default_player_style() then
+		self:set_character_armor(loadout.armor, unit)
+		if loadout.armor ~= "level_1" then
+			self:set_character_armor_skin(loadout.armor_skin, unit)
+		end
 	end
 
 	-- mask

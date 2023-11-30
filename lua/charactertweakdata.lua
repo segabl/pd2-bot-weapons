@@ -20,7 +20,11 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	-- sniper preset
 	crew_presets.is_sniper.FALLOFF = {
 		{ dmg_mul = rifle_dmg_mul * 0.5, r = 0, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = rifle_dmg_mul * 0.5, r = 3000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = rifle_dmg_mul * 0.5, r = 1000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = rifle_dmg_mul * 0.5, r = 2000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = rifle_dmg_mul * 0.5, r = 3000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = rifle_dmg_mul * 0.5, r = 4000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = rifle_dmg_mul * 0.5, r = 4000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } }
 	}
 
 	-- pistol preset
@@ -32,19 +36,31 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	-- LMG preset
 	crew_presets.is_lmg.FALLOFF = {
 		{ dmg_mul = rifle_dmg_mul * 0.9, r = 0, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
+		{ dmg_mul = rifle_dmg_mul * 0.633, r = 1000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
+		{ dmg_mul = rifle_dmg_mul * 0.366, r = 2000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
 		{ dmg_mul = rifle_dmg_mul * 0.1, r = 3000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
+		{ dmg_mul = rifle_dmg_mul * 0.1, r = 4000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
+		{ dmg_mul = rifle_dmg_mul * 0.1, r = 5000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } }
 	}
 
 	-- shotgun preset
 	crew_presets.is_shotgun_pump.FALLOFF = {
 		{ dmg_mul = rifle_dmg_mul * 1.0, r = 0, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = rifle_dmg_mul * 0.666, r = 1000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = rifle_dmg_mul * 0.333, r = 2000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = rifle_dmg_mul * 0.0, r = 3000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = rifle_dmg_mul * 0.0, r = 4000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = rifle_dmg_mul * 0.0, r = 5000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 1, 0, 0, 0 } }
 	}
 
 	-- auto shotgun preset
 	crew_presets.is_shotgun_mag.FALLOFF = {
 		{ dmg_mul = rifle_dmg_mul * 1.0, r = 0, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
+		{ dmg_mul = rifle_dmg_mul * 0.666, r = 1000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
+		{ dmg_mul = rifle_dmg_mul * 0.333, r = 2000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
 		{ dmg_mul = rifle_dmg_mul * 0.0, r = 3000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
+		{ dmg_mul = rifle_dmg_mul * 0.0, r = 4000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
+		{ dmg_mul = rifle_dmg_mul * 0.0, r = 5000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } }
 	}
 
 	-- flamethrower preset
@@ -52,7 +68,11 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	crew_presets.is_flamethrower.range = { optimal = 900, far = 1800, close = 450 }
 	crew_presets.is_flamethrower.FALLOFF = {
 		{ dmg_mul = rifle_dmg_mul * 2, r = 0, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
+		{ dmg_mul = rifle_dmg_mul * 1, r = 1000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
 		{ dmg_mul = rifle_dmg_mul * 0.0, r = 2000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
+		{ dmg_mul = rifle_dmg_mul * 0.0, r = 3000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
+		{ dmg_mul = rifle_dmg_mul * 0.0, r = 4000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } },
+		{ dmg_mul = rifle_dmg_mul * 0.0, r = 5000, acc = { 1, 1 }, recoil = { 1, 1 }, mode = { 0, 0, 0, 1 } }
 	}
 
 	-- spread does nothing in SH so don't confuse people that use more weapon stats

@@ -1,3 +1,11 @@
+setmetatable(HuskPlayerMovement.reload_times, {
+	__index = function (t, k)
+		BLT:Log(LogLevel.WARN, "[BWE] No reload time definition for " .. tostring(k) .. "!")
+		rawset(t, k, 2)
+		return 2
+	end
+})
+
 if BotWeapons.settings.weapon_balance and TeamAIActionShoot then
 	CopMovement._action_variants.team_ai.shoot = TeamAIActionShoot
 end

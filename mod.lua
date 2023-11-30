@@ -230,7 +230,7 @@ if not BotWeapons then
 			self._weapons = self._weapons or {}
 			self._weapons[cat] = {}
 			for weapon_id, data in pairs(tweak_data.weapon) do
-				if data.autohit and (data.categories[check_cat] or data.categories[1]) == cat then
+				if data.autohit ~= nil and (data.categories[check_cat] or data.categories[1]) == cat then
 					local factory_id = self:get_npc_version(weapon_id)
 					if factory_id then
 						table.insert(self._weapons[cat], {

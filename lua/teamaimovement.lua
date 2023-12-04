@@ -1,3 +1,20 @@
+-- Fix for some broken reload anim time check code
+setmetatable(HuskPlayerMovement.reload_times, {
+	__index = function (t, k)
+		if type(k) == "table" then
+			for _, v in pairs(k) do
+				local r = rawget(t, v)
+				if r then
+					return r
+				end
+			end
+		end
+		BLT:Log(LogLevel.WARN, "[BWE] No reload time definition for " .. tostring(k) .. "!")
+		rawset(t, k, 2)
+		return 2
+	end
+})
+
 if BotWeapons.settings.weapon_balance and TeamAIActionShoot then
 	CopMovement._action_variants.team_ai.shoot = TeamAIActionShoot
 end
@@ -55,5 +72,20 @@ Hooks:PreHook(TeamAIMovement, "set_carrying_bag", "set_carrying_bag_bot_weapons"
 		if bag_panel then
 			bag_panel:set_visible(enabled and unit)
 		end
+	end
+end)
+
+Hooks:PostHook(TeamAIMovement, "clbk_inventory", "clbk_inventory_useful_bots", function (self)
+	local weapon = self._ext_inventory:equipped_unit()
+	local weap_tweak = weapon:base():weapon_tweak_data()
+	if not weap_tweak.reload_time then
+		return
+	end
+
+	if self._looped_reload_time then
+		self._looped_reload_time = weap_tweak.reload_time
+		self._reload_speed_multiplier = (0.45 * (weap_tweak.looped_reload_single and 1 or weap_tweak.CLIP_AMMO_MAX)) / self._looped_reload_time
+	else
+		self._reload_speed_multiplier = HuskPlayerMovement:get_reload_animation_time(weap_tweak.reload or weap_tweak.hold) / weap_tweak.reload_time
 	end
 end)

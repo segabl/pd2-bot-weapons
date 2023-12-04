@@ -1,28 +1,8 @@
-TeamAIActionShoot = class(CopActionShoot)
-
-function TeamAIActionShoot:_setup_weapon()
-	if not self._weap_tweak or not self._w_usage_tweak then
-		return
-	end
-	self._automatic_weap = self._weap_tweak.auto and self._w_usage_tweak.autofire_rounds and true
-	self._reload_speed = HuskPlayerMovement:get_reload_animation_time(self._weap_tweak.hold) / (self._weap_tweak.reload_time or 3)
-end
-
-function TeamAIActionShoot:init(...)
-	if TeamAIActionShoot.super.init(self, ...) then
-		self:_setup_weapon()
-		return true
-	end
-end
-
-function TeamAIActionShoot:on_inventory_event(...)
-	TeamAIActionShoot.super.on_inventory_event(self, ...)
-	self:_setup_weapon()
-end
-
 if StreamHeist then
 	return
 end
+
+TeamAIActionShoot = class(CopActionShoot)
 
 -- interpolate damage for team ai
 local lerp = math.lerp

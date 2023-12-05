@@ -92,7 +92,10 @@ end
 Hooks:PostHook(CharacterTweakData, "_init_team_ai", "_init_team_ai_bot_weapons", function (self, presets)
 	for k, v in pairs(self) do
 		if type(v) == "table" and v.access == "teamAI1" then
-			v.weapon = presets.weapon.bot_weapons
+			v.weapon = clone(presets.weapon.bot_weapons)
+			v.weapon.weapons_of_choice = {
+				primary = "wpn_fps_ass_m4_npc"
+			}
 		end
 	end
 end)

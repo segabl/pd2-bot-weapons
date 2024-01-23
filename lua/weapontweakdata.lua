@@ -37,10 +37,6 @@ function WeaponTweakData:_player_weapon_from_crew_weapon(crew_id)
 end
 
 function WeaponTweakData:setup_crew_weapons(crew_preset)
-	local anim_usage_redirects = {
-		is_lmg = "is_rifle",
-		is_shotgun_mag = "is_rifle"
-	}
 	local function setup_crew_weapon_data(crew_weapon_name, crew_weapon, player_weapon)
 		if not player_weapon then
 			BLT:Log(LogLevel.ERROR, "[BWE] Could not find player weapon version of " .. crew_weapon_name .. "!")
@@ -82,7 +78,7 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
 			end
 			-- fix anim_usage
 			crew_weapon.reload = crew_weapon.reload or (crew_weapon.anim_usage or crew_weapon.usage) == "is_shotgun_pump" and "looped" or nil
-			crew_weapon.anim_usage = anim_usage_redirects[crew_weapon.anim_usage or crew_weapon.usage] or crew_weapon.anim_usage or crew_weapon.usage
+			crew_weapon.anim_usage = crew_weapon.anim_usage or crew_weapon.usage
 			-- save original usage
 			crew_weapon.old_usage = crew_weapon.usage
 		end

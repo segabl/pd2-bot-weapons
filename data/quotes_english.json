@@ -153,6 +153,27 @@
 		],
 		[
 			"$1:Will we ever have enough money to get better drills?"
+		],
+		[
+			"$1:Hey $p!",
+			"$1:Do you know what time it is?",
+			"$1:It's PUN-ishment time!"
+		],
+		[
+			"$1:I would say we got a leg up on these cops",
+			"$1:Just don't look down"
+		],
+		[
+			"$1:I wish I could equip a RPG right now",
+			"$1:I want to have a blast"
+		],
+		[
+			"$1:I could do with a knife right about now...",
+			"$1:I just want to make the cut!"
+		],
+		[
+			"$1:Fun fact $p, I once killed a Bulldozer with an OVE9000",
+			"$1:He never SAW it coming..."
 		]
 	],
 	[
@@ -452,6 +473,29 @@
 			"$1:She's translating so many mods",
 			"$1:It really makes modding more accessible to everyone",
 			"$2:That's pretty cool!"
+		],
+		[
+			"$1:I was thinking about the name Bulldozer recently",
+			"$2:A bit random $1 but what about them?",
+			"$1:I was wondering if they really dig the name?",
+			"$2:..."
+		],
+		[
+			"$1:Wait until the Taser finds out I've aced Shockproof!",
+			"$2:I don't like where this is going...",
+			"$1:They'll be in for a shock!",
+			"$2:$1 is in custody!"
+		],
+		[
+			"$1:You know why some heisters equip throwing knives?",
+			"$2:Here we go again...",
+			"$1:So our enemies get the point!"
+		],
+		[
+			"$1:Hey $2, how do you get Hoppip on the bus?",
+			"$2:I don't know $1, how?",
+			"$1:You Poke 'em on!",
+			"$2:Hey $p, let's not save $1 ok?"
 		]
 	],
 	[
@@ -596,6 +640,29 @@
 			"$1:this is going into my cringe compilation",
 			"$2:making cringe compilations is pretty cringe",
 			"$3:saying cringe is cringe"
+		],
+		[
+			"$1:I've been thinking...",
+			"$2:What's on your mind, $1?",
+			"$1:The Bulldozers we've encountered so far...",
+			"$1:Do you think they take any constructive criticism?",
+			"$3:I kinda want to fail this heist right now"
+		],
+		[
+			"$1:OMG these Snipers!",
+			"$2:Which ones?",
+			"$3:The ones giving it their best shot?",
+			"$2:I'm about to give you my best shot $3!"
+		],
+		[
+			"$1:You want to know something funny about the Marksman?",
+			"$2:The fact you couldn't mark them in their debut?",
+			"$1:Yes but no, something else.",
+			"$3:Their scope glint?",
+			"$1:They always miss their first shot",
+			"$3:Oh... I was expecting more tbh",
+			"$2:Shots fired!",
+			"$3:Never mind..."
 		]
 	]
 ]

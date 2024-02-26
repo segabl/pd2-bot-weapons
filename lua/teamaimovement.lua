@@ -77,6 +77,10 @@ end)
 
 Hooks:PostHook(TeamAIMovement, "clbk_inventory", "clbk_inventory_useful_bots", function (self)
 	local weapon = self._ext_inventory:equipped_unit()
+	if not alive(weapon) then
+		return
+	end
+
 	local weap_tweak = weapon:base():weapon_tweak_data()
 	if not weap_tweak.reload_time then
 		return

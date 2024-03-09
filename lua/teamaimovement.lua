@@ -51,13 +51,23 @@ function TeamAIMovement:play_redirect(redirect_name, ...)
 	return play_redirect_original(self, redirect_name, ...)
 end
 
-Hooks:PostHook(TeamAIMovement, "_switch_to_not_cool_clbk_func", "_switch_to_not_cool_clbk_func_bot_weapons", function (self)
-	-- activate gadgets on going loud
-	if Network:is_server() then
-		local weapon = self._ext_inventory:equipped_unit()
-		BotWeapons:check_set_gadget_state(self._unit, weapon and weapon:base())
-	end
-end)
+if Network:is_server() then
+	-- send cool state and activate gadgets on going loud
+	Hooks:PostHook(TeamAIMovement, "_switch_to_not_cool_clbk_func", "_switch_to_not_cool_clbk_func_bot_weapons", function (self)
+		if not self._cool then
+			self._ext_network:send("set_cool_state", self._cool)
+			local weapon = self._ext_inventory:equipped_unit()
+			BotWeapons:check_set_gadget_state(self._unit, weapon and weapon:base())
+		end
+	end)
+else
+	-- update cool state if stance is swapped to hos or cbt, workaround for cool state not being sent by vanilla host
+	Hooks:PreHook(TeamAIMovement, "sync_stance", "sync_stance_bot_weapons", function (self, i_stance)
+		if self._stance and self._stance.code == 1 and i_stance > 1 then
+			self:set_cool(false)
+		end
+	end)
+end
 
 Hooks:PreHook(TeamAIMovement, "set_carrying_bag", "set_carrying_bag_bot_weapons", function (self, unit)
 	local enabled = BotWeapons.settings.player_carry
@@ -75,7 +85,7 @@ Hooks:PreHook(TeamAIMovement, "set_carrying_bag", "set_carrying_bag_bot_weapons"
 	end
 end)
 
-Hooks:PostHook(TeamAIMovement, "clbk_inventory", "clbk_inventory_useful_bots", function (self)
+Hooks:PostHook(TeamAIMovement, "clbk_inventory", "clbk_inventory_bot_weapons", function (self)
 	local weapon = self._ext_inventory:equipped_unit()
 	if not alive(weapon) then
 		return

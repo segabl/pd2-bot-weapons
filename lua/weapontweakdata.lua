@@ -142,3 +142,7 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
 		end
 	end
 end
+
+Hooks:PostHook(WeaponTweakData, "_init_data_p90_crew", "_init_data_p90_crew_bot_weapons", function (self)
+	self.p90_crew.looped_reload_single = true
+end)

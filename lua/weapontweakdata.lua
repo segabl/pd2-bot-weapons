@@ -143,6 +143,12 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
 	end
 end
 
-Hooks:PostHook(WeaponTweakData, "_init_data_p90_crew", "_init_data_p90_crew_bot_weapons", function (self)
+Hooks:PostHook(WeaponTweakData, "init", "init_bot_weapons", function (self)
+	self.contender_crew.reload = "looped"
+	self.hailstorm_crew.looped_reload_single = true
+	self.hailstorm_crew.reload = "looped"
 	self.p90_crew.looped_reload_single = true
+	self.sterling_crew.looped_reload_single = true
+	self.sterling_crew.reload = "looped"
+	self.tkb_crew.reload = "bullpup"
 end)

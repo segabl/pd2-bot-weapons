@@ -95,12 +95,6 @@ Hooks:PostHook(TeamAIMovement, "clbk_inventory", "clbk_inventory_bot_weapons", f
 
 	-- Fix broken hold types
 	if type(weap_tweak.hold) == "table" then
-		for i, hold_type in ipairs(self._weapon_hold) do
-			self._machine:set_global(hold_type, 0)
-		end
-
-		self._weapon_hold = {}
-
 		local num = #weap_tweak.hold + 1
 		for i, hold_type in ipairs(weap_tweak.hold) do
 			self._machine:set_global(hold_type, self:get_hold_type_weight(hold_type) or num - i)

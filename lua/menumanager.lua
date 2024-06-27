@@ -127,6 +127,9 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
 		max = 1,
 		step = 0.01,
 		show_value = true,
+		is_percentage = true,
+		display_scale = 100,
+		display_precision = 0,
 		menu_id = menu_id_main,
 		priority = 93
 	})
@@ -141,6 +144,9 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
 		max = 1,
 		step = 0.01,
 		show_value = true,
+		is_percentage = true,
+		display_scale = 100,
+		display_precision = 0,
 		menu_id = menu_id_main,
 		priority = 92
 	})
@@ -155,6 +161,9 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
 		max = 1,
 		step = 0.01,
 		show_value = true,
+		is_percentage = true,
+		display_scale = 100,
+		display_precision = 0,
 		menu_id = menu_id_main,
 		priority = 91
 	})
@@ -169,6 +178,9 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_BotW
 		max = 1,
 		step = 0.01,
 		show_value = true,
+		is_percentage = true,
+		display_scale = 100,
+		display_precision = 0,
 		menu_id = menu_id_main,
 		priority = 90
 	})

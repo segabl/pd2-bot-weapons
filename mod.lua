@@ -61,24 +61,30 @@ if not BotWeapons then
 				return ext
 			end
 
-			local base = unit.base and unit:base()
-			local base_meta = base and getmetatable(base)
-			if not base_meta or base_meta ~= TeamAIBase and base_meta ~= HuskTeamAIBase then
+			local dmg = unit:character_damage()
+			local dmg_meta = getmetatable(dmg)
+			if not dmg_meta or dmg_meta ~= TeamAIDamage and dmg_meta ~= TeamAIDamage then
 				return ext
 			end
 
-			if not base._armor_skin_ext then
-				base._armor_skin_ext = ArmorSkinExt:new(unit)
-				base._armor_skin_ext:set_character(base._tweak_table)
-				base.update = function (b, ...)
-					if not b._unit:in_slot(0) then
-						b._armor_skin_ext:update(...)
-					end
-				end
-				unit:set_extension_update_enabled(Idstring("base"), true)
+			if dmg._armor_skin_ext ~= nil then
+				return dmg._armor_skin_ext
 			end
 
-			return base._armor_skin_ext
+			dmg._armor_skin_ext = ArmorSkinExt:new(unit)
+			dmg._armor_skin_ext:set_character(unit:base()._tweak_table)
+
+			Hooks:PreHook(dmg, "update", "update_armor_skin" .. tostring(unit:key()), function(d, ...)
+				if d._armor_skin_ext and d._armor_skin_ext._request_update and alive(d._unit) then
+					d._armor_skin_ext:update(...)
+				end
+			end)
+
+			Hooks:PreHook(dmg, "pre_destroy", "pre_destroy_armor_skin" .. tostring(unit:key()), function()
+				Hooks:RemovePreHook("update_armor_skin" .. tostring(unit:key()))
+			end)
+
+			return dmg._armor_skin_ext
 		end
 	end
 

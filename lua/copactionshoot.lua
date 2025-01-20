@@ -26,10 +26,10 @@ function TeamAIActionShoot:_get_shoot_falloff(target_dis, falloff)
 			r = target_dis,
 			acc = { lerp(prev_data.acc[1], data.acc[1], t), lerp(prev_data.acc[2], data.acc[2], t) },
 			recoil = { lerp(prev_data.recoil[1], data.recoil[1], t), lerp(prev_data.recoil[2], data.recoil[2], t) },
-			autofire_rounds = prev_data.autofire_rounds and {
+			autofire_rounds = prev_data.autofire_rounds and data.autofire_rounds and {
 				lerp(prev_data.autofire_rounds[1], data.autofire_rounds[1], t),
 				lerp(prev_data.autofire_rounds[2], data.autofire_rounds[2], t)
-			},
+			} or prev_data.autofire_rounds,
 			mode = data.mode
 		}
 		return n_data, i

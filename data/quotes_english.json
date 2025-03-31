@@ -174,6 +174,21 @@
 		[
 			"$1:Fun fact $p, I once killed a Bulldozer with an OVE9000",
 			"$1:He never SAW it coming..."
+		],
+		[
+			"$1:Hey $p stop looksmaxxing and do your part!"
+		],
+		[
+			"$1:you know",
+			"$1:there's something I don't get",
+			"$1:like why",
+			"$1:why do some people",
+			"$1:write messages like this",
+			"$1:seriously",
+			"$1:isn't that annoying to read?",
+			"$1:is it too much to ask",
+			"$1:to think about a full sentence",
+			"$1:before typing?"
 		]
 	],
 	[
@@ -399,29 +414,6 @@
 			"$1:I really admire him"
 		],
 		[
-			"$1:Yo, shoutout to my homies on the MWS staff!",
-			"$2:Your homies?",
-			"$1:Yeah, you know",
-			"$1:Luffy",
-			"$1:Matthelzor",
-			"$1:tsuna",
-			"$1:Sora",
-			"$1:Leon",
-			"$1:wekk",
-			"$1:Offyerrocker",
-			"$1:Rex",
-			"$1:Ellie",
-			"$1:Alcat101",
-			"$1:Hinaomi",
-			"$1:VxWolf",
-			"$1:happy",
-			"$1:Krimzin",
-			"$1:VinierAardvark1",
-			"$1:The_Punisher",
-			"$1:and blazeykat",
-			"$1:They're awesome!"
-		],
-		[
 			"$1:Cover me, my clip is empty",
 			"$2:Seriously?",
 			"$1:what?",
@@ -496,6 +488,29 @@
 			"$2:I don't know $1, how?",
 			"$1:You Poke 'em on!",
 			"$2:Hey $p, let's not save $1 ok?"
+		],
+		[
+			"$1:Can you beat Payday 2 without playing?",
+			"$2:Ask TheKknowley"
+		],
+		[
+			"$1:I can't believe Hoppip reused this joke again",
+			"$2:ikr, so lazy"
+		],
+		[
+			"$1:Why aren't you playing Payday 3?",
+			"$2:...",
+			"$1:What?",
+			"$2:You're kidding right?"
+		],
+		[
+			"$1:I'm hungry...",
+			"$2:Hi hungry, I'm $2",
+			"$1:..."
+		],
+		[
+			"$1:Did I hear a rock and stone?",
+			"$2:No"
 		]
 	],
 	[
@@ -557,7 +572,7 @@
 			"$3:$2, W H Y?"
 		],
 		[
-			"$1:Name 5 things that aren't the Termal drill",
+			"$1:Name 5 things that aren't the Thermal drill",
 			"$2:Cloaker",
 			"$3:Taser",
 			"$2:Safehouse",

@@ -20,7 +20,8 @@ Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInit_BotWeapons
 	end
 	loc:load_localization_file(BotWeapons.mod_path .. "loc/english.txt", false)
 
-	if BotWeapons.settings.chatter then
+	local date = os.date("*t")
+	if BotWeapons.settings.chatter or date.month == 4 and date.day == 1 then
 		local filename = BotWeapons.mod_path .. "data/quotes_english.json"
 		if io.file_is_readable(SavePath .. "bot_weapons_quotes.json") then
 			filename = SavePath .. "bot_weapons_quotes.json"

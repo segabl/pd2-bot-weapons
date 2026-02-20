@@ -55,7 +55,7 @@ if not BotWeapons then
 
 		-- to add armor skin extensions to bots, the easiest solution is to patch the armor_skin function
 		local armor_skin = Unit.armor_skin
-		Unit.armor_skin = function (unit, ...)
+		Unit.armor_skin = function(unit, ...)
 			local ext = armor_skin(unit, ...)
 			if ext then
 				return ext
@@ -163,7 +163,7 @@ if not BotWeapons then
 	end
 
 	function BotWeapons:sync_to_all_peers(unit, sync_delay)
-		DelayedCalls:Add("bot_weapons_sync_" .. unit:base()._tweak_table, sync_delay or 0, function ()
+		DelayedCalls:Add("bot_weapons_sync_" .. unit:base()._tweak_table, sync_delay or 0, function()
 			if not alive(unit) then
 				return
 			end
@@ -205,15 +205,15 @@ if not BotWeapons then
 		else
 			if not self._masks_data then
 				self._masks_data = {}
-				self._masks_data.masks = table.map_keys(table.filter(tweak_data.blackmarket.masks, function (v, k) return not v.inaccessible end))
-				self._masks_data.colors = table.map_keys(tweak_data.blackmarket.mask_colors)
+				self._masks_data.masks = table.map_keys(table.filter(tweak_data.blackmarket.masks, function(v, k) return not v.inaccessible end))
 				self._masks_data.patterns = table.map_keys(tweak_data.blackmarket.textures)
 				self._masks_data.materials = table.map_keys(tweak_data.blackmarket.materials)
 			end
 			local mask = table.random(self._masks_data.masks)
 			local blueprint = math.random() < self.settings.mask_customized_chance and {
-				color_a = { id = table.random(self._masks_data.colors) },
-				color_b = { id = table.random(self._masks_data.colors) },
+				color_a = { id = table.random(self._masks_data.materials) },
+				color_b = { id = table.random(self._masks_data.materials) },
+				color_c = { id = math.random() < 0.5 and table.random(self._masks_data.materials) or "strip_paint" },
 				pattern = { id = table.random(self._masks_data.patterns) },
 				material = { id = table.random(self._masks_data.materials) }
 			} or nil
@@ -286,7 +286,7 @@ if not BotWeapons then
 
 	function BotWeapons:get_random_player_style(category)
 		if not self._player_styles then
-			self._player_styles = table.map_keys(table.filter(tweak_data.blackmarket.player_styles, function (v, k) return not k ~= "none" end))
+			self._player_styles = table.map_keys(table.filter(tweak_data.blackmarket.player_styles, function(v, k) return not k ~= "none" end))
 		end
 		return table.random(self._player_styles)
 	end
@@ -357,16 +357,10 @@ if not BotWeapons then
 				loadout.mask = "character_locked"
 				loadout.mask_blueprint = nil
 			end
-			-- convert old color data to new system
+			-- strip old color data
 			if loadout.mask_blueprint and loadout.mask_blueprint.color then
-				local color = tweak_data.blackmarket.colors[loadout.mask_blueprint.color.id]
-				if color then
-					loadout.mask_blueprint.color_a = { id = color.color_ids[1] }
-					loadout.mask_blueprint.color_b = { id = color.color_ids[2] }
-				else
-					BLT:Log(LogLevel.WARN, "[BWE] Mask blueprint is invalid, removed it from " .. char_name .. "!", loadout.mask)
-					loadout.mask_blueprint = nil
-				end
+				BLT:Log(LogLevel.WARN, "[BWE] Mask blueprint is invalid, removed it from " .. char_name .. "!", loadout.mask)
+				loadout.mask_blueprint = nil
 			end
 
 			-- choose weapon
@@ -598,7 +592,7 @@ if not BotWeapons then
 			if self._current_quote then
 
 				local actor
-				local line = self._current_quote[self._current_quote_index]:gsub("^$([1-3]):", function (n)
+				local line = self._current_quote[self._current_quote_index]:gsub("^$([1-3]):", function(n)
 					actor = n
 					return ""
 				end)
@@ -606,7 +600,7 @@ if not BotWeapons then
 
 				if data then
 					line = line:gsub("$p", managers.network.account:username())
-					line = line:gsub("$([1-3])", function (n)
+					line = line:gsub("$([1-3])", function(n)
 						local ref = self._available_ai[tonumber(n)]
 						return ref and ref.name or n
 					end)
@@ -660,7 +654,7 @@ if not BotWeapons then
 	-- initialize
 	BotWeapons:init()
 
-	Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function (sender, id, data)
+	Hooks:Add("NetworkReceivedData", "NetworkReceivedDataBotWeapons", function(sender, id, data)
 		if id ~= "bot_weapons_sync" then
 			return
 		end

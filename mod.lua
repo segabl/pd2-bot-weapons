@@ -357,9 +357,11 @@ if not BotWeapons then
 				loadout.mask = "character_locked"
 				loadout.mask_blueprint = nil
 			end
-			-- strip old color data
-			if loadout.mask_blueprint and loadout.mask_blueprint.color then
-				BLT:Log(LogLevel.WARN, "[BWE] Mask blueprint is invalid, removed it from " .. char_name .. "!", loadout.mask)
+			-- check for invalid mask blueprint
+			local mask_bp = loadout.mask_blueprint
+			local mat_td = tweak_data.blackmarket.materials
+			if mask_bp and (not mask_bp.color_a or not mat_td[mask_bp.color_a.id] or not mask_bp.color_b or not mat_td[mask_bp.color_b.id] or mask_bp.color_c and not mat_td[mask_bp.color_c.id]) then
+				BLT:Log(LogLevel.WARN, "[BWE] Mask blueprint is invalid, removed it from " .. char_name .. "!")
 				loadout.mask_blueprint = nil
 			end
 

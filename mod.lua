@@ -93,19 +93,24 @@ if not BotWeapons then
 			return
 		end
 		local loadout = managers.criminals:get_loadout_for(unit:base()._tweak_table)
-		local category = loadout.primary_category or "primaries"
+		local category = loadout.primary_category or ""
 		local slot = loadout.primary_slot or 0
 		local parts = weapon_base._parts or {}
-		local colors, data, sub_type, part_base
 		for part_id, part_data in pairs(parts) do
-			part_base = part_data.unit and part_data.unit:base()
+			local part_base = part_data.unit and part_data.unit:base()
 			if part_base and part_base.set_color then
-				colors = managers.blackmarket:get_part_custom_colors(category, slot, part_id, true) or loadout.primary_random and {
-					laser = loadout.gadget_laser_color or tweak_data.custom_colors.defaults.laser,
-					flashlight = tweak_data.custom_colors.defaults.flashlight
-				}
+				local colors = slot and managers.blackmarket:get_part_custom_colors(category, slot, part_id, true)
+				if not colors and loadout.primary_part_colors and loadout.primary_part_colors[part_id] then
+					colors = table.collect(loadout.primary_part_colors[part_id], function(v) return Color(unpack(v)) end)
+				end
+				if not colors and loadout.primary_random then
+					colors = {
+						laser = loadout.gadget_laser_color or tweak_data.custom_colors.defaults.laser,
+						flashlight = tweak_data.custom_colors.defaults.flashlight
+					}
+				end
 				if colors then
-					data = tweak_data.weapon.factory.parts[part_id]
+					local data = tweak_data.weapon.factory.parts[part_id]
 					if colors[data.sub_type] then
 						part_base:set_color(colors[data.sub_type]:with_alpha(part_base.GADGET_TYPE == "laser" and tweak_data.custom_colors.defaults.laser_alpha or 1))
 					end
@@ -113,7 +118,7 @@ if not BotWeapons then
 						part_data = parts[add_part_id]
 						part_base = part_data and part_data.unit and part_data.unit:base()
 						if part_base and part_base.set_color then
-							sub_type = tweak_data.weapon.factory.parts[add_part_id].sub_type
+							local sub_type = tweak_data.weapon.factory.parts[add_part_id].sub_type
 							if colors[sub_type] then
 								part_base:set_color(colors[sub_type])
 							end
@@ -373,6 +378,7 @@ if not BotWeapons then
 					loadout.primary_random = char_loadout.primary_random
 					loadout.primary_blueprint = char_loadout.primary_blueprint
 					loadout.primary_cosmetics = char_loadout.primary_cosmetics
+					loadout.primary_part_colors = char_loadout.primary_part_colors
 				end
 				if loadout.primary_random then
 					loadout.primary, loadout.primary_category, loadout.primary_blueprint, loadout.primary_cosmetics = self:get_random_weapon(loadout.primary_random)
@@ -559,6 +565,19 @@ if not BotWeapons then
 			primary_cosmetics = not loadout.primary_random and loadout.primary_cosmetics or nil,
 			primary_random = loadout.primary_random or nil
 		}
+		if loadout.primary_slot and self.settings[char_name].primary_blueprint then
+			local category = loadout.primary_category or "primaries"
+			for _, part_id in pairs(self.settings[char_name].primary_blueprint) do
+				local colors = managers.blackmarket:get_part_custom_colors(category, loadout.primary_slot, part_id, true)
+				if colors then
+					self.settings[char_name].primary_part_colors = self.settings[char_name].primary_part_colors or {}
+					self.settings[char_name].primary_part_colors[part_id] = self.settings[char_name].primary_part_colors[part_id] or {}
+					for sub_type, color in pairs(colors) do
+						self.settings[char_name].primary_part_colors[part_id][sub_type] = { color.a, color.r, color.g, color.b }
+					end
+				end
+			end
+		end
 	end
 
 	function BotWeapons:save()

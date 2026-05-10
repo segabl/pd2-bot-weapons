@@ -47,23 +47,20 @@ if not BotWeapons then
 	end
 
 	function BotWeapons:patch_armor_skin_ext()
-		if self._armor_skin_ext_patched then
+		if Unit.armor_skin_bwe then
 			return
 		end
 
-		self._armor_skin_ext_patched = true
-
-		-- to add armor skin extensions to bots, the easiest solution is to patch the armor_skin function
-		local armor_skin = Unit.armor_skin
+		Unit.armor_skin_bwe = Unit.armor_skin
 		Unit.armor_skin = function(unit, ...)
-			local ext = armor_skin(unit, ...)
+			local ext = Unit.armor_skin_bwe(unit, ...)
 			if ext then
 				return ext
 			end
 
 			local dmg = unit:character_damage()
 			local dmg_meta = getmetatable(dmg)
-			if not dmg_meta or dmg_meta ~= TeamAIDamage and dmg_meta ~= TeamAIDamage then
+			if not dmg_meta or dmg_meta ~= TeamAIDamage and dmg_meta ~= HuskTeamAIDamage then
 				return ext
 			end
 

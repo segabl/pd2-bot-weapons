@@ -47,10 +47,11 @@ if not BotWeapons then
 	end
 
 	function BotWeapons:patch_armor_skin_ext()
-		if Unit.armor_skin_bwe then
+		if type(Unit.armor_skin_bwe_patched) == "boolean" then
 			return
 		end
 
+		Unit.armor_skin_bwe_patched = true
 		Unit.armor_skin_bwe = Unit.armor_skin
 		Unit.armor_skin = function(unit, ...)
 			local ext = Unit.armor_skin_bwe(unit, ...)

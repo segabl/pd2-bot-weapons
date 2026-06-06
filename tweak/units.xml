@@ -1,0 +1,508 @@
+<?xml version="1.0"?>
+<tweaks>
+	<tweak version="2" name="units/payday2/characters/npc_criminal_female_1/fem1/npc_criminal_female_fem1" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/payday2/characters/npc_criminal_female_1/fem1/npc_criminal_female_fem1_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/bodhi/npc_criminal_suit_bodhi" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/bodhi/npc_criminal_suit_bodhi_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/chains/npc_criminal_suit_chains" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/chains/npc_criminal_suit_chains_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/dallas/npc_criminal_suit_dallas" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/dallas/npc_criminal_suit_dallas_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/dragan/npc_criminal_suit_dragan" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/dragan/npc_criminal_suit_dragan_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/dragon/npc_criminal_suit_dragon" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/dragon/npc_criminal_suit_dragon_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/hoxton/npc_criminal_suit_hoxton" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/hoxton/npc_criminal_suit_hoxton_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/jacket/npc_criminal_suit_jacket" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/jacket/npc_criminal_suit_jacket_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/jimmy/npc_criminal_suit_jimmy" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/jimmy/npc_criminal_suit_jimmy_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/jowi/npc_criminal_suit_jowi" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/jowi/npc_criminal_suit_jowi_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/old_hoxton/npc_criminal_suit_old_hoxton" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/old_hoxton/npc_criminal_suit_old_hoxton_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/sokol/npc_criminal_suit_sokol" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/sokol/npc_criminal_suit_sokol_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/wolf/npc_criminal_suit_wolf" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/payday2/characters/npc_criminals_suit_1/wolf/npc_criminal_suit_wolf_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/pd2_dlc_bonnie/characters/npc_criminal_bonnie/fem1/npc_criminal_female_bonnie_1" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/pd2_dlc_bonnie/characters/npc_criminal_bonnie/fem1/npc_criminal_female_bonnie_1_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/pd2_dlc_chico/characters/npc_criminals_terry/terry/npc_criminal_terry" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/pd2_dlc_chico/characters/npc_criminals_terry/terry/npc_criminal_terry_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/pd2_dlc_ecp/characters/npc_criminals_ecp_female/ecp_female/npc_criminal_ecp_female" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/pd2_dlc_ecp/characters/npc_criminals_ecp_female/ecp_female/npc_criminal_ecp_female_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/pd2_dlc_ecp/characters/npc_criminals_ecp_male/ecp_male/npc_criminal_ecp_male" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/pd2_dlc_ecp/characters/npc_criminals_ecp_male/ecp_male/npc_criminal_ecp_male_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/pd2_dlc_joy/characters/npc_criminals_joy_1/joy_1/npc_criminal_joy_1" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/pd2_dlc_joy/characters/npc_criminals_joy_1/joy_1/npc_criminal_joy_1_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/pd2_dlc_max/characters/npc_criminals_max/max/npc_criminal_max" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/pd2_dlc_max/characters/npc_criminals_max/max/npc_criminal_max_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/pd2_dlc_myh/characters/npc_criminals_myh/myh/npc_criminal_myh" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/pd2_dlc_myh/characters/npc_criminals_myh/myh/npc_criminal_myh_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/pd2_dlc_opera/characters/npc_criminals_fem_3/fem3/npc_criminal_female_3" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/pd2_dlc_opera/characters/npc_criminals_fem_3/fem3/npc_criminal_female_3_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/pd2_dlc_wild/characters/npc_criminals_wild_1/wild_1/npc_criminal_wild_1" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+	<tweak version="2" name="units/pd2_dlc_wild/characters/npc_criminals_wild_1/wild_1/npc_criminal_wild_1_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="contour"/>
+		</search>
+		<target mode="append">
+			<extension name="armor_skin" class="ArmorSkinExt"/>
+		</target>
+	</tweak>
+</tweaks>

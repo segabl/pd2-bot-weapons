@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<mod name="Bot Weapons and Equipment">
+	<tweak definition="tweak/units.xml"/>
+	<hooks script_path="mod.lua">
+		<group hook_id="lib/">
+			<group :hook_id="managers/">
+				<post :hook_id="blackmarketmanager"/>
+				<post :hook_id="criminalsmanager"/>
+				<post :hook_id="menumanager"/>
+				<post :hook_id="menu/blackmarketgui"/>
+				<post :hook_id="menu/crewmanagementgui"/>
+				<post :hook_id="menu/menuscenemanager"/>
+			</group>
+			<group :hook_id="tweak_data/">
+				<post :hook_id="charactertweakdata"/>
+				<post :hook_id="weapontweakdata"/>
+			</group>
+			<group :hook_id="units/">
+				<post :hook_id="player_team/logics/teamailogictravel"/>
+				<post :hook_id="player_team/huskteamaiinventory"/>
+				<post :hook_id="player_team/teamaiinventory"/>
+				<post :hook_id="player_team/teamaimovement"/>
+				<post :hook_id="weapons/akimboweaponbase"/>
+				<post :hook_id="weapons/newnpcraycastweaponbase"/>
+			</group>
+			<post :hook_id="network/base/networkpeer"/>
+		</group>
+	</hooks>
+</mod>

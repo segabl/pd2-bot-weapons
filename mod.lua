@@ -46,46 +46,6 @@ if not BotWeapons then
 		return BeardLib and BeardLib.Utils:ModLoaded("More Weapon Categories")
 	end
 
-	function BotWeapons:patch_armor_skin_ext()
-		if type(Unit.armor_skin_bwe_patched) == "boolean" then
-			return
-		end
-
-		Unit.armor_skin_bwe_patched = true
-		Unit.armor_skin_bwe = Unit.armor_skin
-		Unit.armor_skin = function(unit, ...)
-			local ext = Unit.armor_skin_bwe(unit, ...)
-			if ext then
-				return ext
-			end
-
-			local dmg = unit:character_damage()
-			local dmg_meta = getmetatable(dmg)
-			if not dmg_meta or dmg_meta ~= TeamAIDamage and dmg_meta ~= HuskTeamAIDamage then
-				return ext
-			end
-
-			if dmg._armor_skin_ext ~= nil then
-				return dmg._armor_skin_ext
-			end
-
-			dmg._armor_skin_ext = ArmorSkinExt:new(unit)
-			dmg._armor_skin_ext:set_character(unit:base()._tweak_table)
-
-			Hooks:PreHook(dmg, "update", "update_armor_skin" .. tostring(unit:key()), function(d, ...)
-				if d._armor_skin_ext and d._armor_skin_ext._request_update and alive(d._unit) then
-					d._armor_skin_ext:update(...)
-				end
-			end)
-
-			Hooks:PreHook(dmg, "pre_destroy", "pre_destroy_armor_skin" .. tostring(unit:key()), function()
-				Hooks:RemovePreHook("update_armor_skin" .. tostring(unit:key()))
-			end)
-
-			return dmg._armor_skin_ext
-		end
-	end
-
 	function BotWeapons:check_setup_gadget_colors(unit, weapon_base)
 		if weapon_base._setup_team_ai_colors then
 			return

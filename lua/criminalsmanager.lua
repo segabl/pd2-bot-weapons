@@ -24,15 +24,6 @@ function CriminalsManager:update_character_visual_state(character_name, visual_s
 		end
 	end
 
-	if character and character.taken and character.data.ai and visual_state then
-		local has_armor = visual_state.armor_id and visual_state.armor_id ~= "level_1"
-		local has_armor_skin = visual_state.armor_skin and visual_state.armor_skin ~= "none"
-		local has_player_style = visual_state.player_style and visual_state.player_style ~= managers.blackmarket:get_default_player_style()
-		if has_armor and has_armor_skin and not has_player_style then
-			BotWeapons:patch_armor_skin_ext()
-		end
-	end
-
 	return update_character_visual_state_original(self, character_name, visual_state, ...)
 end
 

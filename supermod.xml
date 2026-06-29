@@ -15,13 +15,20 @@
 				<post :hook_id="charactertweakdata"/>
 				<post :hook_id="weapontweakdata"/>
 			</group>
-			<group :hook_id="units/">
-				<post :hook_id="player_team/logics/teamailogictravel"/>
-				<post :hook_id="player_team/huskteamaiinventory"/>
-				<post :hook_id="player_team/teamaiinventory"/>
-				<post :hook_id="player_team/teamaimovement"/>
-				<post :hook_id="weapons/akimboweaponbase"/>
-				<post :hook_id="weapons/newnpcraycastweaponbase"/>
+			<group :hook_id="units/enemies/cop/">
+				<post :hook_id="actions/full_body/copactionact"/>
+				<post :hook_id="actions/upper_body/copactionshoot"/>
+				<post :hook_id="copinventory"/>
+			</group>
+			<group :hook_id="units/player_team/">
+				<post :hook_id="logics/teamailogictravel"/>
+				<post :hook_id="huskteamaiinventory"/>
+				<post :hook_id="teamaiinventory"/>
+				<post :hook_id="teamaimovement"/>
+			</group>
+			<group :hook_id="units/weapons/">
+				<post :hook_id="akimboweaponbase"/>
+				<post :hook_id="newnpcraycastweaponbase"/>
 			</group>
 			<post :hook_id="network/base/networkpeer"/>
 		</group>

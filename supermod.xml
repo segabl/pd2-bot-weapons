@@ -1,6 +1,14 @@
 <?xml version="1.0"?>
-<mod name="Bot Weapons and Equipment">
-	<tweak definition="tweak/units.xml"/>
+<mod name="Bot Weapons and Equipment"
+	description="Improved Crew Management, customize the visual appearance of the Team AI to make them more human-like"
+	author="Hoppip"
+	color="0.043 0.808 0.6"
+	image="mod.png"
+	version="11.3.1"
+	priority="10">
+
+	<update identifier="pd2-bot-weapons" meta="https://updates.hoppip.at/pd2-bot-weapons"/>
+
 	<hooks script_path="mod.lua">
 		<group hook_id="lib/">
 			<group :hook_id="managers/">
@@ -33,4 +41,6 @@
 			<post :hook_id="network/base/networkpeer"/>
 		</group>
 	</hooks>
+
+	<tweak definition="tweak/units.xml"/>
 </mod>

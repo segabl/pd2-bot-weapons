@@ -126,7 +126,7 @@ function WeaponTweakData:setup_crew_weapons(crew_preset)
 	local accuracy = (is_automatic or StreamHeist) and (9 + w_u_tweak.FALLOFF[1].acc[1]) / 10 or 1 - w_u_tweak.spread / 100
 	local target_damage = (reference.DAMAGE * mag * accuracy) / ((mag / burst_size) * (burst_size - 1) * shot_delay + (mag / burst_size - 1) * burst_delay + reload_time)
 	for crew_weapon_name, crew_weapon in pairs(self) do
-		if type(crew_weapon) == "table" and crew_weapon_name:match("_crew$") then
+		if type(crew_weapon) == "table" and crew_weapon_name:match("_crew$") and crew_weapon_name ~= "bleckert_crew" then
 			if setup_crew_weapon_data(crew_weapon_name, crew_weapon, self:_player_weapon_from_crew_weapon(crew_weapon_name)) then
 				-- calculate weapon damage based on reference dps
 				w_u_tweak = crew_preset[crew_weapon.usage]

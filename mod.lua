@@ -109,14 +109,18 @@ if not BotWeapons then
 			local gadget_base = weapon_base:get_active_gadget()
 			if gadget_base and gadget_base.color then
 				local col = gadget_base:color()
-				managers.network:session():send_to_peers_synched("set_weapon_gadget_color", unit, col.r * 255, col.g * 255, col.b * 255)
+				local function channel(v) return math.clamp(math.floor(v * 255 + 0.5), 0, 255) end
+				managers.network:session():send_to_peers_synched("set_weapon_gadget_color", unit, channel(col.r), channel(col.g), channel(col.b))
 			end
-			managers.network:session():send_to_peers_synched("set_weapon_gadget_state", unit, weapon_base._gadget_on or 0)
+			managers.network:session():send_to_peers_synched("set_weapon_gadget_state", unit, math.clamp(weapon_base._gadget_on or 0, 0, 4))
 		end
 	end
 
 	function BotWeapons:get_sync_data(unit)
-		local character = managers.criminals:character_by_unit(unit)
+		local character = alive(unit) and managers.criminals:character_by_unit(unit)
+		if not character or not character.name then
+			return
+		end
 		return {
 			name = character.name,
 			equip = character.visual_state and character.visual_state.deployable_id,
@@ -130,7 +134,10 @@ if not BotWeapons then
 			if not alive(unit) then
 				return
 			end
-			LuaNetworking:SendToPeers("bot_weapons_sync", json.encode(self:get_sync_data(unit)))
+			local data = self:get_sync_data(unit)
+			if data then
+				LuaNetworking:SendToPeers("bot_weapons_sync", json.encode(data))
+			end
 		end)
 	end
 
